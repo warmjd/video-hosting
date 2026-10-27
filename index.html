@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>원우마을 열매 강화소 · 시즌1</title>
+<title>원우마을 열매 강화소 · 시즌2</title>
 <style>
 :root { --h:250; }
 * { box-sizing:border-box; margin:0; padding:0; font-family:-apple-system,BlinkMacSystemFont,'Apple SD Gothic Neo','Noto Sans KR',sans-serif; }
@@ -243,10 +243,10 @@ button.chip2:active { transform:scale(.95); }
   <div class="card"><div class="title">🌳 실시간 열매 현황 (터치하면 관전)</div><div id="wall"></div><div id="titles" class="titles"></div></div>
   <div class="card"><div class="title">🙌 지금 도전 중인 식구들 (터치하여 관전)</div><div id="players"></div></div>
   <div class="card hall"><div class="title">🏆 명예의 전당</div><div id="hall"></div></div>
-  <div class="card rules"><div class="title">📜 시즌1 규칙</div><ul>
+  <div class="card rules"><div class="title">📜 시즌2 규칙</div><ul>
     <li>❤️ 도전 1회 = 체력 1. 20분마다 +1 (최대 10).</li>
     <li>📉 실패하면 가끔 한 칸(드물게 두 칸) 추락해요. 위로 갈수록 위험!</li>
-    <li>🔁 연속 실패하면 다음 성공률이 조금씩 올라요. (오래 참음의 열매 ⏳)</li>
+    <li>🔁 연속 실패하면 다음 성공률이 점점 크게 올라요. (최대 5배) (오래 참음의 열매 ⏳)</li>
     <li>🎁 매일 출석 +2 · 🔥 밤 9시 마당 불판 타임 보너스 · 🍀 성공하면 가끔 +1.</li>
     <li>🆘 꼴찌는 매일 출석 때 🍖구운 고기 +4, 🥩생고기 +1을 받고 성공률도 올라요.</li>
     <li>🥩 실패 10번마다 생고기 1팩 → 조돌맹이 권사님댁 마당 불판에서 구워주면 🍖구운 고기(체력 1~10)! 🎒 가방에서 먹기. 아주 가끔 ☕아이스 아메리카노·🙏중보기도 쿠폰도 나와요.</li>
@@ -295,19 +295,19 @@ const firebaseConfig = {
 };
 
 // ================= ⚙️ 기본 설정 =================
-const ROOT = 'w1', SID = 1;                   // 🗄️ 파이어베이스 저장 경로(w1) · 시즌 번호. 기존 락트리(s4)와 완전히 분리돼요
+const ROOT = 'w2', SID = 2;                   // 🗄️ 파이어베이스 저장 경로(w1) · 시즌 번호. 기존 락트리(s4)와 완전히 분리돼요
 const ADMIN = '조돌맹';                       // 운영자(캐릭터 삭제·비번 초기화 가능)
 const TEST_NAME = '운영자';                   // 🧪 테스트 전용 계정: 순위·시상대·현황판·통계·로그에서 숨김
 const MAXG = 12;                              // 🏁 마지막 단계 (12열매를 맺으면 완주)
 const MAXE = 10, REGEN = 20 * 60 * 1000;      // 체력: 최대 10, 20분마다 +1
 const DAILY_E = 2, REFUND = 0.25;             // 🎁 출석 보너스 체력 +2 (하루 1회) · 🍀 성공 시 25% 확률로 체력 +1 환급
-const SEASON_START = new Date('2026-10-26T00:00:00+09:00').getTime();   // 시즌1 시작일 (순풍 계산용) ← 배포일에 맞춰 바꿔도 돼요
-const CHALK_STEP = 0.1, CHALK_MAX = 0.5;      // 🔁 연속 실패 1회당 기본 성공률의 +10% (최대 +50%), 성공하면 초기화
+const SEASON_START = new Date('2026-10-29T00:00:00+09:00').getTime();   // 시즌2 시작일 (순풍 계산용) ← 배포일에 맞춰 바꿔도 돼요
+const CHALK_STEP = 0.3, CHALK_MAX = 4;      // 🔁 연속 실패 1회당 기본 성공률의 +30% (최대 +400%), 성공하면 초기화
 const seasonDay = () => Math.floor((Date.now() - SEASON_START) / 864e5);
 const wind = () => { const d = seasonDay(); return d >= 14 ? 0.2 : (d >= 7 ? 0.1 : 0); };   // 🍃 순풍: 2주차 +10%, 3주차~ +20% (시즌이 너무 길어지지 않게)
-const RATE = [80, 70, 58, 40, 16, 12, 9, 7, 5.5, 4.5, 3.5, 3];                 // N열매→N+1열매 성공률 %
-const fall = (g) => g >= 10 ? 0.12 : (g >= 7 ? 0.08 : (g >= 4 ? 0.05 : 0));    // 실패 시 추락 확률
-const EGG = 0.015, JACK = 0.01, DBL = 0.12;   // 🚒 사다리차 점프(9→11) · 🍽️ 권사님 특식 점프(1~3→4) · 2단계 상승
+const RATE = [80, 68, 54, 38, 5, 3.5, 2.5, 1.75, 1.25, 1, 0.8, 0.6];                 // N열매→N+1열매 성공률 %
+const fall = (g) => g >= 10 ? 0.06 : (g >= 7 ? 0.04 : (g >= 4 ? 0.03 : 0));    // 실패 시 추락 확률
+const EGG = 0.01, JACK = 0.01, DBL = 0.04;   // 🚒 사다리차 점프(9→11) · 🍽️ 권사님 특식 점프(1~3→4) · 2단계 상승
 const U = (g) => g + '열매';                  // 단계 표기 (예: 7열매)
 
 // ================= 🌳 12열매 = 우리 마을 12명 =================
@@ -652,7 +652,7 @@ window.openReport = function () {
   const c = document.createElement('canvas'); c.width = 720; c.height = 960; const x = c.getContext('2d');
   const bg = x.createLinearGradient(0, 0, 0, 960); bg.addColorStop(0, '#1d3a12'); bg.addColorStop(1, '#0b1405'); x.fillStyle = bg; x.fillRect(0, 0, 720, 960);
   x.strokeStyle = '#ffd43b'; x.lineWidth = 10; x.strokeRect(20, 20, 680, 920);
-  x.textAlign = 'center'; x.fillStyle = '#ffd43b'; x.font = 'bold 44px sans-serif'; x.fillText('🏆 원우마을 시즌1 리포트', 360, 110);
+  x.textAlign = 'center'; x.fillStyle = '#ffd43b'; x.font = 'bold 44px sans-serif'; x.fillText('🏆 원우마을 시즌2 리포트', 360, 110);
   const fk = [...VN()].sort((a, b) => P[b].falls - P[a].falls)[0], total = VN().reduce((s, n) => s + P[n].tries, 0), pig = VN().filter(n => P[n].ach.pigeon);
   const lines = [['마을장 조원우가 인정한 열매 맺는 자', `${ended.name} (${ended.tries}번 만에 완주)`], ['참가자', `${VN().length}명 · 총 도전 ${total}번`], ['가장 많이 추락한 사람', fk && P[fk].falls ? `${fk} (${P[fk].falls}회)` : '-'], ['🕊️ 비둘기 전염 피해자', pig.join(', ') || '아무도 없음']];
   lines.forEach((l, i) => { x.fillStyle = '#ffe08a'; x.font = 'bold 30px sans-serif'; x.fillText(l[0], 360, 230 + i * 150); x.fillStyle = '#fff'; x.font = 'bold 40px sans-serif'; x.fillText(l[1].slice(0, 22), 360, 285 + i * 150); });
@@ -1162,7 +1162,7 @@ function renderLists() {
     return `<div class="pl ${n === view ? 'view' : ''} ${n === me ? 'mine' : ''}" onclick="selectView('${n}')"><div class="top"><span>${q.cleared ? '🏆' : ''}${q.ach.pigeon ? '🕊️' : ''}${n}</span><span>${U(q.grade)}</span></div><div class="bar"><i style="width:${q.grade / MAXG * 100}%"></i></div><small>시도 ${q.tries} · 최고 ${U(q.best)}</small></div>`;
   }).join('');
   const top3 = [...VN()].sort((x, y) => P[y].grade - P[x].grade || P[y].best - P[x].best).slice(0, 3).map((n, i) => `${['🥇', '🥈', '🥉'][i]} ${n} ${U(P[n].grade)}`).join(' · ');
-  $('hall').innerHTML = (ended && Array.isArray(ended.rank) ? `<div style="margin-top:2px;color:#ffe08a">🏆 시즌1 기록 — ${esc(ended.name)} 완주 (${esc(ended.tries)}번 도전)</div>` + ended.rank.map((r, i) => `<div>${i + 1}위 ${esc(r[0])} · ${esc(r[1])}열매 · ${esc(r[2])}번</div>`).join('') : `<div style="color:#9aa6b8">아직 완주자가 없어요. 첫 전설이 되어보세요! 🏆</div><div style="color:#9aa6b8;margin-top:6px">시즌1 진행 중 — ${top3 || '참가자 없음'}</div>`);
+  $('hall').innerHTML = (ended && Array.isArray(ended.rank) ? `<div style="margin-top:2px;color:#ffe08a">🏆 시즌2 기록 — ${esc(ended.name)} 완주 (${esc(ended.tries)}번 도전)</div>` + ended.rank.map((r, i) => `<div>${i + 1}위 ${esc(r[0])} · ${esc(r[1])}열매 · ${esc(r[2])}번</div>`).join('') : `<div style="color:#9aa6b8">아직 완주자가 없어요. 첫 전설이 되어보세요! 🏆</div><div style="color:#9aa6b8;margin-top:6px">시즌2 진행 중 — ${top3 || '참가자 없음'}</div>`);
   const tk = todayStr(), td = VN().filter(n => P[n].dKey === tk), top = (f) => td.reduce((a, n) => (!a || f(P[n]) > f(P[a]) ? n : a), null);
   const tf = top(q => q.dFall), tt = top(q => q.dTries), tp = [...VN()].sort((x, y) => P[y].grade - P[x].grade)[0];
   $('titles').textContent = [tp ? `👑 오늘의 정상 ${tp}(${U(P[tp].grade)})` : '', tf && P[tf].dFall ? `☁️ 오늘의 월요병 ${tf}(추락 ${P[tf].dFall}회)` : '', tt && P[tt].dTries ? `💪 오늘의 노력왕 ${tt}(${P[tt].dTries}회)` : ''].filter(Boolean).join(' · ') || '오늘 첫 도전자를 기다리는 중!';
@@ -1170,7 +1170,7 @@ function renderLists() {
   $('ach').innerHTML = Object.keys(ACH).map(k => `<span class="chip2 ${av[k] ? 'on' : ''}">${av[k] ? ACH[k][0] + ' ' + ACH[k][1] : '🔒 ???'}</span>`).join('');
   $('fruits').innerHTML = FRUIT.map((f, g) => f ? `<button class="chip2 ${vp.best >= g ? 'on' : ''}" onclick="tapFruit(${g},event)">${f[0]} ${f[1]}</button>` : '').join('');
   const e = $('ended'); $('report-btn').style.display = ended ? 'block' : 'none';
-  if (ended) { e.style.display = 'block'; const cl = Array.isArray(ended.clears) ? ended.clears : [[ended.name, ended.at, ended.tries]]; e.textContent = `🔒 시즌1 종료! ${cl.map((c, i) => `${['🥇', '🥈', '🥉'][i] || '🏅'} ${c[0]}(${c[2]}번)`).join(' · ')} — 마을장 조원우가 인정한 열매 맺는 자 🏅`; } else winBanner();
+  if (ended) { e.style.display = 'block'; const cl = Array.isArray(ended.clears) ? ended.clears : [[ended.name, ended.at, ended.tries]]; e.textContent = `🔒 시즌2 종료! ${cl.map((c, i) => `${['🥇', '🥈', '🥉'][i] || '🏅'} ${c[0]}(${c[2]}번)`).join(' · ')} — 마을장 조원우가 인정한 열매 맺는 자 🏅`; } else winBanner();
   $('admin').style.display = me === ADMIN ? 'block' : 'none';
   if (me === ADMIN) $('idea-text').value = ideas.map(i => `${i.lv}열매 | ${i.n} | ${i.s} | by ${i.u}`).join('\n');
   if (me === ADMIN) $('admin-list').innerHTML = NAMES.filter(n => n !== ADMIN).map(n => `<div class="arow"><span>${n} · ${U(P[n].grade)} · ${P[n].tries}회${P[n].pin ? '' : ' · 🔓'}</span><span><button class="small-btn" style="background:#3742fa" onclick="adminReset('${n}')">비번초기화</button> <button class="small-btn" onclick="adminDel('${n}')">삭제</button></span></div>`).join('') || '<small>삭제할 캐릭터가 없어요</small>';
@@ -1189,7 +1189,7 @@ window.openShare = function () {
   const g = p.grade, h = 250 - g * 13, c = document.createElement('canvas'); c.width = 720; c.height = 960; const x = c.getContext('2d');
   const bg = x.createLinearGradient(0, 0, 0, 960); bg.addColorStop(0, `hsl(${h},50%,24%)`); bg.addColorStop(1, `hsl(${h + 30},55%,8%)`); x.fillStyle = bg; x.fillRect(0, 0, 720, 960);
   x.strokeStyle = `hsl(${h},90%,65%)`; x.lineWidth = 10; x.strokeRect(20, 20, 680, 920);
-  x.textAlign = 'center'; x.fillStyle = '#fff'; x.font = 'bold 40px sans-serif'; x.fillText('원우마을 열매 강화소 · 시즌1', 360, 100);
+  x.textAlign = 'center'; x.fillStyle = '#fff'; x.font = 'bold 40px sans-serif'; x.fillText('원우마을 열매 강화소 · 시즌2', 360, 100);
   const im = sprImg[n];
   if (g === 11 && sprImg['조돌맹'] && sprImg['조돌맹'].complete && sprImg['조돌맹'].naturalWidth) { const i2 = sprImg['조돌맹']; x.imageSmoothingEnabled = false; const w = Math.min(420, 360 * i2.naturalWidth / i2.naturalHeight); x.drawImage(i2, 360 - w / 2, 150, w, w * i2.naturalHeight / i2.naturalWidth); }
   else { x.font = '220px sans-serif'; x.fillText(ICON[g], 360, 400); }
@@ -1198,7 +1198,7 @@ window.openShare = function () {
   x.fillStyle = '#d0d7e2'; x.font = '30px sans-serif';
   (LV[g][1].match(/.{1,17}/g) || []).slice(0, 2).forEach((t, i) => x.fillText(t, 360, 805 + i * 40));
   x.fillStyle = '#ffd43b'; x.font = 'bold 32px sans-serif';
-  x.fillText(ended && ended.name === n ? '🏆 시즌1 최초 완주 · 마을장이 인정한 열매 맺는 자' : `도전 ${p.tries}번 · 최고 ${U(p.best)}`, 360, 895);
+  x.fillText(ended && ended.name === n ? '🏆 시즌2 최초 완주 · 마을장이 인정한 열매 맺는 자' : `도전 ${p.tries}번 · 최고 ${U(p.best)}`, 360, 895);
   x.fillStyle = '#8f9bb0'; x.font = '24px sans-serif'; x.fillText(new Date().toLocaleDateString('ko-KR') + ' · ' + location.host, 360, 930);
   shareCv = c; $('share-img').src = c.toDataURL('image/png'); $('share').style.display = 'flex';
 };
