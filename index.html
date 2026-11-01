@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>원우마을 열매 강화소 · 시즌2</title>
+<title>원우마을 열매 강화소 · 시즌3</title>
 <style>
 :root { --h:250; }
 * { box-sizing:border-box; margin:0; padding:0; font-family:-apple-system,BlinkMacSystemFont,'Apple SD Gothic Neo','Noto Sans KR',sans-serif; }
@@ -197,7 +197,7 @@ button.chip2:active { transform:scale(.95); }
 </head>
 <body>
 <div id="toast"></div>
-<div id="ending"><h2>🏆 12열매 완주!</h2><p id="end-text"></p><button class="small-btn" style="padding:12px 24px;font-size:1rem" onclick="document.getElementById('ending').style.display='none'">확인</button></div>
+<div id="ending"><h2>🏆 9열매 완주!</h2><p id="end-text"></p><button class="small-btn" style="padding:12px 24px;font-size:1rem" onclick="document.getElementById('ending').style.display='none'">확인</button></div>
 
 <canvas id="fx"></canvas><div id="flash"></div>
 <div class="ov" id="join"><div class="box"><h3>누구로 입장할까요?</h3><small>우리 마을 식구를 눌러 입장하거나, 새 이름을 만들어 주세요</small><small style="color:#ffe08a">📖 영접하는 자 곧 그 이름을 믿는 자들에게는 하나님의 자녀가 되는 권세를 주셨으니 (요 1:12)</small><div id="join-names"></div><input id="join-input" maxlength="8" placeholder="새 캐릭터 이름 (최대 8자)" autocomplete="off"><button class="small-btn" style="padding:11px;font-size:.95rem" onclick="createName()">✨ 새 캐릭터 만들기</button><div class="msg" id="join-msg"></div><button id="join-close" class="small-btn gray" onclick="closeJoin()">닫기</button></div></div>
@@ -208,7 +208,7 @@ button.chip2:active { transform:scale(.95); }
 <div class="ov" id="share"><div class="box"><h3>📸 자랑 카드</h3><img id="share-img" alt="자랑 카드"><small>이미지를 길게 눌러 저장하거나 아래 버튼으로 공유하세요</small><button class="small-btn" style="padding:11px;background:#3742fa" onclick="shareImg()">공유 / 저장</button><button class="small-btn gray" onclick="closeShare()">닫기</button></div></div>
 
 <div class="wrap">
-  <header style="position:relative"><button id="snd-btn" class="small-btn" style="position:absolute;right:0;top:0;background:#3a3f55" onclick="toggleSnd()">🔊</button><h1>원우마을 열매 강화소</h1><p>시즌 1 · 열두 열매를 맺어라 — 온사랑교회 2청년부</p></header>
+  <header style="position:relative"><button id="snd-btn" class="small-btn" style="position:absolute;right:0;top:0;background:#3a3f55" onclick="toggleSnd()">🔊</button><h1>원우마을 열매 강화소</h1><p>시즌 3 · 아홉 열매를 맺어라 — 온사랑교회 2청년부</p></header>
   <div id="ended"></div>
   <button id="report-btn" class="small-btn" style="display:none;width:100%;padding:11px;background:#3742fa" onclick="openReport()">📸 시즌 리포트 카드 저장</button>
   <div class="status loading" id="status">⏳ 서버에서 데이터 불러오는 중...</div>
@@ -228,30 +228,25 @@ button.chip2:active { transform:scale(.95); }
     <div id="e-text"></div>
     <div id="restv" class="vbox" style="display:none"></div>
     <button id="go" onclick="tryUpgrade()" disabled>⏳ 불러오는 중...</button>
-    <button id="live-btn" class="small-btn" style="display:none;width:100%;margin-top:8px;padding:11px;background:#e03131" onclick="goLive()">🔴 마을 전체 중계 도전 선언 (모두에게 알림!)</button>
     <div id="bas-box"></div>
     <div id="result"></div>
     <button id="share-btn" class="small-btn" style="width:100%;margin-top:8px;padding:11px;font-size:.9rem;display:none;background:#3742fa" onclick="openShare()">📸 자랑 카드 저장</button>
   </div>
 
-  <div class="card" id="cheer" style="display:none"><div class="title">📣 <span id="cheer-to"></span>님에게 응원 · 장난 보내기 <small style="color:#9aa6b8">(이펙트만! 게임에는 영향 없음)</small></div>
-    <div class="ebtns"><button onclick="sendCheer('🔥')">🔥</button><button onclick="sendCheer('👏')">👏</button><button onclick="sendCheer('😂')">😂</button><button onclick="sendCheer('🫵')">🫵</button><button onclick="sendCheer('🙏')">🙏</button><button onclick="sendCheer('🕊️')">🕊️</button></div>
-    <div style="display:flex;gap:6px;margin-top:8px"><input id="cheer-msg" maxlength="30" placeholder="한 줄 메시지 (30자)" autocomplete="off" onkeydown="if(event.key==='Enter')sendCheer('💬')"><button class="small-btn" style="padding:0 16px;font-size:.9rem;white-space:nowrap;background:#3742fa" onclick="sendCheer('💬')">💬 보내기</button></div>
-    <div class="pre"><button onclick="preset('내 아래구나~ ㅋㅋ')">내 아래구나~ ㅋㅋ</button><button onclick="preset('파이팅!')">파이팅!</button><button onclick="preset('기도할게 🙏')">기도할게 🙏</button><button onclick="preset('고기 식는다~')">고기 식는다~</button><button onclick="preset('비둘기 조심!')">비둘기 조심!</button></div>
-    <button class="small-btn" style="margin-top:8px;padding:9px;background:#3742fa;width:100%" onclick="setRival()">🎯 라이벌로 지정하기</button></div>
   <div class="card"><div class="title">🏅 실시간 시상대 (터치하면 관전)</div><div id="podium"></div></div>
   <div class="card"><div class="title">🌳 실시간 열매 현황 (터치하면 관전)</div><div id="wall"></div><div id="titles" class="titles"></div></div>
   <div class="card"><div class="title">🙌 지금 도전 중인 식구들 (터치하여 관전)</div><div id="players"></div></div>
-  <div class="card hall"><div class="title">🏆 명예의 전당</div><div id="hall"></div></div>
-  <div class="card rules"><div class="title">📜 시즌2 규칙</div><ul>
+  <div class="card hall"><div class="title">🏆 명예의 전당</div><div id="hall"></div><div style="margin-top:8px;padding-top:6px;border-top:1px dashed rgba(255,255,255,.15);font-size:.8rem;color:#ffe08a">👑 역대 우승 · 시즌1 서충원 · 시즌2 서충원</div></div>
+  <div class="card rules"><div class="title">📜 시즌3 규칙</div><ul>
     <li>❤️ 도전 1회 = 체력 1. 20분마다 +1 (최대 10).</li>
-    <li>📉 실패하면 가끔 한 칸(드물게 두 칸) 추락해요. 위로 갈수록 위험!</li>
-    <li>🔁 연속 실패하면 다음 성공률이 점점 크게 올라요. (최대 5배) (오래 참음의 열매 ⏳)</li>
+    <li>📉 실패하면 가끔 한 칸(드물게 두 칸) 추락해요. 위로 갈수록 위험하고, 성공률도 크게 낮아져요!</li>
     <li>🎁 매일 출석 +2 · 🔥 밤 9시 마당 불판 타임 보너스 · 🍀 성공하면 가끔 +1.</li>
     <li>🆘 꼴찌는 매일 출석 때 🍖구운 고기 +4, 🥩생고기 +1을 받고 성공률도 올라요.</li>
     <li>🥩 실패 10번마다 생고기 1팩 → 조돌맹이 권사님댁 마당 불판에서 구워주면 🍖구운 고기(체력 1~10)! 🎒 가방에서 먹기. 아주 가끔 ☕아이스 아메리카노·🙏중보기도 쿠폰도 나와요.</li>
-    <li>🍃 시즌 2주차부터 순풍이 불어요.</li>
-    <li>🏁 12열매 첫 완주자가 나와도 <b>48시간</b> 더 열려 있어요. 그 안에 완주한 사람은 완주 순서대로 순위!</li>
+    <li>🍃 시즌이 길어지면 순풍이 불어요. 2주차 +10% · 3주차 +20% · 5주차부터 +40%.</li>
+    <li>🏁 성령의 열매 아홉 가지를 모두 맺으면 완주! 첫 완주자가 나와도 <b>48시간</b> 더 열려 있어요. 단, 시즌은 시작 후 <b>최소 2주(14일)</b>는 항상 열려 있어요. 마감 전에 완주한 사람은 완주 순서대로 순위!</li>
+    <li>🌧️ <b>시도 대비 열매가 가장 낮은 사람</b>(30번 이상 도전, 3명 이상일 때)은 <b>눈물 젖은 고기</b> 패시브! 추락 확률이 절반이 되고, 실패해도 15% 확률로 체력 +1 환급. (업적 🌧️)</li>
+    <li>🍀 <b>시도 대비 열매가 가장 높은 사람</b>은 <b>행운의 대가</b>! 성공률 -15%, 추락 확률 ×1.5. 다른 사람에게 자리를 뺏기면 풀려요. (업적 🍀)</li>
     <li>📋 매일 보상 과제: 크게 추락하거나 많이 도전하면 생고기·구운 고기를 줘요 (가방에서 확인).</li>
     <li>📖 단계마다 그 주민에게 어울리는 말씀이 나와요. (말씀 본문은 그대로, 적용은 장난으로 😄)</li>
     <li style="color:#b79a55">🕊️ 숨겨진 말씀: 열매는 아무렇게나 따는 게 아니다. 말씀에 나온 순서대로 도감의 열매를 따 보라. (소리 없이도 알 수 있어요)</li></ul></div>
@@ -260,7 +255,7 @@ button.chip2:active { transform:scale(.95); }
   <div class="card" id="admin" style="display:none"><div class="title">🛠 운영자 (조돌맹 전용) · 캐릭터 삭제</div><div id="admin-list"></div>
     <button class="small-btn" style="width:100%;margin-top:8px;padding:10px;background:#1c7ed6" onclick="backupData()">💾 전체 데이터 백업 다운로드 (JSON)</button>
     <div class="title" style="margin-top:12px">📥 레벨 이야기 제안함 (복사해서 클로드에게 붙여넣기)</div><textarea id="idea-text" readonly rows="5"></textarea><button class="small-btn" style="margin-top:6px;padding:9px" onclick="copyIdeas()">📋 전체 복사</button></div>
-  <div class="card"><div class="title">✍️ 레벨 이야기 제안 <small style="color:#9aa6b8">(다음 시즌에 반영될 수 있어요)</small></div><div class="idea"><select id="idea-lv"><option value="1">1열매 (희락)</option><option value="2">2열매 (믿음)</option><option value="3">3열매 (오래 참음)</option><option value="4">4열매 (지혜)</option><option value="5">5열매 (절제)</option><option value="6">6열매 (온유)</option><option value="7">7열매 (양선)</option><option value="8">8열매 (자비)</option><option value="9">9열매 (소망)</option><option value="10">10열매 (화평)</option><option value="11">11열매 (사랑)</option><option value="12">12열매 (충성)</option></select><input id="idea-n" maxlength="20" placeholder="레벨 이름 (예: 슈바인학센 한 접시)" autocomplete="off"><input id="idea-s" maxlength="60" placeholder="한 줄 이야기 (60자)" autocomplete="off"><button class="small-btn" style="padding:11px" onclick="sendIdea()">제안하기</button></div></div>
+  <div class="card"><div class="title">✍️ 레벨 이야기 제안 <small style="color:#9aa6b8">(다음 시즌에 반영될 수 있어요)</small></div><div class="idea"><select id="idea-lv"><option value="1">1열매 (사랑)</option><option value="2">2열매 (희락)</option><option value="3">3열매 (화평)</option><option value="4">4열매 (오래 참음)</option><option value="5">5열매 (자비)</option><option value="6">6열매 (양선)</option><option value="7">7열매 (충성)</option><option value="8">8열매 (온유)</option><option value="9">9열매 (절제)</option></select><input id="idea-n" maxlength="20" placeholder="레벨 이름 (예: 슈바인학센 한 접시)" autocomplete="off"><input id="idea-s" maxlength="60" placeholder="한 줄 이야기 (60자)" autocomplete="off"><button class="small-btn" style="padding:11px" onclick="sendIdea()">제안하기</button></div></div>
   <div class="card"><div class="title">💬 마을 소식</div><div id="log"></div></div>
   <div style="text-align:center;font-size:.7rem;color:#7f8a9c;padding:2px 0 10px">⛪ 온사랑교회 2청년부 원우마을 · 만든이 조돌맹</div>
 </div>
@@ -278,7 +273,7 @@ button.chip2:active { transform:scale(.95); }
   </div>
   <div id="bs-box"><div id="bs-name"></div><div id="bs-text"></div><div id="bs-tap"></div><div id="bs-choices"></div></div>
 </div>
-<div id="egg" onclick="this.classList.remove('on')"><div class="moai">🕊️</div><h2>숨겨진 말씀을 찾았다!</h2><div style="font-size:.9rem;color:#d9c07a">열매를 말씀의 순서대로 따자, 마을 어딘가에서 조용한 박수 소리가 들렸다…<br>(이 선물은 평생 단 한 번뿐!)</div><div style="margin-top:14px"><div class="it">🙏 중보기도 쿠폰 ×1</div><div class="it">☕ 아이스 아메리카노 ×1</div><div class="it">🍖 구운 고기 +30 <span style="font-size:.8rem;color:#d9c07a">(10짜리 3개)</span></div></div><div class="tap">🎒 가방에 들어갔어요 · 탭하여 닫기</div></div>
+<div id="egg" onclick="this.classList.remove('on')"><div class="moai">🕊️</div><h2>숨겨진 말씀을 찾았다!</h2><div style="font-size:.9rem;color:#d9c07a">열매를 말씀의 순서대로 따자, 마을 어딘가에서 조용한 박수 소리가 들렸다…<br><span style="display:block;margin-top:8px;color:#ffe08a">📖 갈라디아서 5:22-23<br>오직 성령의 열매는 사랑과 희락과 화평과 오래 참음과 자비와 양선과 충성과 온유와 절제니 이같은 것을 금지할 법이 없느니라</span>(이 선물은 평생 단 한 번뿐!)</div><div style="margin-top:14px"><div class="it">🙏 중보기도 쿠폰 ×1</div><div class="it">☕ 아이스 아메리카노 ×1</div><div class="it">🍖 구운 고기 +30 <span style="font-size:.8rem;color:#d9c07a">(10짜리 3개)</span></div></div><div class="tap">🎒 가방에 들어갔어요 · 탭하여 닫기</div></div>
 
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
@@ -295,39 +290,36 @@ const firebaseConfig = {
 };
 
 // ================= ⚙️ 기본 설정 =================
-const ROOT = 'w2', SID = 2;                   // 🗄️ 파이어베이스 저장 경로(w1) · 시즌 번호. 기존 락트리(s4)와 완전히 분리돼요
+const ROOT = 'w3', SID = 3;                   // 🗄️ 파이어베이스 저장 경로(w1) · 시즌 번호. 기존 락트리(s4)와 완전히 분리돼요
 const ADMIN = '조돌맹';                       // 운영자(캐릭터 삭제·비번 초기화 가능)
 const TEST_NAME = '운영자';                   // 🧪 테스트 전용 계정: 순위·시상대·현황판·통계·로그에서 숨김
-const MAXG = 12;                              // 🏁 마지막 단계 (12열매를 맺으면 완주)
+const MAXG = 9;                               // 🏁 마지막 단계 (9열매 = 성령의 열매 아홉 가지를 모두 맺으면 완주)
 const MAXE = 10, REGEN = 20 * 60 * 1000;      // 체력: 최대 10, 20분마다 +1
 const DAILY_E = 2, REFUND = 0.25;             // 🎁 출석 보너스 체력 +2 (하루 1회) · 🍀 성공 시 25% 확률로 체력 +1 환급
-const SEASON_START = new Date('2026-10-29T00:00:00+09:00').getTime();   // 시즌2 시작일 (순풍 계산용) ← 배포일에 맞춰 바꿔도 돼요
-const CHALK_STEP = 0.3, CHALK_MAX = 4;      // 🔁 연속 실패 1회당 기본 성공률의 +30% (최대 +400%), 성공하면 초기화
+const SEASON_START = new Date('2026-11-02T00:00:00+09:00').getTime();   // 시즌3 시작일 (순풍 계산용) ← 배포일에 맞춰 바꿔도 돼요
+const CHALK_STEP = 0, CHALK_MAX = 0;      // 🔁 연속 실패 보너스: 시즌3부터 없음 (0)
 const seasonDay = () => Math.floor((Date.now() - SEASON_START) / 864e5);
-const wind = () => { const d = seasonDay(); return d >= 14 ? 0.2 : (d >= 7 ? 0.1 : 0); };   // 🍃 순풍: 2주차 +10%, 3주차~ +20% (시즌이 너무 길어지지 않게)
-const RATE = [80, 68, 54, 38, 5, 3.5, 2.5, 1.75, 1.25, 1, 0.8, 0.6];                 // N열매→N+1열매 성공률 %
-const fall = (g) => g >= 10 ? 0.06 : (g >= 7 ? 0.04 : (g >= 4 ? 0.03 : 0));    // 실패 시 추락 확률
-const EGG = 0.01, JACK = 0.01, DBL = 0.04;   // 🚒 사다리차 점프(9→11) · 🍽️ 권사님 특식 점프(1~3→4) · 2단계 상승
+const wind = () => { const d = seasonDay(); return d >= 28 ? 0.4 : (d >= 14 ? 0.2 : (d >= 7 ? 0.1 : 0)); };   // 🍃 순풍: 2주차 +10%, 3주차~ +20% (시즌이 너무 길어지지 않게)
+const RATE = [80, 20, 10, 1.9, 1.2, 0.85, 0.6, 0.45, 0.3];                 // N열매→N+1열매 성공률 %
+const fall = (g) => g >= 7 ? 0.036 : (g >= 5 ? 0.026 : (g >= 3 ? 0.016 : 0));    // 실패 시 추락 확률
+const EGG = 0.01, JACK = 0.01, DBL = 0.03;   // 🚒 사다리차 점프(6→8) · 🍽️ 권사님 특식 점프(1~2→4) · 2단계 상승
 const U = (g) => g + '열매';                  // 단계 표기 (예: 7열매)
 
-// ================= 🌳 12열매 = 우리 마을 12명 =================
+// ================= 🌳 9열매 = 성령의 열매 아홉 가지 × 우리 마을 =================
 const LV = [
   ['원우마을 입장', '권사님댁 대문 앞. 숯불 냄새가 벌써 마당 밖까지 새어 나온다'],
-  ['희락 · 겜돌이 다원', '바이브코딩으로 입장권을 뚝딱 만들어 왔다. 겉보기엔 늘 신나 보이는 다원, 힘들면 마을에 말해요 🫶'],
-  ['믿음 · 볼링왕 태웅', '매주 볼링장에 출석하는 신실한 손목. 던지는 순간 스트라이크를 믿는다 🎳'],
-  ['오래 참음 · 출장왕 선엽', '해외 출장 캐리어를 끌고 와서도 로봇 자동화 이야기를 멈추지 않는다. 오늘도 오래 참는 중 🤖'],
-  ['지혜 · 비둘기 경민', '"다 같이 사진 찍자~" 하더니 비둘기 전염. 지혜가 너무 넘쳐서 탈이다 🕊️'],
-  ['절제 · 카페인 승호', '오늘 커피 3잔째. 절제의 열매는 아직 익는 중이다 ☕'],
-  ['온유 · 한마디 충원', '"음… 그게 최선이야?" 전 청년부 회장의 눈높이는 늘 높다. 본인은 온유하다고 주장한다 🥐'],
-  ['양선 · 전기맨 재형', '학교마다 돌며 전기 안전을 지키는 사람. 교회에서도 전기로 섬길 길을 찾는 중 ⚡ 요즘 썸 기류는 비밀이래요'],
-  ['자비 · 사랑부 교사 지석', '수술을 이겨내고 사랑부 친구들을 섬기는 선생님. 이 마을에서 제일 대단한 사람 🤝'],
-  ['소망 · 행방불명 한춘', '출장 다녀와서 슈바인학센 자랑하더니 사라졌다. 어디 갔지? 그래도 돌아올 거라는 소망으로 기다린다 🍖'],
-  ['화평 · 소방사 한빛', '미대생에서 소방사가 되기까지. 훈련받는 중에도 마음엔 평강이 있다 🚒'],
   ['사랑 · 클라이머 돌맹', '은비 덕에 교회 온 지 1년 6개월. 왼쪽 어깨는 네 번 빠졌어도 전완근은 굳건하다 🧗 (제작자가 사심으로 이 자리에 앉았습니다)'],
-  ['충성 · 마을장 원우', '40살 축구·운동맨 마을장. 열심이 하늘을 찌른다. 엄지를 척 들었다 👍 원우마을의 열매가 활짝 열린다 ⚽']
+  ['희락 · 겜돌이 다원', '바이브코딩으로 입장권을 뚝딱 만들어 왔다. 겉보기엔 늘 신나 보이는 다원, 힘들면 마을에 말해요 🫶'],
+  ['화평 · 소방사 한빛', '미대생에서 소방사가 되기까지. 훈련받는 중에도 마음엔 평강이 있다 🚒'],
+  ['오래 참음 · 출장왕 선엽', '해외 출장 캐리어를 끌고 와서도 로봇 자동화 이야기를 멈추지 않는다. 오늘도 오래 참는 중 🤖'],
+  ['자비 · 사랑부 교사 지석', '수술을 이겨내고 사랑부 친구들을 섬기는 선생님. 이 마을에서 제일 대단한 사람 🤝'],
+  ['양선 · 전기맨 재형', '학교마다 돌며 전기 안전을 지키는 사람. 교회에서도 전기로 섬길 길을 찾는 중 ⚡ 요즘 썸 기류는 비밀이래요'],
+  ['충성 · 마을장 원우', '40살 축구·운동맨 마을장. 열심이 하늘을 찌른다. 엄지를 척 들었다 👍 ⚽'],
+  ['온유 · 한마디 충원', '"음… 그게 최선이야?" 전 청년부 회장의 눈높이는 늘 높다. 본인은 온유하다고 주장한다 🥐'],
+  ['절제 · 카페인 승호', '마지막 열매는 절제. 커피 4잔째는 허락되지 않았지만 아홉 열매 완성은 허락된다 ☕ 원우마을의 열매가 활짝 열린다']
 ];
-const ICON = ['🏡', '💻', '🎳', '🤖', '🕊️', '☕', '🥐', '⚡', '🤝', '🍖', '🚒', '🧗', '👑'];
-const FRUIT = [null, ['😆', '희락'], ['🙏', '믿음'], ['⏳', '오래 참음'], ['🧠', '지혜'], ['☕', '절제'], ['🌿', '온유'], ['🌱', '양선'], ['🤲', '자비'], ['🌅', '소망'], ['🕊️', '화평'], ['💗', '사랑'], ['⚽', '충성']];
+const ICON = ['🏡', '🧗', '💻', '🚒', '🤖', '🤝', '⚡', '👑', '🥐', '☕'];
+const FRUIT = [null, ['💗', '사랑'], ['😆', '희락'], ['🕊️', '화평'], ['⏳', '오래 참음'], ['🤲', '자비'], ['🌱', '양선'], ['⚽', '충성'], ['🌿', '온유'], ['☕', '절제']];
 const GAL = ['사랑', '희락', '화평', '오래 참음', '자비', '양선', '충성', '온유', '절제'];   // 갈 5:22-23 순서 (이스터에그 정답)
 const ROSTER = ['조원우', '서충원', '나선엽', '류태웅', '박경민', '박승호', '이다원', '유한춘', '이재형', '한빛', '조돌맹', '현지석'];
 const AV = { '조원우': '⚽', '서충원': '🥐', '나선엽': '🤖', '류태웅': '🎳', '박경민': '🕊️', '박승호': '☕', '이다원': '💻', '유한춘': '🍖', '이재형': '⚡', '한빛': '🚒', '조돌맹': '🧗', '현지석': '🤝' };
@@ -348,25 +340,25 @@ const VERSE = {
   pe5: ['베드로전서 5:7', '너희 염려를 다 주께 맡겨 버리라 이는 그가 너희를 돌보심이라', '확률 걱정은 맡겨 버리고 한 번 더! 🙏'],
   php4a: ['빌립보서 4:6-7', '아무 것도 염려하지 말고 다만 모든 일에 기도와 간구로, 너희 구할 것을 감사함으로 하나님께 아뢰라 그리하면 모든 지각에 뛰어난 하나님의 평강이 그리스도 예수 안에서 너희 마음과 생각을 지키시리라', '한빛과 돌맹의 이야기에 나오는 말씀이에요 🕊️'],
   php4b: ['빌립보서 4:12', '…배부르며 배고픔과 풍부와 궁핍에도 일체의 비결을 배웠노라', '권사님댁 마당에서는 배부름의 비결만 배워 가도 충분하다 🥩'],
-  php4c: ['빌립보서 4:13', '내게 능력 주시는 자 안에서 내가 모든 것을 할 수 있느니라', '12열매도 할 수 있느니라! 🏆'],
+  php4c: ['빌립보서 4:13', '내게 능력 주시는 자 안에서 내가 모든 것을 할 수 있느니라', '9열매도 할 수 있느니라! 🏆'],
   php4d: ['빌립보서 4:19', '나의 하나님이 그리스도 예수 안에서 영광 가운데 그 풍성한 대로 너희 모든 쓸 것을 채우시리라', '체력도 채워 주시니 출석 보너스를 받자 🎁'],
   jas1: ['야고보서 1:5', '너희 중에 누구든지 지혜가 부족하거든 모든 사람에게 후히 주시고 꾸짖지 아니하시는 하나님께 구하라 그리하면 주시리라', '꾸짖지 아니하시는 하나님… 우리도 따라 해 보자 (사랑해 충원아) 🥐'],
   heb4: ['히브리서 4:16', '그러므로 우리는 긍휼하심을 받고 때를 따라 돕는 은혜를 얻기 위하여 은혜의 보좌 앞에 담대히 나아갈 것이니라', '긍휼(자비)을 입고 담대히 나아가는 사람. 사랑부 아이들 곁의 지석처럼 🤝'],
   heb11: ['히브리서 11:6', '믿음이 없이는 기쁘시게 하지 못하나니…', '던지기 전에 믿음부터. 스트라이크는 그다음 🎳'],
-  co13: ['고린도전서 13:13', '그런즉 믿음, 소망, 사랑, 이 세 가지는 항상 있을 것인데 … 제일은 사랑이라', '믿음(2) · 소망(9) · 사랑(11). 이 세 가지가 12열매 안에 다 들어 있어요 🧗'],
+  co13: ['고린도전서 13:13', '그런즉 믿음, 소망, 사랑, 이 세 가지는 항상 있을 것인데 … 제일은 사랑이라', '성령의 열매 아홉 가지(갈 5:22-23)도 가장 첫 번째가 사랑이에요. 이 마을의 첫 열매 🧗'],
   ti3: ['디모데후서 3:16-17', '모든 성경은 하나님의 감동으로 된 것으로 교훈과 책망과 바르게 함과 의로 교육하기에 유익하니 이는 하나님의 사람으로 온전하게 하며 모든 선한 일을 행하기에 온전하게 하려 함이라', '모든 선한 일(양선!)을 행하기에 온전하게. 전기 안전도 선한 일이다 ⚡'],
   gal5b: ['갈라디아서 5:23', '온유와 절제니 이같은 것을 금지할 법이 없느니라', '커피 4잔이 허락된다는 뜻은 아니다. 포인트는 온유와 절제! ☕'],
-  gal5: ['갈라디아서 5:22-23', '오직 성령의 열매는 사랑과 희락과 화평과 오래 참음과 자비와 양선과 충성과 온유와 절제니 이같은 것을 금지할 법이 없느니라', '열매를 맺는 일을 금지할 법이 없다면, 12열매 완주도 금지할 법이 없느니라! 🏆'],
+  gal5: ['갈라디아서 5:22-23', '오직 성령의 열매는 사랑과 희락과 화평과 오래 참음과 자비와 양선과 충성과 온유와 절제니 이같은 것을 금지할 법이 없느니라', '열매를 맺는 일을 금지할 법이 없다면, 9열매 완주도 금지할 법이 없느니라! 🏆'],
   rest: ['마태복음 11:28', '수고하고 무거운 짐 진 자들아 다 내게로 오라 내가 너희를 쉬게 하리라', '체력은 20분마다 1씩, 쉬는 동안 채워져요 🛋️']
 };
-const VERSE_LV = ['ps23a', 'pe5', 'heb11', 'mt11', 'mt6', 'gal5b', 'jas1', 'ti3', 'heb4', 'jer', 'php4a', 'co13', 'gal5'];   // 0~12열매 각 단계에 붙는 말씀
+const VERSE_LV = ['ps23a', 'co13', 'pe5', 'php4a', 'mt11', 'heb4', 'ti3', 'php4c', 'jas1', 'gal5'];   // 0~9열매 각 단계에 붙는 말씀
 const FAIL_V = ['pe5', 'p16', 'rom8', 'ps1', 'rom8c', 'p3'];                                                               // 실패 위로 말씀 (가끔)
 const verseHtml = (id) => { const v = VERSE[id]; return v ? `📖 <b>${esc(v[0])}</b> — ${esc(v[1])}<i>💬 ${esc(v[2])}</i>` : ''; };
 
-// ================= 🕊️ 마을 간증 (10열매·11열매에 처음 도착하면 열려요) =================
+// ================= 🕊️ 마을 간증 (3열매·4열매에 처음 도착하면 열려요) =================
 const TESTI = {
-  10: ['🕊️ 마을 간증 · 한빛', '한빛은 소방공무원 시험에 합격해서 요즘 훈련을 받고 있어요.\n원래는 미대생이었다가 미술 관련 사업을 했고, 코로나가 터진 뒤 가치관에 맞는 소방사가 되기로 했대요. 일하면서 공부하느라 참 힘들었던 한 해였죠.\n\n한빛에게는 특별한 경험이 있어요. 어릴 때 하나님을 음성으로 만났대요.\n「사랑하는 아들아 내가 너를 사랑한다 내가 너와 항상 함께한다」\n\n그리고 취업 준비나 공부 때문에 교회에 못 나가다가 다시 나온 날, 그날의 설교 말씀이 음성으로 들었던 말씀이었던 적이 있었대요.', 'php4a'],
-  11: ['🕊️ 마을 간증 · 조돌맹', '돌맹도 한빛과 비슷한 경험이 있대요. 그때 만난 말씀이 바로 빌립보서 4장 6~7절이에요.\n\n교회에 나온 지 1년 6개월. 작년 4월에 은비와 사귀게 되면서 은비의 전도로 시작된 길이었어요.', 'php4a']
+  3: ['🕊️ 마을 간증 · 한빛', '한빛은 소방공무원 시험에 합격해서 요즘 훈련을 받고 있어요.\n원래는 미대생이었다가 미술 관련 사업을 했고, 코로나가 터진 뒤 가치관에 맞는 소방사가 되기로 했대요. 일하면서 공부하느라 참 힘들었던 한 해였죠.\n\n한빛에게는 특별한 경험이 있어요. 어릴 때 하나님을 음성으로 만났대요.\n「사랑하는 아들아 내가 너를 사랑한다 내가 너와 항상 함께한다」\n\n그리고 취업 준비나 공부 때문에 교회에 못 나가다가 다시 나온 날, 그날의 설교 말씀이 음성으로 들었던 말씀이었던 적이 있었대요.', 'php4a'],
+  4: ['🕊️ 마을 간증 · 조돌맹', '돌맹도 한빛과 비슷한 경험이 있대요. 그때 만난 말씀이 바로 빌립보서 4장 6~7절이에요.\n\n교회에 나온 지 1년 6개월. 작년 4월에 은비와 사귀게 되면서 은비의 전도로 시작된 길이었어요.', 'php4a']
 };
 
 // ================= 😅 도전 결과 멘트 =================
@@ -441,13 +433,36 @@ function refill(p) {
 }
 function addE(p, n) { if (p.energy < MAXE) p.energy = Math.min(MAXE, p.energy + n); if (p.energy >= MAXE) p.at = Date.now(); }
 const f1 = (x) => (Math.round(x * 10) / 10).toString();
-const UNDER_REL = 0.3, UNDER_E = 4;   // 🆘 꼴찌 지원: 성공률 +30%(상대, 9열매 미만) · 매일 출석 때 구운 고기 +4 & 생고기 +1
-const CHALK_ITEM = (g) => g >= 9 ? 0.4 : 0.6;   // ☕ 아이스 아메리카노: 다음 도전 성공률 상승 (9열매 이상은 +40%)
+const UNDER_REL = 0.3, UNDER_E = 4;   // 🆘 꼴찌 지원: 성공률 +30%(상대, 7열매 미만) · 매일 출석 때 구운 고기 +4 & 생고기 +1
+const CHALK_ITEM = (g) => g >= 7 ? 0.4 : 0.6;   // ☕ 아이스 아메리카노: 다음 도전 성공률 상승 (7열매 이상은 +40%)
 function underdog(p) {
   if (!p) return false; const ns = VN().filter(n => P[n] && P[n].tries >= 3); if (ns.length < 3 || p.tries < 3) return false;
   const gs = ns.map(n => P[n].grade), mn = Math.min(...gs), mx = Math.max(...gs); return p.grade <= mn && mx - mn >= 2;
 }
-const bonusOf = (p, extra) => { const g = p.grade, base = RATE[g] || 0, ck = base * Math.min(CHALK_MAX, p.ck * CHALK_STEP), w = base * wind(), un = (g < 9 && underdog(p)) ? base * UNDER_REL : 0, it = (p.buf && p.buf.c) ? base * CHALK_ITEM(g) : 0, ex = (extra || 0) * Math.min(1, base / 30); return { ck, w, un, it, ex, total: ck + w + un + it + ex }; };
+// ── 🌧️ 불운 / 🍀 행운 칭호: (현재 열매 ÷ 도전 횟수)가 가장 낮은/높은 사람 (30번 이상 도전한 3명 이상일 때) ──
+const LUCK_MIN_TRIES = 30, LUCK_MIN_N = 3, LUCK_RAIN_FALL = 0.5, LUCK_RAIN_REFUND = 0.15, LUCK_CLOVER_RATE = 0.15, LUCK_CLOVER_FALL = 1.5;
+function luck() {
+  const q = VN().filter(n => P[n] && P[n].tries >= LUCK_MIN_TRIES).map(n => ({ n, s: P[n].grade / P[n].tries, t: P[n].tries }));
+  if (q.length < LUCK_MIN_N) return { lo: '', hi: '' };
+  const lo = [...q].sort((a, b) => a.s - b.s || b.t - a.t)[0].n, hi = [...q].sort((a, b) => b.s - a.s || a.t - b.t)[0].n;
+  return { lo, hi };
+}
+const isLo = (p) => { const l = luck(); return !!l.lo && P[l.lo] === p; };
+const isHi = (p) => { const l = luck(); return !!l.hi && P[l.hi] === p; };
+const lkFall = (p) => isLo(p) ? LUCK_RAIN_FALL : (isHi(p) ? LUCK_CLOVER_FALL : 1);
+let luckPrev = '';
+function luckCheck() {
+  if (!dbReady || !me || !P[me] || ended) return;
+  const l = luck(), st = l.lo === me ? 'lo' : (l.hi === me ? 'hi' : '');
+  if (st !== luckPrev) {
+    luckPrev = st;
+    if (st === 'lo') toast('🌧️ 시도 대비 열매 꼴찌!\n눈물 젖은 고기 패시브: 추락 확률 절반 · 실패해도 가끔 체력 환급');
+    else if (st === 'hi') toast('🍀 시도 대비 열매 1등!\n행운의 대가: 성공률 -15% · 추락 확률 ×1.5 (잠깐만 내려놓으세요 😇)');
+  }
+  if (st === 'lo' && !P[me].ach.unlucky) { award(P[me], 'unlucky'); save(); }
+  if (st === 'hi' && !P[me].ach.lucky) { award(P[me], 'lucky'); save(); }
+}
+const bonusOf = (p, extra) => { const g = p.grade, base = RATE[g] || 0, ck = base * Math.min(CHALK_MAX, p.ck * CHALK_STEP), w = base * wind(), un = (g < 7 && underdog(p)) ? base * UNDER_REL : 0, it = (p.buf && p.buf.c) ? base * CHALK_ITEM(g) : 0, ex = (extra || 0) * Math.min(1, base / 30), lk = isHi(p) ? -base * LUCK_CLOVER_RATE : 0; return { ck, w, un, it, ex, lk, total: ck + w + un + it + ex + lk }; };
 const hueOf = (n) => [...n].reduce((a, c) => (a * 31 + c.charCodeAt(0)) >>> 0, 7) % 360;
 async function hashPin(n, pin) {
   const s = n + '|' + pin + '|wonwoo1';
@@ -513,7 +528,7 @@ function burst(x, y, n, cols) { for (let i = 0; i < n; i++) { const a = Math.ran
 function loop() { fxx.clearRect(0, 0, fxc.width, fxc.height); parts = parts.filter(q => q.l > 0 && q.y < fxc.height + 60); parts.forEach(q => { if (q.tx !== undefined) { q.x += (q.tx - q.x) * .12; q.y += (q.ty - q.y) * .12; } else { q.x += q.vx; q.y += q.vy; if (!q.e) q.vy += .12; } q.l--; if (q.e) { fxx.globalAlpha = 1; fxx.font = '28px sans-serif'; fxx.fillText(q.e, q.x, q.y); } else { fxx.globalAlpha = Math.min(1, q.l / 20); fxx.fillStyle = q.c; fxx.fillRect(q.x, q.y, 5, 5); } }); fxx.globalAlpha = 1; requestAnimationFrame(loop); }
 loop();
 function celebrate(g) {
-  if (g < 10) return;
+  if (g < 7) return;
   const cols = ['#ffd43b', '#ff6b9d', '#4dabf7', '#69db7c', '#ffffff'], rounds = g === MAXG ? 9 : (g === MAXG - 1 ? 6 : 4);
   for (let i = 0; i < rounds; i++) setTimeout(() => burst(innerWidth * (.15 + Math.random() * .7), innerHeight * (.15 + Math.random() * .4), g === MAXG ? 80 : 50, cols), i * 330);
   const f = $('flash'); f.classList.remove('go'); void f.offsetWidth; f.classList.add('go');
@@ -522,7 +537,7 @@ function celebrate(g) {
 }
 
 // ── 업적 · 응원 · 운영자 ──
-const ACH = { mid: ['🍖', '8열매 돌파 · 마을의 중진'], top: ['😱', '11열매 입성 · 정상이 보인다'], jump: ['🍽️', '권사님 특식 점프'], egg: ['🚒', '사다리차 탑승'], pigeon: ['🕊️', '비둘기 전염 피해자'], sigh: ['😒', '충원의 한숨 생존자'], robot: ['🤖', '로봇 오작동 생존자'], dbl: ['⚡', '2단계 점프'], patient: ['⏳', '오래 참음 (연속 실패 6번)'], near: ['🌤️', '정상 직전 11열매 확보'], grill: ['🥩', '마당 불판 단골'], grill10: ['🔥', '고기 대박 (체력 10)'], rare: ['✨', '희귀 아이템 발견'], tes10: ['🕊️', '한빛의 간증을 들은 자'], tes11: ['🕊️', '돌맹의 간증을 들은 자'], legend: ['🍇', '숨겨진 말씀을 찾은 자'] };
+const ACH = { mid: ['🍖', '6열매 돌파 · 마을의 중진'], top: ['😱', '8열매 입성 · 정상이 보인다'], jump: ['🍽️', '권사님 특식 점프'], egg: ['🚒', '사다리차 탑승'], pigeon: ['🕊️', '비둘기 전염 피해자'], sigh: ['😒', '충원의 한숨 생존자'], robot: ['🤖', '로봇 오작동 생존자'], dbl: ['⚡', '2단계 점프'], patient: ['⏳', '오래 참음 (연속 실패 6번)'], near: ['🌤️', '정상 직전 8열매 확보'], grill: ['🥩', '마당 불판 단골'], grill10: ['🔥', '고기 대박 (체력 10)'], rare: ['✨', '희귀 아이템 발견'], tes3: ['🕊️', '한빛의 간증을 들은 자'], tes4: ['🕊️', '돌맹의 간증을 들은 자'], legend: ['🍇', '숨겨진 말씀을 찾은 자'], unlucky: ['🌧️', '시도 대비 열매 꼴찌 · 눈물 젖은 고기'], lucky: ['🍀', '시도 대비 열매 1등 · 행운의 대가'] };
 const achQ = new Set();
 function cleanAch(raw) { const o = {}; if (raw && typeof raw === 'object') Object.keys(ACH).forEach(k => { if (raw[k]) o[k] = Number(raw[k]) || 1; }); return o; }
 function award(p, id) { if (p.ach[id]) return; p.ach[id] = Date.now(); achQ.add(id); setTimeout(() => toast(`🎖 업적 달성! ${ACH[id][0]} ${ACH[id][1]}`), 1400); }
@@ -614,14 +629,7 @@ window.claimLT = function () {
   toast(`🔥 마당 불판 타임 보너스! 체력 +${ltBonus()}`); log(`🔥 ${me}님이 불판 타임 보너스를 받았습니다 (체력 +${ltBonus()})`, 'success'); render(); save();
 };
 function countdown(n, cb) { const c = $('cd'); c.style.display = 'flex'; let i = n; const step = () => { if (i < 0) { c.style.display = 'none'; cb(); return; } c.textContent = i > 0 ? String(i) : '🙏'; i--; setTimeout(step, 800); }; step(); }
-window.goLive = function () {
-  if (!dbReady || !me || view !== me || ended || liveBusy) return;
-  const p = P[me]; if (p.grade < 9 || p.grade >= MAXG) return;
-  refill(p); if (p.energy < 1) return toast('❤️ 체력이 없어요');
-  liveBusy = true; p.live = Date.now() + 25000; update(ref(db, ROOT + '/players/' + me), { live: p.live }).catch(() => {});
-  log(`🔴 ${me}님이 ${U(p.grade)}→${U(p.grade + 1)} 도전을 선언했습니다! 지금 모두 주목!`, 'success', `🔴 ${me}님이 ${U(p.grade + 1)} 도전 중! (눌러서 보러가기)`, { k: 'live' });
-  countdown(3, () => { liveBusy = false; tryUpgrade({ live: 1 }); });
-};
+window.goLive = function () {};
 window.setRival = function () {
   if (!me || view === me || !P[view] || !dbReady) return;
   P[me].rival = view; lastCmp = undefined; update(ref(db, ROOT + '/players/' + me), { rival: view }).catch(onErr);
@@ -652,7 +660,7 @@ window.openReport = function () {
   const c = document.createElement('canvas'); c.width = 720; c.height = 960; const x = c.getContext('2d');
   const bg = x.createLinearGradient(0, 0, 0, 960); bg.addColorStop(0, '#1d3a12'); bg.addColorStop(1, '#0b1405'); x.fillStyle = bg; x.fillRect(0, 0, 720, 960);
   x.strokeStyle = '#ffd43b'; x.lineWidth = 10; x.strokeRect(20, 20, 680, 920);
-  x.textAlign = 'center'; x.fillStyle = '#ffd43b'; x.font = 'bold 44px sans-serif'; x.fillText('🏆 원우마을 시즌2 리포트', 360, 110);
+  x.textAlign = 'center'; x.fillStyle = '#ffd43b'; x.font = 'bold 44px sans-serif'; x.fillText('🏆 원우마을 시즌3 리포트', 360, 110);
   const fk = [...VN()].sort((a, b) => P[b].falls - P[a].falls)[0], total = VN().reduce((s, n) => s + P[n].tries, 0), pig = VN().filter(n => P[n].ach.pigeon);
   const lines = [['마을장 조원우가 인정한 열매 맺는 자', `${ended.name} (${ended.tries}번 만에 완주)`], ['참가자', `${VN().length}명 · 총 도전 ${total}번`], ['가장 많이 추락한 사람', fk && P[fk].falls ? `${fk} (${P[fk].falls}회)` : '-'], ['🕊️ 비둘기 전염 피해자', pig.join(', ') || '아무도 없음']];
   lines.forEach((l, i) => { x.fillStyle = '#ffe08a'; x.font = 'bold 30px sans-serif'; x.fillText(l[0], 360, 230 + i * 150); x.fillStyle = '#fff'; x.font = 'bold 40px sans-serif'; x.fillText(l[1].slice(0, 22), 360, 285 + i * 150); });
@@ -1005,13 +1013,13 @@ window.tryUpgrade = function (mods) {
   const tk = todayStr(); if (p.dKey !== tk) { p.dKey = tk; p.dFall = 0; p.dTries = 0; } p.dTries++;
   const g = p.grade; let to = g, kind = 'fail', msg = pick(FAIL), b = '';
   const bo = bonusOf(p, mods.rate || 0), usedChalk = !!p.buf.c; p.buf.c = 0;
-  if (g === 9 && Math.random() < EGG) { to = 11; kind = 'egg'; msg = '한빛 소방사님의 사다리차 출동! 🚒 사다리를 타고 한 번에 두 칸 올라갔다!'; award(p, 'egg'); b = `🚒 ${me}님이 사다리차를 타고 ${U(9)}→${U(11)} 순간이동!`; }
+  if (g === 6 && Math.random() < EGG) { to = 8; kind = 'egg'; msg = '한빛 소방사님의 사다리차 출동! 🚒 사다리를 타고 한 번에 두 칸 올라갔다!'; award(p, 'egg'); b = `🚒 ${me}님이 사다리차를 타고 ${U(6)}→${U(8)} 순간이동!`; }
   else if (Math.random() * 100 < Math.min(95, RATE[g] + bo.total)) {
     to = g + 1; kind = 'win'; msg = pick(WIN);
-    if (g >= 1 && g <= 3 && Math.random() < JACK * (D.jm || 1)) { to = 4; kind = 'jump'; msg = '권사님이 갈비찜까지 내어주셨다! 힘이 솟아 높이 올라갑니다!! 🍽️'; award(p, 'jump'); b = `🍽️ ${me}님이 권사님 특식으로 ${U(g)}→${U(4)} 점프!`; }
-    else if (g >= 1 && g <= 8 && Math.random() < DBL * (D.dm || 1)) { to = g + 2; kind = 'double'; msg = pick(DBLMSG); award(p, 'dbl'); }
-  } else if (g > 0 && !mods.noFall && (mods.forceFall || Math.random() < Math.min(0.9, fall(g) * (D.fm || 1)))) {
-    if (g >= 8 && g <= 11 && Math.random() < Math.min(0.8, 0.05 * (D.f2m || 1))) { const f = pick(F2); to = Math.max(0, g - 2); kind = 'fall2'; msg = f[0]; award(p, f[1]); }
+    if (g >= 1 && g <= 2 && Math.random() < JACK * (D.jm || 1)) { to = 4; kind = 'jump'; msg = '권사님이 갈비찜까지 내어주셨다! 힘이 솟아 높이 올라갑니다!! 🍽️'; award(p, 'jump'); b = `🍽️ ${me}님이 권사님 특식으로 ${U(g)}→${U(4)} 점프!`; }
+    else if (g >= 1 && g <= MAXG - 2 && Math.random() < DBL * (D.dm || 1)) { to = g + 2; kind = 'double'; msg = pick(DBLMSG); award(p, 'dbl'); }
+  } else if (g > 0 && !mods.noFall && (mods.forceFall || Math.random() < Math.min(0.9, fall(g) * (D.fm || 1) * lkFall(p)))) {
+    if (g >= 5 && g <= MAXG - 1 && Math.random() < Math.min(0.8, 0.05 * (D.f2m || 1))) { const f = pick(F2); to = Math.max(0, g - 2); kind = 'fall2'; msg = f[0]; award(p, f[1]); }
     else { to = Math.max(0, g - 1); kind = 'fall'; }
   }
   if (p.buf.m && to < g) { to = g; kind = 'fail'; msg = '🙏 중보기도가 몸을 받쳐줬다! 추락을 막았다'; p.buf.m = 0; b = `🙏 ${me}님이 중보기도 덕분에 ${U(g)}에서 추락을 막았습니다!`; }
@@ -1022,35 +1030,36 @@ window.tryUpgrade = function (mods) {
   if (p.ck >= 6) award(p, 'patient');
   if (g === MAXG - 1 && to === MAXG - 1) award(p, 'near');
   if (to < g) { p.falls++; p.dFall++; }
-  if (to >= 8) award(p, 'mid');
-  if (to >= 11) award(p, 'top');
+  if (to >= 6) award(p, 'mid');
+  if (to >= 8) award(p, 'top');
   const adv = to > g;
   let extra = '';
   if (adv && LV[to]) extra = `「${LV[to][0]}」 ${LV[to][1]}`;
   else if (!adv && Math.random() < 0.35) { const v = VERSE[pick(FAIL_V)]; extra = `📖 ${v[0]} — ${v[1]} (💬 ${v[2]})`; }
   setResult(kind, g, to, msg, extra);
-  log(`${adv ? '🎉' : '💥'} ${me}님 ${U(g)}→${U(to)}: ${msg}${usedChalk ? ' ☕' : ''}`, adv ? 'success' : 'fail', b || (adv && to >= 9 && to < MAXG ? `🔥 ${me}님이 ${U(to)} 돌파!` : ''));
+  log(`${adv ? '🎉' : '💥'} ${me}님 ${U(g)}→${U(to)}: ${msg}${usedChalk ? ' ☕' : ''}`, adv ? 'success' : 'fail', b || (adv && to >= 6 && to < MAXG ? `🔥 ${me}님이 ${U(to)} 돌파!` : ''));
+  if (!adv && isLo(p) && Math.random() < LUCK_RAIN_REFUND) { addE(p, 1); setTimeout(() => toast('🌧️ 눈물 젖은 고기 패시브! 체력 +1 환급'), 1600); }
   if (adv && to < MAXG && Math.random() < REFUND) { addE(p, 1); setTimeout(() => toast('🍀 기분 좋은 성공! 체력 +1 환급'), 1600); }
   if (adv) pop(to);
   else if (to < g) { const s = $('stage'); s.classList.remove('hit'); void s.offsetWidth; s.classList.add('hit'); }
   fxResult(adv, kind);
   questCheck(p, g, to);
-  if (adv) [10, 11].forEach(lv => { if (to >= lv && g < lv && !p.ach['tes' + lv]) { award(p, 'tes' + lv); setTimeout(() => queueTesti(lv), 2600); } });
+  if (adv) [3, 4].forEach(lv => { if (to >= lv && g < lv && !p.ach['tes' + lv]) { award(p, 'tes' + lv); setTimeout(() => queueTesti(lv), 2600); } });
   if (to === MAXG) {
     p.cleared = Date.now(); const idx = clearers().indexOf(me) + 1, medal = ['🥇', '🥈', '🥉'][idx - 1] || '🏅';
-    log(idx === 1 ? `🏆 ${me}님이 12열매 첫 완주!! 앞으로 48시간 동안 다른 사람도 도전할 수 있어요!` : `${medal} ${me}님이 12열매 ${idx}번째 완주!`, 'success', idx === 1 ? `🏆 ${me}님이 12열매 첫 완주!!! 48시간 카운트다운 시작!` : `${medal} ${me}님이 12열매 ${idx}번째 완주!`);
+    log(idx === 1 ? `🏆 ${me}님이 9열매 첫 완주!! 시즌 마감 전까지 다른 사람도 도전할 수 있어요!` : `${medal} ${me}님이 9열매 ${idx}번째 완주!`, 'success', idx === 1 ? `🏆 ${me}님이 9열매 첫 완주!!! 시즌 마감 카운트다운 시작!` : `${medal} ${me}님이 9열매 ${idx}번째 완주!`);
     $('end-text').textContent = (idx === 1
-      ? `${me}님, 첫 완주! 🏅\n마을장 조원우가 지켜보다 엄지를 척 들었습니다 👍\n총 ${p.tries}번의 도전 끝에 열두 열매를 모두 맺었어요.\n앞으로 48시간 동안 다른 사람들도 완주할 수 있고,\n완주한 순서대로 순위가 매겨집니다!`
-      : `${me}님, ${idx}번째 완주! ${medal}\n총 ${p.tries}번의 도전 끝에 열두 열매를 모두 맺었어요.\n48시간이 지나면 시즌이 종료되고 순위가 확정돼요.`)
-      + `\n\n📖 ${VERSE.php4c[0]}\n${VERSE.php4c[1]}`;
+      ? `${me}님, 첫 완주! 🏅\n마을장 조원우가 지켜보다 엄지를 척 들었습니다 👍\n총 ${p.tries}번의 도전 끝에 아홉 열매를 모두 맺었어요.\n시즌이 마감되기 전까지 다른 사람들도 완주할 수 있고,\n완주한 순서대로 순위가 매겨집니다!`
+      : `${me}님, ${idx}번째 완주! ${medal}\n총 ${p.tries}번의 도전 끝에 아홉 열매를 모두 맺었어요.\n시즌이 마감되면 순위가 확정돼요.`)
+      + `\n\n📖 ${VERSE.gal5[0]}\n${VERSE.gal5[1]}`;
     $('ending').style.display = 'flex';
   }
   rivalCheck(); render(); save();
 };
 // ── 시즌 마감 (첫 완주 + 48시간) ──
-const WIN_MS = 48 * 3600 * 1000;
+const WIN_MS = 48 * 3600 * 1000, MIN_DAYS = 14;   // 🏁 마감 = 첫 완주 +48시간, 단 시즌 시작 후 최소 14일은 항상 열려 있어요
 const clearers = () => VN().filter(n => P[n] && P[n].cleared).sort((a, b) => P[a].cleared - P[b].cleared);
-const winEnd = () => { const c = clearers(); return c.length ? P[c[0]].cleared + WIN_MS : 0; };
+const winEnd = () => { const c = clearers(); return c.length ? Math.max(P[c[0]].cleared + WIN_MS, SEASON_START + MIN_DAYS * 864e5) : 0; };
 let finalizing = false;
 function finalizeSeason() {
   if (finalizing || ended || !dbReady) return; finalizing = true; setTimeout(() => { finalizing = false; }, 15000);
@@ -1065,7 +1074,7 @@ function winBanner() {
   if (!we) { el.style.display = 'none'; return; }
   const left = we - Date.now(); if (left <= 0) { finalizeSeason(); return; }
   const h = Math.floor(left / 3600000), m = Math.floor(left / 60000) % 60, sec = Math.floor(left / 1000) % 60, cl = clearers();
-  el.style.display = 'block'; el.textContent = `🏁 ${cl[0]}님이 12열매 첫 완주! 시즌 마감까지 ${h}시간 ${String(m).padStart(2, '0')}분 ${String(sec).padStart(2, '0')}초 · 지금 완주해도 순위에 들어가요! (현재 ${cl.map((n, i) => ['🥇', '🥈', '🥉'][i] || '🏅').join('')} ${cl.length}명)`;
+  el.style.display = 'block'; el.textContent = `🏁 ${cl[0]}님이 9열매 첫 완주! 시즌 마감까지 ${h}시간 ${String(m).padStart(2, '0')}분 ${String(sec).padStart(2, '0')}초 · 지금 완주해도 순위에 들어가요! (현재 ${cl.map((n, i) => ['🥇', '🥈', '🥉'][i] || '🏅').join('')} ${cl.length}명)`;
 }
 // ── 📋 일일 보상 과제 (실패·추락에 대한 위로 보상) ──
 function questCheck(p, g, to) {
@@ -1102,15 +1111,14 @@ function renderWall() {
     el.classList.toggle('mine', n === me); el.classList.toggle('view', n === view);
     if (prevG[n] !== g) { const d = g - prevG[n]; el.classList.remove('up', 'down'); void el.offsetWidth; el.classList.add(d > 0 ? 'up' : 'down'); el.querySelector('.mv').textContent = d > 0 ? `⬆+${d}` : `⬇${d}`; clearTimeout(el._t); el._t = setTimeout(() => { el.classList.remove('up', 'down'); el.querySelector('.mv').textContent = ''; }, 3000); prevG[n] = g; }
     el.querySelector('small').textContent = n + (P[n].ach.pigeon ? '🕊️' : '') + (P[n].cleared ? '🏆' : '');
-    const rv = P[me] && P[me].rival;
-    el.querySelector('.tg').textContent = Date.now() < (P[n].live || 0) ? '🔴LIVE' : (n === me ? '나' : ((n === rv ? '🎯' : '') + (mg === null ? '' : (g > mg ? '👆위' : (g < mg ? '👇아래' : '🤝')))));
+    el.querySelector('.tg').textContent = n === me ? '나' : (mg === null ? '' : (g > mg ? '👆위' : (g < mg ? '👇아래' : '🤝')));
   });
 }
 function renderStage() {
   const p = P[view] || P[me] || fresh(), mine = view === me, g = p.grade;
   refill(p);
   document.documentElement.style.setProperty('--h', 250 - g * 13);
-  $('stage').classList.toggle('hot', g >= 10);
+  $('stage').classList.toggle('hot', g >= 7);
   const D = dayInfo(); $('daybar').textContent = `📅 시즌 ${Math.max(1, seasonDay() + 1)}일차 · ${D.n} — ${D.d}${wind() ? ` · 🍃순풍 +${Math.round(wind() * 100)}%` : ''}`;
   const lt = $('ltbar'), canLT = dbReady && me && P[me] && ltOn() && !ended && P[me].ltDay !== todayStr();
   lt.style.display = ltOn() && !ended ? 'block' : 'none';
@@ -1118,18 +1126,17 @@ function renderStage() {
   const dbr = $('dbar'), canD = dbReady && me && P[me] && !ended && P[me].dc !== todayStr();
   dbr.style.display = canD ? 'block' : 'none';
   dbr.innerHTML = canD ? `${underdog(P[me]) ? '🆘 꼴찌 지원금 포함! ' : ''}🎁 오늘의 출석 보너스! <button class="small-btn" style="margin-left:6px;padding:5px 10px;background:#2f9e44" onclick="claimDaily()">${underdog(P[me]) ? `체력 +${DAILY_E} · 🍖+${UNDER_E} · 🥩+1` : `체력 +${DAILY_E}`} 받기</button>` : '';
-  $('live-btn').style.display = dbReady && mine && g >= 9 && g < MAXG && !ended && p.energy >= 1 && !liveBusy ? 'block' : 'none';
   $('me-name').textContent = me || '미설정';
-  const sp = g === 11 ? SPRITE['조돌맹'] : null, ik = sp ? 'S11' : 'E' + ICON[g];
+  const sp = g === 1 ? SPRITE['조돌맹'] : null, ik = sp ? 'S1' : 'E' + ICON[g];
   if ($('icon').dataset.k !== ik) { $('icon').dataset.k = ik; $('icon').innerHTML = sp ? `<img src="${sp}" alt="" style="height:88px;image-rendering:pixelated">` : ICON[g]; }
   $('grade').textContent = U(g);
   $('route').textContent = `${view || '-'}님 · 「${LV[g][0]}」${mine ? '' : ' (👀 관전 중)'}`;
   $('story').textContent = LV[g][1];
   const vb = $('verse'), vid = VERSE_LV[g]; vb.style.display = 'block';
   vb.innerHTML = verseHtml(vid) + (TESTI[g] && p.ach['tes' + g] ? `<button class="small-btn" style="background:#2f9e44" onclick="showTesti(${g})">🕊️ 마을 간증 다시 보기</button>` : '');
-  const fl = fall(g) * (dayInfo().fm || 1), bo = bonusOf(p), eff = Math.min(95, RATE[g] + bo.total);
-  $('rate').textContent = g >= MAXG ? '🏆 12열매 완주' : `성공 확률 ${eff.toFixed(1).replace('.0', '')}%${fl ? ` · 실패 시 추락 ${Math.round(Math.min(.9, fl) * 100)}%` : ''}`;
-  $('bonus').textContent = g >= MAXG ? '' : `기본 ${RATE[g]}%` + (bo.ck ? ` · ⏳연속실패 +${f1(bo.ck)}` : '') + (bo.w ? ` · 🍃순풍 +${f1(bo.w)}` : '') + (bo.un ? ` · 🆘꼴찌지원 +${f1(bo.un)}` : '') + (bo.it ? ` · ☕아메리카노 +${f1(bo.it)}` : '') + (p.buf && p.buf.m ? ' · 🙏중보기도 장착' : '');
+  const fl = fall(g) * (dayInfo().fm || 1) * lkFall(p), bo = bonusOf(p), eff = Math.min(95, RATE[g] + bo.total);
+  $('rate').textContent = g >= MAXG ? '🏆 9열매 완주' : `성공 확률 ${eff.toFixed(1).replace('.0', '')}%${fl ? ` · 실패 시 추락 ${Math.round(Math.min(.9, fl) * 100)}%` : ''}`;
+  $('bonus').textContent = g >= MAXG ? '' : `기본 ${RATE[g]}%` + (bo.ck ? ` · ⏳연속실패 +${f1(bo.ck)}` : '') + (bo.w ? ` · 🍃순풍 +${f1(bo.w)}` : '') + (bo.un ? ` · 🆘꼴찌지원 +${f1(bo.un)}` : '') + (bo.it ? ` · ☕아메리카노 +${f1(bo.it)}` : '') + (bo.lk ? ` · 🍀행운의 대가 ${f1(bo.lk)}` : '') + (isLo(p) ? ' · 🌧️눈물 젖은 고기(추락↓)' : '') + (p.buf && p.buf.m ? ' · 🙏중보기도 장착' : '');
   basBoxRender(P[me] || p, mine && dbReady);
   $('next').textContent = g >= MAXG ? '' : `다음 ${U(g + 1)}: 「${LV[g + 1][0]}」`;
   $('e-fill').style.width = Math.min(100, p.energy / MAXE * 100) + '%';
@@ -1145,8 +1152,6 @@ function renderStage() {
   else if (p.energy < 1) { go.disabled = true; go.textContent = '❤️ 체력 충전 중...'; }
   else { go.disabled = false; go.textContent = '🙏 도전하기! (❤️-1)'; }
   $('share-btn').style.display = me && P[me] ? 'block' : 'none';
-  $('cheer').style.display = dbReady && me && view && view !== me && P[view] ? 'block' : 'none';
-  $('cheer-to').textContent = view;
 }
 function podImg(n) { const s = SPRITE[n]; return s ? `<img class="av" src="${s}" alt="">` : (AV[n] ? `<span class="av emo">${AV[n]}</span>` : `<span class="av dot" style="background:hsl(${hueOf(n)},60%,45%)">${esc(n[0])}</span>`); }
 function renderPodium() {
@@ -1162,22 +1167,22 @@ function renderLists() {
     return `<div class="pl ${n === view ? 'view' : ''} ${n === me ? 'mine' : ''}" onclick="selectView('${n}')"><div class="top"><span>${q.cleared ? '🏆' : ''}${q.ach.pigeon ? '🕊️' : ''}${n}</span><span>${U(q.grade)}</span></div><div class="bar"><i style="width:${q.grade / MAXG * 100}%"></i></div><small>시도 ${q.tries} · 최고 ${U(q.best)}</small></div>`;
   }).join('');
   const top3 = [...VN()].sort((x, y) => P[y].grade - P[x].grade || P[y].best - P[x].best).slice(0, 3).map((n, i) => `${['🥇', '🥈', '🥉'][i]} ${n} ${U(P[n].grade)}`).join(' · ');
-  $('hall').innerHTML = (ended && Array.isArray(ended.rank) ? `<div style="margin-top:2px;color:#ffe08a">🏆 시즌2 기록 — ${esc(ended.name)} 완주 (${esc(ended.tries)}번 도전)</div>` + ended.rank.map((r, i) => `<div>${i + 1}위 ${esc(r[0])} · ${esc(r[1])}열매 · ${esc(r[2])}번</div>`).join('') : `<div style="color:#9aa6b8">아직 완주자가 없어요. 첫 전설이 되어보세요! 🏆</div><div style="color:#9aa6b8;margin-top:6px">시즌2 진행 중 — ${top3 || '참가자 없음'}</div>`);
+  $('hall').innerHTML = (ended && Array.isArray(ended.rank) ? `<div style="margin-top:2px;color:#ffe08a">🏆 시즌3 기록 — ${esc(ended.name)} 완주 (${esc(ended.tries)}번 도전)</div>` + ended.rank.map((r, i) => `<div>${i + 1}위 ${esc(r[0])} · ${esc(r[1])}열매 · ${esc(r[2])}번</div>`).join('') : `<div style="color:#9aa6b8">아직 완주자가 없어요. 첫 전설이 되어보세요! 🏆</div><div style="color:#9aa6b8;margin-top:6px">시즌3 진행 중 — ${top3 || '참가자 없음'}</div>`);
   const tk = todayStr(), td = VN().filter(n => P[n].dKey === tk), top = (f) => td.reduce((a, n) => (!a || f(P[n]) > f(P[a]) ? n : a), null);
   const tf = top(q => q.dFall), tt = top(q => q.dTries), tp = [...VN()].sort((x, y) => P[y].grade - P[x].grade)[0];
-  $('titles').textContent = [tp ? `👑 오늘의 정상 ${tp}(${U(P[tp].grade)})` : '', tf && P[tf].dFall ? `☁️ 오늘의 월요병 ${tf}(추락 ${P[tf].dFall}회)` : '', tt && P[tt].dTries ? `💪 오늘의 노력왕 ${tt}(${P[tt].dTries}회)` : ''].filter(Boolean).join(' · ') || '오늘 첫 도전자를 기다리는 중!';
+  $('titles').textContent = [tp ? `👑 오늘의 정상 ${tp}(${U(P[tp].grade)})` : '', tf && P[tf].dFall ? `☁️ 오늘의 월요병 ${tf}(추락 ${P[tf].dFall}회)` : '', tt && P[tt].dTries ? `💪 오늘의 노력왕 ${tt}(${P[tt].dTries}회)` : ''].concat((() => { const l = luck(); return [l.lo ? `🌧️ 눈물 젖은 고기 ${l.lo}` : '', l.hi ? `🍀 행운의 대가 ${l.hi}` : '']; })()).filter(Boolean).join(' · ') || '오늘 첫 도전자를 기다리는 중!';
   const vp = P[view] || P[me] || fresh(), av = vp.ach;
   $('ach').innerHTML = Object.keys(ACH).map(k => `<span class="chip2 ${av[k] ? 'on' : ''}">${av[k] ? ACH[k][0] + ' ' + ACH[k][1] : '🔒 ???'}</span>`).join('');
-  $('fruits').innerHTML = FRUIT.map((f, g) => f ? `<button class="chip2 ${vp.best >= g ? 'on' : ''}" onclick="tapFruit(${g},event)">${f[0]} ${f[1]}</button>` : '').join('');
+  $('fruits').innerHTML = FRUIT.map((f, g) => f ? [f, g] : null).filter(Boolean).sort((a, b) => a[0][1].localeCompare(b[0][1], 'ko')).map(([f, g]) => `<button class="chip2 ${vp.best >= g ? 'on' : ''}" onclick="tapFruit(${g},event)">${f[0]} ${f[1]}</button>`).join('');
   const e = $('ended'); $('report-btn').style.display = ended ? 'block' : 'none';
-  if (ended) { e.style.display = 'block'; const cl = Array.isArray(ended.clears) ? ended.clears : [[ended.name, ended.at, ended.tries]]; e.textContent = `🔒 시즌2 종료! ${cl.map((c, i) => `${['🥇', '🥈', '🥉'][i] || '🏅'} ${c[0]}(${c[2]}번)`).join(' · ')} — 마을장 조원우가 인정한 열매 맺는 자 🏅`; } else winBanner();
+  if (ended) { e.style.display = 'block'; const cl = Array.isArray(ended.clears) ? ended.clears : [[ended.name, ended.at, ended.tries]]; e.textContent = `🔒 시즌3 종료! ${cl.map((c, i) => `${['🥇', '🥈', '🥉'][i] || '🏅'} ${c[0]}(${c[2]}번)`).join(' · ')} — 마을장 조원우가 인정한 열매 맺는 자 🏅`; } else winBanner();
   $('admin').style.display = me === ADMIN ? 'block' : 'none';
   if (me === ADMIN) $('idea-text').value = ideas.map(i => `${i.lv}열매 | ${i.n} | ${i.s} | by ${i.u}`).join('\n');
   if (me === ADMIN) $('admin-list').innerHTML = NAMES.filter(n => n !== ADMIN).map(n => `<div class="arow"><span>${n} · ${U(P[n].grade)} · ${P[n].tries}회${P[n].pin ? '' : ' · 🔓'}</span><span><button class="small-btn" style="background:#3742fa" onclick="adminReset('${n}')">비번초기화</button> <button class="small-btn" onclick="adminDel('${n}')">삭제</button></span></div>`).join('') || '<small>삭제할 캐릭터가 없어요</small>';
 }
 function render() { renderStage(); renderLists(); }
 window.selectView = (n) => { view = n; render(); };
-setInterval(() => { if (dbReady) { renderStage(); winBanner(); } }, 1000);
+setInterval(() => { if (dbReady) { renderStage(); winBanner(); luckCheck(); } }, 1000);
 addEventListener('pointerdown', () => { if (Snd.mode === '2') Snd.bgm(true); }, { once: true });
 setInterval(() => { if (dbReady) renderWall(); }, 3000);
 render();
@@ -1189,16 +1194,16 @@ window.openShare = function () {
   const g = p.grade, h = 250 - g * 13, c = document.createElement('canvas'); c.width = 720; c.height = 960; const x = c.getContext('2d');
   const bg = x.createLinearGradient(0, 0, 0, 960); bg.addColorStop(0, `hsl(${h},50%,24%)`); bg.addColorStop(1, `hsl(${h + 30},55%,8%)`); x.fillStyle = bg; x.fillRect(0, 0, 720, 960);
   x.strokeStyle = `hsl(${h},90%,65%)`; x.lineWidth = 10; x.strokeRect(20, 20, 680, 920);
-  x.textAlign = 'center'; x.fillStyle = '#fff'; x.font = 'bold 40px sans-serif'; x.fillText('원우마을 열매 강화소 · 시즌2', 360, 100);
+  x.textAlign = 'center'; x.fillStyle = '#fff'; x.font = 'bold 40px sans-serif'; x.fillText('원우마을 열매 강화소 · 시즌3', 360, 100);
   const im = sprImg[n];
-  if (g === 11 && sprImg['조돌맹'] && sprImg['조돌맹'].complete && sprImg['조돌맹'].naturalWidth) { const i2 = sprImg['조돌맹']; x.imageSmoothingEnabled = false; const w = Math.min(420, 360 * i2.naturalWidth / i2.naturalHeight); x.drawImage(i2, 360 - w / 2, 150, w, w * i2.naturalHeight / i2.naturalWidth); }
+  if (g === 1 && sprImg['조돌맹'] && sprImg['조돌맹'].complete && sprImg['조돌맹'].naturalWidth) { const i2 = sprImg['조돌맹']; x.imageSmoothingEnabled = false; const w = Math.min(420, 360 * i2.naturalWidth / i2.naturalHeight); x.drawImage(i2, 360 - w / 2, 150, w, w * i2.naturalHeight / i2.naturalWidth); }
   else { x.font = '220px sans-serif'; x.fillText(ICON[g], 360, 400); }
   x.fillStyle = `hsl(${h},95%,72%)`; x.font = 'bold 150px sans-serif'; x.fillText(String(g), 300, 680); x.font = 'bold 70px sans-serif'; x.fillText('열매', 520, 680);
   x.fillStyle = '#fff'; x.font = 'bold 42px sans-serif'; x.fillText(`${n} · ${LV[g][0]}`.slice(0, 24), 360, 750);
   x.fillStyle = '#d0d7e2'; x.font = '30px sans-serif';
   (LV[g][1].match(/.{1,17}/g) || []).slice(0, 2).forEach((t, i) => x.fillText(t, 360, 805 + i * 40));
   x.fillStyle = '#ffd43b'; x.font = 'bold 32px sans-serif';
-  x.fillText(ended && ended.name === n ? '🏆 시즌2 최초 완주 · 마을장이 인정한 열매 맺는 자' : `도전 ${p.tries}번 · 최고 ${U(p.best)}`, 360, 895);
+  x.fillText(ended && ended.name === n ? '🏆 시즌3 최초 완주 · 마을장이 인정한 열매 맺는 자' : `도전 ${p.tries}번 · 최고 ${U(p.best)}`, 360, 895);
   x.fillStyle = '#8f9bb0'; x.font = '24px sans-serif'; x.fillText(new Date().toLocaleDateString('ko-KR') + ' · ' + location.host, 360, 930);
   shareCv = c; $('share-img').src = c.toDataURL('image/png'); $('share').style.display = 'flex';
 };
