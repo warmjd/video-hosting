@@ -238,7 +238,7 @@ button.chip2:active { transform:scale(.95); }
   <div class="card"><div class="title">🙌 지금 도전 중인 식구들 (터치하여 관전)</div><div id="players"></div></div>
   <div class="card hall"><div class="title">🏆 명예의 전당</div><div id="hall"></div><div style="margin-top:8px;padding-top:6px;border-top:1px dashed rgba(255,255,255,.15);font-size:.8rem;color:#ffe08a">👑 역대 우승 · 시즌1 서충원 · 시즌2 서충원 · 시즌2.5 류태웅</div></div>
   <div class="card rules"><div class="title">📜 시즌3 규칙</div><ul>
-    <li>❤️ 도전 1회 = 체력 1. 20분마다 +1 (최대 10).</li>
+    <li>❤️ 도전 1회 = 체력 1. 20분마다 +1 (최대 50).</li>
     <li>📉 실패하면 가끔 한 칸(드물게 두 칸) 추락해요. 위로 갈수록 위험하고, 성공률도 크게 낮아져요!</li>
     <li>🎁 매일 출석 +2 · 🎳 밤 9시 심야 볼링 타임 보너스 · 🍀 성공하면 가끔 +1.</li>
     <li>🆘 꼴찌는 매일 출석 때 🎳볼링핀 +4, 🔵볼링공 +1을 받고 성공률도 올라요.</li>
@@ -294,7 +294,7 @@ const ROOT = 'w3', SID = 3;                   // 🗄️ 파이어베이스 저�
 const ADMIN = '조돌맹';                       // 운영자(캐릭터 삭제·비번 초기화 가능)
 const TEST_NAME = '운영자';                   // 🧪 테스트 전용 계정: 순위·시상대·현황판·통계·로그에서 숨김
 const MAXG = 9;                               // 🏁 마지막 단계 (9열매 = 성령의 열매 아홉 가지를 모두 맺으면 완주)
-const MAXE = 10, REGEN = 20 * 60 * 1000;      // 체력: 최대 10, 20분마다 +1
+const MAXE = 50, REGEN = 20 * 60 * 1000;      // 체력: 최대 50, 20분마다 +1
 const DAILY_E = 2, REFUND = 0.25;             // 🎁 출석 보너스 체력 +2 (하루 1회) · 🍀 성공 시 25% 확률로 체력 +1 환급
 const SEASON_START = new Date('2026-11-02T00:00:00+09:00').getTime();   // 시즌3 시작일 (순풍 계산용) ← 배포일에 맞춰 바꿔도 돼요
 const CHALK_STEP = 0, CHALK_MAX = 0;      // 🔁 연속 실패 보너스: 시즌3부터 없음 (0)
@@ -427,7 +427,7 @@ const NAME_RE = /^[가-힣A-Za-z0-9_-]{1,8}$/;
 const num = (v, lo, hi, d) => { v = Number(v); return Number.isFinite(v) ? Math.min(hi, Math.max(lo, v)) : d; };
 function norm(raw) {
   if (!raw || typeof raw !== 'object' || raw.season !== SID) return null;
-  return { season: SID, grade: Math.floor(num(raw.grade, 0, MAXG, 0)), energy: Math.floor(num(raw.energy, 0, 40, MAXE)), at: num(raw.at, 0, 4e12, Date.now()), tries: Math.floor(num(raw.tries, 0, 1e9, 0)), best: Math.floor(num(raw.best, 0, MAXG, 0)), cleared: num(raw.cleared, 0, 4e12, 0), pin: typeof raw.pin === 'string' ? raw.pin.slice(0, 80) : '', ach: cleanAch(raw.ach), rival: NAME_RE.test(raw.rival) ? raw.rival : '', live: num(raw.live, 0, 4e12, 0), ltDay: typeof raw.ltDay === 'string' ? raw.ltDay.slice(0, 10) : '', dKey: typeof raw.dKey === 'string' ? raw.dKey.slice(0, 10) : '', dFall: Math.floor(num(raw.dFall, 0, 1e6, 0)), dTries: Math.floor(num(raw.dTries, 0, 1e6, 0)), falls: Math.floor(num(raw.falls, 0, 1e9, 0)), ck: Math.floor(num(raw.ck, 0, 99, 0)), dc: typeof raw.dc === 'string' ? raw.dc.slice(0, 10) : '', bas: Math.floor(num(raw.bas, 0, 99, 0)), fl: Math.floor(num(raw.fl, 0, 1e6, 0)), bag: cleanBag(raw.bag), eg: typeof raw.eg === 'string' ? raw.eg.slice(0, 8) : '', dq: cleanDq(raw.dq), itm: cleanItm(raw.itm, 5), buf: cleanItm(raw.buf, 1) };
+  return { season: SID, grade: Math.floor(num(raw.grade, 0, MAXG, 0)), energy: Math.floor(num(raw.energy, 0, 90, MAXE)), at: num(raw.at, 0, 4e12, Date.now()), tries: Math.floor(num(raw.tries, 0, 1e9, 0)), best: Math.floor(num(raw.best, 0, MAXG, 0)), cleared: num(raw.cleared, 0, 4e12, 0), pin: typeof raw.pin === 'string' ? raw.pin.slice(0, 80) : '', ach: cleanAch(raw.ach), rival: NAME_RE.test(raw.rival) ? raw.rival : '', live: num(raw.live, 0, 4e12, 0), ltDay: typeof raw.ltDay === 'string' ? raw.ltDay.slice(0, 10) : '', dKey: typeof raw.dKey === 'string' ? raw.dKey.slice(0, 10) : '', dFall: Math.floor(num(raw.dFall, 0, 1e6, 0)), dTries: Math.floor(num(raw.dTries, 0, 1e6, 0)), falls: Math.floor(num(raw.falls, 0, 1e9, 0)), ck: Math.floor(num(raw.ck, 0, 99, 0)), dc: typeof raw.dc === 'string' ? raw.dc.slice(0, 10) : '', bas: Math.floor(num(raw.bas, 0, 99, 0)), fl: Math.floor(num(raw.fl, 0, 1e6, 0)), bag: cleanBag(raw.bag), eg: typeof raw.eg === 'string' ? raw.eg.slice(0, 8) : '', dq: cleanDq(raw.dq), itm: cleanItm(raw.itm, 5), buf: cleanItm(raw.buf, 1) };
 }
 const pub = (p) => ({ season: SID, grade: p.grade, energy: p.energy, at: p.at, tries: p.tries, best: p.best, cleared: p.cleared, ltDay: p.ltDay, dKey: p.dKey, dFall: p.dFall, dTries: p.dTries, falls: p.falls, ck: p.ck, dc: p.dc, bas: p.bas, fl: p.fl, bag: p.bag, eg: p.eg, dq: p.dq, itm: p.itm, buf: p.buf });
 function refill(p) {
