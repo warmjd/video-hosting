@@ -22,6 +22,7 @@ input,select{width:100%;padding:10px;border-radius:9px;border:1px solid #455a64;
 <div class="c" id="me" style="display:none"></div>
 <div class="c" id="act" style="display:none"></div>
 <div class="c" id="adm" style="display:none"></div>
+<div class="c" id="hist" style="display:none"></div>
 <div class="c"><div class="t">👥 마을 사람들</div><div id="pl" class="g2"></div></div>
 <div class="c"><div class="t">📜 마을 기록</div><div class="lg" id="lg"></div></div>
 <div class="c"><div class="t">📖 규칙</div><div class="q" style="font-size:.76rem">• 하루 1번만 접속하면 돼요! 매일 밤 12시(자정)에 자동 마감·집계됩니다.
@@ -42,8 +43,8 @@ const RN={mafia:'🔪 마피아',doctor:'💉 의사',police:'🕵️ 경찰',je
 const RD={mafia:'매일 1명을 지목해 제거하세요. 들키지 마세요.',doctor:'매일 1명을 보호하세요. 같은 사람 연속 불가, 본인 가능.',police:'매일 1명을 조사해 마피아인지 확인하세요.',jester:'투표로 처형당하면 혼자 승리! 의심받아야 이겨요.',citizen:'카톡 대화와 투표로 마피아를 찾아내세요.'};
 const $=id=>document.getElementById(id);
 const db=getDatabase(initializeApp(cfg));
-let D={users:{},game:null,votes:{},night:{}},me=localStorage.getItem('m1_me')||'',as='',admin=false,loaded=false,busy=false;
-onValue(ref(db,ROOT),s=>{const v=s.val()||{};D={users:v.users||{},game:v.game||null,votes:v.votes||{},night:v.night||{}};loaded=true;render();tick()});
+let D={users:{},game:null,votes:{},night:{},ghost:{}},me=localStorage.getItem('m1_me')||'',as='',admin=false,loaded=false,busy=false;
+onValue(ref(db,ROOT),s=>{const v=s.val()||{};D={users:v.users||{},game:v.game||null,votes:v.votes||{},night:v.night||{},ghost:v.ghost||{}};loaded=true;render();tick()});
 async function H(s){const b=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(s));return[...new Uint8Array(b)].map(x=>x.toString(16).padStart(2,'0')).join('')}
 const sh=a=>{a=[...a];for(let i=a.length-1;i>0;i--){const j=Math.random()*(i+1)|0;[a[i],a[j]]=[a[j],a[i]]}return a};
 const G=()=>D.game,P=()=>as||me,KST=9*36e5,nextMid=t=>Math.floor((t+KST)/864e5+1)*864e5-KST;
@@ -85,7 +86,42 @@ window.unlock=()=>{if($('ap').value===ADMIN_PIN){admin=true;render()}else $('ap'
 window.setAs=v=>{as=v;render()};
 const btn=(t,fn,on,cls)=>`<button class="${on?'on':cls||''}" onclick="${fn}">${t}</button>`;
 function cd(){const g=G();if(!g||g.phase!=='day')return;const s=Math.max(0,Math.floor((g.deadline-Date.now())/1000));$('hd').textContent=g.day+'일차 · ⏳ 자정 마감까지 '+String(s/3600|0).padStart(2,'0')+':'+String(s/60%60|0).padStart(2,'0')+':'+String(s%60).padStart(2,'0')}
-function render(){const g=G(),p=P(),$u=Object.keys(D.users);
+
+let hp=0;
+window.hpg=d=>{const g=G();hp=Math.max(1,Math.min(g.day,(hp||g.day)+d));render()};
+const COL={v:'#ffa94d',m:'#b197fc',d:'#69db7c',p:'#4dabf7'};
+function RES(g,d){const L=g.log||[],r={ex:null,kl:'',peace:false},i=L.findIndex(x=>x.startsWith('🗳️ '+d+'일차'));
+if(i>=0){const m=(L[i+1]||'').match(/^⚖️ (\S+) 처형! (.*)$/);if(m)r.ex={n:m[1],maf:m[2].indexOf('마피아였')>=0}}
+const k=L.find(x=>x.startsWith('💀 '+d+'일차 밤, '));if(k){const m=k.match(/밤, (\S+) 사망/);if(m)r.kl=m[1]}
+r.peace=L.some(x=>x.startsWith('🌙 '+d+'일차 밤은'));return r}
+function arrow(a,b,c,off){if(a===b)return`<circle cx="${a[0]}" cy="${a[1]-30}" r="11" fill="none" stroke="${c}" stroke-width="2.5" marker-end="url(#ar${c.slice(1)})"/>`;
+const dx=b[0]-a[0],dy=b[1]-a[1],l=Math.hypot(dx,dy),ux=dx/l,uy=dy/l,sx=a[0]+ux*26,sy=a[1]+uy*20,ex=b[0]-ux*30,ey=b[1]-uy*24,cx=(sx+ex)/2-uy*off,cy=(sy+ey)/2+ux*off;
+return`<path d="M${sx} ${sy} Q${cx} ${cy} ${ex} ${ey}" fill="none" stroke="${c}" stroke-width="2.5" marker-end="url(#ar${c.slice(1)})"/>`}
+
+const EM=['👏','😱','🤡','😂','💀'];
+window.pred=t=>{if(live())set(ref(db,ROOT+'/ghost/'+G().day+'/pred/'+P()),t)};
+window.emo=i=>{const g=G(),d=Math.min(hp||g.day,g.day),mine=((((D.ghost||{})[d]||{}).emo||{})[i]||{})[P()];set(ref(db,ROOT+'/ghost/'+d+'/emo/'+i+'/'+P()),mine?null:true)};
+function ghostUI(g,p,d,lv){const pl=P(),gh=D.ghost||{};let h='';
+if(lv&&(!g.roles[pl]||!g.alive[pl])){const cur=((gh[d]||{}).pred||{})[pl];h+=`<div class="t" style="margin-top:10px">🔮 오늘 사망자 예측 (현재: ${cur?(cur==='-'?'아무도 안 죽음':cur):'미선택'})</div><div class="g2">${al(g).map(n=>btn(n,`pred('${n}')`,cur===n,'')).join('')}${btn('🕊️ 아무도 안 죽음',`pred('-')`,cur==='-','g')}</div><div class="sm">처형 또는 밤 사망 중 한 명이라도 맞히면 +1점! 자정 전까지 바꿀 수 있어요</div>`}
+const em=(gh[d]||{}).emo||{};h+=`<div class="g2" style="margin-top:10px">${EM.map((e,i)=>{const o=em[i]||{};return btn(e+' '+Object.keys(o).length,`emo(${i})`,!!o[pl],'g')}).join('')}</div>`;
+const sc={};Object.keys(gh).forEach(day=>{const dn=+day;if(!(dn<g.day||g.phase==='end'))return;const r=RES(g,dn),dd=[r.ex&&r.ex.n,r.kl].filter(Boolean),pr=(gh[day]||{}).pred||{};Object.keys(pr).forEach(n=>{const t=pr[n];sc[n]=(sc[n]||0)+((t==='-'?dd.length===0:dd.includes(t))?1:0)})});
+const rk=Object.keys(sc).sort((a,b)=>sc[b]-sc[a]);if(rk.length)h+=`<div class="sm" style="margin-top:8px">🔮 유령 예측 순위: ${rk.map(n=>n+' '+sc[n]+'점').join(' · ')}</div>`;return h}
+function hist(g,p){const el=$('hist'),ok=g&&g.phase!=='lobby'&&g.roles&&p&&(g.phase==='end'||!g.roles[p]||!g.alive[p]);if(!ok){el.style.display='none';return}
+el.style.display='block';const d=Math.min(hp||g.day,g.day),dead=new Set();for(let e=1;e<d;e++){const r=RES(g,e);if(r.ex)dead.add(r.ex.n);if(r.kl)dead.add(r.kl)}
+const nm=Object.keys(g.roles),n=nm.length,pos={};nm.forEach((x,i)=>{const a=-Math.PI/2+i*2*Math.PI/n;pos[x]=[190+128*Math.cos(a),170+120*Math.sin(a)]});
+const V=D.votes[d]||{},N=D.night[d]||{},r=RES(g,d),live=d===g.day&&g.phase==='day',ar=[];
+const add=(o,c,off)=>Object.keys(o||{}).forEach(f=>{if(pos[f]&&pos[o[f]])ar.push(arrow(pos[f],pos[o[f]],c,off))});
+add(V,COL.v,0);add(N.mafia,COL.m,34);add(N.doctor,COL.d,-34);add(N.police,COL.p,64);
+const mk=Object.values(COL).map(c=>`<marker id="ar${c.slice(1)}" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="${c}"/></marker>`).join('');
+const nd=nm.map(x=>`<g opacity="${dead.has(x)?.4:1}"><rect x="${pos[x][0]-34}" y="${pos[x][1]-14}" width="68" height="28" rx="8" fill="#232845" stroke="#556"/><text x="${pos[x][0]}" y="${pos[x][1]+5}" text-anchor="middle" fill="#fff" font-size="12">${RN[g.roles[x]].split(' ')[0]}${x}${dead.has(x)?'💀':''}</text></g>`).join('');
+const L=o=>Object.keys(o||{}).map(f=>f+'→'+o[f]).join(', ')||'—',pr=Object.keys(N.police||{}).map(f=>{const t=N.police[f];return f+'→'+t+' ('+(g.roles[t]==='mafia'?'마피아':'마피아 아님')+')'}).join(', ')||'—';
+const mt=Object.values(N.mafia||{}),dt=Object.values(N.doctor||{});
+const out=live?'⏳ 진행 중 · 자정에 집계돼요 (지금까지의 선택)':(r.ex?`⚖️ 처형: ${r.ex.n} (${r.ex.maf?'마피아였음':'마피아 아님'})<br>`:'⚖️ 처형 없음<br>')+(r.kl?`💀 밤 사망: ${r.kl}`:r.peace?(mt.some(t=>dt.includes(t))?'💉 의사가 지켜냈어요! 아무도 죽지 않음':'🌙 평화로운 밤'):'');
+const extra=ghostUI(g,p,d,live);el.innerHTML=`<div class="t">🏹 일일 상세 기록 ${g.phase==='end'?'(전체 공개)':'(관전 전용)'}</div><div class="g2" style="justify-content:space-between;align-items:center;margin-bottom:6px">${btn('◀ 이전','hpg(-1)',0,'g')}<b>${d}일차 (${d}/${g.day})</b>${btn('다음 ▶','hpg(1)',0,'g')}</div>
+<svg viewBox="0 0 380 340" style="width:100%"><defs>${mk}</defs>${ar.join('')}${nd}</svg>
+<div class="sm" style="margin:4px 0"><span style="color:${COL.v}">━ 투표</span> · <span style="color:${COL.m}">━ 마피아</span> · <span style="color:${COL.d}">━ 의사</span> · <span style="color:${COL.p}">━ 경찰</span></div>
+<div class="q" style="font-size:.78rem">🗳️ 투표: ${L(V)}\n🔪 마피아: ${L(N.mafia)}\n💉 의사: ${L(N.doctor)}\n🕵️ 경찰: ${pr}</div><div style="font-size:.82rem;margin-top:6px;line-height:1.6">${out}</div>${extra}`}
+function render(){const g=G(),p=P(),$u=Object.keys(D.users);hist(g,p);
 $('hd').textContent=g&&g.phase==='end'?'🏁 게임 종료':g&&g.phase==='day'?'':'🛋️ 로비 · 참가 '+$u.filter(n=>!D.users[n].obs).length+'명 (최소 '+MIN+'명)'+(TEST?' · 🧪테스트':'');cd();
 $('login').innerHTML=me?`<div class="g2" style="align-items:center;justify-content:space-between"><div>👤 <b>${me}</b>${as?` → <b style="color:#ffd43b">${as}</b>로 보는 중`:''}</div>${btn('변경','logout()',0,'g')}</div>`:'<div class="t">👤 입장</div><div class="g2">'+ROSTER.map(n=>`<button class="g" onclick="pick('${n}')">${n}</button>`).join('')+'</div><input id="nm" maxlength="8" placeholder="이름"><input id="pin" type="password" inputmode="numeric" maxlength="4" placeholder="비밀번호 숫자 4자리 (처음이면 새로 설정)"><button style="width:100%" onclick="login()">입장</button><div class="sm" id="lm"></div>';
 const M=$('me'),A=$('act');M.style.display=A.style.display='none';
