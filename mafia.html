@@ -30,7 +30,7 @@ input,select{width:100%;padding:10px;border-radius:9px;border:1px solid #455a64;
 <div class="c"><div class="t">📖 규칙</div><div class="q" style="font-size:.76rem">• 하루 1번만 접속하면 돼요! 매일 밤 12시(자정)에 자동 마감·집계됩니다.
 • 하루에 할 일: ① 처형할 사람 1명 투표 ② 내 직업 능력 사용 (마피아·의사·경찰). 자정 전까지 바꿀 수 있어요.
 • 자정 정산 순서: 투표 처형 → 마피아 습격(의사가 보호하면 생존).
-• 처형되면 마피아였는지 아닌지만 공개 (직업 비공개). 동률/무투표면 처형 없음.
+• 사망하면 쓰러진 캐릭터에 마피아/시민 표지가 붙어요 (의사·경찰·광대는 시민으로 표시). 게임이 끝나면 전체 직업 공개! 동률/무투표면 처형 없음.
 • 의사: 같은 사람 연속 보호 불가, 본인 가능. 경찰: 조사 결과를 바로 확인.
 • 광대는 투표로 처형되면 혼자 승리! 마피아 전멸=시민 승, 마피아 ≥ 나머지=마피아 승.
 • 대화는 카톡방에서! (마감 시간이 지나면 버튼이 잠겨요)</div></div>
@@ -44,7 +44,7 @@ const ROSTER=['조원우','서충원','나선엽','류태웅','박경민','박�
 const RN={mafia:'🔪 마피아',doctor:'💉 의사',police:'🕵️ 경찰',jester:'🤡 광대',citizen:'🙂 시민'};
 const RD={mafia:'매일 1명을 지목해 제거하세요. 들키지 마세요.',doctor:'매일 1명을 보호하세요. 같은 사람 연속 불가, 본인 가능.',police:'매일 1명을 조사해 마피아인지 확인하세요.',jester:'투표로 처형당하면 혼자 승리! 의심받아야 이겨요.',citizen:'카톡 대화와 투표로 마피아를 찾아내세요.'};
 const $=id=>document.getElementById(id);
-const db=getDatabase(initializeApp(cfg));
+const db=getDatabase(initializeApp(cfg));let OFF=0;const NOW=()=>Date.now()+OFF;onValue(ref(db,'.info/serverTimeOffset'),x=>{OFF=x.val()||0});
 let D={users:{},game:null,votes:{},night:{},ghost:{}},me=localStorage.getItem('m1_me')||'',as='',admin=false,loaded=false,busy=false;
 onValue(ref(db,ROOT),s=>{const v=s.val()||{};D={users:v.users||{},game:v.game||null,votes:v.votes||{},night:v.night||{},ghost:v.ghost||{}};loaded=true;render();tick()});
 async function H(s){const b=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(s));return[...new Uint8Array(b)].map(x=>x.toString(16).padStart(2,'0')).join('')}
@@ -65,20 +65,20 @@ const dk=Object.keys(N.doctor||{}).find(k=>g.alive[k]&&g.roles[k]==='doctor'),dp
 if(tg&&tg!==dp){g.alive[tg]=false;g.log.push('💀 '+g.day+'일차 밤, '+tg+' 사망했습니다.')}else g.log.push('🌙 '+g.day+'일차 밤은 평화로웠습니다. 아무도 죽지 않았어요.');
 w=wc(g);if(w)return fin(g,w);g.day++;g.deadline+=864e5;g.log.push('☀️ '+g.day+'일차가 시작됐어요. (오늘 밤 12시 마감)')}
 //RESOLVE_END
-async function tick(){const g=G();if(!loaded||!g||g.phase!=='day'||busy||Date.now()<g.deadline)return;busy=true;
-try{await runTransaction(ref(db,ROOT+'/game'),c=>{if(!c||c.phase!=='day'||Date.now()<c.deadline)return;let n=0;while(c.phase==='day'&&Date.now()>=c.deadline&&n++<14)resolve(c,D.votes[c.day],D.night[c.day]);return c})}catch(e){}busy=false}
+async function tick(){const g=G();if(!loaded||!g||g.phase!=='day'||busy||NOW()<g.deadline)return;busy=true;
+try{await runTransaction(ref(db,ROOT+'/game'),c=>{if(!c||c.phase!=='day'||NOW()<c.deadline)return;let n=0;while(c.phase==='day'&&NOW()>=c.deadline&&n++<14)resolve(c,D.votes[c.day],D.night[c.day]);return c})}catch(e){}busy=false}
 window.pick=n=>{$('nm').value=n};
 window.login=async()=>{const n=$('nm').value.trim(),p=$('pin').value.trim();if(!/^[가-힣A-Za-z0-9]{1,8}$/.test(n))return $('lm').textContent='이름 1~8자';if(!/^\d{4}$/.test(p))return $('lm').textContent='숫자 4자리';
 const h=await H(n+'|'+p+'|m1'),u=D.users[n];if(u&&u.pin!==h)return $('lm').textContent='비밀번호가 달라요';if(!u)await set(ref(db,ROOT+'/users/'+n),{pin:h});me=n;localStorage.setItem('m1_me',n);render()};
 window.logout=()=>{me='';as='';localStorage.removeItem('m1_me');render()};
-const live=()=>G()&&G().phase==='day'&&Date.now()<G().deadline;
+const live=()=>G()&&G().phase==='day'&&NOW()<G().deadline;
 window.vote=t=>{if(live())set(ref(db,ROOT+'/votes/'+G().day+'/'+P()),t)};
 window.act=(k,t)=>{if(live())set(ref(db,ROOT+'/night/'+G().day+'/'+k+'/'+P()),t)};
 window.startG=async()=>{const ns=Object.keys(D.users).filter(n=>!D.users[n].obs),n=ns.length;if(n<MIN)return alert('최소 '+MIN+'명 필요해요 (현재 '+n+'명)');if(G()&&G().phase!=='lobby'&&!confirm('진행 중인 게임을 지우고 새로 시작할까요?'))return;
 const m=n>=11?3:n>=8?2:1,rl=[...Array(m).fill('mafia'),'police','doctor','jester'];while(rl.length<n)rl.push('citizen');const s=sh(rl.slice(0,n)),roles={},alive={};sh(ns).forEach((x,i)=>{roles[x]=s[i];alive[x]=true});
-await set(ref(db,ROOT+'/votes'),null);await set(ref(db,ROOT+'/night'),null);await set(ref(db,ROOT+'/game'),{phase:'day',day:1,deadline:nextMid(Date.now()),roles,alive,winner:'',log:['🌅 게임 시작! '+n+'명 참가 · 마피아 '+m+'명 (의사·경찰·광대 포함)','☀️ 1일차가 시작됐어요. 오늘 밤 12시에 자동 마감됩니다. 카톡방에서 의심을 나누고 투표하세요!']})};
+await set(ref(db,ROOT+'/votes'),null);await set(ref(db,ROOT+'/night'),null);await set(ref(db,ROOT+'/ghost'),null);await set(ref(db,ROOT+'/game'),{phase:'day',day:1,deadline:nextMid(NOW()),roles,alive,winner:'',log:['🌅 게임 시작! '+n+'명 참가 · 마피아 '+m+'명 (의사·경찰·광대 포함)','☀️ 1일차가 시작됐어요. 오늘 밤 12시에 자동 마감됩니다. 카톡방에서 의심을 나누고 투표하세요!']})};
 window.closeNow=async()=>{if(!confirm('지금 바로 마감·집계할까요? (비상용)'))return;await runTransaction(ref(db,ROOT+'/game'),c=>{if(!c||c.phase!=='day')return;resolve(c,D.votes[c.day],D.night[c.day]);return c})};
-window.resetG=async()=>{if(!confirm('게임 기록(투표·역할)을 모두 지울까요? 참가자 명단은 유지돼요.'))return;await set(ref(db,ROOT+'/game'),null);await set(ref(db,ROOT+'/votes'),null);await set(ref(db,ROOT+'/night'),null)};
+window.resetG=async()=>{if(!confirm('게임 기록(투표·역할)을 모두 지울까요? 참가자 명단은 유지돼요.'))return;await set(ref(db,ROOT+'/game'),null);await set(ref(db,ROOT+'/votes'),null);await set(ref(db,ROOT+'/night'),null);await set(ref(db,ROOT+'/ghost'),null)};
 window.addBots=async()=>{const k=Object.keys(D.users),b=k.filter(n=>n.startsWith('테스트')).length;for(let i=1;i<=Math.max(0,9-k.length);i++)await set(ref(db,ROOT+'/users/테스트'+(b+i)),{pin:'-',bot:true})};
 window.delBots=async()=>{for(const n of Object.keys(D.users))if(D.users[n].bot)await set(ref(db,ROOT+'/users/'+n),null)};
 window.auto=async()=>{const g=G();if(!g||g.phase!=='day')return;const a=al(g),pk=x=>{const o=a.filter(y=>y!==x);return o[Math.random()*o.length|0]};
@@ -87,7 +87,7 @@ if(r==='mafia')await set(ref(db,ROOT+'/night/'+d+'/mafia/'+b),pk(b));if(r==='doc
 window.unlock=()=>{if($('ap').value===ADMIN_PIN){admin=true;render()}else $('ap').value=''};
 window.setAs=v=>{as=v;render()};
 const btn=(t,fn,on,cls)=>`<button class="${on?'on':cls||''}" onclick="${fn}">${t}</button>`;
-function cd(){const g=G();if(!g||g.phase!=='day')return;const s=Math.max(0,Math.floor((g.deadline-Date.now())/1000));$('hd').textContent=g.day+'일차 · ⏳ 자정 마감까지 '+String(s/3600|0).padStart(2,'0')+':'+String(s/60%60|0).padStart(2,'0')+':'+String(s%60).padStart(2,'0')}
+function cd(){const g=G();if(!g||g.phase!=='day')return;const s=Math.max(0,Math.floor((g.deadline-NOW())/1000));$('hd').textContent=g.day+'일차 · ⏳ 자정 마감까지 '+String(s/3600|0).padStart(2,'0')+':'+String(s/60%60|0).padStart(2,'0')+':'+String(s%60).padStart(2,'0')}
 
 let hp=0;
 window.hpg=d=>{const g=G();hp=Math.max(1,Math.min(g.day,(hp||g.day)+d));render()};
@@ -102,13 +102,13 @@ return`<path d="M${sx} ${sy} Q${cx} ${cy} ${ex} ${ey}" fill="none" stroke="${c}"
 
 const EM=['👏','😱','🤡','😂','💀'];
 window.pred=t=>{if(live())set(ref(db,ROOT+'/ghost/'+G().day+'/pred/'+P()),t)};
-window.emo=i=>{const g=G(),d=Math.min(hp||g.day,g.day),mine=((((D.ghost||{})[d]||{}).emo||{})[i]||{})[P()];set(ref(db,ROOT+'/ghost/'+d+'/emo/'+i+'/'+P()),mine?null:true)};
+window.emo=i=>{if(!P())return;const g=G(),d=Math.min(hp||g.day,g.day),mine=((((D.ghost||{})[d]||{}).emo||{})[i]||{})[P()];set(ref(db,ROOT+'/ghost/'+d+'/emo/'+i+'/'+P()),mine?null:true)};
 function ghostUI(g,p,d,lv){const pl=P(),gh=D.ghost||{};let h='';
 if(lv&&(!g.roles[pl]||!g.alive[pl])){const cur=((gh[d]||{}).pred||{})[pl];h+=`<div class="t" style="margin-top:10px">🔮 오늘 사망자 예측 (현재: ${cur?(cur==='-'?'아무도 안 죽음':cur):'미선택'})</div><div class="g2">${al(g).map(n=>btn(n,`pred('${n}')`,cur===n,'')).join('')}${btn('🕊️ 아무도 안 죽음',`pred('-')`,cur==='-','g')}</div><div class="sm">처형 또는 밤 사망 중 한 명이라도 맞히면 +1점! 자정 전까지 바꿀 수 있어요</div>`}
 const em=(gh[d]||{}).emo||{};h+=`<div class="g2" style="margin-top:10px">${EM.map((e,i)=>{const o=em[i]||{};return btn(e+' '+Object.keys(o).length,`emo(${i})`,!!o[pl],'g')}).join('')}</div>`;
 const sc={};Object.keys(gh).forEach(day=>{const dn=+day;if(!(dn<g.day||g.phase==='end'))return;const r=RES(g,dn),dd=[r.ex&&r.ex.n,r.kl].filter(Boolean),pr=(gh[day]||{}).pred||{};Object.keys(pr).forEach(n=>{const t=pr[n];sc[n]=(sc[n]||0)+((t==='-'?dd.length===0:dd.includes(t))?1:0)})});
 const rk=Object.keys(sc).sort((a,b)=>sc[b]-sc[a]);if(rk.length)h+=`<div class="sm" style="margin-top:8px">🔮 유령 예측 순위: ${rk.map(n=>n+' '+sc[n]+'점').join(' · ')}</div>`;return h}
-function hist(g,p){const el=$('hist'),ok=g&&g.phase!=='lobby'&&g.roles&&p&&(g.phase==='end'||!g.roles[p]||!g.alive[p]);if(!ok){el.style.display='none';return}
+function hist(g,p){const el=$('hist'),ok=g&&g.phase!=='lobby'&&g.roles&&(g.phase==='end'||(p&&(!g.roles[p]||!g.alive[p])));if(!ok){el.style.display='none';return}
 el.style.display='block';const d=Math.min(hp||g.day,g.day),dead=new Set();for(let e=1;e<d;e++){const r=RES(g,e);if(r.ex)dead.add(r.ex.n);if(r.kl)dead.add(r.kl)}
 const nm=Object.keys(g.roles),n=nm.length,pos={};nm.forEach((x,i)=>{const a=-Math.PI/2+i*2*Math.PI/n;pos[x]=[190+128*Math.cos(a),170+120*Math.sin(a)]});
 const V=D.votes[d]||{},N=D.night[d]||{},r=RES(g,d),live=d===g.day&&g.phase==='day',ar=[];
@@ -128,13 +128,13 @@ const known=new Set(),SHC=['#e03131','#1971c2','#2f9e44','#f08c00','#9c36b5','#0
 const hs=x=>{let h=0;for(const c of x)h=(h*31+c.charCodeAt(0))>>>0;return h};
 function ringRender(g,p){const el=$('ring'),has=g&&g.roles&&g.phase!=='lobby',names=has?Object.keys(g.roles):Object.keys(D.users).filter(n=>!D.users[n].obs);
 if(!names.length){el.innerHTML='';return}
-const spec=p&&has&&(!g.roles[p]||!g.alive[p]||g.phase==='end'),n=names.length;
+const spec=has&&(g.phase==='end'||(p&&(!g.roles[p]||!g.alive[p]))),n=names.length;
 const arr=names.map((x,i)=>{const a=-Math.PI/2+i*2*Math.PI/n,px=190+140*Math.cos(a),py=185+115*Math.sin(a),sc=(0.95+0.3*Math.sin(a))*(n>14?.85:1),dead=has&&!g.alive[x],h=hs(x),sh=SHC[h%10],hr=HRC[(h>>3)%5];
 const fall=dead&&!known.has(x);if(dead)known.add(x);
 const role=has&&(x===p||spec)?RN[g.roles[x]].split(' ')[0]:'',vo=has&&g.phase==='day'&&(D.votes[g.day]||{})[x]?'✅':'';
 const body=`<ellipse cx="0" cy="1" rx="15" ry="3.5" fill="#000" opacity=".3"/><rect x="-6" y="-14" width="5" height="14" rx="2" fill="#3b4252"/><rect x="1" y="-14" width="5" height="14" rx="2" fill="#3b4252"/><line x1="-8" y1="-29" x2="-13" y2="-16" stroke="${sh}" stroke-width="4.5" stroke-linecap="round"/><line x1="8" y1="-29" x2="13" y2="-16" stroke="${sh}" stroke-width="4.5" stroke-linecap="round"/><rect x="-8.5" y="-33" width="17" height="21" rx="6" fill="${sh}"/><circle cx="0" cy="-41" r="8" fill="#f1c27d"/><path d="M-8 -42a8 8 0 0 1 16 0z" fill="${hr}"/>`;
 const svg=`<g transform="translate(${px.toFixed(1)} ${py.toFixed(1)}) scale(${sc.toFixed(2)})"><g class="fig ${dead?'dead'+(fall?' fall':''):'idle'}" ${dead?'':`style="animation-delay:${(h%7)*.35}s"`}>${body}</g>`
-+(dead?`<text x="22" y="-14" font-size="15" text-anchor="middle">💀</text>`:`${role?`<text x="0" y="-55" font-size="14" text-anchor="middle">${role}</text>`:''}${vo?`<text x="16" y="-48" font-size="10">${vo}</text>`:''}`)
++(dead?`<text x="22" y="-14" font-size="15" text-anchor="middle">💀</text>${(()=>{const r=g.roles[x],mf=r==='mafia',lb=spec?RN[r]:(mf?'🔪 마피아':'🙂 시민');return`<rect x="-8" y="-36" width="60" height="17" rx="8" fill="${mf?'#c92a2a':'#2b8a3e'}"/><text x="22" y="-24" font-size="11" font-weight="700" text-anchor="middle" fill="#fff">${lb}</text>`})()}`:`${role?`<text x="0" y="-55" font-size="14" text-anchor="middle">${role}</text>`:''}${vo?`<text x="16" y="-48" font-size="10">${vo}</text>`:''}`)
 +`<text x="0" y="14" font-size="11" text-anchor="middle" fill="${dead?'#868e96':'#fff'}">${x}</text></g>`;return[py,svg]});
 el.innerHTML=`<svg viewBox="0 0 380 350" style="width:100%"><ellipse cx="190" cy="185" rx="170" ry="140" fill="rgba(255,200,120,.05)"/><text class="fire" x="190" y="200" font-size="38" text-anchor="middle">🔥</text>${arr.sort((a,b)=>a[0]-b[0]).map(x=>x[1]).join('')}</svg>`}
 function render(){const g=G(),p=P(),$u=Object.keys(D.users);hist(g,p);ringRender(g,p);
@@ -155,7 +155,7 @@ if(ADMINQ){if(!admin)AD.innerHTML='<div class="t">🛠️ 운영자</div><input 
 else AD.innerHTML=`<div class="t">🛠️ 운영자 모드</div><div class="g2">${btn('▶ 게임 시작 (역할 배정)','startG()',0,'o')}${g&&g.phase==='day'?btn('⏩ 지금 마감(비상용)','closeNow()',0,'r'):''}${btn('🔄 초기화','resetG()',0,'g')}</div>
 <div class="sm" style="margin:8px 0 4px">테스트 도구</div><div class="g2">${btn('🤖 봇 채우기(총9명)','addBots()',0,'g')}${btn('봇 삭제','delBots()',0,'g')}${btn('🎲 봇 자동행동','auto()',0,'g')}</div>
 <select onchange="setAs(this.value)"><option value="">👀 다른 사람으로 보기 (본인)</option>${$u.map(n=>`<option ${as===n?'selected':''} value="${n}">${n}${g&&g.roles&&g.roles[n]?' · '+RN[g.roles[n]]+(g.alive[n]?'':' 💀'):''}</option>`).join('')}</select>`}
-$('pl').innerHTML=$u.map(n=>{const dead=g&&g.alive&&g.roles&&g.roles[n]&&!g.alive[n],vo=g&&g.phase==='day'&&(D.votes[g.day]||{})[n];const spec=p&&g&&g.roles&&(!g.roles[p]||!g.alive[p]||g.phase==='end');return`<span class="${dead?'d':''}" style="padding:4px 8px;background:rgba(255,255,255,.08);border-radius:8px;font-size:.8rem">${n}${vo?' ✅':''}${dead?' 💀':''}${spec&&g.roles[n]?' · '+RN[g.roles[n]]:''}</span>`}).join('')||'<span class="sm">아직 없어요</span>';
+$('pl').innerHTML=$u.map(n=>{const dead=g&&g.alive&&g.roles&&g.roles[n]&&!g.alive[n],vo=g&&g.phase==='day'&&(D.votes[g.day]||{})[n];const spec=g&&g.roles&&(g.phase==='end'||(p&&(!g.roles[p]||!g.alive[p])));return`<span class="${dead?'d':''}" style="padding:4px 8px;background:rgba(255,255,255,.08);border-radius:8px;font-size:.8rem">${n}${vo?' ✅':''}${dead?' 💀':''}${spec&&g.roles[n]?' · '+RN[g.roles[n]]:(dead&&g.roles[n]?(g.roles[n]==='mafia'?' · 🔪 마피아':' · 🙂 시민'):'')}</span>`}).join('')||'<span class="sm">아직 없어요</span>';
 $('lg').innerHTML=g&&g.log?[...g.log].reverse().map(x=>`<div>${x}</div>`).join(''):'<div class="sm">게임이 시작되면 기록이 쌓여요</div>'}
 render();setInterval(()=>{cd();tick()},1000);
 </script></body></html>
