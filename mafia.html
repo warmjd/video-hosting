@@ -73,7 +73,11 @@ const h=await H(n+'|'+p+'|m1'),u=D.users[n];if(u&&u.pin!==h)return $('lm').textC
 window.logout=()=>{me='';as='';localStorage.removeItem('m1_me');render()};
 const live=()=>G()&&G().phase==='day'&&NOW()<G().deadline;
 window.vote=t=>{if(live())set(ref(db,ROOT+'/votes/'+G().day+'/'+P()),t)};
-window.act=(k,t)=>{if(live())set(ref(db,ROOT+'/night/'+G().day+'/'+k+'/'+P()),t)};
+window.act=async(k,t)=>{if(!live())return;const g=G(),path=ROOT+'/night/'+g.day+'/'+k+'/'+P();
+if(k==='doctor'&&Object.values((D.night[g.day-1]||{}).doctor||{})[0]===t)return alert('어제 보호한 사람은 연속으로 보호할 수 없어요');
+if(k==='police'){if(!confirm(t+'님을 조사할까요?\n하루에 딱 1명, 한 번 정하면 바꿀 수 없어요!'))return;
+await runTransaction(ref(db,path),c=>c===null?t:undefined);return}
+set(ref(db,path),t)};
 window.startG=async()=>{const ns=Object.keys(D.users).filter(n=>!D.users[n].obs),n=ns.length;if(n<MIN)return alert('최소 '+MIN+'명 필요해요 (현재 '+n+'명)');if(G()&&G().phase!=='lobby'&&!confirm('진행 중인 게임을 지우고 새로 시작할까요?'))return;
 const m=n>=11?3:n>=8?2:1,rl=[...Array(m).fill('mafia'),'police','doctor','jester'];while(rl.length<n)rl.push('citizen');const s=sh(rl.slice(0,n)),roles={},alive={};sh(ns).forEach((x,i)=>{roles[x]=s[i];alive[x]=true});
 await set(ref(db,ROOT+'/votes'),null);await set(ref(db,ROOT+'/night'),null);await set(ref(db,ROOT+'/ghost'),null);await set(ref(db,ROOT+'/game'),{phase:'day',day:1,deadline:nextMid(NOW()),roles,alive,winner:'',log:['🌅 게임 시작! '+n+'명 참가 · 마피아 '+m+'명 (의사·경찰·광대 포함)','☀️ 1일차가 시작됐어요. 오늘 밤 12시에 자동 마감됩니다. 카톡방에서 의심을 나누고 투표하세요!']})};
@@ -148,7 +152,7 @@ let h=`<div class="t">🗳️ 오늘 처형할 사람 (현재: ${cur||'미투표
 if(r==='mafia'){const c=(N.mafia||{})[p];h+=`<div class="t" style="margin-top:10px">🔪 오늘 밤 제거할 사람 (현재: ${c||'미선택'})</div><div class="g2">${o.filter(n=>g.roles[n]!=='mafia').map(n=>btn(n,`act('mafia','${n}')`,c===n,'r')).join('')}</div>`}
 if(r==='doctor'){const c=(N.doctor||{})[p],last=Object.values((D.night[g.day-1]||{}).doctor||{})[0];h+=`<div class="t" style="margin-top:10px">💉 오늘 밤 보호할 사람 (현재: ${c||'미선택'})</div><div class="g2">${al(g).map(n=>n===last?`<button disabled class="g">${n}(어제 보호)</button>`:btn(n,`act('doctor','${n}')`,c===n,'')).join('')}</div>`}
 if(r==='police'){const c=(N.police||{})[p];let rs='';for(let d=1;d<=g.day;d++){const t=((D.night[d]||{}).police||{})[p];if(t)rs+=`<div>${d}일차: ${t} → <b>${g.roles[t]==='mafia'?'마피아 🔪':'마피아 아님 ✅'}</b></div>`}
-h+=`<div class="t" style="margin-top:10px">🕵️ 오늘 조사할 사람 (현재: ${c||'미선택'})</div><div class="g2">${o.map(n=>btn(n,`act('police','${n}')`,c===n,'')).join('')}</div><div class="q" style="margin-top:8px">${rs||'조사 결과가 여기에 쌓여요'}</div>`}
+h+=`<div class="t" style="margin-top:10px">🕵️ ${c?'오늘 조사 완료: '+c+' (변경 불가)':'오늘 조사할 사람 (딱 1명 · 선택하면 바꿀 수 없어요)'}</div>${c?'':`<div class="g2">${o.map(n=>btn(n,`act('police','${n}')`,0,'')).join('')}</div>`}<div class="q" style="margin-top:8px">${rs||'조사 결과가 여기에 쌓여요'}</div>`}
 A.innerHTML=h+(lk?'<div class="sm" style="color:#ff8787">⏰ 마감되어 집계 중이에요. 잠시 후 새로고침!</div>':'')}}
 const AD=$('adm');AD.style.display=ADMINQ?'block':'none';
 if(ADMINQ){if(!admin)AD.innerHTML='<div class="t">🛠️ 운영자</div><input id="ap" type="password" placeholder="운영자 비밀번호" onkeydown="if(event.key===\'Enter\')unlock()"><button onclick="unlock()">확인</button>';
