@@ -24,11 +24,13 @@ input,select{width:100%;padding:10px;border-radius:9px;border:1px solid #455a64;
 <div class="c" id="me" style="display:none"></div>
 <div class="c" id="act" style="display:none"></div>
 <div class="c" id="adm" style="display:none"></div>
+<div class="c" id="award" style="display:none"></div>
+<div class="c" id="shop" style="display:none"></div>
 <div class="c" id="hist" style="display:none"></div>
 <div class="c"><div class="t">🔥 마을 모닥불</div><div id="ring"></div><div id="pl" class="g2" style="margin-top:6px"></div></div>
 <div class="c"><div class="t">📜 마을 기록</div><div class="lg" id="lg"></div></div>
-<div class="c"><div class="t">📖 규칙</div><div class="q" style="font-size:.76rem">• 시즌마다 참가 신청을 받아요. 신청한 사람만 참가자가 되고, 나머지는 관전자예요.
-• 직업: 마피아 2(8~9명)/3(10명↑) · 의사 · 경찰 · 광대 · 시민. 10명↑ 🪖군인·🔎탐정 추가, 12명↑ 마피아 중 1명이 🕴️갓파더!
+<div class="c"><div class="t">📖 규칙</div><div class="q" style="font-size:.76rem">• 한 판마다 참가 신청을 받고, 모두 모이면 운영자가 "신청 끝 · 게임 시작"을 눌러요. 신청한 사람만 참가자가 되고, 나머지는 관전자예요.
+• 직업: 마피아 2(8~9명)/3(10명↑) · 의사 · 경찰 · 광대 · 시민. 10명↑ 🪖군인·🔎탐정 추가, 12명↑ 마피아 중 1명이 🕴️갓파더! 11명↑ ✝️예수님! 나머지 자리는 🏛️이장·📰기자·🍺술꾼·👀목격자, 그래도 남는 시민은 🎯비밀 미션 카드를 받아요.
 • 하루는 ☀️낮 투표 → ⚖️최후 변론·찬반 → 🌙밤 순서예요. 정해진 시각이 아니라 "모두 끝내면 바로" 다음 단계로 넘어가요. 안 끝내는 사람이 있어도 제한시간이 지나면 넘어가요.
 • ☀️ 낮(제한 12시간): 처형할 사람 1명에게 투표 (그전까진 바꿀 수 있어요). 모두 투표하면 투표가 공개되고 최다 득표자가 재판 대상이 돼요. 동률·무투표면 재판 없이 바로 밤!
 • ⚖️ 최후 변론(제한 3시간): 카톡방에서 변론하고 앱에서 👍찬성/👎반대를 골라요. 모두 정하면 바로 결과 (찬성이 반대보다 많아야 처형, 동률 부결). 재판 대상은 투표할 수 없어요. 처형되면 마피아였는지 아닌지만 공개돼요.
@@ -38,7 +40,11 @@ input,select{width:100%;padding:10px;border-radius:9px;border:1px solid #455a64;
 • 🪖 군인: 마피아의 밤 습격을 게임당 1번 버텨요. 발동하면 군인 정체가 공개돼요 (의사 보호가 먼저 적용).
 • 💉 의사: 같은 사람 연속 보호 불가, 본인 가능. 🕵️ 경찰: 밤에 1명을 조사하면 결과는 다음 날 아침에 확인 (한 번 정하면 변경 불가).
 • 🤡 광대는 재판에서 처형되면 혼자 승리! 마피아 전멸=시민 승, 마피아 ≥ 나머지=마피아 승.
-• 사망하면 쓰러진 캐릭터에 마피아/시민 표지가 붙어요 (의사·경찰·광대는 시민으로 표시). 죽은 사람·관전자 화면에서도 광대는 시민으로 보여요. 시즌이 끝나면 전체 직업 공개!
+• 사망하면 쓰러진 캐릭터에 마피아/시민 표지가 붙어요 (의사·경찰·광대는 시민으로 표시). 죽은 사람·관전자 화면에서도 광대는 시민으로 보여요. 게임이 끝나면 전체 직업 공개!
+• ✝️ 예수님(시민 편): 처형이든 습격이든 죽으면 3일 뒤 낮에 부활해요 (게임당 1번). 죽어 있는 동안은 유령 모드(직업 보기) 없이 죽은 사람처럼 말하면 안 돼요. 대기 중에도 시민 쪽 생존자로 계산돼요.
+• 🏛️ 이장: 재판 찬반이 동률이면 이장의 한 표가 결정 · 📰 기자: 게임당 1번 "간밤에 능력을 쓴 사람 수" 속보 · 🍺 술꾼: 시민 편이지만 경찰에게 마피아로 나와요 · 👀 목격자: 시작 때 마피아 한 명의 초성 힌트.
+• 🪙 달란트: 게임이 끝나면 참가 +10, 개근 +10, 승리 (시민 +20 / 마피아 +40 / 광대 +50), 활약(마피아 처형 투표 +5, 경찰 적발 +5, 의사 방어 +10, 군인 방어 +5, 시민팀 승리 시 생존 +5), 유령 예측 +3, 유령 MVP +15, 비밀 미션 +10을 받아요.
+• 🏪 달란트시장: 칭호·모자·안경·망토·이름색·쓰러짐/승리 효과를 살 수 있어요. 승패에는 영향이 없어요!
 • 대화는 카톡방에서! 앱은 투표와 능력 사용만 해요.</div></div>
 </div>
 <script type="module">
@@ -47,41 +53,74 @@ import{getDatabase,ref,set,onValue,runTransaction}from"https://www.gstatic.com/f
 const cfg={apiKey:"AIzaSyBk2bAqCq_SGeiPJUvoPTRMk0zk3psVewU",authDomain:"jowonu-107aa.firebaseapp.com",databaseURL:"https://jowonu-107aa-default-rtdb.asia-southeast1.firebasedatabase.app",projectId:"jowonu-107aa",storageBucket:"jowonu-107aa.firebasestorage.app",messagingSenderId:"332313627395",appId:"1:332313627395:web:eb5e98f35ff3070129f736"};
 const Q=location.search,TEST=Q.includes('test'),ADMINQ=Q.includes('admin')||TEST,ROOT=TEST?'m1test':'m1',ADMIN_PIN='0000',MIN=TEST?4:8;
 const ROSTER=['조원우','서충원','나선엽','류태웅','박경민','박승호','이다원','유한춘','이재형','한빛','조돌맹','현지석','황동범'];
-const RN={mafia:'🔪 마피아',doctor:'💉 의사',police:'🕵️ 경찰',jester:'🤡 광대',citizen:'🙂 시민',godfather:'🕴️ 갓파더',soldier:'🪖 군인',detective:'🔎 탐정'};
-const vis=(g,r)=>g.phase==='end'||r!=='jester'?r:'citizen';
-const RD={mafia:'밤마다 1명을 지목해 제거하세요. 들키지 마세요.',doctor:'밤마다 1명을 보호하세요. 같은 사람 연속 불가, 본인 가능.',police:'밤에 1명을 조사하면 다음 날 아침에 마피아인지 알려줘요. 갓파더는 같은 사람을 두 번 조사하면 정체가 드러나요.',jester:'투표로 처형당하면 혼자 승리! 의심받아야 이겨요.',detective:'밤에 1명을 조사하면 다음 날 아침 "그 사람이 간밤에 능력을 누구에게 썼는지" 알려줘요. 직업은 알려주지 않아요.',godfather:'마피아 편이에요! 경찰이 조사해도 마피아 아님으로 나와요. 매일 1명을 지목해 제거하세요.',soldier:'마피아의 밤 습격을 1번 버텨요. 발동하면 정체가 공개돼요. 투표 처형은 못 막아요.',citizen:'카톡 대화와 투표로 마피아를 찾아내세요.'};
+const RN={mafia:'🔪 마피아',doctor:'💉 의사',police:'🕵️ 경찰',jester:'🤡 광대',citizen:'🙂 시민',godfather:'🕴️ 갓파더',soldier:'🪖 군인',detective:'🔎 탐정',jesus:'✝️ 예수님',mayor:'🏛️ 이장',reporter:'📰 기자',drunk:'🍺 술꾼',witness:'👀 목격자'};
+const vis=(g,r)=>g.phase==='end'||!['jester','drunk','jesus'].includes(r)?r:'citizen';
+const RD={mafia:'밤마다 1명을 지목해 제거하세요. 들키지 마세요.',doctor:'밤마다 1명을 보호하세요. 같은 사람 연속 불가, 본인 가능.',police:'밤에 1명을 조사하면 다음 날 아침에 마피아인지 알려줘요. 갓파더는 같은 사람을 두 번 조사하면 정체가 드러나요.',jester:'투표로 처형당하면 혼자 승리! 의심받아야 이겨요.',jesus:'시민 편이에요. 처형이든 습격이든 죽으면 3일 뒤 낮에 부활해요 (1번). 죽어 있는 동안은 유령 모드 없이, 죽은 사람처럼 카톡방에서 말하면 안 돼요.',mayor:'재판 찬반이 동률이면 당신의 한 표가 결정해요.',reporter:'게임당 1번 밤에 속보를 발행하면, 아침에 "간밤에 능력을 쓴 사람 수"가 모두에게 공개돼요.',drunk:'시민 편이에요. 하지만 경찰이 조사하면 마피아로 나와요! 억울하게 몰리지 않게 조심하세요.',witness:'시민 편이에요. 시작할 때 마피아 팀 한 명의 이름 초성을 힌트로 받아요.',detective:'밤에 1명을 조사하면 다음 날 아침 "그 사람이 간밤에 능력을 누구에게 썼는지" 알려줘요. 직업은 알려주지 않아요.',godfather:'마피아 편이에요! 경찰이 조사해도 마피아 아님으로 나와요. 매일 1명을 지목해 제거하세요.',soldier:'마피아의 밤 습격을 1번 버텨요. 발동하면 정체가 공개돼요. 투표 처형은 못 막아요.',citizen:'카톡 대화와 투표로 마피아를 찾아내세요.'};
 const $=id=>document.getElementById(id);
 const db=getDatabase(initializeApp(cfg));let OFF=0;const NOW=()=>Date.now()+OFF;onValue(ref(db,'.info/serverTimeOffset'),x=>{OFF=x.val()||0});
-let D={users:{},game:null,votes:{},night:{},ghost:{},fv:{},entries:{}},me=localStorage.getItem('m1_me')||'',as='',admin=false,loaded=false,busy=false;
-onValue(ref(db,ROOT),s=>{const v=s.val()||{};D={users:v.users||{},game:v.game||null,votes:v.votes||{},night:v.night||{},ghost:v.ghost||{},fv:v.fvotes||{},entries:v.entries||{}};loaded=true;render();tick()});
+let D={users:{},game:null,votes:{},night:{},ghost:{},fv:{},entries:{},profiles:{}},me=localStorage.getItem('m1_me')||'',as='',admin=false,loaded=false,busy=false;
+onValue(ref(db,ROOT),s=>{const v=s.val()||{};D={users:v.users||{},game:v.game||null,votes:v.votes||{},night:v.night||{},ghost:v.ghost||{},fv:v.fvotes||{},entries:v.entries||{},profiles:v.profiles||{}};loaded=true;render();tick()});
 async function H(s){const b=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(s));return[...new Uint8Array(b)].map(x=>x.toString(16).padStart(2,'0')).join('')}
 const sh=a=>{a=[...a];for(let i=a.length-1;i>0;i--){const j=Math.random()*(i+1)|0;[a[i],a[j]]=[a[j],a[i]]}return a};
 const G=()=>D.game,P=()=>as||me,HR=Q.includes('fast')?6e4:36e5,T_VOTE=12*HR,T_TRIAL=3*HR,T_NIGHT=9*HR;
 //RESOLVE_START
 const isM=r=>r==='mafia'||r==='godfather';
 const al=g=>Object.keys(g.alive||{}).filter(n=>g.alive[n]);
-const wc=g=>{const a=al(g),m=a.filter(n=>isM(g.roles[n])).length;return m===0?'🎉 시민팀 승리! 마피아가 전멸했습니다.':m>=a.length-m?'😈 마피아팀 승리! 마을이 마피아에게 넘어갔습니다.':''};
+const wc=g=>{const a=al(g),m=a.filter(n=>isM(g.roles[n])).length,pend=Object.keys(g.rise||{}).length;return m===0?'🎉 시민팀 승리! 마피아가 전멸했습니다.':m>=a.length-m+pend?'😈 마피아팀 승리! 마을이 마피아에게 넘어갔습니다.':''};
 const tally=(o,g)=>{const c={};Object.values(o).forEach(t=>{if(g.alive[t])c[t]=(c[t]||0)+1});const mx=Math.max(0,...Object.values(c));return{mx,top:Object.keys(c).filter(k=>c[k]===mx)}};
 const defOf=(g,V)=>{const vv={};al(g).forEach(v=>{if(V&&V[v]&&g.alive[V[v]]&&V[v]!==v)vv[v]=V[v]});const t=tally(vv,g);return t.top.length===1&&t.mx>0?t.top[0]:''};
-function fin(g,w){g.phase='end';g.winner=w;g.log.push(w)}
+const ad=(g,n,v)=>{g.pt=g.pt||{};g.pt[n]=(g.pt[n]||0)+v};
+const ent=o=>Object.keys(o||{}).filter(k=>o[k]);
+const CHO='ㄱㄲㄴㄷㄸㄹㅁㅂㅃㅅㅆㅇㅈㅉㅊㅋㅌㅍㅎ';
+const cho=n=>{const c=n.charCodeAt(0)-44032;return c>=0&&c<11172?CHO[c/588|0]:n[0]};
+const MIS={live:'🛡️ 게임이 끝날 때까지 살아남기',first:'🎯 이번 판 첫 처형자에게 투표하기',spot:'🧐 마피아에게 투표하기 2회 이상',yes:'👍 마피아인 재판 대상에게 찬성표 던지기'};
+function makeRoles(ns,sh){const n=ns.length,m=n>=10?3:n>=8?2:1,ma=Array(m).fill('mafia');if(n>=12)ma[0]='godfather';
+const fixed=[...ma,'police','doctor','jester',...(n>=10?['soldier','detective']:[]),...(n>=11?['jesus']:[])],pool=sh(['mayor','reporter','drunk','witness']);
+const rl=fixed.slice(0,n);while(rl.length<n)rl.push(pool.length?pool.shift():'citizen');
+const sr=sh(rl),roles={},alive={},ms={},wh={};sh(ns).forEach((x,i)=>{roles[x]=sr[i];alive[x]=true});
+const mf=ns.filter(x=>isM(roles[x])),keys=Object.keys(MIS);
+ns.forEach(x=>{if(roles[x]==='citizen')ms[x]=sh(keys)[0];if(roles[x]==='witness'&&mf.length)wh[x]=cho(sh(mf)[0])});
+return{roles,alive,ms,wh}}
+function die(g,x){g.alive[x]=false;g.dd=g.dd||{};g.dd[x]=g.day;if(g.roles[x]==='jesus'&&!(g.res&&g.res[x])){g.res=g.res||{};g.res[x]=1;g.rise=g.rise||{};g.rise[x]=g.day+3}}
+function missionOK(g,n,k){const V=d=>D.votes[d]||{},F=d=>D.fv[d]||{},ex=g.ex||{};
+if(k==='live')return !!g.alive[n];
+if(k==='first'){const ds=ent(ex).map(Number).sort((a,b)=>a-b);return ds.length>0&&V(ds[0])[n]===ex[ds[0]]}
+if(k==='spot'){let c=0;for(let d=1;d<=g.day;d++){const t=V(d)[n];if(t&&isM(g.roles[t]))c++}return c>=2}
+if(k==='yes'){return ent(g.df).some(d=>isM(g.roles[g.df[d]])&&F(d)[n]==='y')}
+return false}
+function calcAwards(g){const aw={},names=Object.keys(g.roles),tm=r=>isM(r)?'m':r==='jester'?'j':'c',V=d=>D.votes[d]||{},hit={};
+ent(D.ghost).forEach(d=>{const dn=+d;if(!(dn>=1&&dn<=g.day))return;const dd=[(g.ex||{})[dn],(g.kl||{})[dn]].filter(Boolean),pr=(D.ghost[d]||{}).pred||{};Object.keys(pr).forEach(n=>{if(!g.roles[n])return;const t=pr[n];if(t==='-'?dd.length===0:dd.includes(t))hit[n]=(hit[n]||0)+1})});
+const mx=Math.max(0,...Object.values(hit));
+names.forEach(n=>{let t=0;const why=[],put=(v,x)=>{if(v>0){t+=v;why.push(x+' +'+v)}},r=g.roles[n];
+put(10,'참가');const lim=Math.min((g.dd||{})[n]||g.day,g.day);let ok=lim>=1;for(let d=1;d<=lim;d++)if(!V(d)[n])ok=false;if(ok)put(10,'개근');
+if(g.win==='m'&&tm(r)==='m')put(40,'마피아팀 승리');else if(g.win==='c'&&tm(r)==='c')put(20,'시민팀 승리');else if(g.win==='j'&&r==='jester')put(50,'광대 단독 승리');
+put((g.pt||{})[n]||0,'활약');if(g.win==='c'&&tm(r)==='c'&&g.alive[n])put(5,'끝까지 생존');
+const ms=(g.ms||{})[n];if(ms&&missionOK(g,n,ms))put(10,'비밀 미션');
+if(hit[n])put(hit[n]*3,'유령 예측');if(mx>=1&&hit[n]===mx)put(15,'유령 MVP');aw[n]={t,why}});return aw}
+function fin(g,w){g.phase='end';g.winner=w;g.log.push(w);g.win=w.startsWith('🎉')?'c':w.startsWith('😈')?'m':'j';if(g.sid)g.aw=calcAwards(g)}
 function endVote(c,V){V=V||{};const a=al(c),vv={};a.forEach(v=>{if(V[v]&&c.alive[V[v]]&&V[v]!==v)vv[v]=V[v]});
 c.log.push('🗳️ '+c.day+'일차 투표 공개: '+(Object.keys(vv).map(v=>v+'→'+vv[v]).join(', ')||'투표 없음'));const x=defOf(c,V);
-if(x){c.def=x;c.phase='trial';c.deadline=NOW()+T_TRIAL;c.log.push('⚖️ '+x+'님이 재판에 올랐습니다. 카톡방에서 최후 변론을 하고, 앱에서 처형 찬성/반대를 정하세요!')}
+if(x){c.def=x;c.df=c.df||{};c.df[c.day]=x;c.phase='trial';c.deadline=NOW()+T_TRIAL;c.log.push('⚖️ '+x+'님이 재판에 올랐습니다. 카톡방에서 최후 변론을 하고, 앱에서 처형 찬성/반대를 정하세요!')}
 else{c.log.push('⚖️ 동률이거나 투표가 없어 재판 대상이 없었습니다.');startNight(c)}}
 function startNight(c){c.def='';c.phase='night';c.deadline=NOW()+T_NIGHT;c.log.push('🌙 '+c.day+'일차 밤이 되었습니다. 마피아·의사·경찰이 움직이는 시간…')}
-function endTrial(c,F){F=F||{};const x=c.def,a=al(c);let y=0,n=0;a.forEach(v=>{if(v!==x){if(F[v]==='y')y++;else if(F[v]==='n')n++}});c.log.push('⚖️ '+x+' 재판 · 찬성 '+y+' / 반대 '+n);
-if(y>n){c.alive[x]=false;c.log.push('⚖️ '+x+' 처형! '+(isM(c.roles[x])?'마피아였습니다 🔪':'마피아가 아니었습니다 😢'));if(c.roles[x]==='jester')return fin(c,'🤡 광대 '+x+' 단독 승리! 모두가 속았습니다.')}else c.log.push('🕊️ '+x+' 처형 부결! 찬성이 반대보다 많아야 처형돼요. 오늘은 살았습니다.');
+function endTrial(c,F,V){F=F||{};V=V||{};const x=c.def,a=al(c);let y=0,n=0;a.forEach(v=>{if(v!==x){if(F[v]==='y')y++;else if(F[v]==='n')n++}});
+const mv=a.find(v=>v!==x&&c.roles[v]==='mayor'&&F[v]),tie=y===n&&!!mv;c.log.push('⚖️ '+x+' 재판 · 찬성 '+y+' / 반대 '+n+(tie?' · 동률! 마을의 숨은 한 표가 결정했습니다':''));
+if(y>n||(tie&&F[mv]==='y')){die(c,x);c.ex=c.ex||{};c.ex[c.day]=x;if(isM(c.roles[x]))a.forEach(v=>{if(V[v]===x)ad(c,v,5)});c.log.push('⚖️ '+x+' 처형! '+(isM(c.roles[x])?'마피아였습니다 🔪':'마피아가 아니었습니다 😢'));if(c.roles[x]==='jester')return fin(c,'🤡 광대 '+x+' 단독 승리! 모두가 속았습니다.')}else c.log.push('🕊️ '+x+' 처형 부결! 찬성이 반대보다 많아야 처형돼요. 오늘은 살았습니다.');
 const w=wc(c);if(w)return fin(c,w);startNight(c)}
 function endNight(g,N){N=N||{};
 const mp={};Object.keys(N.mafia||{}).forEach(k=>{if(g.alive[k]&&isM(g.roles[k])&&g.alive[N.mafia[k]]&&!isM(g.roles[N.mafia[k]]))mp[k]=N.mafia[k]});
 const t2=tally(mp,g),tg=t2.mx>0?t2.top[Math.random()*t2.top.length|0]:'';
 const dk=Object.keys(N.doctor||{}).find(k=>g.alive[k]&&g.roles[k]==='doctor'),dp=dk?N.doctor[dk]:'';
-if(tg&&tg===dp)g.log.push('🛡️ '+g.day+'일차 밤, 마피아의 습격이 있었지만 의사가 막아냈습니다! 아무도 죽지 않았어요.');
-else if(tg&&g.roles[tg]==='soldier'&&!(g.rev||[]).includes(tg)){g.rev=(g.rev||[]).concat([tg]);g.log.push('🪖 '+g.day+'일차 밤, 마피아의 습격! '+tg+'님은 군인이었습니다. 방패로 버텨냈어요! 아무도 죽지 않았어요.')}
-else if(tg){g.alive[tg]=false;g.log.push('💀 '+g.day+'일차 밤, '+tg+' 사망했습니다.')}
+const pk=Object.keys(N.police||{}).find(k=>g.alive[k]&&g.roles[k]==='police');if(pk){const t=N.police[pk],r=g.roles[t];let hit=r==='mafia';if(r==='godfather')for(let e=1;e<g.day;e++)if(((D.night[e]||{}).police||{})[pk]===t)hit=true;if(hit)ad(g,pk,5)}
+Object.keys(N.reporter||{}).forEach(k=>{if(g.alive[k]&&g.roles[k]==='reporter'&&!(g.rp&&g.rp[k])){g.rp=g.rp||{};g.rp[k]=1;const cnt=new Set(['mafia','doctor','police','detective'].flatMap(q=>Object.keys(N[q]||{}))).size;g.log.push('📰 속보! 간밤에 능력을 사용한 사람은 총 '+cnt+'명이었습니다.')}});
+if(tg&&tg===dp){ad(g,dk,10);g.log.push('🛡️ '+g.day+'일차 밤, 마피아의 습격이 있었지만 의사가 막아냈습니다! 아무도 죽지 않았어요.')}
+else if(tg&&g.roles[tg]==='soldier'&&!(g.rev||[]).includes(tg)){g.rev=(g.rev||[]).concat([tg]);ad(g,tg,5);g.log.push('🪖 '+g.day+'일차 밤, 마피아의 습격! '+tg+'님은 군인이었습니다. 방패로 버텨냈어요! 아무도 죽지 않았어요.')}
+else if(tg){die(g,tg);g.kl=g.kl||{};g.kl[g.day]=tg;g.log.push('💀 '+g.day+'일차 밤, '+tg+' 사망했습니다.')}
 else g.log.push('🌙 '+g.day+'일차 밤은 평화로웠습니다. 아무도 죽지 않았어요.');
-const w=wc(g);if(w)return fin(g,w);g.day++;g.phase='vote';g.deadline=NOW()+T_VOTE;g.log.push('☀️ '+g.day+'일차 낮이 밝았습니다. 처형할 사람에게 투표하세요!')}
-function step(c){const V=D.votes[c.day],F=D.fv[c.day],N=D.night[c.day];if(c.phase==='vote')endVote(c,V);else if(c.phase==='trial')endTrial(c,F);else if(c.phase==='night')endNight(c,N)}
+const w=wc(g);if(w)return fin(g,w);g.day++;g.phase='vote';g.deadline=NOW()+T_VOTE;
+Object.keys(g.rise||{}).forEach(x=>{if(g.rise[x]<=g.day){g.alive[x]=true;delete g.rise[x];if(g.dd)delete g.dd[x];g.rev=(g.rev||[]).concat([x]);ad(g,x,10);g.log.push('✝️ '+x+'님이 부활하셨습니다! 예수님이었습니다. 3일 만에 다시 살아났어요!')}});
+g.log.push('☀️ '+g.day+'일차 낮이 밝았습니다. 처형할 사람에게 투표하세요!')}
+function step(c){const V=D.votes[c.day],F=D.fv[c.day],N=D.night[c.day];if(c.phase==='vote')endVote(c,V);else if(c.phase==='trial')endTrial(c,F,V);else if(c.phase==='night')endNight(c,N)}
 function need(g){if(!g||!g.roles)return false;const a=al(g);if(!a.length)return false;
 if(g.phase==='vote'){const V=D.votes[g.day]||{};return NOW()>=g.deadline||a.every(v=>V[v]&&g.alive[V[v]]&&V[v]!==v)}
 if(g.phase==='trial'){const F=D.fv[g.day]||{};return NOW()>=g.deadline||a.filter(v=>v!==g.def).every(v=>F[v]==='y'||F[v]==='n')}
@@ -99,14 +138,15 @@ window.vote=t=>{const g=G();if(g&&g.phase==='vote'&&run(g)&&g.alive[P()]&&t!==P(
 window.fv=v=>{const g=G();if(!g||g.phase!=='trial'||!run(g)||!g.alive[P()]||P()===g.def)return;set(ref(db,ROOT+'/fvotes/'+g.day+'/'+P()),v)};
 window.act=async(k,t)=>{const g0=G();if(!g0||g0.phase!=='night'||!run(g0)||!g0.alive[P()])return;const g=G(),path=ROOT+'/night/'+g.day+'/'+k+'/'+P();
 if(k==='doctor'&&Object.values((D.night[g.day-1]||{}).doctor||{})[0]===t)return alert('어제 보호한 사람은 연속으로 보호할 수 없어요');
+if(k==='reporter'){if(g0.rp&&g0.rp[P()])return alert('이미 속보를 발행했어요');if(!confirm('속보를 발행할까요?\n게임당 1번이에요. 아침에 모두에게 공개돼요.'))return;await runTransaction(ref(db,path),c=>c===null?'1':undefined);return}
 if(k==='police'||k==='detective'){if(!confirm(t+'님을 조사할까요?\n하루에 딱 1명, 한 번 정하면 바꿀 수 없어요!'))return;
 await runTransaction(ref(db,path),c=>c===null?t:undefined);return}
 set(ref(db,path),t)};
 window.startG=async()=>{const ns=Object.keys(D.entries||{}).filter(n=>D.users[n]),n=ns.length;if(n<MIN)return alert('최소 '+MIN+'명 필요해요 (현재 '+n+'명)');if(G()&&G().phase!=='lobby'&&!confirm('진행 중인 게임을 지우고 새로 시작할까요?'))return;
-const m=n>=10?3:n>=8?2:1,ma=Array(m).fill('mafia');if(n>=12)ma[0]='godfather';const rl=[...ma,'police','doctor','jester',...(n>=10?['soldier','detective']:[])];while(rl.length<n)rl.push('citizen');const s=sh(rl.slice(0,n)),roles={},alive={};sh(ns).forEach((x,i)=>{roles[x]=s[i];alive[x]=true});
-await set(ref(db,ROOT+'/votes'),null);await set(ref(db,ROOT+'/night'),null);await set(ref(db,ROOT+'/ghost'),null);await set(ref(db,ROOT+'/fvotes'),null);await set(ref(db,ROOT+'/game'),{phase:'vote',day:1,seq:0,def:'',deadline:NOW()+T_VOTE,roles,alive,winner:'',log:['🌅 시즌 시작! '+n+'명 참가 · 마피아 '+m+'명 (의사·경찰·광대 포함)','☀️ 1일차 낮이 시작됐어요. 카톡방에서 의심을 나누고 투표하세요. 모두 투표하면 바로 최후 변론으로 넘어가요!']})};
+const {roles,alive,ms,wh}=makeRoles(ns,sh),m=Object.values(roles).filter(isM).length;
+await set(ref(db,ROOT+'/votes'),null);await set(ref(db,ROOT+'/night'),null);await set(ref(db,ROOT+'/ghost'),null);await set(ref(db,ROOT+'/fvotes'),null);await set(ref(db,ROOT+'/game'),{phase:'vote',day:1,seq:0,def:'',deadline:NOW()+T_VOTE,roles,alive,ms,wh,sid:NOW(),winner:'',log:['🌅 게임 시작! '+n+'명 참가 · 마피아 '+m+'명, 모두에게 직업이 배정됐어요','☀️ 1일차 낮이 시작됐어요. 카톡방에서 의심을 나누고 투표하세요. 모두 투표하면 바로 최후 변론으로 넘어가요!']})};
 window.closeNow=async()=>{if(!confirm('지금 이 단계를 바로 넘길까요? (비상용)'))return;await runTransaction(ref(db,ROOT+'/game'),c=>{if(!c||!c.roles||!['vote','trial','night'].includes(c.phase))return;step(c);c.seq=(c.seq||0)+1;return c})};
-window.resetG=async()=>{if(!confirm('새 시즌을 시작할까요? 이전 시즌의 투표·역할·기록과 참가 신청이 모두 지워지고, 새로 참가 신청을 받아요.'))return;for(const k of ['votes','night','ghost','fvotes','entries'])await set(ref(db,ROOT+'/'+k),null);await set(ref(db,ROOT+'/game'),{phase:'lobby'})};
+window.resetG=async()=>{if(!confirm('한 판 더 하시겠어요? 이전 판의 투표·역할·기록과 참가 신청이 모두 지워지고, 참가 신청을 새로 받아요. (달란트와 구매 내역은 유지돼요)'))return;const g0=G();if(g0&&g0.phase==='end'&&g0.aw)for(const k of Object.keys(g0.aw))await claim(k,g0);for(const k of ['votes','night','ghost','fvotes','entries'])await set(ref(db,ROOT+'/'+k),null);await set(ref(db,ROOT+'/game'),{phase:'lobby'})};
 window.applyG=async()=>{const n=P(),g=G();if(!n||(g&&g.phase!=='lobby'))return;await set(ref(db,ROOT+'/entries/'+n),(D.entries&&D.entries[n])?null:true)};
 window.addBots=async()=>{const k=Object.keys(D.users),b=k.filter(n=>n.startsWith('테스트')).length,need=Math.max(0,9-Object.keys(D.entries||{}).length);for(let i=1;i<=need;i++){const n='테스트'+(b+i);await set(ref(db,ROOT+'/users/'+n),{pin:'-',bot:true});await set(ref(db,ROOT+'/entries/'+n),true)}};
 window.delBots=async()=>{for(const n of Object.keys(D.users))if(D.users[n].bot)await set(ref(db,ROOT+'/users/'+n),null)};
@@ -134,13 +174,13 @@ const EM=['👏','😱','🤡','😂','💀'];
 window.pred=t=>{if(ph()==='vote'&&run(G()))set(ref(db,ROOT+'/ghost/'+G().day+'/pred/'+P()),t)};
 window.emo=i=>{if(!P())return;const g=G(),d=Math.min(hp||HT,HT),mine=((((D.ghost||{})[d]||{}).emo||{})[i]||{})[P()];set(ref(db,ROOT+'/ghost/'+d+'/emo/'+i+'/'+P()),mine?null:true)};
 function ghostUI(g,p,d,lv){const pl=P(),gh=D.ghost||{};let h='';
-if(lv&&(g.roles[pl]&&!g.alive[pl])){const cur=((gh[d]||{}).pred||{})[pl];h+=`<div class="t" style="margin-top:10px">🔮 오늘 사망자 예측 (현재: ${cur?(cur==='-'?'아무도 안 죽음':cur):'미선택'})</div><div class="g2">${al(g).map(n=>btn(n,`pred('${n}')`,cur===n,'')).join('')}${btn('🕊️ 아무도 안 죽음',`pred('-')`,cur==='-','g')}</div><div class="sm">처형 또는 밤 사망 중 한 명이라도 맞히면 +1점! 낮 투표가 끝나기 전까지 바꿀 수 있어요</div>`}
+if(lv&&(g.roles[pl]&&!g.alive[pl]&&!(g.rise&&g.rise[pl]))){const cur=((gh[d]||{}).pred||{})[pl];h+=`<div class="t" style="margin-top:10px">🔮 오늘 사망자 예측 (현재: ${cur?(cur==='-'?'아무도 안 죽음':cur):'미선택'})</div><div class="g2">${al(g).map(n=>btn(n,`pred('${n}')`,cur===n,'')).join('')}${btn('🕊️ 아무도 안 죽음',`pred('-')`,cur==='-','g')}</div><div class="sm">처형 또는 밤 사망 중 한 명이라도 맞히면 +1점! 낮 투표가 끝나기 전까지 바꿀 수 있어요</div>`}
 const em=(gh[d]||{}).emo||{};h+=`<div class="g2" style="margin-top:10px">${EM.map((e,i)=>{const o=em[i]||{};return btn(e+' '+Object.keys(o).length,`emo(${i})`,!!o[pl],'g')}).join('')}</div>`;
 const sc={};Object.keys(gh).forEach(day=>{const dn=+day;if(!(dn<g.day||g.phase==='end'))return;const r=RES(g,dn),dd=[r.ex&&r.ex.n,r.kl].filter(Boolean),pr=(gh[day]||{}).pred||{};Object.keys(pr).forEach(n=>{const t=pr[n];sc[n]=(sc[n]||0)+((t==='-'?dd.length===0:dd.includes(t))?1:0)})});
 const rk=Object.keys(sc).sort((a,b)=>sc[b]-sc[a]);if(rk.length)h+=`<div class="sm" style="margin-top:8px">🔮 유령 예측 순위: ${rk.map(n=>n+' '+sc[n]+'점').join(' · ')}</div>`;return h}
-function polRes(g,p,d){const t=((D.night[d]||{}).police||{})[p];if(!t)return null;const r=g.roles[t];if(r==='mafia')return{t,m:1};if(r==='godfather'){let c=0;for(let e=1;e<d;e++)if(((D.night[e]||{}).police||{})[p]===t)c++;return{t,m:c>=1?2:0}}return{t,m:0}}
+function polRes(g,p,d){const t=((D.night[d]||{}).police||{})[p];if(!t)return null;const r=g.roles[t];if(r==='mafia'||r==='drunk')return{t,m:1};if(r==='godfather'){let c=0;for(let e=1;e<d;e++)if(((D.night[e]||{}).police||{})[p]===t)c++;return{t,m:c>=1?2:0}}return{t,m:0}}
 const PT=['마피아 아님 ✅','마피아 🔪','🕴️ 사실은 마피아였습니다'];
-function hist(g,p){const el=$('hist'),has=g&&g.phase!=='lobby'&&g.roles,full=has&&(g.phase==='end'||(p&&(g.roles[p]&&!g.alive[p]))),top=has?(full?g.day:(g.phase==='vote'?g.day-1:g.day)):0;HT=top;if(!has||top<1){el.style.display='none';return}
+function hist(g,p){const el=$('hist'),has=g&&g.phase!=='lobby'&&g.roles,full=has&&(g.phase==='end'||(p&&(g.roles[p]&&!g.alive[p]&&!(g.rise&&g.rise[p])))),top=has?(full?g.day:(g.phase==='vote'?g.day-1:g.day)):0;HT=top;if(!has||top<1){el.style.display='none';return}
 el.style.display='block';const d=Math.min(hp||top,top),dead=new Set();for(let e=1;e<d;e++){const r=RES(g,e);if(r.ex)dead.add(r.ex.n);if(r.kl)dead.add(r.kl)}
 const nm=Object.keys(g.roles),n=nm.length,pos={};nm.forEach((x,i)=>{const a=-Math.PI/2+i*2*Math.PI/n;pos[x]=[190+128*Math.cos(a),170+120*Math.sin(a)]});
 const V=D.votes[d]||{},N=D.night[d]||{},r=RES(g,d),live=d===g.day&&g.phase!=='end',ar=[];
@@ -156,45 +196,88 @@ const F0=D.fv[d]||{},yl=Object.keys(F0).filter(k=>F0[k]==='y'),nl=Object.keys(F0
 <div class="sm" style="margin:4px 0"><span style="color:${COL.v}">━ 투표</span>${full?` · <span style="color:${COL.m}">━ 마피아</span> · <span style="color:${COL.d}">━ 의사</span> · <span style="color:${COL.p}">━ 경찰</span> · <span style="color:${COL.e}">━ 탐정</span>`:''}</div>
 <div class="q" style="font-size:.78rem">🗳️ 투표: ${L(V)}${full?`\n🔪 마피아: ${L(N.mafia)}\n💉 의사: ${L(N.doctor)}\n🕵️ 경찰: ${pr}\n🔎 탐정: ${L(N.detective)}`:''}</div><div style="font-size:.82rem;margin-top:6px;line-height:1.6">${out}${fvt}</div>${extra}`}
 
+const SLOT={title:'칭호',hat:'모자',glass:'안경',cape:'망토',nameC:'이름색',dead:'쓰러짐',win:'승리'};
+const SHOP=[
+{id:'t1',s:'title',n:'비둘기 목격자',p:30,v:'비둘기 목격자'},{id:'t2',s:'title',n:'의심 많은 자',p:30,v:'의심 많은 자'},{id:'t3',s:'title',n:'평화주의자',p:30,v:'평화주의자'},{id:'t4',s:'title',n:'마을의 눈',p:40,v:'마을의 눈'},
+{id:'t5',s:'title',n:'모닥불 지킴이',p:50,v:'모닥불 지킴이'},{id:'t6',s:'title',n:'거짓말 장인',p:60,v:'거짓말 장인'},{id:'t7',s:'title',n:'불사조',p:80,v:'불사조'},{id:'t8',s:'title',n:'달란트왕',p:100,v:'달란트왕'},
+{id:'h1',s:'hat',n:'리본',p:20,v:'<path d="M0-49L-7-54L-7-46Z" fill="#f06595"/><path d="M0-49L7-54L7-46Z" fill="#f06595"/><circle cx="0" cy="-49" r="1.8" fill="#c2255c"/>'},
+{id:'h2',s:'hat',n:'야구모자',p:20,v:'<path d="M-8.2-42a8.2 8.2 0 0 1 16.4 0z" fill="#1971c2"/><rect x="2" y="-44.5" width="11" height="3" rx="1.5" fill="#1864ab"/>'},
+{id:'h3',s:'hat',n:'학사모',p:40,v:'<path d="M-11-50L0-55L11-50L0-45Z" fill="#212529"/><rect x="-6" y="-49" width="12" height="4" fill="#212529"/><line x1="10" y1="-50" x2="10" y2="-44" stroke="#ffd43b" stroke-width="1"/>'},
+{id:'h4',s:'hat',n:'산타모자',p:50,v:'<path d="M-8-48.5Q0-64 9-52L10-48.5Z" fill="#e03131"/><rect x="-9" y="-49.5" width="19" height="3" rx="1.5" fill="#fff"/><circle cx="9.5" cy="-53" r="2.4" fill="#fff"/>'},
+{id:'h5',s:'hat',n:'신사모자',p:50,v:'<rect x="-10" y="-49.5" width="20" height="3" rx="1" fill="#222"/><rect x="-6.5" y="-61" width="13" height="12" fill="#222"/><rect x="-6.5" y="-53" width="13" height="2.5" fill="#c92a2a"/>'},
+{id:'h6',s:'hat',n:'마법사모자',p:60,v:'<path d="M-10-48L0-70L10-48Z" fill="#5f3dc4"/><rect x="-12" y="-49.5" width="24" height="3" rx="1.5" fill="#4c2fb0"/><circle cx="2" cy="-58" r="1.6" fill="#ffd43b"/>'},
+{id:'h7',s:'hat',n:'천사 링',p:80,v:'<ellipse cx="0" cy="-55" rx="8" ry="2.6" fill="none" stroke="#ffd43b" stroke-width="2"/>'},
+{id:'h8',s:'hat',n:'왕관',p:120,v:'<path d="M-8-48.5L-9-59L-4-53.5L0-61L4-53.5L9-59L8-48.5Z" fill="#ffd43b" stroke="#e67700" stroke-width=".8"/>'},
+{id:'g1',s:'glass',n:'동그란 안경',p:20,v:'<circle cx="-3.6" cy="-41" r="2.8" fill="none" stroke="#222" stroke-width="1"/><circle cx="3.6" cy="-41" r="2.8" fill="none" stroke="#222" stroke-width="1"/><line x1="-.8" y1="-41" x2=".8" y2="-41" stroke="#222" stroke-width="1"/>'},
+{id:'g2',s:'glass',n:'별 안경',p:30,v:'<text x="-3.6" y="-38.8" font-size="6.5" text-anchor="middle">⭐</text><text x="3.6" y="-38.8" font-size="6.5" text-anchor="middle">⭐</text>'},
+{id:'g3',s:'glass',n:'선글라스',p:40,v:'<rect x="-7.5" y="-43" width="6.5" height="4" rx="1.5" fill="#111"/><rect x="1" y="-43" width="6.5" height="4" rx="1.5" fill="#111"/><line x1="-1" y1="-42" x2="1" y2="-42" stroke="#111" stroke-width="1"/>'},
+{id:'c1',s:'cape',n:'붉은 망토',p:50,v:'<path d="M-9-33L9-33L14-6L-14-6Z" fill="#c92a2a" opacity=".92"/>'},
+{id:'c2',s:'cape',n:'푸른 망토',p:50,v:'<path d="M-9-33L9-33L14-6L-14-6Z" fill="#1c7ed6" opacity=".92"/>'},
+{id:'c3',s:'cape',n:'보랏빛 망토',p:60,v:'<path d="M-9-33L9-33L14-6L-14-6Z" fill="#7048e8" opacity=".92"/>'},
+{id:'c4',s:'cape',n:'황금 망토',p:80,v:'<path d="M-9-33L9-33L14-6L-14-6Z" fill="#fab005" opacity=".95"/>'},
+{id:'n1',s:'nameC',n:'하늘색 이름',p:30,v:'#74c0fc'},{id:'n2',s:'nameC',n:'분홍 이름',p:30,v:'#f783ac'},{id:'n3',s:'nameC',n:'연두 이름',p:30,v:'#69db7c'},{id:'n4',s:'nameC',n:'황금 이름',p:40,v:'#ffd43b'},{id:'n5',s:'nameC',n:'무지개 이름',p:70,v:'url(#rbg)'},
+{id:'d1',s:'dead',n:'별빛',p:30,v:'✨'},{id:'d2',s:'dead',n:'장미 한 송이',p:30,v:'🌹'},{id:'d3',s:'dead',n:'촛불',p:40,v:'🕯️'},{id:'d4',s:'dead',n:'유령 승천',p:40,v:'👻'},
+{id:'w1',s:'win',n:'폭죽',p:40,v:'🎉'},{id:'w2',s:'win',n:'불꽃',p:50,v:'🔥'},{id:'w3',s:'win',n:'승리의 왕관',p:60,v:'👑'},{id:'w4',s:'win',n:'트로피',p:70,v:'🏆'}];
+const ITEM=Object.fromEntries(SHOP.map(i=>[i.id,i]));
+const acc=eq=>{eq=eq||{};const g=k=>(ITEM[eq[k]]||{}).v||'';return{back:g('cape'),front:g('glass')+g('hat'),nc:g('nameC'),ti:g('title'),dx:g('dead'),wx:g('win')}};
+const won=(g,x)=>{const r=g.roles[x];return(g.win==='m'&&isM(r))||(g.win==='c'&&!isM(r)&&r!=='jester')||(g.win==='j'&&r==='jester')};
+const buyTx=(c,id)=>{const it=ITEM[id];c=c||{t:0,own:{},eq:{}};if(!it||(c.own&&c.own[id])||(c.t||0)<it.p)return;c.t=(c.t||0)-it.p;c.own=c.own||{};c.own[id]=1;return c};
+const claimTx=(c,a,sid)=>{c=c||{t:0,own:{},eq:{}};if(c.last===sid)return;c.t=(c.t||0)+a.t;c.last=sid;return c};
 const known=new Set(),SHC=['#e03131','#1971c2','#2f9e44','#f08c00','#9c36b5','#0c8599','#c2255c','#5f3dc4','#e8590c','#2b8a3e'],HRC=['#2b2118','#5a3a1e','#d9a441','#111','#8a3b12'];
 const hs=x=>{let h=0;for(const c of x)h=(h*31+c.charCodeAt(0))>>>0;return h};
 function ringRender(g,p){const el=$('ring'),has=g&&g.roles&&g.phase!=='lobby',names=has?Object.keys(g.roles):Object.keys(D.entries||{}).filter(n=>D.users[n]);
 if(!names.length){el.innerHTML='';return}
-const spec=has&&(g.phase==='end'||(p&&(g.roles[p]&&!g.alive[p]))),n=names.length;
+const spec=has&&(g.phase==='end'||(p&&(g.roles[p]&&!g.alive[p]&&!(g.rise&&g.rise[p])))),n=names.length;
 const arr=names.map((x,i)=>{const a=-Math.PI/2+i*2*Math.PI/n,px=190+140*Math.cos(a),py=185+115*Math.sin(a),sc=(0.95+0.3*Math.sin(a))*(n>14?.85:1),dead=has&&!g.alive[x],h=hs(x),sh=SHC[h%10],hr=HRC[(h>>3)%5];
 const fall=dead&&!known.has(x);if(dead)known.add(x);
-const role0=has&&(x===p||spec)?RN[x===p?g.roles[x]:vis(g,g.roles[x])].split(' ')[0]:'',role=has&&(g.rev||[]).includes(x)?'🪖':role0,vo=has&&g.phase==='vote'&&(D.votes[g.day]||{})[x]?'✅':'';
-const body=`<ellipse cx="0" cy="1" rx="15" ry="3.5" fill="#000" opacity=".3"/><rect x="-6" y="-14" width="5" height="14" rx="2" fill="#3b4252"/><rect x="1" y="-14" width="5" height="14" rx="2" fill="#3b4252"/><line x1="-8" y1="-29" x2="-13" y2="-16" stroke="${sh}" stroke-width="4.5" stroke-linecap="round"/><line x1="8" y1="-29" x2="13" y2="-16" stroke="${sh}" stroke-width="4.5" stroke-linecap="round"/><rect x="-8.5" y="-33" width="17" height="21" rx="6" fill="${sh}"/><circle cx="0" cy="-41" r="8" fill="#f1c27d"/><path d="M-8 -42a8 8 0 0 1 16 0z" fill="${hr}"/>`;
+const role0=has&&(x===p||spec)?RN[x===p?g.roles[x]:vis(g,g.roles[x])].split(' ')[0]:'',role=has&&(g.rev||[]).includes(x)?(g.roles[x]==='jesus'?'✝️':'🪖'):role0,vo=has&&g.phase==='vote'&&(D.votes[g.day]||{})[x]?'✅':'';
+const ac=acc(((D.profiles||{})[x]||{}).eq);const body=`<ellipse cx="0" cy="1" rx="15" ry="3.5" fill="#000" opacity=".3"/>${ac.back}<rect x="-6" y="-14" width="5" height="14" rx="2" fill="#3b4252"/><rect x="1" y="-14" width="5" height="14" rx="2" fill="#3b4252"/><line x1="-8" y1="-29" x2="-13" y2="-16" stroke="${sh}" stroke-width="4.5" stroke-linecap="round"/><line x1="8" y1="-29" x2="13" y2="-16" stroke="${sh}" stroke-width="4.5" stroke-linecap="round"/><rect x="-8.5" y="-33" width="17" height="21" rx="6" fill="${sh}"/><circle cx="0" cy="-41" r="8" fill="#f1c27d"/><path d="M-8 -42a8 8 0 0 1 16 0z" fill="${hr}"/>${ac.front}`;
 const svg=`<g transform="translate(${px.toFixed(1)} ${py.toFixed(1)}) scale(${sc.toFixed(2)})"><g class="fig ${dead?'dead'+(fall?' fall':''):'idle'}" ${dead?'':`style="animation-delay:${(h%7)*.35}s"`}>${body}</g>`
 +(dead?`<text x="22" y="-14" font-size="15" text-anchor="middle">💀</text>${(()=>{const r=g.roles[x],mf=isM(r),lb=spec?RN[x===p?r:vis(g,r)]:(mf?'🔪 마피아':'🙂 시민');return`<rect x="-8" y="-36" width="60" height="17" rx="8" fill="${mf?'#c92a2a':'#2b8a3e'}"/><text x="22" y="-24" font-size="11" font-weight="700" text-anchor="middle" fill="#fff">${lb}</text>`})()}`:`${role?`<text x="0" y="-55" font-size="14" text-anchor="middle">${role}</text>`:''}${vo?`<text x="16" y="-48" font-size="10">${vo}</text>`:''}`)
-+`<text x="0" y="14" font-size="11" text-anchor="middle" fill="${dead?'#868e96':'#fff'}">${x}</text></g>`;return[py,svg]});
-el.innerHTML=`<svg viewBox="0 0 380 350" style="width:100%"><ellipse cx="190" cy="185" rx="170" ry="140" fill="rgba(255,200,120,.05)"/><text class="fire" x="190" y="200" font-size="38" text-anchor="middle">🔥</text>${arr.sort((a,b)=>a[0]-b[0]).map(x=>x[1]).join('')}</svg>`}
++`<text x="0" y="14" font-size="11" text-anchor="middle" fill="${dead?'#868e96':(ac.nc||'#fff')}">${x}</text>${ac.ti?`<text x="0" y="24" font-size="8" text-anchor="middle" fill="#ffd43b">${ac.ti}</text>`:''}${(dead&&ac.dx?`<text x="40" y="-4" font-size="13">${ac.dx}</text>`:'')+(has&&g.phase==='end'&&ac.wx&&won(g,x)?`<text x="0" y="-66" font-size="16" text-anchor="middle">${ac.wx}</text>`:'')}</g>`;return[py,svg]});
+el.innerHTML=`<svg viewBox="0 0 380 350" style="width:100%"><defs><linearGradient id="rbg" x1="0" x2="1"><stop offset="0" stop-color="#ff6b6b"/><stop offset=".5" stop-color="#ffd43b"/><stop offset="1" stop-color="#4dabf7"/></linearGradient></defs><ellipse cx="190" cy="185" rx="170" ry="140" fill="rgba(255,200,120,.05)"/><text class="fire" x="190" y="200" font-size="38" text-anchor="middle">🔥</text>${arr.sort((a,b)=>a[0]-b[0]).map(x=>x[1]).join('')}</svg>`}
 function detRes(g,p,d){const N=D.night[d]||{},t=(N.detective||{})[p];if(!t)return null;const r=g.roles[t];let x='';if(isM(r))x=(N.mafia||{})[t];else if(r==='doctor')x=(N.doctor||{})[t];else if(r==='police')x=(N.police||{})[t];else if(r==='detective')x=(N.detective||{})[t];return{t,x:x||''}}
 function detList(g,p){let rs='';for(let d=1;d<=g.day;d++){const q=detRes(g,p,d);if(!q)continue;rs+=(d<g.day||g.phase==='end')?`<div>${d}일차: ${q.t} → <b>${q.x?'간밤에 '+q.x+'님에게 능력을 썼어요':'간밤에 아무에게도 능력을 쓰지 않았어요'}</b></div>`:`<div>${d}일차: ${q.t} 조사 중… (결과는 다음 날 아침에 알려드려요)</div>`}return`<div class="q" style="margin-top:8px">🔎 조사 기록\n${rs||'아직 없어요'}</div>`}
+function previewSVG(eq){const a=acc(eq);return`<svg viewBox="-34 -76 68 94" style="width:84px;height:116px"><ellipse cx="0" cy="1" rx="15" ry="3.5" fill="#000" opacity=".3"/>${a.back}<rect x="-6" y="-14" width="5" height="14" rx="2" fill="#3b4252"/><rect x="1" y="-14" width="5" height="14" rx="2" fill="#3b4252"/><line x1="-8" y1="-29" x2="-13" y2="-16" stroke="#1971c2" stroke-width="4.5" stroke-linecap="round"/><line x1="8" y1="-29" x2="13" y2="-16" stroke="#1971c2" stroke-width="4.5" stroke-linecap="round"/><rect x="-8.5" y="-33" width="17" height="21" rx="6" fill="#1971c2"/><circle cx="0" cy="-41" r="8" fill="#f1c27d"/><path d="M-8 -42a8 8 0 0 1 16 0z" fill="#5a3a1e"/>${a.front}</svg>`}
+let shopOpen=false,shopSlot='hat';
+window.shopToggle=()=>{shopOpen=!shopOpen;render()};
+window.shopTab=k=>{shopSlot=k;render()};
+window.buy=async id=>{if(!me)return;const r=await runTransaction(ref(db,ROOT+'/profiles/'+me),c=>buyTx(c,id));if(r&&!r.committed)alert('달란트가 부족하거나 이미 가진 아이템이에요')};
+window.equip=async(k,id)=>{if(!me)return;await set(ref(db,ROOT+'/profiles/'+me+'/eq/'+k),id||null)};
+function shopRender(){const el=$('shop');if(!me){el.style.display='none';return}el.style.display='block';const pf=(D.profiles||{})[me]||{},t=pf.t||0,own=pf.own||{},eq=pf.eq||{};
+const top=`<div class="g2" style="align-items:center;justify-content:space-between"><div>🏪 <b>달란트시장</b> · 💰 ${t}달란트</div>${btn(shopOpen?'닫기':'열기','shopToggle()',0,'g')}</div>`;
+if(!shopOpen){el.innerHTML=top;return}
+el.innerHTML=top+`<div class="g2" style="margin:8px 0">${Object.keys(SLOT).map(k=>btn(SLOT[k],`shopTab('${k}')`,k===shopSlot,'g')).join('')}</div><div style="text-align:center">${previewSVG(eq)}</div><div class="sm" style="text-align:center;margin:4px 0 8px">게임이 끝나면 달란트가 쌓여요. 꾸미기는 승패에 영향이 없어요!</div>${SHOP.filter(i=>i.s===shopSlot).map(i=>`<div class="g2" style="align-items:center;justify-content:space-between;margin:6px 0"><div>${(i.s==='dead'||i.s==='win')?i.v+' ':''}${i.n} <span class="sm">${i.p}달란트</span></div>${own[i.id]?(eq[i.s]===i.id?btn('해제',`equip('${i.s}','')`,1,''):btn('착용',`equip('${i.s}','${i.id}')`,0,'')):btn('구매',`buy('${i.id}')`,0,t>=i.p?'o':'g')}</div>`).join('')}`}
+function awardRender(g){const el=$('award');if(!g||g.phase!=='end'||!g.aw){el.style.display='none';return}el.style.display='block';const my=g.aw[me],rk=Object.keys(g.aw).sort((a,b)=>g.aw[b].t-g.aw[a].t);
+el.innerHTML=`<div class="t">🪙 이번 판 달란트 정산</div>${my?`<div class="q" style="font-size:.85rem">내 획득: <b>+${my.t}달란트</b>\n${my.why.join(' · ')}</div>`:'<div class="q">참가자가 아니라 달란트를 받지 않아요.</div>'}<div class="sm" style="margin-top:6px">🏆 ${rk.slice(0,5).map((n,i)=>(['🥇','🥈','🥉'][i]||(i+1)+'.')+' '+n+' +'+g.aw[n].t).join(' · ')}</div>`}
+const clm={};
+async function claim(name,g){const a=g.aw&&g.aw[name];if(!a||!g.sid)return;await runTransaction(ref(db,ROOT+'/profiles/'+name),c=>claimTx(c,a,g.sid))}
+function autoClaim(){const g=G();if(me&&g&&g.phase==='end'&&g.aw&&g.aw[me]&&g.sid&&!clm[g.sid+me]){clm[g.sid+me]=1;claim(me,g)}}
 function polList(g,p){let rs='';for(let d=1;d<=g.day;d++){const q=polRes(g,p,d);if(!q)continue;rs+=(d<g.day||g.phase==='end')?`<div>${d}일차: ${q.t} → <b>${PT[q.m]}</b></div>`:`<div>${d}일차: ${q.t} 조사 중… (결과는 다음 날 아침에 알려드려요)</div>`}return`<div class="q" style="margin-top:8px">🕵️ 조사 기록\n${rs||'아직 없어요'}</div>`}
-function render(){const g=G(),p=P(),$u=Object.keys(D.users);hist(g,p);ringRender(g,p);
-$('hd').textContent=g&&g.phase==='end'?'🏁 시즌 종료':g&&['vote','trial','night'].includes(g.phase)?'':'🛋️ 참가 신청 중 · 신청 '+Object.keys(D.entries||{}).filter(n=>D.users[n]).length+'명 (최소 '+MIN+'명)'+(TEST?' · 🧪테스트':'');cd();
-$('login').innerHTML=me?`<div class="g2" style="align-items:center;justify-content:space-between"><div>👤 <b>${me}</b>${as?` → <b style="color:#ffd43b">${as}</b>로 보는 중`:''}</div>${btn('변경','logout()',0,'g')}</div>`:'<div class="t">👤 입장</div><div class="g2">'+ROSTER.map(n=>`<button class="g" onclick="pick('${n}')">${n}</button>`).join('')+'</div><input id="nm" maxlength="8" placeholder="이름"><input id="pin" type="password" inputmode="numeric" maxlength="4" placeholder="비밀번호 숫자 4자리 (처음이면 새로 설정)"><button style="width:100%" onclick="login()">입장</button><div class="sm" id="lm"></div>';
+function render(){const g=G(),p=P(),$u=Object.keys(D.users);hist(g,p);ringRender(g,p);awardRender(g);shopRender();autoClaim();
+$('hd').textContent=g&&g.phase==='end'?'🏁 게임 종료':g&&['vote','trial','night'].includes(g.phase)?'':'🛋️ 참가 신청 중 · 신청 '+Object.keys(D.entries||{}).filter(n=>D.users[n]).length+'명 (최소 '+MIN+'명)'+(TEST?' · 🧪테스트':'');cd();
+$('login').innerHTML=me?`<div class="g2" style="align-items:center;justify-content:space-between"><div>👤 <b>${me}</b> <span class="sm">💰${((D.profiles||{})[me]||{}).t||0}</span>${as?` → <b style="color:#ffd43b">${as}</b>로 보는 중`:''}</div>${btn('변경','logout()',0,'g')}</div>`:'<div class="t">👤 입장</div><div class="g2">'+ROSTER.map(n=>`<button class="g" onclick="pick('${n}')">${n}</button>`).join('')+'</div><input id="nm" maxlength="8" placeholder="이름"><input id="pin" type="password" inputmode="numeric" maxlength="4" placeholder="비밀번호 숫자 4자리 (처음이면 새로 설정)"><button style="width:100%" onclick="login()">입장</button><div class="sm" id="lm"></div>';
 const M=$('me'),A=$('act');M.style.display=A.style.display='none';
-if(p&&(!g||g.phase==='lobby')){A.style.display='block';const on=D.entries&&D.entries[p],cnt=Object.keys(D.entries||{}).filter(n=>D.users[n]).length;A.innerHTML=`<div class="t">📝 시즌 참가 신청</div><div class="q">${on?'✅ 참가 신청 완료! 운영자가 시작하면 직업이 배정돼요.':'이번 시즌에 참가하려면 신청해 주세요. 신청하지 않으면 관전만 할 수 있어요.'}</div><div class="g2" style="margin-top:6px">${btn(on?'신청 취소':'🙋 참가 신청','applyG()',on,'')}</div><div class="sm" style="margin-top:6px">현재 ${cnt}명 신청 (최소 ${MIN}명)</div>`}
+if(p&&(!g||g.phase==='lobby')){A.style.display='block';const on=D.entries&&D.entries[p],cnt=Object.keys(D.entries||{}).filter(n=>D.users[n]).length;A.innerHTML=`<div class="t">📝 이번 판 참가 신청</div><div class="q">${on?'✅ 참가 신청 완료! 모두 모이면 운영자가 게임을 시작해요.':'이번 판에 참가하려면 신청해 주세요. 신청하지 않으면 관전만 할 수 있어요.'}</div><div class="g2" style="margin-top:6px">${btn(on?'신청 취소':'🙋 참가 신청','applyG()',on,'')}</div><div class="sm" style="margin-top:6px">현재 ${cnt}명 신청 (최소 ${MIN}명)</div>`}
 if(p&&g&&g.phase!=='lobby'){const r=g.roles[p],dead=r&&!g.alive[p];M.style.display='block';
-M.innerHTML=!r?'<div class="role">👀 관전자</div><div class="q" style="text-align:center">이번 시즌은 참가 신청을 하지 않아 관전만 가능해요.\n직업과 능력 기록은 보이지 않고, 공개된 투표와 결과만 볼 수 있어요.</div>':`<div class="role">${RN[r]}${dead?' · 💀 사망':''}</div><div class="q" style="text-align:center">${dead?'모든 직업을 아래에서 볼 수 있어요. (카톡방 스포 금지!)':RD[r]}${isM(r)?'\n동료: '+Object.keys(g.roles).filter(n=>isM(g.roles[n])&&n!==p).map(n=>n+(g.roles[n]==='godfather'?'(갓파더)':'')).join(', '):''}</div>`;
+M.innerHTML=!r?'<div class="role">👀 관전자</div><div class="q" style="text-align:center">이번 판은 참가 신청을 하지 않아 관전만 가능해요.\n직업과 능력 기록은 보이지 않고, 공개된 투표와 결과만 볼 수 있어요.</div>':`<div class="role">${RN[r]}${dead?' · 💀 사망':''}</div><div class="q" style="text-align:center">${dead?((g.rise&&g.rise[p])?'✝️ 부활 대기 중! '+g.rise[p]+'일차 낮에 다시 살아나요. 그동안은 죽은 사람처럼 말하지 마세요. (직업 정보는 볼 수 없어요)':'모든 직업을 아래에서 볼 수 있어요. (카톡방 스포 금지!)'):RD[r]+(r==='witness'&&g.wh&&g.wh[p]?'\n🔎 힌트: 마피아 팀 중 한 명의 이름은 「'+g.wh[p]+'」으로 시작해요':'')+(r==='citizen'&&g.ms&&g.ms[p]?'\n🎯 비밀 미션: '+MIS[g.ms[p]]+' (성공하면 +10달란트)':'')}${isM(r)?'\n동료: '+Object.keys(g.roles).filter(n=>isM(g.roles[n])&&n!==p).map(n=>n+(g.roles[n]==='godfather'?'(갓파더)':'')).join(', '):''}</div>`;
 if(r&&!dead&&['vote','trial','night'].includes(g.phase)){A.style.display='block';const o=al(g).filter(n=>n!==p),d=g.day,V0=D.votes[d]||{},N=D.night[d]||{};let h='';
 if(g.phase==='vote'){const cur=V0[p];h=`<div class="t">🗳️ ${d}일차 낮 · 처형할 사람 (현재: ${cur||'미투표'})</div><div class="g2">${o.map(n=>btn(n,`vote('${n}')`,cur===n,'')).join('')}</div><div class="sm" style="margin:6px 0">투표 ${Object.keys(V0).filter(k=>g.alive[k]).length}/${al(g).length}명 · 모두 투표하면 바로 최후 변론으로 넘어가요 (그전까진 바꿀 수 있어요)</div>`}
 else if(g.phase==='trial'){const def=g.def,fvm=D.fv[d]||{},mn=fvm[p],cn={};Object.keys(V0).forEach(k=>{if(g.alive[k]&&g.alive[V0[k]]&&V0[k]!==k)cn[V0[k]]=(cn[V0[k]]||0)+1});
-h=`<div class="t">⚖️ 최후 변론 · 처형 찬반 투표</div><div class="q" style="font-size:.8rem">📢 공개된 투표\n${Object.entries(cn).sort((a,b)=>b[1]-a[1]).map(([n,v])=>n+' '+v+'표').join(' · ')||'투표 없음'}\n${Object.keys(V0).filter(k=>g.alive[k]).map(k=>k+'→'+V0[k]).join(', ')}</div>${p===def?'<div class="q" style="margin-top:6px">⚠️ 오늘의 재판 대상은 당신이에요! 카톡방에서 최후 변론을 하세요. (찬반 투표 불가)</div>':`<div class="q" style="margin-top:6px">재판 대상: <b>${def}</b>\n찬성이 반대보다 많으면 처형, 동률이면 부결이에요.</div><div class="g2">${btn('👍 처형 찬성','fv(\'y\')',mn==='y','r')}${btn('👎 처형 반대','fv(\'n\')',mn==='n','')}</div><div class="sm" style="margin:6px 0">찬반 참여 ${Object.keys(fvm).filter(k=>g.alive[k]&&k!==def).length}/${al(g).filter(n=>n!==def).length}명 · 모두 정하면 바로 밤으로 넘어가요</div>`}`}
+h=`<div class="t">⚖️ 최후 변론 · 처형 찬반 투표</div><div class="q" style="font-size:.8rem">📢 공개된 투표\n${Object.entries(cn).sort((a,b)=>b[1]-a[1]).map(([n,v])=>n+' '+v+'표').join(' · ')||'투표 없음'}\n${Object.keys(V0).filter(k=>g.alive[k]).map(k=>k+'→'+V0[k]).join(', ')}</div>${p===def?'<div class="q" style="margin-top:6px">⚠️ 오늘의 재판 대상은 당신이에요! 카톡방에서 최후 변론을 하세요. (찬반 투표 불가)</div>':`<div class="q" style="margin-top:6px">재판 대상: <b>${def}</b>\n찬성이 반대보다 많으면 처형, 동률이면 부결이에요.${g.roles[p]==='mayor'?'\n🏛️ 이장: 동률이면 당신의 한 표가 결정해요!':''}</div><div class="g2">${btn('👍 처형 찬성','fv(\'y\')',mn==='y','r')}${btn('👎 처형 반대','fv(\'n\')',mn==='n','')}</div><div class="sm" style="margin:6px 0">찬반 참여 ${Object.keys(fvm).filter(k=>g.alive[k]&&k!==def).length}/${al(g).filter(n=>n!==def).length}명 · 모두 정하면 바로 밤으로 넘어가요</div>`}`}
 else{
 if(isM(r)){const c=(N.mafia||{})[p];h+=`<div class="t" style="margin-top:10px">🔪 오늘 밤 제거할 사람 (현재: ${c||'미선택'})</div><div class="g2">${o.filter(n=>!isM(g.roles[n])).map(n=>btn(n,`act('mafia','${n}')`,c===n,'r')).join('')}</div><div class="sm" style="margin-top:6px">동료 지목: ${Object.keys(g.roles).filter(k=>isM(g.roles[k])&&k!==p&&g.alive[k]).map(k=>k+(N.mafia&&N.mafia[k]?'→'+N.mafia[k]:' (미선택)')).join(' · ')||'생존 동료 없음'}<br>의견이 갈리면 최다 득표, 동률이면 무작위예요!</div>`}
 if(r==='doctor'){const c=(N.doctor||{})[p],last=Object.values((D.night[g.day-1]||{}).doctor||{})[0];h+=`<div class="t" style="margin-top:10px">💉 오늘 밤 보호할 사람 (현재: ${c||'미선택'})</div><div class="g2">${al(g).map(n=>n===last?`<button disabled class="g">${n}(어제 보호)</button>`:btn(n,`act('doctor','${n}')`,c===n,'')).join('')}</div>`}
 if(r==='police'){const c=(N.police||{})[p];h+=`<div class="t" style="margin-top:10px">🕵️ ${c?'오늘 조사 완료: '+c+' (변경 불가 · 결과는 다음 날 아침에!)':'오늘 조사할 사람 (딱 1명 · 결과는 다음 날 아침 공개)'}</div>${c?'':`<div class="g2">${o.map(n=>btn(n,`act('police','${n}')`,0,'')).join('')}</div>`}`}
 if(r==='detective'){const c=(N.detective||{})[p];h+=`<div class="t" style="margin-top:10px">🔎 ${c?'오늘 조사 완료: '+c+' (변경 불가 · 결과는 다음 날 아침에!)':'오늘 조사할 사람 (딱 1명 · 그 사람이 오늘 밤 능력을 누구에게 썼는지 알려줘요)'}</div>${c?'':`<div class="g2">${o.map(n=>btn(n,`act('detective','${n}')`,0,'')).join('')}</div>`}`}
-if(!isM(r)&&r!=='doctor'&&r!=='police'&&r!=='detective')h='<div class="q">🌙 밤이에요. 당신은 할 일이 없어요. 💤 아침을 기다려 주세요.</div>'}
+if(r==='reporter'){const c=(N.reporter||{})[p],used=g.rp&&g.rp[p];h+=`<div class="t" style="margin-top:10px">📰 속보 (게임당 1번)</div>${used?'<div class="q">이미 속보를 발행했어요.</div>':c?'<div class="q">✅ 속보 발행 예약! 아침에 "간밤에 능력을 쓴 사람 수"가 공개돼요.</div>':btn('📰 속보 발행하기',"act('reporter','1')",0,'')}`}
+if(!isM(r)&&r!=='doctor'&&r!=='police'&&r!=='detective'&&r!=='reporter')h='<div class="q">🌙 밤이에요. 당신은 할 일이 없어요. 💤 아침을 기다려 주세요.</div>'}
 if(r==='police')h+=polList(g,p);if(r==='detective')h+=detList(g,p);
 A.innerHTML=h}}
 const AD=$('adm');AD.style.display=ADMINQ?'block':'none';
 if(ADMINQ){if(!admin)AD.innerHTML='<div class="t">🛠️ 운영자</div><input id="ap" type="password" placeholder="운영자 비밀번호" onkeydown="if(event.key===\'Enter\')unlock()"><button onclick="unlock()">확인</button>';
-else AD.innerHTML=`<div class="t">🛠️ 운영자 모드</div><div class="g2">${btn('▶ 시즌 시작 (신청자로 역할 배정)','startG()',0,'o')}${g&&['vote','trial','night'].includes(g.phase)?btn('⏩ 이 단계 넘기기(비상용)','closeNow()',0,'r'):''}${btn('🔄 새 시즌 (참가 신청 받기)','resetG()',0,'g')}</div><div class="sm" style="margin-top:6px">신청 ${Object.keys(D.entries||{}).filter(n=>D.users[n]).length}명${g&&g.roles?' · 이번 시즌 참가자 '+Object.keys(g.roles).length+'명':''}</div>${TEST?`<div class="sm" style="margin:8px 0 4px">테스트 도구</div><div class="g2">${btn('🤖 봇 채우기(총9명 신청)','addBots()',0,'g')}${btn('봇 삭제','delBots()',0,'g')}${btn('🎲 봇 자동행동','auto()',0,'g')}</div><select onchange="setAs(this.value)"><option value="">👀 다른 사람으로 보기 (본인)</option>${$u.map(n=>`<option ${as===n?'selected':''} value="${n}">${n}${g&&g.roles&&g.roles[n]?' · '+RN[g.roles[n]]+(g.alive[n]?'':' 💀'):''}</option>`).join('')}</select>`:''}`}
-$('pl').innerHTML=$u.map(n=>{const dead=g&&g.alive&&g.roles&&g.roles[n]&&!g.alive[n],vo=(g&&g.phase==='vote'&&(D.votes[g.day]||{})[n])||((!g||g.phase==='lobby')&&D.entries&&D.entries[n]);const spec=g&&g.roles&&(g.phase==='end'||(p&&(g.roles[p]&&!g.alive[p])));return`<span class="${dead?'d':''}" style="padding:4px 8px;background:rgba(255,255,255,.08);border-radius:8px;font-size:.8rem">${n}${vo?' ✅':''}${dead?' 💀':''}${g&&g.roles&&!g.roles[n]?' · 👀관전':''}${spec&&g.roles[n]?' · '+RN[n===p?g.roles[n]:vis(g,g.roles[n])]:(dead&&g.roles[n]?(isM(g.roles[n])?' · 🔪 마피아':' · 🙂 시민'):'')}</span>`}).join('')||'<span class="sm">아직 없어요</span>';
+else AD.innerHTML=`<div class="t">🛠️ 운영자 모드</div><div class="g2">${btn('▶ 신청 끝 · 게임 시작 (신청자로 직업 배정)','startG()',0,'o')}${g&&['vote','trial','night'].includes(g.phase)?btn('⏩ 이 단계 넘기기(비상용)','closeNow()',0,'r'):''}${btn('🔄 한 판 더 (참가 신청 열기)','resetG()',0,'g')}</div><div class="sm" style="margin-top:6px">순서: ① 🔄 한 판 더(신청 열기) → ② 모두 신청하면 ▶ 신청 끝·게임 시작</div><div class="sm" style="margin-top:4px">신청 ${Object.keys(D.entries||{}).filter(n=>D.users[n]).length}명${g&&g.roles?' · 이번 판 참가자 '+Object.keys(g.roles).length+'명':''}</div>${TEST?`<div class="sm" style="margin:8px 0 4px">테스트 도구</div><div class="g2">${btn('🤖 봇 채우기(총9명 신청)','addBots()',0,'g')}${btn('봇 삭제','delBots()',0,'g')}${btn('🎲 봇 자동행동','auto()',0,'g')}</div><select onchange="setAs(this.value)"><option value="">👀 다른 사람으로 보기 (본인)</option>${$u.map(n=>`<option ${as===n?'selected':''} value="${n}">${n}${g&&g.roles&&g.roles[n]?' · '+RN[g.roles[n]]+(g.alive[n]?'':' 💀'):''}</option>`).join('')}</select>`:''}`}
+$('pl').innerHTML=$u.map(n=>{const dead=g&&g.alive&&g.roles&&g.roles[n]&&!g.alive[n],vo=(g&&g.phase==='vote'&&(D.votes[g.day]||{})[n])||((!g||g.phase==='lobby')&&D.entries&&D.entries[n]);const spec=g&&g.roles&&(g.phase==='end'||(p&&(g.roles[p]&&!g.alive[p]&&!(g.rise&&g.rise[p]))));return`<span class="${dead?'d':''}" style="padding:4px 8px;background:rgba(255,255,255,.08);border-radius:8px;font-size:.8rem">${(()=>{const t=acc(((D.profiles||{})[n]||{}).eq).ti;return t?`<small style="color:#ffd43b">${t}</small> `:''})()}${n}${vo?' ✅':''}${dead?' 💀':''}${g&&g.roles&&!g.roles[n]?' · 👀관전':''}${spec&&g.roles[n]?' · '+RN[n===p?g.roles[n]:vis(g,g.roles[n])]:(dead&&g.roles[n]?(isM(g.roles[n])?' · 🔪 마피아':' · 🙂 시민'):'')}</span>`}).join('')||'<span class="sm">아직 없어요</span>';
 $('lg').innerHTML=g&&g.log?[...g.log].reverse().map(x=>`<div>${x}</div>`).join(''):'<div class="sm">게임이 시작되면 기록이 쌓여요</div>'}
 render();setInterval(()=>{cd();tick()},1000);
 </script></body></html>
