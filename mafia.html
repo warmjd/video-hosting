@@ -15,8 +15,9 @@ input,select{width:100%;padding:10px;border-radius:9px;border:1px solid #455a64;
 .q{white-space:pre-line;line-height:1.6;font-size:.84rem;color:#cfd6e6}
 .role{text-align:center;font-size:1.3rem;font-weight:800;padding:8px}
 .d{color:#868e96;text-decoration:line-through}.sm{font-size:.72rem;color:#8d96b0}
-.fig{transform-box:fill-box;transform-origin:50% 100%}.fig.idle{animation:bob 2.6s ease-in-out infinite}.fig.dead{transform:rotate(86deg);filter:grayscale(1);opacity:.55}.fig.fall{animation:fall .9s ease-out}.fire{animation:fl 1s ease-in-out infinite;transform-box:fill-box;transform-origin:50% 100%}
-@keyframes bob{50%{transform:translateY(-2.5px)}}@keyframes fall{0%{transform:rotate(0);opacity:1;filter:none}35%{transform:rotate(-14deg)}100%{transform:rotate(86deg)}}@keyframes fl{50%{transform:scale(1.18)}}
+.fig{transform-box:fill-box;transform-origin:50% 100%}.fig.idle{animation:bob 2.6s ease-in-out infinite}.fig.dead{transform:rotate(86deg);filter:grayscale(1);opacity:.55}.fig.fall{animation:fall .9s ease-out}.fa{animation:fa .6s steps(1) infinite}.fb{animation:fb .6s steps(1) infinite}.glow{animation:gl 1.3s ease-in-out infinite}.em{animation:rise 2.4s linear infinite}.tw{animation:tw 2s steps(1) infinite}
+@keyframes bob{50%{transform:translateY(-2.5px)}}@keyframes fall{0%{transform:rotate(0);opacity:1;filter:none}35%{transform:rotate(-14deg)}100%{transform:rotate(86deg)}}@keyframes fa{0%{opacity:1}50%{opacity:0}}@keyframes fb{0%{opacity:0}50%{opacity:1}}@keyframes gl{50%{opacity:.65}}@keyframes rise{0%{transform:translate(0,0);opacity:.95}100%{transform:translate(var(--dx),-46px);opacity:0}}@keyframes tw{50%{opacity:.2}}
+.sw{width:30px;height:30px;padding:0;border-radius:8px;border:2px solid #555}.sw.on{border-color:#ffd43b;box-shadow:0 0 0 2px rgba(255,212,59,.4)}.row2{display:flex;align-items:center;gap:8px;margin:6px 0}.row2>.nm2{flex:1;font-size:.85rem}
 .lg div{font-size:.8rem;line-height:1.5;padding:4px 0;border-bottom:1px solid rgba(255,255,255,.07)}
 </style></head><body><div class="w">
 <div><h1>🎭 원우마을 슬로우 마피아</h1><div class="sub" id="hd"></div></div>
@@ -44,7 +45,7 @@ input,select{width:100%;padding:10px;border-radius:9px;border:1px solid #455a64;
 • ✝️ 예수님(시민 편): 처형이든 습격이든 죽으면 3일 뒤 낮에 부활해요 (게임당 1번). 죽어 있는 동안은 유령 모드(직업 보기) 없이 죽은 사람처럼 말하면 안 돼요. 대기 중에도 시민 쪽 생존자로 계산돼요.
 • 🏛️ 이장: 재판 찬반이 동률이면 이장의 한 표가 결정 · 📰 기자: 게임당 1번 "간밤에 능력을 쓴 사람 수" 속보 · 🍺 술꾼: 시민 편이지만 경찰에게 마피아로 나와요 · 👀 목격자: 시작 때 마피아 한 명의 초성 힌트.
 • 🪙 달란트: 게임이 끝나면 참가 +10, 개근 +10, 승리 (시민 +20 / 마피아 +40 / 광대 +50), 활약(마피아 처형 투표 +5, 경찰 적발 +5, 의사 방어 +10, 군인 방어 +5, 시민팀 승리 시 생존 +5), 유령 예측 +3, 유령 MVP +15, 비밀 미션 +10을 받아요.
-• 🏪 달란트시장: 칭호·모자·안경·망토·이름색·쓰러짐/승리 효과를 살 수 있어요. 승패에는 영향이 없어요!
+• 🏪 달란트시장: 칭호·모자(간달프 모자 등)·안경·얼굴 장식·망토/날개·손 도구(간달프 지팡이 등)·반려동물·발밑 효과·이름색·쓰러짐/승리 효과, 총 130여 개! 구매 전에 "입어보기"로 미리 입혀볼 수 있고, 외형(피부·머리·옷 색)은 무료로 바꿀 수 있어요. 승패에는 영향이 없어요!
 • 대화는 카톡방에서! 앱은 투표와 능력 사용만 해요.</div></div>
 </div>
 <script type="module">
@@ -203,30 +204,115 @@ const F0=D.fv[d]||{},yl=Object.keys(F0).filter(k=>F0[k]==='y'),nl=Object.keys(F0
 <div class="sm" style="margin:4px 0"><span style="color:${COL.v}">━ 투표</span>${full?` · <span style="color:${COL.m}">━ 마피아</span> · <span style="color:${COL.d}">━ 의사</span> · <span style="color:${COL.p}">━ 경찰</span> · <span style="color:${COL.e}">━ 탐정</span>`:''}</div>
 <div class="q" style="font-size:.78rem">🗳️ 투표: ${L(V)}${full?`\n🔪 마피아: ${L(N.mafia)}\n💉 의사: ${L(N.doctor)}\n🕵️ 경찰: ${pr}\n🔎 탐정: ${L(N.detective)}`:''}</div><div style="font-size:.82rem;margin-top:6px;line-height:1.6">${out}${fvt}</div>${extra}`}
 
-const SLOT={title:'칭호',hat:'모자',glass:'안경',cape:'망토',nameC:'이름색',dead:'쓰러짐',win:'승리'};
+const PS=2.4,GW=16,GH=27;
+const mix=(hex,f)=>{const n=parseInt(hex.slice(1),16),r=Math.min(255,(n>>16&255)*f|0),g=Math.min(255,(n>>8&255)*f|0),b=Math.min(255,(n&255)*f|0);return'#'+((1<<24)+(r<<16)+(g<<8)+b).toString(16).slice(1)};
+const SKIN=['#f1c27d','#ffdbac','#e0ac69','#c68642','#8d5524'],HAIRC=['#2b2118','#5a3a1e','#d9a441','#c0392b','#3b5bdb','#f06595','#868e96','#f1f3f5'],SHIRT=['#e03131','#1971c2','#2f9e44','#f08c00','#9c36b5','#0c8599','#c2255c','#5f3dc4','#e8590c','#2b8a3e','#495057','#fab005'],PANTS=['#3b4252','#1c3d6e','#4a3b2a','#2b2b2b','#5c2d2d','#2f4f4f'],HAIRN=['단발','장발','뾰족','똥머리'];
+const BASE=Object.fromEntries(['................','................','................','................','...oooooooooo...','...oSSSSSSSSo...','...oSSSSSSSSo...','...oSeSSSSeSo...','...oSeSSSSeSo...','...oSsSSSSsSo...','...oSSSmmSSSo...','...oSSSSSSSSo...','....oooooooo....','...oCCCCCCCCo...','..oCCCCCCCCCCo..','..oCCcCCCCcCCo..','..oSCCCCCCCCSo..','..oSCCCCCCCCSo..','...oCCCCCCCCo...','...obbbbbbbbo...','...oPPPooPPPo...','...oPPPooPPPo...','...oPPPooPPPo...','...oPpPooPpPo...','...oPPPooPPPo...','...oBBBooBBBo...','...oooo..oooo...'].map((r,i)=>[i,r]));
+const HAIR=[
+{4:'...oHHHHHHHHo...',5:'....HhhHHHHH....',6:'....HHHHHHHH....',7:'....H......H....'},
+{4:'...oHHHHHHHHo...',5:'....HhhHHHHH....',6:'....HHHHHHHH....',7:'...HH......HH...',8:'...HH......HH...',9:'...HH......HH...',10:'...HH......HH...',11:'...HH......HH...',12:'...HH......HH...',13:'..HH........HH..'},
+{3:'....H..HH..H....',4:'...HHHHHHHHHH...',5:'....HhHHHHHH....',6:'....HHHHHHHH....',7:'....H......H....'},
+{2:'......HHHH......',3:'.....HHhHHH.....',4:'...oHHHHHHHHo...',5:'....HHhHHHHH....',6:'....HHHHHHHH....',7:'....H......H....'}];
+const CAPE={13:'...CCCCCCCCCC...',14:'..CCCCCCCCCCCC..',15:'..CCCCCCCCCCCC..',16:'.CCCCCCCCCCCCCC.',17:'.CCCCCCCCCCCCCC.',18:'.CCCCCCCCCCCCCC.',19:'.CCCCCCCCCCCCCC.',20:'.CCCCCCCCCCCCCC.',21:'CCCCCCCCCCCCCCCC',22:'CCCCCCCCCCCCCCCC',23:'CCDCCCCCCCCCCDCC',24:'CCCCCCCCCCCCCCCC',25:'CDCCCCCCCCCCCCDC'};
+const SLOT={title:'칭호',hat:'모자',glass:'안경',face:'얼굴',cape:'망토/날개',hand:'손 도구',pet:'반려동물',foot:'발밑 효과',nameC:'이름색',dead:'쓰러짐',win:'승리'};
+const I=(id,s,n,p,v)=>({id,s,n,p,v}),vr=(a,b,t)=>Object.fromEntries(Array.from({length:b-a+1},(_,i)=>[a+i,t]));
+const WING=(pal)=>({rows:{8:'.ww..........ww.',9:'gww..........wwg',10:'gwww........wwwg',11:'gwww........wwwg',12:'wwwww......wwwww',13:'gwww........wwwg',14:'.www........www.',15:'.gww........wwg.',16:'..ww........ww..',17:'..ww........ww..',18:'...w........w...'.slice(0,16)},pal});
 const SHOP=[
-{id:'t1',s:'title',n:'비둘기 목격자',p:30,v:'비둘기 목격자'},{id:'t2',s:'title',n:'의심 많은 자',p:30,v:'의심 많은 자'},{id:'t3',s:'title',n:'평화주의자',p:30,v:'평화주의자'},{id:'t4',s:'title',n:'마을의 눈',p:40,v:'마을의 눈'},
-{id:'t5',s:'title',n:'모닥불 지킴이',p:50,v:'모닥불 지킴이'},{id:'t6',s:'title',n:'거짓말 장인',p:60,v:'거짓말 장인'},{id:'t7',s:'title',n:'불사조',p:80,v:'불사조'},{id:'t8',s:'title',n:'달란트왕',p:100,v:'달란트왕'},
-{id:'h1',s:'hat',n:'리본',p:20,v:'<path d="M0-49L-7-54L-7-46Z" fill="#f06595"/><path d="M0-49L7-54L7-46Z" fill="#f06595"/><circle cx="0" cy="-49" r="1.8" fill="#c2255c"/>'},
-{id:'h2',s:'hat',n:'야구모자',p:20,v:'<path d="M-8.2-42a8.2 8.2 0 0 1 16.4 0z" fill="#1971c2"/><rect x="2" y="-44.5" width="11" height="3" rx="1.5" fill="#1864ab"/>'},
-{id:'h3',s:'hat',n:'학사모',p:40,v:'<path d="M-11-50L0-55L11-50L0-45Z" fill="#212529"/><rect x="-6" y="-49" width="12" height="4" fill="#212529"/><line x1="10" y1="-50" x2="10" y2="-44" stroke="#ffd43b" stroke-width="1"/>'},
-{id:'h4',s:'hat',n:'산타모자',p:50,v:'<path d="M-8-48.5Q0-64 9-52L10-48.5Z" fill="#e03131"/><rect x="-9" y="-49.5" width="19" height="3" rx="1.5" fill="#fff"/><circle cx="9.5" cy="-53" r="2.4" fill="#fff"/>'},
-{id:'h5',s:'hat',n:'신사모자',p:50,v:'<rect x="-10" y="-49.5" width="20" height="3" rx="1" fill="#222"/><rect x="-6.5" y="-61" width="13" height="12" fill="#222"/><rect x="-6.5" y="-53" width="13" height="2.5" fill="#c92a2a"/>'},
-{id:'h6',s:'hat',n:'마법사모자',p:60,v:'<path d="M-10-48L0-70L10-48Z" fill="#5f3dc4"/><rect x="-12" y="-49.5" width="24" height="3" rx="1.5" fill="#4c2fb0"/><circle cx="2" cy="-58" r="1.6" fill="#ffd43b"/>'},
-{id:'h7',s:'hat',n:'천사 링',p:80,v:'<ellipse cx="0" cy="-55" rx="8" ry="2.6" fill="none" stroke="#ffd43b" stroke-width="2"/>'},
-{id:'h8',s:'hat',n:'왕관',p:120,v:'<path d="M-8-48.5L-9-59L-4-53.5L0-61L4-53.5L9-59L8-48.5Z" fill="#ffd43b" stroke="#e67700" stroke-width=".8"/>'},
-{id:'g1',s:'glass',n:'동그란 안경',p:20,v:'<circle cx="-3.6" cy="-41" r="2.8" fill="none" stroke="#222" stroke-width="1"/><circle cx="3.6" cy="-41" r="2.8" fill="none" stroke="#222" stroke-width="1"/><line x1="-.8" y1="-41" x2=".8" y2="-41" stroke="#222" stroke-width="1"/>'},
-{id:'g2',s:'glass',n:'별 안경',p:30,v:'<text x="-3.6" y="-38.8" font-size="6.5" text-anchor="middle">⭐</text><text x="3.6" y="-38.8" font-size="6.5" text-anchor="middle">⭐</text>'},
-{id:'g3',s:'glass',n:'선글라스',p:40,v:'<rect x="-7.5" y="-43" width="6.5" height="4" rx="1.5" fill="#111"/><rect x="1" y="-43" width="6.5" height="4" rx="1.5" fill="#111"/><line x1="-1" y1="-42" x2="1" y2="-42" stroke="#111" stroke-width="1"/>'},
-{id:'c1',s:'cape',n:'붉은 망토',p:50,v:'<path d="M-9-33L9-33L14-6L-14-6Z" fill="#c92a2a" opacity=".92"/>'},
-{id:'c2',s:'cape',n:'푸른 망토',p:50,v:'<path d="M-9-33L9-33L14-6L-14-6Z" fill="#1c7ed6" opacity=".92"/>'},
-{id:'c3',s:'cape',n:'보랏빛 망토',p:60,v:'<path d="M-9-33L9-33L14-6L-14-6Z" fill="#7048e8" opacity=".92"/>'},
-{id:'c4',s:'cape',n:'황금 망토',p:80,v:'<path d="M-9-33L9-33L14-6L-14-6Z" fill="#fab005" opacity=".95"/>'},
-{id:'n1',s:'nameC',n:'하늘색 이름',p:30,v:'#74c0fc'},{id:'n2',s:'nameC',n:'분홍 이름',p:30,v:'#f783ac'},{id:'n3',s:'nameC',n:'연두 이름',p:30,v:'#69db7c'},{id:'n4',s:'nameC',n:'황금 이름',p:40,v:'#ffd43b'},{id:'n5',s:'nameC',n:'무지개 이름',p:70,v:'url(#rbg)'},
-{id:'d1',s:'dead',n:'별빛',p:30,v:'✨'},{id:'d2',s:'dead',n:'장미 한 송이',p:30,v:'🌹'},{id:'d3',s:'dead',n:'촛불',p:40,v:'🕯️'},{id:'d4',s:'dead',n:'유령 승천',p:40,v:'👻'},
-{id:'w1',s:'win',n:'폭죽',p:40,v:'🎉'},{id:'w2',s:'win',n:'불꽃',p:50,v:'🔥'},{id:'w3',s:'win',n:'승리의 왕관',p:60,v:'👑'},{id:'w4',s:'win',n:'트로피',p:70,v:'🏆'}];
+...[['비둘기 목격자',30],['의심 많은 자',30],['평화주의자',30],['마을의 눈',40],['모닥불 지킴이',50],['거짓말 장인',60],['불사조',80],['달란트왕',100],['마을 이장님',60],['카톡 읽씹러',30],['투표 장인',50],['한 표의 무게',60],['밤의 제왕',80],['의사 선생님',50],['무적 군인',50],['탐정 지망생',40],['부활 전문가',90],['조용한 시민',30],['마피아 헌터',70],['반전 장인',60],['비둘기 지킴이',40],['모닥불 요리사',40],['전설의 간달프',150]].map(([n,p],i)=>I('t'+(i+1),'title',n,p,n)),
+I('h1','hat','리본',20,{rows:{3:'....rrr..rrr....',4:'...rrrrRRrrrr...'},pal:{r:'#f06595',R:'#c2255c'}}),
+I('h2','hat','야구모자',20,{rows:{3:'....CCCCCCCC....',4:'...CCCCCCCCCC...',5:'....CCCCCCCCbbb.'},pal:{C:'#1971c2',b:'#1864ab'}}),
+I('h3','hat','학사모',40,{rows:{2:'..kkkkkkkkkkkk..',3:'....kkkkkkkk..y.',4:'....kkkkkkkk..y.',5:'..............y.'},pal:{k:'#212529',y:'#ffd43b'}}),
+I('h4','hat','산타모자',50,{rows:{1:'..........ww....',2:'.......RRRRww...',3:'......RRRRRRR...',4:'...wwwwwwwwww...'},pal:{R:'#e03131',w:'#ffffff'}}),
+I('h5','hat','신사모자',50,{rows:{1:'....kkkkkkkk....',2:'....kkkkkkkk....',3:'....rrrrrrrr....',4:'..kkkkkkkkkkkk..'},pal:{k:'#222222',r:'#c92a2a'}}),
+I('h6','hat','마법사모자',60,{rows:{0:'.......pp.......',1:'......pppp......',2:'.....pppypp.....',3:'....pppppppp....',4:'..PPPPPPPPPPPP..'},pal:{p:'#5f3dc4',P:'#4c2fb0',y:'#ffd43b'}}),
+I('h7','hat','천사 링',80,{rows:{1:'.....yyyyyy.....',2:'....y......y....',3:'.....yyyyyy.....'},pal:{y:'#ffd43b'}}),
+I('h8','hat','왕관',120,{rows:{2:'....y..yy..y....',3:'....yyyryyyy....',4:'...yyyyyyyyyy...'},pal:{y:'#ffd43b',r:'#e03131'}}),
+I('h9','hat','간달프 모자',90,{rows:{0:'.........ggg....',1:'........gggg....',2:'.......ggggg....',3:'.....gggggggg...',4:'....gbbyybbbg...',5:'..GGGGGGGGGGGG..'},pal:{g:'#adb5bd',G:'#868e96',b:'#495057',y:'#ffd43b'}}),
+I('h10','hat','닌자 두건',50,{rows:{3:'....kkkkkkkk....',4:'...kkkkkkkkkk...',5:'....kkkkkkkk....',6:'...rrrrrrrrrrrr.',7:'.............rr.'},pal:{k:'#111111',r:'#c92a2a'}}),
+I('h11','hat','해적 모자',70,{rows:{2:'...kkkkkkkkkk...',3:'..kkkkkwwkkkkk..',4:'.kkkkkkwwkkkkkk.',5:'.kkkkkkkkkkkkkk.'},pal:{k:'#1b1b2a',w:'#f1f3f5'}}),
+I('h12','hat','요리사 모자',40,{rows:{0:'....www..www....',1:'...wwwwwwwwww...',2:'...wwwwwwwwww...',3:'....wwwwwwww....',4:'....gggggggg....'},pal:{w:'#ffffff',g:'#dee2e6'}}),
+I('h13','hat','카우보이 모자',60,{rows:{2:'......BBBB......',3:'.....BBBBBB.....',4:'....BBrrrrBB....',5:'.bbbbbbbbbbbbbb.'},pal:{B:'#8b5a2b',b:'#6b4423',r:'#c92a2a'}}),
+I('h14','hat','파티 고깔',30,{rows:{0:'.......y........',1:'......ppp.......',2:'.....ppcpp......',3:'....ppppcpp.....',4:'...ppcppppcp....'},pal:{p:'#f06595',y:'#ffd43b',c:'#4dabf7'}}),
+I('h15','hat','토끼 귀',50,{rows:{0:'.....ww..ww.....',1:'.....wp..pw.....',2:'.....wp..pw.....',3:'.....wp..pw.....',4:'.....ww..ww.....'},pal:{w:'#f8f9fa',p:'#fcc2d7'}}),
+I('h16','hat','고양이 귀',40,{rows:{3:'....k......k....',4:'....kk....kk....',5:'....kkk..kkk....'},pal:{k:'#343a40'}}),
+I('h17','hat','악마 뿔',60,{rows:{2:'....r......r....',3:'....rr....rr....',4:'....rdr..rdr....'},pal:{r:'#e03131',d:'#a61e1e'}}),
+I('h18','hat','기사 투구',80,{rows:{2:'.......rr.......',3:'....ssssssss....',4:'...ssssssssss...',5:'...SssssssssS...',6:'...SS......SS...'},pal:{s:'#adb5bd',S:'#868e96',r:'#e03131'}}),
+I('h19','hat','헤드폰',50,{rows:{3:'....kkkkkkkk....',4:'...k........k...',5:'..gk........kg..',6:'..rk........kr..',7:'..rk........kr..',8:'..gk........kg..'},pal:{k:'#343a40',g:'#868e96',r:'#e03131'}}),
+I('h20','hat','비니',30,{rows:{2:'.......ww.......',3:'....bbbbbbbb....',4:'...bbBbbBbbbb...',5:'...BBBBBBBBBB...'},pal:{b:'#1971c2',B:'#1864ab',w:'#ffffff'}}),
+I('h21','hat','밀짚모자',40,{rows:{2:'.....yyyyyy.....',3:'....yyyyyyyy....',4:'....rrrrrrrr....',5:'..YYYYYYYYYYYY..'},pal:{y:'#ffd43b',Y:'#e8b923',r:'#c92a2a'}}),
+I('h22','hat','월계관',70,{rows:{4:'...gl......lg...',5:'..gl........lg..',6:'..gl........lg..',7:'..gl........lg..'},pal:{g:'#2f9e44',l:'#69db7c'}}),
+I('h23','hat','광대 모자',50,{rows:{2:'..yr........by..',3:'...rrr....bbb...',4:'...rrrrrbbbbb...'},pal:{r:'#e03131',b:'#1971c2',y:'#ffd43b'}}),
+I('h24','hat','후드',60,{rows:{3:'....gggggggg....',4:'...gggggggggg...',5:'..ggg......ggg..',6:'..gGg......gGg..',7:'..gGg......gGg..',8:'..gG........Gg..'},pal:{g:'#2f9e44',G:'#237a38'}}),
+I('h25','hat','꽃핀',20,{rows:{4:'..........p.....',5:'.........pyp....',6:'..........p.....'},pal:{p:'#f783ac',y:'#ffd43b'}}),
+I('h26','hat','비둘기 모자',90,{rows:{1:'......GGG.......',2:'.....GgggG......',3:'....kgggggG.....',4:'...oogggggGG....',5:'....GGGGGGG.....'},pal:{g:'#adb5bd',G:'#868e96',k:'#212529',o:'#f08c00'}}),
+I('h27','hat','외계인 안테나',40,{rows:{1:'....y......y....',2:'.....g....g.....',3:'.....g....g.....',4:'.....gg..gg.....'},pal:{g:'#51cf66',y:'#ffd43b'}}),
+I('g1','glass','동그란 안경',20,{rows:{6:'....kkk..kkk....',7:'....k.kkkk.k....',8:'....k.k..k.k....',9:'....kkk..kkk....'},pal:{k:'#222222'}}),
+I('g2','glass','별 안경',30,{rows:{6:'.....y....y.....',7:'....y.y..y.y....',8:'....y.y..y.y....',9:'.....y....y.....'},pal:{y:'#ffd43b'}}),
+I('g3','glass','선글라스',40,{rows:{7:'....kwkkkkwk....',8:'....kkkkkkkk....'},pal:{k:'#111111',w:'#555555'}}),
+I('g4','glass','안대',30,{rows:{6:'....kkkkkkkk....',7:'....kkk.........',8:'....kkk.........'},pal:{k:'#111111'}}),
+I('g5','glass','하트 안경',40,{rows:{6:'....r.r..r.r....',7:'....rrrrrrrr....',8:'....rrr..rrr....',9:'.....r....r.....'},pal:{r:'#f06595'}}),
+I('g6','glass','고글',50,{rows:{6:'...kkkkkkkkkk...',7:'...kooooooook...',8:'...kooooooook...',9:'...kkkkkkkkkk...'},pal:{o:'#f76707',k:'#343a40'}}),
+I('g7','glass','3D 안경',30,{rows:{6:'....kkk..kkk....',7:'....krkkkkbk....',8:'....krk..kbk....',9:'....kkk..kkk....'},pal:{r:'#e03131',b:'#1971c2',k:'#222222'}}),
+I('g8','glass','모노클',60,{rows:{6:'..........yy....',7:'.........y..y...',8:'.........y..y...',9:'..........yy....',10:'............y...'},pal:{y:'#ffd43b'}}),
+I('f1','face','간달프 수염',120,{rows:{9:'....w......w....',10:'....wwwwwwww....',11:'....wwwwwwww....',12:'...wwwgwwgww....',13:'...wwwwwwwwww...',14:'....wwwgwwww....',15:'....wwwwwwww....',16:'.....wwwwww.....',17:'......wwww......',18:'.......ww.......'},pal:{w:'#e9ecef',g:'#ced4da'}}),
+I('f2','face','콧수염',30,{rows:{9:'......kkkk......'},pal:{k:'#2b2118'}}),
+I('f3','face','산타 수염',70,{rows:{9:'....wwwwwwww....',10:'....wwwwwwww....',11:'....wwwwwwww....',12:'....wwwwwwww....',13:'.....wwwwww.....'},pal:{w:'#ffffff'}}),
+I('f4','face','마스크',30,{rows:{9:'...bwwwwwwwwb...',10:'...bwwwwwwwwb...',11:'....wwwwwwww....'},pal:{w:'#f1f3f5',b:'#74c0fc'}}),
+I('f5','face','볼터치',20,{rows:{9:'.....p....p.....'},pal:{p:'#ff8787'}}),
+I('f6','face','얼굴 상처',40,{rows:{6:'..........r.....',7:'..........r.....',8:'.........r......'},pal:{r:'#c92a2a'}}),
+I('f7','face','복면',50,{rows:{9:'....kkkkkkkk....',10:'....kkkkkkkk....',11:'....kkkkkkkk....'},pal:{k:'#1b1b2a'}}),
+I('f8','face','주근깨',20,{rows:{8:'.....b.b..b.b...',9:'......b....b....'},pal:{b:'#b07a4a'}}),
+I('f9','face','번개 이마 문양',50,{rows:{5:'........r.......',6:'.......r........',7:'........r.......'},pal:{r:'#fa5252'}}),
+...[['c1','붉은 망토',50,'#c92a2a','#a61e1e'],['c2','푸른 망토',50,'#1c7ed6','#1864ab'],['c3','보랏빛 망토',60,'#7048e8','#5f3dc4'],['c4','황금 망토',80,'#fab005','#e67700'],['c5','검은 망토',60,'#343a40','#212529'],['c6','분홍 망토',50,'#f06595','#c2255c'],['c7','초록 망토',50,'#37b24d','#2b8a3e'],['c8','하얀 망토',60,'#f1f3f5','#ced4da']].map(([id,n,p,C,D])=>I(id,'cape',n,p,{rows:CAPE,pal:{C,D}})),
+I('c9','cape','천사 날개',200,WING({w:'#f8f9fa',g:'#ced4da'})),I('c10','cape','박쥐 날개',150,WING({w:'#5f3dc4',g:'#2b1a5e'})),I('c11','cape','불사조 날개',250,WING({w:'#f76707',g:'#ffd43b'})),I('c12','cape','요정 날개',120,WING({w:'#a5d8ff',g:'#f783ac'})),
+I('k1','hand','간달프 지팡이',80,{rows:{2:'.............www',3:'.............wWw',4:'.............www',5:'.............bkb',6:'..............b.',...vr(7,15,'..............b.'),16:'.............bb.',17:'.............bb.',...vr(18,26,'..............b.')},pal:{w:'#e7f5ff',W:'#ffffff',b:'#8b5a2b',k:'#6b4423'}}),
+I('k2','hand','마법봉',40,{rows:{5:'.............y.y',6:'..............y.',7:'.............yyy',...vr(8,15,'..............p.'),16:'.............pp.',17:'.............pp.',...vr(18,24,'..............p.')},pal:{y:'#ffd43b',p:'#f06595'}}),
+I('k3','hand','검',70,{rows:{...vr(2,14,'..............s.'),15:'.............yyy',16:'.............bb.',17:'.............bb.',18:'..............y.'},pal:{s:'#dee2e6',y:'#ffd43b',b:'#6b4423'}}),
+I('k4','hand','횃불',50,{rows:{9:'..............y.',10:'.............yOy',11:'.............OOO',12:'.............OyO',13:'..............b.',14:'..............b.',15:'..............b.',16:'.............bb.',17:'.............bb.',...vr(18,24,'..............b.')},pal:{y:'#ffd43b',O:'#f76707',b:'#8b5a2b'}}),
+I('k5','hand','풍선',30,{rows:{0:'.............rr.',1:'............rrrr',2:'............rwrr',3:'............rrrr',4:'.............rr.',...vr(5,15,'..............g.'),16:'.............gg.',17:'.............gg.'},pal:{r:'#e03131',w:'#ffc9c9',g:'#adb5bd'}}),
+I('k6','hand','사탕 지팡이',30,{rows:{8:'.............rr.',9:'.............r.r',10:'..............w.',11:'..............r.',12:'..............w.',13:'..............r.',14:'..............w.',15:'..............r.',16:'.............bb.',17:'.............bb.',18:'..............w.',19:'..............r.',20:'..............w.',21:'..............r.'},pal:{r:'#e03131',w:'#ffffff',b:'#c92a2a'}}),
+I('k7','hand','방패',60,{rows:{14:'ssss............',15:'sBBs............',16:'sBBs............',17:'sBBs............',18:'.ss.............'},pal:{s:'#868e96',B:'#1971c2'}}),
+I('k8','hand','곡괭이',50,{rows:{6:'.........ssss...',7:'.......ssssssss.',8:'.............ss.',...vr(9,15,'..............b.'),16:'.............bb.',17:'.............bb.',...vr(18,24,'..............b.')},pal:{s:'#adb5bd',b:'#8b5a2b'}}),
+I('k9','hand','우산',50,{rows:{3:'..............p.',4:'.............ppp',5:'.............ppp',6:'..............p.',...vr(7,15,'..............k.'),16:'.............kk.',17:'.............kk.',...vr(18,22,'..............k.')},pal:{p:'#f06595',k:'#495057'}}),
+I('k10','hand','아이스크림',30,{rows:{10:'.............ppp',11:'.............pmp',12:'..............c.',13:'.............cCc',14:'..............C.',15:'..............C.',16:'.............CC.',17:'.............C..'},pal:{p:'#fcc2d7',m:'#c3fae8',c:'#f1c27d',C:'#d9a441'}}),
+I('p1','pet','검은 고양이',60,{rows:['k.k.....','kkk...k.','kek..kk.','kkkkkkk.','kkkkkkk.','k.k.k.k.'],pal:{k:'#343a40',e:'#ffd43b'},w:8}),
+I('p2','pet','강아지',60,{rows:['bb......','bbb.....','beb...b.','bbbbbbb.','bbbbbbb.','b.b.b.b.'],pal:{b:'#c68642',e:'#222222'},w:8}),
+I('p3','pet','병아리',40,{rows:['..yy....','.yyyy...','.yeyyo..','.yyyy...','..yy....','..o.o...'],pal:{y:'#ffd43b',e:'#222222',o:'#f08c00'},w:8}),
+I('p4','pet','마을 비둘기',70,{rows:['.gg.....','gkgg....','oggggg..','.ggggGG.','..GGGG..','..o.o...'],pal:{g:'#adb5bd',G:'#868e96',k:'#222222',o:'#f08c00'},w:8}),
+I('p5','pet','슬라임',50,{rows:['........','..bbbb..','.bbbbbb.','.bwbbwb.','bbbbbbbb','bbbbbbbb'],pal:{b:'#4dabf7',w:'#ffffff'},w:8}),
+I('p6','pet','여우',80,{rows:['o.o.....','ooo...ow','oeo..ooo','ooooooo.','ooooooo.','o.o.o.o.'],pal:{o:'#f76707',e:'#222222',w:'#ffffff'},w:8}),
+I('p7','pet','토끼',60,{rows:['.w.w....','.w.w....','.wwww...','.wewww.w','.wwwwww.','.w.w.w..'],pal:{w:'#f8f9fa',e:'#f06595'},w:8}),
+I('p8','pet','오리',50,{rows:['..yy....','.yyyy...','oyeyy...','.yyyyy..','..yyyyy.','..o.o...'],pal:{y:'#fff3bf',e:'#222222',o:'#f08c00'},w:8}),
+I('o1','foot','마법진',150,{rows:['.....pppppp.....','..pp........pp..','.p....pppp....p.','..pp........pp..','.....pppppp.....'],pal:{p:'#9775fa'}}),
+I('o2','foot','불꽃 링',120,{rows:['.....oyyyyo.....','..oy........yo..','.o....rooo....o.','..oy........yo..','.....oyyyyo.....'],pal:{o:'#f76707',y:'#ffd43b',r:'#e03131'}}),
+I('o3','foot','얼음 결정',100,{rows:['.....cccccc.....','..cc..w..w..cc..','.c....cccc....c.','..cc..w..w..cc..','.....cccccc.....'],pal:{c:'#74c0fc',w:'#e7f5ff'}}),
+I('o4','foot','꽃밭',80,{rows:['p.g.y..p..g.y.p.','.g.p.y.g.p.g.y..','y.g.p..g.y.p.g.p','.p.y.g.p..y.g..y','g..p.y..g.p.y.g.'],pal:{p:'#f783ac',g:'#51cf66',y:'#ffd43b'}}),
+I('o5','foot','금빛 오라',140,{rows:['.....yyyyyy.....','..yy........yy..','.y....wwww....y.','..yy........yy..','.....yyyyyy.....'],pal:{y:'#ffd43b',w:'#fff9db'}}),
+I('o6','foot','하트 이펙트',90,{rows:['..h...h..h...h..','.hh..hhh.hh..hh.','..h...h..h...h..','.......h........','................'].map(t=>t.slice(0,16)),pal:{h:'#f06595'}}),
+I('o7','foot','어둠의 안개',110,{rows:['..kk.kkk..kk.kk.','.kkkkkkkkkkkkkk.','kkkkkkkkkkkkkkkk','.kkkkkkkkkkkkkk.','..kk..kkk..kk...'],pal:{k:'#3b2a5c'}}),
+...[['n1','하늘색 이름',30,'#74c0fc'],['n2','분홍 이름',30,'#f783ac'],['n3','연두 이름',30,'#69db7c'],['n4','황금 이름',40,'#ffd43b'],['n5','무지개 이름',70,'url(#rbg)'],['n6','보라 이름',30,'#b197fc'],['n7','주황 이름',30,'#ffa94d'],['n8','은빛 이름',40,'#ced4da'],['n9','형광 이름',50,'#a9e34b'],['n10','빨강 이름',30,'#ff6b6b']].map(([id,n,p,v])=>I(id,'nameC',n,p,v)),
+...[['d1','별빛',30,'✨'],['d2','장미 한 송이',30,'🌹'],['d3','촛불',40,'🕯️'],['d4','유령 승천',40,'👻'],['d5','벚꽃',40,'🌸'],['d6','낙엽',30,'🍂'],['d7','평화의 비둘기',50,'🕊️'],['d8','꽃다발',40,'💐'],['d9','묘비',50,'🪦'],['d10','풍선',30,'🎈'],['d11','눈꽃',40,'❄️'],['d12','별똥별',50,'💫']].map(([id,n,p,v])=>I(id,'dead',n,p,v)),
+...[['w1','폭죽',40,'🎉'],['w2','불꽃',50,'🔥'],['w3','승리의 왕관',60,'👑'],['w4','트로피',70,'🏆'],['w5','색종이',50,'🎊'],['w6','반짝임',40,'✨'],['w7','무지개',60,'🌈'],['w8','금메달',70,'🥇'],['w9','다이아',90,'💎'],['w10','불꽃놀이',60,'🎆'],['w11','샴페인',70,'🍾']].map(([id,n,p,v])=>I(id,'win',n,p,v))];
 const ITEM=Object.fromEntries(SHOP.map(i=>[i.id,i]));
-const acc=eq=>{eq=eq||{};const g=k=>(ITEM[eq[k]]||{}).v||'';return{back:g('cape'),front:g('glass')+g('hat'),nc:g('nameC'),ti:g('title'),dx:g('dead'),wx:g('win')}};
+const acc=eq=>{eq=eq||{};const g=k=>(ITEM[eq[k]]||{}).v||'';return{nc:g('nameC'),ti:g('title'),dx:g('dead'),wx:g('win')}};
+function chOf(n){const c=((D.profiles||{})[n]||{}).ch||{},h=hs(n);return{sk:c.sk??0,hs:c.hs??(h%4),hc:c.hc??((h>>3)%5),sh:c.sh??(h%10),pc:c.pc??0}}
+function putL(G,rows,pal){for(const r in rows){const t=rows[r];for(let c=0;c<GW;c++){const k=t[c];if(k&&k!=='.'&&pal[k])G[+r][c]=pal[k]}}}
+function sprite(ch,eq){const sk=SKIN[ch.sk]||SKIN[0],hc=HAIRC[ch.hc]||HAIRC[0],sh=SHIRT[ch.sh]||SHIRT[0],pc=PANTS[ch.pc]||PANTS[0],G=Array.from({length:GH},()=>Array(GW).fill(null)),it=k=>(ITEM[(eq||{})[k]]||{}).v;
+const pal={o:'#1b1b2a',S:sk,s:mix(sk,.86),e:'#1b1b2a',m:mix(sk,.6),C:sh,c:mix(sh,.78),P:pc,p:mix(pc,.75),B:'#4a2f1d',b:'#3d2b1f',H:hc,h:mix(hc,1.35)};
+if(it('cape'))putL(G,it('cape').rows,it('cape').pal);
+putL(G,BASE,pal);putL(G,HAIR[ch.hs]||HAIR[0],pal);
+if(it('face'))putL(G,it('face').rows,it('face').pal);if(it('glass'))putL(G,it('glass').rows,it('glass').pal);if(it('hat'))putL(G,it('hat').rows,it('hat').pal);if(it('hand'))putL(G,it('hand').rows,it('hand').pal);
+let out='';for(let r=0;r<GH;r++){let c=0;while(c<GW){const col=G[r][c];if(!col){c++;continue}let e=c;while(e+1<GW&&G[r][e+1]===col)e++;out+=`<rect x="${((c-8)*PS).toFixed(2)}" y="${((r-GH)*PS).toFixed(2)}" width="${((e-c+1)*PS+.05).toFixed(2)}" height="${(PS+.05).toFixed(2)}" fill="${col}"/>`;c=e+1}}
+return`<g shape-rendering="crispEdges">${out}</g>`}
+function char(ch,eq){const e=eq||{},ft=(ITEM[e.foot]||{}).v,pt=(ITEM[e.pet]||{}).v;
+return(ft?rowsSVG(ft.rows,ft.pal,PS,-19.2,-4):'')+`<ellipse cx="0" cy="1" rx="16" ry="3.5" fill="#000" opacity=".3"/>`+sprite(ch,e)+(pt?`<ellipse cx="-31" cy="1" rx="9" ry="2.2" fill="#000" opacity=".3"/>`+rowsSVG(pt.rows,pt.pal,PS,-41,-14.4):'')}
+function rowsSVG(rows,pal,ps,x0,y0){let o='';rows.forEach((t,r)=>{let c=0;while(c<t.length){const k=t[c];if(k==='.'){c++;continue}let e=c;while(e+1<t.length&&t[e+1]===k)e++;o+=`<rect x="${(x0+c*ps).toFixed(1)}" y="${(y0+r*ps).toFixed(1)}" width="${((e-c+1)*ps+.05).toFixed(2)}" height="${(ps+.05).toFixed(2)}" fill="${pal[k]}"/>`;c=e+1}});return o}
+const FIRE_A=['......R.....','.....RR.R...','....RROR.R..','...RROOORR..','..RROOYOORR.','..ROOYYYOOR.','.RROYYWYYOOR','.ROOYWWWYOOR','.ROYYWWWYYOR','.ROYYWWWYYOR','..ROYYYYYOR.','...ROOOOOR..'],
+FIRE_B=['.....R......','....RR.R....','...RRORR....','...ROOORR...','..RROOYOOR..','.RROOYYYOORR','.ROOYYWYYOOR','.ROYYWWWYYOR','.ROYYWWWYYOR','.ROYYWWWYYOR','..ROYYYYYOR.','...ROOOOOR..'],
+LOGS=['..bBBB..BBBb..','.bBBBBBBBBBBb.','dBBBBBBBBBBBBd','.dddddddddddd.'],
+FP={R:'#e03131',O:'#f76707',Y:'#ffd43b',W:'#fff3bf',B:'#6b4423',b:'#8b5a2b',d:'#4a2f1d'};
+function campfire(){const ps=3,st=[[-34,3],[-26,6],[-15,8],[-3,9],[9,8],[20,6],[30,3]].map(([x,y],i)=>`<rect x="${x}" y="${y}" width="7" height="4" fill="${i%2?'#868e96':'#adb5bd'}"/><rect x="${x}" y="${y+3}" width="7" height="1.5" fill="#495057"/>`).join(''),em=[[-8,0,-10,0],[-2,0.4,6,0.5],[4,0.9,12,1.1],[-5,1.3,-14,1.6],[8,1.8,4,0.2],[0,2.1,-6,1.9]].map(([x,d,dx,dd])=>`<rect class="em" x="${x}" y="-26" width="2.4" height="2.4" fill="${d>1.4?'#ffe066':'#ffa94d'}" style="--dx:${dx}px;animation-delay:${(d+dd*.3).toFixed(2)}s"/>`).join('');
+return`<g transform="translate(190 222)"><circle r="78" cy="-24" fill="url(#glow)" class="glow"/>${st}<g class="fa">${rowsSVG(FIRE_A,FP,ps,-18,-48)}</g><g class="fb">${rowsSVG(FIRE_B,FP,ps,-18,-48)}</g>${rowsSVG(LOGS,FP,3,-21,-12)}${em}</g>`}
 const won=(g,x)=>{const r=g.roles[x];return(g.win==='m'&&isM(r))||(g.win==='c'&&!isM(r)&&r!=='jester')||(g.win==='j'&&r==='jester')};
 const buyTx=(c,id)=>{const it=ITEM[id];c=c||{t:0,own:{},eq:{}};if(!it||(c.own&&c.own[id])||(c.t||0)<it.p)return;c.t=(c.t||0)-it.p;c.own=c.own||{};c.own[id]=1;return c};
 const claimTx=(c,a,sid)=>{c=c||{t:0,own:{},eq:{}};if(c.last===sid)return;c.t=(c.t||0)+a.t;c.last=sid;return c};
@@ -234,27 +320,50 @@ const known=new Set(),SHC=['#e03131','#1971c2','#2f9e44','#f08c00','#9c36b5','#0
 const hs=x=>{let h=0;for(const c of x)h=(h*31+c.charCodeAt(0))>>>0;return h};
 function ringRender(g,p){const el=$('ring'),has=g&&g.roles&&g.phase!=='lobby',names=has?Object.keys(g.roles):Object.keys(D.entries||{}).filter(n=>D.users[n]);
 if(!names.length){el.innerHTML='';return}
-const spec=has&&(g.phase==='end'||(p&&(g.roles[p]&&!g.alive[p]&&!(g.rise&&g.rise[p])))),n=names.length;
-const arr=names.map((x,i)=>{const a=-Math.PI/2+i*2*Math.PI/n,px=190+140*Math.cos(a),py=185+115*Math.sin(a),sc=(0.95+0.3*Math.sin(a))*(n>14?.85:1),dead=has&&!g.alive[x],h=hs(x),sh=SHC[h%10],hr=HRC[(h>>3)%5];
+const spec=has&&(g.phase==='end'||(p&&(g.roles[p]&&!g.alive[p]&&!(g.rise&&g.rise[p])))),n=names.length,night=has&&g.phase==='night';
+const arr=names.map((x,i)=>{const a=-Math.PI/2+i*2*Math.PI/n,px=190+140*Math.cos(a),py=185+115*Math.sin(a),sc=(0.95+0.3*Math.sin(a))*(n>14?.85:1),dead=has&&!g.alive[x],h=hs(x);
 const fall=dead&&!known.has(x);if(dead)known.add(x);
 const role0=has&&(x===p||spec)?RN[x===p?g.roles[x]:vis(g,g.roles[x])].split(' ')[0]:'',role=has&&(g.rev||[]).includes(x)?(g.roles[x]==='jesus'?'✝️':'🪖'):role0,vo=has&&g.phase==='vote'&&(D.votes[g.day]||{})[x]?'✅':'';
-const ac=acc(((D.profiles||{})[x]||{}).eq);const body=`<ellipse cx="0" cy="1" rx="15" ry="3.5" fill="#000" opacity=".3"/>${ac.back}<rect x="-6" y="-14" width="5" height="14" rx="2" fill="#3b4252"/><rect x="1" y="-14" width="5" height="14" rx="2" fill="#3b4252"/><line x1="-8" y1="-29" x2="-13" y2="-16" stroke="${sh}" stroke-width="4.5" stroke-linecap="round"/><line x1="8" y1="-29" x2="13" y2="-16" stroke="${sh}" stroke-width="4.5" stroke-linecap="round"/><rect x="-8.5" y="-33" width="17" height="21" rx="6" fill="${sh}"/><circle cx="0" cy="-41" r="8" fill="#f1c27d"/><path d="M-8 -42a8 8 0 0 1 16 0z" fill="${hr}"/>${ac.front}`;
+const eq=((D.profiles||{})[x]||{}).eq,ac=acc(eq),body=char(chOf(x),eq);
 const svg=`<g transform="translate(${px.toFixed(1)} ${py.toFixed(1)}) scale(${sc.toFixed(2)})"><g class="fig ${dead?'dead'+(fall?' fall':''):'idle'}" ${dead?'':`style="animation-delay:${(h%7)*.35}s"`}>${body}</g>`
-+(dead?`<text x="22" y="-14" font-size="15" text-anchor="middle">💀</text>${(()=>{const r=g.roles[x],mf=isM(r),lb=spec?RN[x===p?r:vis(g,r)]:(mf?'🔪 마피아':'🙂 시민');return`<rect x="-8" y="-36" width="60" height="17" rx="8" fill="${mf?'#c92a2a':'#2b8a3e'}"/><text x="22" y="-24" font-size="11" font-weight="700" text-anchor="middle" fill="#fff">${lb}</text>`})()}`:`${role?`<text x="0" y="-55" font-size="14" text-anchor="middle">${role}</text>`:''}${vo?`<text x="16" y="-48" font-size="10">${vo}</text>`:''}`)
-+`<text x="0" y="14" font-size="11" text-anchor="middle" fill="${dead?'#868e96':(ac.nc||'#fff')}">${x}</text>${ac.ti?`<text x="0" y="24" font-size="8" text-anchor="middle" fill="#ffd43b">${ac.ti}</text>`:''}${(dead&&ac.dx?`<text x="40" y="-4" font-size="13">${ac.dx}</text>`:'')+(has&&g.phase==='end'&&ac.wx&&won(g,x)?`<text x="0" y="-66" font-size="16" text-anchor="middle">${ac.wx}</text>`:'')}</g>`;return[py,svg]});
-el.innerHTML=`<svg viewBox="0 0 380 350" style="width:100%"><defs><linearGradient id="rbg" x1="0" x2="1"><stop offset="0" stop-color="#ff6b6b"/><stop offset=".5" stop-color="#ffd43b"/><stop offset="1" stop-color="#4dabf7"/></linearGradient></defs><ellipse cx="190" cy="185" rx="170" ry="140" fill="rgba(255,200,120,.05)"/><text class="fire" x="190" y="200" font-size="38" text-anchor="middle">🔥</text>${arr.sort((a,b)=>a[0]-b[0]).map(x=>x[1]).join('')}</svg>`}
++(dead?`<text x="22" y="-14" font-size="15" text-anchor="middle">💀</text>${(()=>{const r=g.roles[x],mf=isM(r),lb=spec?RN[x===p?r:vis(g,r)]:(mf?'🔪 마피아':'🙂 시민');return`<rect x="-8" y="-40" width="60" height="17" rx="8" fill="${mf?'#c92a2a':'#2b8a3e'}"/><text x="22" y="-28" font-size="11" font-weight="700" text-anchor="middle" fill="#fff">${lb}</text>`})()}`:`${role?`<text x="0" y="-70" font-size="14" text-anchor="middle">${role}</text>`:''}${vo?`<text x="18" y="-62" font-size="10">${vo}</text>`:''}`)
++`<text x="0" y="14" font-size="11" text-anchor="middle" fill="${dead?'#868e96':(ac.nc||'#fff')}">${x}</text>${ac.ti?`<text x="0" y="24" font-size="8" text-anchor="middle" fill="#ffd43b">${ac.ti}</text>`:''}${(dead&&ac.dx?`<text x="40" y="-4" font-size="13">${ac.dx}</text>`:'')+(has&&g.phase==='end'&&ac.wx&&won(g,x)?`<text x="0" y="-78" font-size="16" text-anchor="middle">${ac.wx}</text>`:'')}</g>`;return[py,svg]});
+const stars=night?[[30,30],[80,18],[140,40],[210,14],[270,36],[330,22],[350,60],[20,90],[60,60],[310,90]].map(([x,y],i)=>`<rect class="tw" x="${x}" y="${y}" width="2" height="2" fill="#fff" style="animation-delay:${i*.2}s"/>`).join('')+'<circle cx="335" cy="38" r="9" fill="#f1f3f5"/><circle cx="340" cy="35" r="8" fill="#0d1228"/>':'';
+const tint=g&&g.phase==='trial'?'rgba(224,49,49,.10)':night?'rgba(30,60,140,.30)':'rgba(255,200,120,.06)';
+el.innerHTML=`<svg viewBox="0 0 380 350" style="width:100%"><defs><linearGradient id="rbg" x1="0" x2="1"><stop offset="0" stop-color="#ff6b6b"/><stop offset=".5" stop-color="#ffd43b"/><stop offset="1" stop-color="#4dabf7"/></linearGradient><radialGradient id="glow"><stop offset="0" stop-color="#ff9d3c" stop-opacity=".55"/><stop offset=".6" stop-color="#ff7a1a" stop-opacity=".16"/><stop offset="1" stop-color="#ff7a1a" stop-opacity="0"/></radialGradient></defs><ellipse cx="190" cy="185" rx="170" ry="140" fill="${tint}"/>${stars}${campfire()}${arr.sort((a,b)=>a[0]-b[0]).map(x=>x[1]).join('')}</svg>`}
 function detRes(g,p,d){const N=D.night[d]||{},t=(N.detective||{})[p];if(!t)return null;const r=g.roles[t];let x='';if(isM(r))x=(N.mafia||{})[t];else if(r==='doctor')x=(N.doctor||{})[t];else if(r==='police')x=(N.police||{})[t];else if(r==='detective')x=(N.detective||{})[t];return{t,x:x||''}}
 function detList(g,p){let rs='';for(let d=1;d<=g.day;d++){const q=detRes(g,p,d);if(!q)continue;rs+=(d<g.day||g.phase==='end')?`<div>${d}일차: ${q.t} → <b>${q.x?'간밤에 '+q.x+'님에게 능력을 썼어요':'간밤에 아무에게도 능력을 쓰지 않았어요'}</b></div>`:`<div>${d}일차: ${q.t} 조사 중… (결과는 다음 날 아침에 알려드려요)</div>`}return`<div class="q" style="margin-top:8px">🔎 조사 기록\n${rs||'아직 없어요'}</div>`}
-function previewSVG(eq){const a=acc(eq);return`<svg viewBox="-34 -76 68 94" style="width:84px;height:116px"><ellipse cx="0" cy="1" rx="15" ry="3.5" fill="#000" opacity=".3"/>${a.back}<rect x="-6" y="-14" width="5" height="14" rx="2" fill="#3b4252"/><rect x="1" y="-14" width="5" height="14" rx="2" fill="#3b4252"/><line x1="-8" y1="-29" x2="-13" y2="-16" stroke="#1971c2" stroke-width="4.5" stroke-linecap="round"/><line x1="8" y1="-29" x2="13" y2="-16" stroke="#1971c2" stroke-width="4.5" stroke-linecap="round"/><rect x="-8.5" y="-33" width="17" height="21" rx="6" fill="#1971c2"/><circle cx="0" cy="-41" r="8" fill="#f1c27d"/><path d="M-8 -42a8 8 0 0 1 16 0z" fill="#5a3a1e"/>${a.front}</svg>`}
-let shopOpen=false,shopSlot='hat';
-window.shopToggle=()=>{shopOpen=!shopOpen;render()};
+let cwOpen=false,cwTab='look',shopSlot='hat',tryOn={};
+const fig=(ch,eq,w)=>`<svg viewBox="-44 -68 88 78" style="width:${w}px;height:${Math.round(w*78/88)}px">${char(ch,eq)}</svg>`;
+function thumb(it,ch){const bg='background:rgba(255,255,255,.05);border-radius:8px';
+if(it.s==='hat'||it.s==='glass')return`<svg viewBox="-16 -68 32 32" style="width:52px;height:52px;${bg}">${sprite(ch,{[it.s]:it.id})}</svg>`;
+if(it.s==='face')return`<svg viewBox="-16 -56 32 42" style="width:52px;height:68px;${bg}">${sprite(ch,{face:it.id})}</svg>`;
+if(it.s==='cape'||it.s==='hand')return`<svg viewBox="-24 -68 48 72" style="width:46px;height:69px;${bg}">${sprite(ch,{[it.s]:it.id})}</svg>`;
+if(it.s==='pet')return`<svg viewBox="-44 -18 26 20" style="width:52px;height:40px;${bg}">${rowsSVG(it.v.rows,it.v.pal,PS,-41,-14.4)}</svg>`;
+if(it.s==='foot')return`<svg viewBox="-22 -7 44 18" style="width:52px;height:22px;${bg}">${rowsSVG(it.v.rows,it.v.pal,PS,-19.2,-4)}</svg>`;
+if(it.s==='title')return`<span style="display:inline-block;width:52px;text-align:center;font-size:.6rem;color:#ffd43b">${it.v}</span>`;
+if(it.s==='nameC')return`<svg viewBox="0 0 52 20" style="width:52px;height:20px"><defs><linearGradient id="rbg" x1="0" x2="1"><stop offset="0" stop-color="#ff6b6b"/><stop offset=".5" stop-color="#ffd43b"/><stop offset="1" stop-color="#4dabf7"/></linearGradient></defs><text x="26" y="15" font-size="13" text-anchor="middle" fill="${it.v}">이름</text></svg>`;
+return`<span style="display:inline-block;width:52px;text-align:center;font-size:1.4rem">${it.v}</span>`}
+window.cwToggle=()=>{cwOpen=!cwOpen;if(!cwOpen)tryOn={};render()};
+window.cwTabSet=t=>{cwTab=t;if(t!=='shop')tryOn={};render()};
 window.shopTab=k=>{shopSlot=k;render()};
+window.tryItem=id=>{const it=ITEM[id];if(tryOn[it.s]===id)delete tryOn[it.s];else tryOn[it.s]=id;render()};
+window.clearTry=()=>{tryOn={};render()};
+window.setCh=async(f,v)=>{if(!me)return;await set(ref(db,ROOT+'/profiles/'+me+'/ch/'+f),v)};
 window.buy=async id=>{if(!me)return;const r=await runTransaction(ref(db,ROOT+'/profiles/'+me),c=>buyTx(c,id));if(r&&!r.committed)alert('달란트가 부족하거나 이미 가진 아이템이에요')};
 window.equip=async(k,id)=>{if(!me)return;await set(ref(db,ROOT+'/profiles/'+me+'/eq/'+k),id||null)};
-function shopRender(){const el=$('shop');if(!me){el.style.display='none';return}el.style.display='block';const pf=(D.profiles||{})[me]||{},t=pf.t||0,own=pf.own||{},eq=pf.eq||{};
-const top=`<div class="g2" style="align-items:center;justify-content:space-between"><div>🏪 <b>달란트시장</b> · 💰 ${t}달란트</div>${btn(shopOpen?'닫기':'열기','shopToggle()',0,'g')}</div>`;
-if(!shopOpen){el.innerHTML=top;return}
-el.innerHTML=top+`<div class="g2" style="margin:8px 0">${Object.keys(SLOT).map(k=>btn(SLOT[k],`shopTab('${k}')`,k===shopSlot,'g')).join('')}</div><div style="text-align:center">${previewSVG(eq)}</div><div class="sm" style="text-align:center;margin:4px 0 8px">게임이 끝나면 달란트가 쌓여요. 꾸미기는 승패에 영향이 없어요!</div>${SHOP.filter(i=>i.s===shopSlot).map(i=>`<div class="g2" style="align-items:center;justify-content:space-between;margin:6px 0"><div>${(i.s==='dead'||i.s==='win')?i.v+' ':''}${i.n} <span class="sm">${i.p}달란트</span></div>${own[i.id]?(eq[i.s]===i.id?btn('해제',`equip('${i.s}','')`,1,''):btn('착용',`equip('${i.s}','${i.id}')`,0,'')):btn('구매',`buy('${i.id}')`,0,t>=i.p?'o':'g')}</div>`).join('')}`}
+const swatch=(f,arr,cur)=>`<div class="g2" style="margin:4px 0">${arr.map((c,i)=>`<button class="sw ${cur===i?'on':''}" style="background:${c}" onclick="setCh('${f}',${i})"></button>`).join('')}</div>`;
+function shopRender(){const el=$('shop');if(!me){el.style.display='none';return}el.style.display='block';const pf=(D.profiles||{})[me]||{},t=pf.t||0,own=pf.own||{},eq=pf.eq||{},ch=chOf(me);
+const top=`<div class="g2" style="align-items:center;justify-content:space-between"><div>🎒 <b>내 캐릭터 · 달란트시장</b> · 💰 ${t}</div>${btn(cwOpen?'닫기':'열기','cwToggle()',0,'g')}</div>`;
+if(!cwOpen){el.innerHTML=top;return}
+const pe={...eq,...tryOn},tn=Object.values(tryOn).map(i=>ITEM[i].n);
+const tabs=`<div class="g2" style="margin:8px 0">${btn('🎨 꾸미기','cwTabSet(\'look\')',cwTab==='look','g')}${btn('🎒 인벤토리','cwTabSet(\'inv\')',cwTab==='inv','g')}${btn('🏪 달란트시장','cwTabSet(\'shop\')',cwTab==='shop','g')}</div>`;
+const prev=`<div style="text-align:center">${fig(ch,pe,140)}</div>${tn.length?`<div class="sm" style="text-align:center;color:#ffd43b">👀 입어보는 중: ${tn.join(', ')} (아직 구매 전이에요)</div><div style="text-align:center;margin:4px 0">${btn('입어보기 해제','clearTry()',0,'g')}</div>`:''}`;
+let body='';
+if(cwTab==='look'){body=`<div class="t" style="margin-top:6px">피부색</div>${swatch('sk',SKIN,ch.sk)}<div class="t">머리 모양</div><div class="g2" style="margin:4px 0">${HAIRN.map((n,i)=>btn(n,`setCh('hs',${i})`,ch.hs===i,'g')).join('')}</div><div class="t">머리색</div>${swatch('hc',HAIRC,ch.hc)}<div class="t">상의 색</div>${swatch('sh',SHIRT,ch.sh)}<div class="t">하의 색</div>${swatch('pc',PANTS,ch.pc)}<div class="sm" style="margin-top:6px">외형은 무료예요. 바로 저장되고 다른 사람 화면에도 보여요!</div>`}
+else if(cwTab==='inv'){const mine=SHOP.filter(i=>own[i.id]);body=`<div class="sm" style="margin:6px 0">보유 ${mine.length}개 · 눌러서 착용/해제</div>`+(Object.keys(SLOT).map(k=>{const li=mine.filter(i=>i.s===k);return li.length?`<div class="t" style="margin-top:8px">${SLOT[k]}</div>`+li.map(i=>`<div class="row2">${thumb(i,ch)}<div class="nm2">${i.n}${eq[k]===i.id?' <span class="sm">착용 중</span>':''}</div>${eq[k]===i.id?btn('해제',`equip('${k}','')`,1,''):btn('착용',`equip('${k}','${i.id}')`,0,'')}</div>`).join(''):''}).join('')||'<div class="q">아직 가진 아이템이 없어요. 달란트시장에서 구매해 보세요!</div>')}
+else{body=`<div class="g2" style="margin:6px 0">${Object.keys(SLOT).map(k=>btn(SLOT[k],`shopTab('${k}')`,k===shopSlot,'g')).join('')}</div><div class="sm" style="margin-bottom:6px">👀 입어보기를 누르면 구매 전에 내 캐릭터에 미리 입혀볼 수 있어요. 꾸미기는 승패에 영향이 없어요!</div>`+SHOP.filter(i=>i.s===shopSlot).map(i=>`<div class="row2">${thumb(i,ch)}<div class="nm2">${i.n}<div class="sm">${i.p}달란트</div></div>${btn(tryOn[i.s]===i.id?'입는 중':'👀 입어보기',`tryItem('${i.id}')`,tryOn[i.s]===i.id,'g')}${own[i.id]?(eq[i.s]===i.id?btn('해제',`equip('${i.s}','')`,1,''):btn('착용',`equip('${i.s}','${i.id}')`,0,'')):btn('구매',`buy('${i.id}')`,0,t>=i.p?'o':'g')}</div>`).join('')}
+el.innerHTML=top+tabs+prev+body}
 function awardRender(g){const el=$('award');if(!g||g.phase!=='end'||!g.aw){el.style.display='none';return}el.style.display='block';const my=g.aw[me],rk=Object.keys(g.aw).sort((a,b)=>g.aw[b].t-g.aw[a].t);
 el.innerHTML=`<div class="t">🪙 이번 판 달란트 정산</div>${my?`<div class="q" style="font-size:.85rem">내 획득: <b>+${my.t}달란트</b>\n${my.why.join(' · ')}</div>`:'<div class="q">참가자가 아니라 달란트를 받지 않아요.</div>'}<div class="sm" style="margin-top:6px">🏆 ${rk.slice(0,5).map((n,i)=>(['🥇','🥈','🥉'][i]||(i+1)+'.')+' '+n+' +'+g.aw[n].t).join(' · ')}</div>`}
 const clm={};
