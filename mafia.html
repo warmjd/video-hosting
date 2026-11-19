@@ -1,66 +1,113 @@
 <!DOCTYPE html>
 <html lang="ko"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>원우마을 슬로우 마피아</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&display=swap" rel="stylesheet">
 <style>
-*{box-sizing:border-box;margin:0;padding:0;font-family:-apple-system,BlinkMacSystemFont,'Apple SD Gothic Neo','Noto Sans KR',sans-serif}
-body{background:linear-gradient(160deg,#1a1230,#070a18);color:#eef1f8;min-height:100vh;padding:14px;display:flex;justify-content:center}
-.w{width:100%;max-width:430px;display:flex;flex-direction:column;gap:11px}
-h1{text-align:center;font-size:1.4rem;color:#ffd43b}.sub{text-align:center;font-size:.78rem;color:#9aa6c0;margin-top:2px}
-.c{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.14);border-radius:14px;padding:12px}
-.t{font-weight:800;font-size:.9rem;margin-bottom:7px;color:#ffe08a}
-button{border:0;border-radius:10px;padding:10px 12px;font-weight:700;color:#fff;background:#3b5bdb;font-size:.88rem;cursor:pointer;touch-action:manipulation}
-button.g{background:#3a3f55}button.r{background:#c92a2a}button.o{background:#e67700}button.on{background:#2f9e44}
-input,select{width:100%;padding:10px;border-radius:9px;border:1px solid #455a64;background:#0d1020;color:#fff;font-size:1rem;margin:5px 0}
-.g2{display:flex;flex-wrap:wrap;gap:6px}.g2 button{flex:0 0 auto}
-.q{white-space:pre-line;line-height:1.6;font-size:.84rem;color:#cfd6e6}
+html{background:#05070f}:root{--gold:#ffd43b;--gold2:#ffa94d;--ink:#eef1f8;--mut:#9aa6c0;--line:rgba(255,212,59,.16)}
+*{box-sizing:border-box;margin:0;padding:0;font-family:-apple-system,BlinkMacSystemFont,'Apple SD Gothic Neo','Noto Sans KR',sans-serif;-webkit-tap-highlight-color:transparent}
+.hx,h1,.t,.rc-n,.tab,.stp b{font-family:'Black Han Sans','Apple SD Gothic Neo',sans-serif;font-weight:400;letter-spacing:.3px}
+body{background:radial-gradient(ellipse at 50% -10%,#3a2462 0%,transparent 55%),radial-gradient(ellipse at 100% 100%,#40150f 0%,transparent 45%),linear-gradient(170deg,#141029,#05070f 70%);background-attachment:fixed;color:var(--ink);min-height:100vh;padding:12px 12px 40px;display:flex;justify-content:center}
+body:before{content:'';position:fixed;inset:0;pointer-events:none;background-image:radial-gradient(1.2px 1.2px at 12% 18%,#fff8,transparent),radial-gradient(1px 1px at 72% 9%,#fff9,transparent),radial-gradient(1.4px 1.4px at 88% 32%,#fff6,transparent),radial-gradient(1px 1px at 33% 42%,#fff5,transparent),radial-gradient(1.2px 1.2px at 55% 22%,#fff7,transparent),radial-gradient(1px 1px at 8% 66%,#fff4,transparent),radial-gradient(1px 1px at 93% 74%,#fff5,transparent);animation:tw 5s ease-in-out infinite}
+.w{width:100%;max-width:440px;display:flex;flex-direction:column;gap:12px;position:relative}
+.top{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:4px 2px 0}
+h1{font-size:1.55rem;line-height:1.1;background:linear-gradient(180deg,#fff3bf,#ffd43b 45%,#f08c00);-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 2px 0 #5c2a00) drop-shadow(0 0 14px rgba(255,170,60,.35))}
+.tag{font-size:.68rem;color:var(--mut);margin-top:3px;letter-spacing:2px}
+.rb{flex:0 0 auto;padding:9px 12px;border-radius:12px;background:linear-gradient(180deg,#5b3fd1,#4527a0);box-shadow:0 3px 0 #2a1766,0 6px 14px rgba(90,60,220,.35);font-size:.82rem}
+#hd{display:block;text-align:center;font-weight:800;font-size:.86rem;padding:9px 12px;border-radius:999px;background:linear-gradient(90deg,rgba(255,212,59,.08),rgba(255,212,59,.18),rgba(255,212,59,.08));border:1px solid var(--line);color:#ffe8a3;box-shadow:inset 0 0 18px rgba(255,190,80,.08)}
+#hd:empty{display:none}
+.c{position:relative;background:linear-gradient(180deg,rgba(38,42,74,.88),rgba(16,18,36,.92));border:1px solid var(--line);border-radius:18px;padding:14px;box-shadow:0 10px 26px rgba(0,0,0,.45),inset 0 1px 0 rgba(255,255,255,.07);backdrop-filter:blur(6px)}
+.c:before{content:'';position:absolute;left:18px;right:18px;top:-1px;height:1px;background:linear-gradient(90deg,transparent,rgba(255,212,59,.55),transparent)}
+.t{font-size:1.02rem;margin-bottom:9px;color:var(--gold);text-shadow:0 2px 0 rgba(0,0,0,.5)}
+button{border:0;border-radius:12px;padding:10px 13px;font-weight:800;color:#fff;font-size:.86rem;cursor:pointer;touch-action:manipulation;background:linear-gradient(180deg,#5c7cfa,#3b5bdb);box-shadow:0 3px 0 #233a99,0 5px 10px rgba(0,0,0,.3);transition:transform .06s,box-shadow .06s,filter .15s;text-shadow:0 1px 0 rgba(0,0,0,.35)}
+button:active{transform:translateY(3px);box-shadow:0 0 0 #000,0 2px 4px rgba(0,0,0,.3)}
+button.g{background:linear-gradient(180deg,#474d68,#353a52);box-shadow:0 3px 0 #1f2233,0 5px 10px rgba(0,0,0,.3)}
+button.r{background:linear-gradient(180deg,#f03e3e,#c92a2a);box-shadow:0 3px 0 #7a1414,0 5px 12px rgba(224,49,49,.3)}
+button.o{background:linear-gradient(180deg,#ff922b,#e8590c);box-shadow:0 3px 0 #8a3305,0 5px 12px rgba(255,146,43,.3)}
+button.on{background:linear-gradient(180deg,#51cf66,#2b8a3e);box-shadow:0 3px 0 #18562a,0 0 0 2px rgba(105,219,124,.5),0 5px 14px rgba(81,207,102,.35)}
+button[disabled]{opacity:.45;filter:grayscale(.6)}
+input,select{width:100%;padding:11px;border-radius:11px;border:1px solid rgba(255,255,255,.14);background:rgba(5,7,16,.75);color:#fff;font-size:1rem;margin:5px 0;outline:none}
+input:focus,select:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(255,212,59,.15)}
+.g2{display:flex;flex-wrap:wrap;gap:7px}.g2 button{flex:0 0 auto}
+.q{white-space:pre-line;line-height:1.65;font-size:.84rem;color:#d3d9e8}
 .role{text-align:center;font-size:1.3rem;font-weight:800;padding:8px}
-.d{color:#868e96;text-decoration:line-through}.sm{font-size:.72rem;color:#8d96b0}
+.d{color:#868e96;text-decoration:line-through}.sm{font-size:.72rem;color:#8d96b0;line-height:1.5}
 .fig{transform-box:fill-box;transform-origin:50% 100%}.fig.idle{animation:bob 2.6s ease-in-out infinite}.fig.dead{transform:rotate(86deg);filter:grayscale(1);opacity:.55}.fig.fall{animation:fall .9s ease-out}.fa{animation:fa .6s steps(1) infinite}.fb{animation:fb .6s steps(1) infinite}.glow{animation:gl 1.3s ease-in-out infinite}.em{animation:rise 2.4s linear infinite}.tw{animation:tw 2s steps(1) infinite}
 @keyframes bob{50%{transform:translateY(-2.5px)}}@keyframes fall{0%{transform:rotate(0);opacity:1;filter:none}35%{transform:rotate(-14deg)}100%{transform:rotate(86deg)}}@keyframes fa{0%{opacity:1}50%{opacity:0}}@keyframes fb{0%{opacity:0}50%{opacity:1}}@keyframes gl{50%{opacity:.65}}@keyframes rise{0%{transform:translate(0,0);opacity:.95}100%{transform:translate(var(--dx),-46px);opacity:0}}@keyframes tw{50%{opacity:.2}}
-.sw{width:30px;height:30px;padding:0;border-radius:8px;border:2px solid #555}.sw.on{border-color:#ffd43b;box-shadow:0 0 0 2px rgba(255,212,59,.4)}.row2{display:flex;align-items:center;gap:8px;margin:6px 0}.row2>.nm2{flex:1;font-size:.85rem}
-.lg div{font-size:.8rem;line-height:1.5;padding:4px 0;border-bottom:1px solid rgba(255,255,255,.07)}
+@keyframes shine{0%{transform:translateX(-120%) skewX(-20deg)}60%,100%{transform:translateX(260%) skewX(-20deg)}}@keyframes pop{0%{transform:scale(.92);opacity:0}100%{transform:scale(1);opacity:1}}@keyframes up{0%{transform:translateY(100%)}100%{transform:translateY(0)}}
+.sw{width:30px;height:30px;padding:0;border-radius:8px;border:2px solid #555;box-shadow:none}.sw.on{border-color:#ffd43b;box-shadow:0 0 0 2px rgba(255,212,59,.4)}.row2{display:flex;align-items:center;gap:8px;margin:6px 0}.row2>.nm2{flex:1;font-size:.85rem}
+/* 로그 타임라인 */
+.lg div{font-size:.8rem;line-height:1.55;padding:7px 10px;margin:5px 0;border-left:3px solid #4c5372;background:rgba(255,255,255,.035);border-radius:0 10px 10px 0;animation:pop .3s}
+.lg .k{border-color:#fa5252;background:rgba(250,82,82,.08)}.lg .s{border-color:#51cf66;background:rgba(81,207,102,.07)}.lg .j{border-color:#ffa94d;background:rgba(255,169,77,.07)}.lg .n{border-color:#748ffc}.lg .dy{border-color:#ffd43b}.lg .w{border-color:#ffd43b;background:linear-gradient(90deg,rgba(255,212,59,.22),rgba(255,212,59,.04));font-weight:800;font-size:.9rem}
+.more{width:100%;margin-top:6px}
+/* 참가자 칩 */
+#pl span{border:1px solid rgba(255,255,255,.1)}
+/* 내 직업 카드 */
+.rc{position:relative;overflow:hidden;text-align:center;border-radius:16px;padding:16px 10px 12px;margin-bottom:10px;border:1px solid rgba(255,255,255,.18);animation:pop .35s}
+.rc:after{content:'';position:absolute;top:0;bottom:0;left:0;width:40%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.18),transparent);animation:shine 4.5s ease-in-out infinite}
+.rc.tm{background:radial-gradient(circle at 50% 0,#a51d1d,#3b0b0b 75%);box-shadow:0 0 22px rgba(224,49,49,.35)}
+.rc.tc{background:radial-gradient(circle at 50% 0,#1c5fb8,#0b1d3b 75%);box-shadow:0 0 22px rgba(77,171,247,.3)}
+.rc.tj{background:radial-gradient(circle at 50% 0,#7b2fbe,#22093b 75%);box-shadow:0 0 22px rgba(177,151,252,.35)}
+.rc.tx{background:radial-gradient(circle at 50% 0,#4a5068,#15182a 75%)}
+.rc.dead{filter:grayscale(.75) brightness(.8)}
+.rc-e{font-size:3rem;line-height:1.1;filter:drop-shadow(0 4px 8px rgba(0,0,0,.5))}
+.rc-n{font-size:1.7rem;margin-top:4px;text-shadow:0 2px 0 rgba(0,0,0,.5)}
+.rc-tm{display:inline-block;margin-top:6px;font-size:.7rem;font-weight:800;padding:3px 10px;border-radius:999px;background:rgba(0,0,0,.35);border:1px solid rgba(255,255,255,.2)}
+.rc.hid+.q{filter:blur(7px)}.rc.hid .rc-e,.rc.hid .rc-n,.rc.hid .rc-tm{filter:blur(14px)}
+.eye{position:absolute;right:8px;top:8px;z-index:2;padding:5px 8px;font-size:.7rem;border-radius:9px;background:rgba(0,0,0,.4);box-shadow:none}
+/* 규칙서 */
+.ov{position:fixed;inset:0;z-index:50;background:rgba(3,4,10,.72);backdrop-filter:blur(4px);display:none}
+.ov.op{display:block}
+.sheet{position:absolute;left:0;right:0;bottom:0;margin:0 auto;max-width:460px;max-height:90vh;display:flex;flex-direction:column;background:linear-gradient(180deg,#22264a,#0f1124);border:1px solid var(--line);border-bottom:0;border-radius:22px 22px 0 0;box-shadow:0 -10px 40px rgba(0,0,0,.6);animation:up .28s ease-out}
+.sh-h{display:flex;align-items:center;justify-content:space-between;padding:14px 14px 8px}
+.sh-h .hx{font-size:1.3rem;color:var(--gold)}
+.tabs{display:flex;gap:6px;padding:0 12px 10px;overflow-x:auto}
+.tab{flex:1 0 auto;padding:9px 10px;font-size:.9rem;border-radius:11px}
+.sh-b{overflow-y:auto;padding:4px 14px 30px;-webkit-overflow-scrolling:touch}
+.stp{display:flex;gap:10px;padding:11px;margin:8px 0;border-radius:14px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.07)}
+.stp .no{flex:0 0 34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.15rem;background:linear-gradient(180deg,#3a3f62,#262a45);box-shadow:inset 0 0 0 1px rgba(255,212,59,.3)}
+.stp b{display:block;font-size:1rem;color:#fff;margin-bottom:2px}.stp p{font-size:.8rem;color:#c8cfe0;line-height:1.6}
+.pill{display:inline-block;font-size:.66rem;font-weight:800;padding:2px 7px;border-radius:999px;background:rgba(255,212,59,.15);color:#ffe08a;margin-left:4px;vertical-align:2px}
+.wins{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin:8px 0}
+.wins div{text-align:center;padding:10px 6px;border-radius:12px;font-size:.72rem;line-height:1.45;color:#dfe4f0}.wins b{display:block;font-size:1.4rem}
+.h2{font-family:'Black Han Sans',sans-serif;color:var(--gold);font-size:1rem;margin:16px 0 6px}
+.rg{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.rcd{position:relative;padding:10px;border-radius:13px;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.04)}
+.rcd .e{font-size:1.7rem}.rcd b{display:block;font-size:.92rem;margin:2px 0}.rcd p{font-size:.7rem;color:#bfc7da;line-height:1.5}
+.rcd.m{background:linear-gradient(160deg,rgba(201,42,42,.28),rgba(201,42,42,.05));border-color:rgba(250,82,82,.35)}
+.rcd.c2{background:linear-gradient(160deg,rgba(28,126,214,.25),rgba(28,126,214,.04));border-color:rgba(77,171,247,.3)}
+.rcd.j{background:linear-gradient(160deg,rgba(132,94,247,.3),rgba(132,94,247,.05));border-color:rgba(177,151,252,.35)}
+.rcd .in{position:absolute;right:7px;top:7px}
+.tb{width:100%;border-collapse:collapse;font-size:.8rem}.tb td{padding:8px 6px;border-bottom:1px solid rgba(255,255,255,.07)}.tb td:last-child{text-align:right;font-weight:800;color:#ffe08a;white-space:nowrap}
+.fq{padding:11px;margin:8px 0;border-radius:12px;background:rgba(255,255,255,.04)}.fq b{display:block;font-size:.86rem;margin-bottom:4px;color:#fff}.fq p{font-size:.8rem;color:#c8cfe0;line-height:1.6}
+.chips{display:flex;flex-wrap:wrap;gap:5px;margin-top:6px}.chips span{font-size:.74rem;padding:4px 9px;border-radius:999px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12)}
 </style></head><body><div class="w">
-<div><h1>🎭 원우마을 슬로우 마피아</h1><div class="sub" id="hd"></div></div>
+<div class="top"><div><h1><span style="color:initial;-webkit-text-fill-color:initial">🎭</span> 원우마을 마피아</h1><div class="tag">SLOW MAFIA · 카톡방 추리 게임</div></div><button class="rb" onclick="rulesOpen()">📖 규칙서</button></div>
+<div id="hd"></div>
 <div class="c" id="login"></div>
 <div class="c" id="me" style="display:none"></div>
 <div class="c" id="act" style="display:none"></div>
-<div class="c" id="adm" style="display:none"></div>
 <div class="c" id="award" style="display:none"></div>
-<div class="c" id="shop" style="display:none"></div>
-<div class="c" id="hist" style="display:none"></div>
 <div class="c"><div class="t">🔥 마을 모닥불</div><div id="ring"></div><div id="pl" class="g2" style="margin-top:6px"></div></div>
+<div class="c" id="hist" style="display:none"></div>
 <div class="c"><div class="t">📜 마을 기록</div><div class="lg" id="lg"></div></div>
-<div class="c"><div class="t">📖 규칙</div><div class="q" style="font-size:.76rem">• 한 판마다 참가 신청을 받고, 모두 모이면 운영자가 "신청 끝 · 게임 시작"을 눌러요. 신청한 사람만 참가자가 되고, 나머지는 관전자예요.
-• 직업: 마피아 2(8~9명)/3(10명↑) · 의사 · 경찰 · 광대 · 시민. 10명↑ 🪖군인·🔎탐정 추가, 12명↑ 마피아 중 1명이 🕴️갓파더! 11명↑ ✝️예수님! 나머지 자리는 🏛️이장·📰기자·🍺술꾼·👀목격자, 그래도 남는 시민은 🎯비밀 미션 카드를 받아요.
-• 하루는 ☀️낮 투표 → ⚖️최후 변론·찬반 → 🌙밤 순서예요. 정해진 시각이 아니라 "모두 끝내면 바로" 다음 단계로 넘어가요. 안 끝내는 사람이 있어도 제한시간이 지나면 넘어가요.
-• ☀️ 낮(제한 12시간): 처형할 사람 1명에게 투표 (그전까진 바꿀 수 있어요). 모두 투표하면 투표가 공개되고 최다 득표자가 재판 대상이 돼요. 동률·무투표면 재판 없이 바로 밤!
-• ⚖️ 최후 변론(제한 3시간): 카톡방에서 변론하고 앱에서 👍찬성/👎반대를 골라요. 모두 정하면 바로 결과 (찬성이 반대보다 많아야 처형, 동률 부결). 재판 대상은 투표할 수 없어요. 처형되면 마피아였는지 아닌지만 공개돼요.
-마피아·의사·경찰이 능력을 써요. 모두 쓰면 바로 아침! (마피아는 모두 같은 사람을 골라야 해요): 마피아·의사·경찰이 능력을 써요. 모두 쓰면 바로 아침! 마피아 습격은 의사가 막으면 "의사가 막아냈다"고 공개돼요 (누구인지는 비밀).
-• 🕴️ 갓파더: 마피아 편이지만 경찰이 조사하면 "마피아 아님"으로 나와요. 같은 사람을 두 번 조사하면 "사실은 마피아였습니다"로 정체가 드러나요.
-• 🔎 탐정: 밤에 1명을 조사하면 다음 날 아침 "그 사람이 간밤에 능력을 누구에게 썼는지"를 알려줘요 (직업은 안 알려줘요). 하루 1명, 한 번 정하면 변경 불가.
-• 🪖 군인: 마피아의 밤 습격을 게임당 1번 버텨요. 발동하면 군인 정체가 공개돼요 (의사 보호가 먼저 적용).
-• 💉 의사: 같은 사람 연속 보호 불가, 본인 가능. 🕵️ 경찰: 밤에 1명을 조사하면 결과는 다음 날 아침에 확인 (한 번 정하면 변경 불가).
-• 🤡 광대는 재판에서 처형되면 혼자 승리! 마피아 전멸=시민 승, 마피아 ≥ 나머지=마피아 승.
-• 사망하면 쓰러진 캐릭터에 마피아/시민 표지가 붙어요 (의사·경찰·광대는 시민으로 표시). 죽은 사람·관전자 화면에서도 광대는 시민으로 보여요. 게임이 끝나면 전체 직업 공개!
-• ✝️ 예수님(시민 편): 처형이든 습격이든 죽으면 3일 뒤 낮에 부활해요 (게임당 1번). 죽어 있는 동안은 유령 모드(직업 보기) 없이 죽은 사람처럼 말하면 안 돼요. 대기 중에도 시민 쪽 생존자로 계산돼요.
-• 🏛️ 이장: 재판 찬반이 동률이면 이장의 한 표가 결정 · 📰 기자: 게임당 1번 "간밤에 능력을 쓴 사람 수" 속보 · 🍺 술꾼: 시민 편이지만 경찰에게 마피아로 나와요 · 👀 목격자: 시작 때 마피아 한 명의 초성 힌트.
-• 🪙 달란트: 게임이 끝나면 참가 +10, 개근 +10, 승리 (시민 +20 / 마피아 +40 / 광대 +50), 활약(마피아 처형 투표 +5, 경찰 적발 +5, 의사 방어 +10, 군인 방어 +5, 시민팀 승리 시 생존 +5), 유령 예측 +3, 유령 MVP +15, 비밀 미션 +10을 받아요.
-• 🏪 달란트시장: 칭호·모자(간달프 모자 등)·안경·얼굴 장식·망토/날개·손 도구(간달프 지팡이 등)·반려동물·발밑 효과·이름색·쓰러짐/승리 효과, 총 130여 개! 구매 전에 "입어보기"로 미리 입혀볼 수 있고, 외형(피부·머리·옷 색)은 무료로 바꿀 수 있어요. 승패에는 영향이 없어요!
-• 대화는 카톡방에서! 앱은 투표와 능력 사용만 해요.</div></div>
+<div class="c" id="shop" style="display:none"></div>
+<div class="c" id="adm" style="display:none"></div>
+<div class="c" style="text-align:center"><div class="q" style="font-size:.8rem;margin-bottom:8px">처음이라면 규칙서부터! 진행 순서 · 직업 · 달란트를 한눈에 볼 수 있어요.</div><button class="rb" style="width:100%" onclick="rulesOpen()">📖 규칙서 열기</button></div>
 </div>
+<div class="ov" id="ov" onclick="if(event.target===this)rulesClose()"><div class="sheet"><div class="sh-h"><div class="hx">📖 마피아 규칙서</div><button class="g" onclick="rulesClose()">✕ 닫기</button></div><div class="tabs" id="rtabs"></div><div class="sh-b" id="rbody"></div></div></div>
 <script type="module">
 import{initializeApp}from"https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
 import{getDatabase,ref,set,onValue,runTransaction}from"https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
 const cfg={apiKey:"AIzaSyBk2bAqCq_SGeiPJUvoPTRMk0zk3psVewU",authDomain:"jowonu-107aa.firebaseapp.com",databaseURL:"https://jowonu-107aa-default-rtdb.asia-southeast1.firebasedatabase.app",projectId:"jowonu-107aa",storageBucket:"jowonu-107aa.firebasestorage.app",messagingSenderId:"332313627395",appId:"1:332313627395:web:eb5e98f35ff3070129f736"};
 const Q=location.search,TEST=Q.includes('test'),ADMINQ=Q.includes('admin')||TEST,ROOT=TEST?'m1test':'m1',ADMIN_PIN='0000',MIN=TEST?4:8;
 const ROSTER=['조원우','서충원','나선엽','류태웅','박경민','박승호','이다원','유한춘','이재형','한빛','조돌맹','현지석','황동범'];
-const RN={mafia:'🔪 마피아',doctor:'💉 의사',police:'🕵️ 경찰',jester:'🤡 광대',citizen:'🙂 시민',godfather:'🕴️ 갓파더',soldier:'🪖 군인',detective:'🔎 탐정',jesus:'✝️ 예수님',mayor:'🏛️ 이장',reporter:'📰 기자',drunk:'🍺 술꾼',witness:'👀 목격자'};
+const RN={mafia:'🔪 마피아',doctor:'💉 의사',police:'🕵️ 경찰',jester:'🤡 광대',citizen:'🛋️ 백수',godfather:'🕴️ 갓파더',soldier:'🪖 군인',detective:'🔎 탐정',jesus:'✝️ 예수님',mayor:'🏛️ 이장',reporter:'📰 기자',drunk:'🍺 술꾼',witness:'👀 목격자'};
 const vis=(g,r)=>g.phase==='end'||!['jester','drunk','jesus'].includes(r)?r:'citizen';
-const RD={mafia:'밤마다 1명을 지목해 제거하세요. 들키지 마세요.',doctor:'밤마다 1명을 보호하세요. 같은 사람 연속 불가, 본인 가능.',police:'밤에 1명을 조사하면 다음 날 아침에 마피아인지 알려줘요. 갓파더는 같은 사람을 두 번 조사하면 정체가 드러나요.',jester:'투표로 처형당하면 혼자 승리! 의심받아야 이겨요.',jesus:'시민 편이에요. 처형이든 습격이든 죽으면 3일 뒤 낮에 부활해요 (1번). 죽어 있는 동안은 유령 모드 없이, 죽은 사람처럼 카톡방에서 말하면 안 돼요.',mayor:'재판 찬반이 동률이면 당신의 한 표가 결정해요.',reporter:'게임당 1번 밤에 속보를 발행하면, 아침에 "간밤에 능력을 쓴 사람 수"가 모두에게 공개돼요.',drunk:'시민 편이에요. 하지만 경찰이 조사하면 마피아로 나와요! 억울하게 몰리지 않게 조심하세요.',witness:'시민 편이에요. 시작할 때 마피아 팀 한 명의 이름 초성을 힌트로 받아요.',detective:'밤에 1명을 조사하면 다음 날 아침 "그 사람이 간밤에 능력을 누구에게 썼는지" 알려줘요. 직업은 알려주지 않아요.',godfather:'마피아 편이에요! 경찰이 조사해도 마피아 아님으로 나와요. 매일 1명을 지목해 제거하세요.',soldier:'마피아의 밤 습격을 1번 버텨요. 발동하면 정체가 공개돼요. 투표 처형은 못 막아요.',citizen:'카톡 대화와 투표로 마피아를 찾아내세요.'};
+const RD={mafia:'밤마다 1명을 지목해 제거하세요. 들키지 마세요.',doctor:'밤마다 1명을 보호하세요. 같은 사람 연속 불가, 본인 가능.',police:'밤에 1명을 조사하면 다음 날 아침에 마피아인지 알려줘요. 갓파더는 같은 사람을 두 번 조사하면 정체가 드러나요.',jester:'투표로 처형당하면 혼자 승리! 의심받아야 이겨요.',jesus:'시민 편이에요. 처형이든 습격이든 죽으면 3일 뒤 낮에 부활해요 (1번). 죽어 있는 동안은 유령 모드 없이, 죽은 사람처럼 카톡방에서 말하면 안 돼요.',mayor:'재판 찬반이 동률이면 당신의 한 표가 결정해요.',reporter:'게임당 1번 밤에 속보를 발행하면, 아침에 "간밤에 능력을 쓴 사람 수"가 모두에게 공개돼요.',drunk:'시민 편이에요. 하지만 경찰이 조사하면 마피아로 나와요! 억울하게 몰리지 않게 조심하세요.',witness:'시민 편이에요. 시작할 때 마피아 팀 한 명의 이름 초성을 힌트로 받아요.',detective:'밤에 1명을 조사하면 다음 날 아침 "그 사람이 간밤에 능력을 누구에게 썼는지" 알려줘요. 직업은 알려주지 않아요.',godfather:'마피아 편이에요! 경찰이 조사해도 마피아 아님으로 나와요. 매일 1명을 지목해 제거하세요.',soldier:'마피아의 밤 습격을 1번 버텨요. 발동하면 정체가 공개돼요. 투표 처형은 못 막아요.',citizen:'시민 편이에요. 특별한 능력은 없지만 카톡 대화와 투표로 마피아를 찾아내세요.'};
 const $=id=>document.getElementById(id);
 const db=getDatabase(initializeApp(cfg));let OFF=0;const NOW=()=>Date.now()+OFF;onValue(ref(db,'.info/serverTimeOffset'),x=>{OFF=x.val()||0});
-let D={users:{},game:null,votes:{},night:{},ghost:{},fv:{},entries:{},profiles:{},last:[]},me=localStorage.getItem('m1_me')||'',as='',admin=false,loaded=false,busy=false;
-onValue(ref(db,ROOT),s=>{const v=s.val()||{};D={users:v.users||{},game:v.game||null,votes:v.votes||{},night:v.night||{},ghost:v.ghost||{},fv:v.fvotes||{},entries:v.entries||{},profiles:v.profiles||{},last:v.last||[]};loaded=true;render();tick()});
+let D={users:{},game:null,votes:{},night:{},ghost:{},fv:{},entries:{},profiles:{},last:[],cfg:null},me=localStorage.getItem('m1_me')||'',as='',admin=false,loaded=false,busy=false,busyAt=0;
+onValue(ref(db,ROOT),s=>{const v=s.val()||{};D={users:v.users||{},game:v.game||null,votes:v.votes||{},night:v.night||{},ghost:v.ghost||{},fv:v.fvotes||{},entries:v.entries||{},profiles:v.profiles||{},last:v.last||[],cfg:v.cfg||null};loaded=true;render();tick()});
 async function H(s){const b=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(s));return[...new Uint8Array(b)].map(x=>x.toString(16).padStart(2,'0')).join('')}
 const sh=a=>{a=[...a];for(let i=a.length-1;i>0;i--){const j=Math.random()*(i+1)|0;[a[i],a[j]]=[a[j],a[i]]}return a};
 const G=()=>D.game,P=()=>as||me,HR=Q.includes('fast')?6e4:36e5,T_VOTE=12*HR,T_TRIAL=3*HR,T_NIGHT=9*HR;
@@ -75,12 +122,31 @@ const ent=o=>Object.keys(o||{}).filter(k=>o[k]);
 const CHO='ㄱㄲㄴㄷㄸㄹㅁㅂㅃㅅㅆㅇㅈㅉㅊㅋㅌㅍㅎ';
 const cho=n=>{const c=n.charCodeAt(0)-44032;return c>=0&&c<11172?CHO[c/588|0]:n[0]};
 const MIS={live:'🛡️ 게임이 끝날 때까지 살아남기',first:'🎯 이번 판 첫 처형자에게 투표하기',spot:'🧐 마피아에게 투표하기 2회 이상',yes:'👍 마피아인 재판 대상에게 찬성표 던지기'};
-function makeRoles(ns,sh){const n=ns.length,m=n>=10?3:n>=8?2:1,ma=Array(m).fill('mafia');if(n>=12)ma[0]='godfather';
-const fixed=[...ma,'police','doctor','jester',...(n>=10?['soldier','detective']:[]),...(n>=11?['jesus']:[])],pool=sh(['mayor','reporter','drunk','witness']);
-const rl=fixed.slice(0,n);while(rl.length<n)rl.push(pool.length?pool.shift():'citizen');
-const sr=sh(rl),roles={},alive={},ms={},wh={};sh(ns).forEach((x,i)=>{roles[x]=sr[i];alive[x]=true});
+// ── 직업 구성 설정 (운영자가 게임 전에 정함) ──
+const RK=['mafia','godfather','jester','police','doctor','soldier','detective','jesus','mayor','reporter','drunk','witness'];
+const RMAX={mafia:6,godfather:2,jester:2,police:1,doctor:1,soldier:2,detective:2,jesus:1,mayor:1,reporter:2,drunk:2,witness:2};
+const POOLK=RK.filter(k=>!isM(k)),DEF_TM={v:12,t:3,n:9};
+const PRESET={mode:'custom',c:{mafia:3,jester:1,police:1,doctor:1},pool:['soldier','detective'],pk:1,tm:{v:12,t:3,n:9}};
+const CF=()=>{const c=D.cfg||PRESET;return{mode:c.mode||'custom',c:{...(c.c||{})},pool:[...(c.pool||[])].filter(k=>POOLK.includes(k)),pk:c.pk||0,tm:{...DEF_TM,...(c.tm||{})}}};
+const TL=(c,k)=>(((c.tm||{})[k])||DEF_TM[k])*HR;
+function autoList(n,shf){const m=n>=10?3:n>=8?2:1,ma=Array(m).fill('mafia');if(n>=12)ma[0]='godfather';
+const fixed=[...ma,'police','doctor','jester',...(n>=10?['soldier','detective']:[]),...(n>=11?['jesus']:[])],pool=shf(['mayor','reporter','drunk','witness']);
+const rl=fixed.slice(0,n);while(rl.length<n)rl.push(pool.length?pool.shift():'citizen');return rl}
+function roleList(n,cf,shf){if(!cf||cf.mode==='auto')return autoList(n,shf);const rl=[];RK.forEach(k=>{for(let i=0;i<(cf.c[k]||0);i++)rl.push(k)});rl.push(...shf(cf.pool).slice(0,cf.pk));while(rl.length<n)rl.push('citizen');return rl.slice(0,n)}
+function cfgCheck(cf,n){if(cf.mode==='auto')return{err:n<MIN?'자동 구성은 최소 '+MIN+'명 필요해요':'',txt:'🤖 자동 구성 (인원별 기본 규칙)',min:MIN};
+const sp=RK.reduce((s,k)=>s+(cf.c[k]||0),0)+cf.pk,mt=(cf.c.mafia||0)+(cf.c.godfather||0),min=Math.max(4,sp,mt*2+1);let err='';
+if(mt<1)err='마피아(또는 갓파더)가 최소 1명은 있어야 해요';
+else if(cf.pk>cf.pool.length)err='랜덤 후보 수가 넣을 개수보다 적어요';
+else{const du=cf.pool.filter(k=>RMAX[k]===1&&(cf.c[k]||0)>=1);if(du.length)err='랜덤 후보에 이미 넣은 직업이 있어요 (1명만 가능): '+du.map(k=>RN[k]).join(', ')}
+if(!err&&n&&sp>n)err='직업 수('+sp+'개)가 신청 인원('+n+'명)보다 많아요';
+if(!err&&n&&mt*2>=n)err='마피아가 너무 많아요. 시작하자마자 마피아가 이겨요 (마피아 '+mt+'명이면 최소 '+(mt*2+1)+'명)';
+if(!err&&n<min)err='최소 '+min+'명 필요해요 (현재 '+n+'명)';
+const parts=RK.filter(k=>cf.c[k]).map(k=>RN[k]+' '+cf.c[k]);if(cf.pk&&cf.pool.length)parts.push(cf.pool.map(k=>RN[k]).join('/')+' 중 랜덤 '+cf.pk);parts.push('🛋️ 백수 '+(n?Math.max(0,n-sp):'나머지'));
+return{err,txt:parts.join(' · '),min}}
+function makeRoles(ns,shf,cf){const n=ns.length,rl=roleList(n,cf,shf);
+const sr=shf(rl),roles={},alive={},ms={},wh={};shf(ns).forEach((x,i)=>{roles[x]=sr[i];alive[x]=true});
 const mf=ns.filter(x=>isM(roles[x])),keys=Object.keys(MIS);
-ns.forEach(x=>{if(roles[x]==='citizen')ms[x]=sh(keys)[0];if(roles[x]==='witness'&&mf.length)wh[x]=cho(sh(mf)[0])});
+ns.forEach(x=>{if(roles[x]==='citizen')ms[x]=shf(keys)[0];if(roles[x]==='witness'&&mf.length)wh[x]=cho(shf(mf)[0])});
 return{roles,alive,ms,wh}}
 function die(g,x){g.alive[x]=false;g.dd=g.dd||{};g.dd[x]=g.day;if(g.roles[x]==='jesus'&&!(g.res&&g.res[x])){g.res=g.res||{};g.res[x]=1;g.rise=g.rise||{};g.rise[x]=g.day+3}}
 function missionOK(g,n,k){const V=d=>D.votes[d]||{},F=d=>D.fv[d]||{},ex=g.ex||{};
@@ -101,10 +167,10 @@ if(hit[n])put(hit[n]*3,'유령 예측');if(mx>=1&&hit[n]===mx)put(15,'유령 MVP
 function fin(g,w){g.phase='end';g.winner=w;g.log.push(w);g.win=w.startsWith('🎉')?'c':w.startsWith('😈')?'m':'j';if(g.sid)g.aw=calcAwards(g)}
 function endVote(c,V){V=V||{};const a=al(c),vv={};a.forEach(v=>{if(V[v]&&c.alive[V[v]]&&V[v]!==v)vv[v]=V[v]});
 c.log.push('🗳️ '+c.day+'일차 투표 공개: '+(Object.keys(vv).map(v=>v+'→'+vv[v]).join(', ')||'투표 없음'));const x=defOf(c,V);
-if(x){c.def=x;c.df=c.df||{};c.df[c.day]=x;c.phase='trial';c.deadline=NOW()+T_TRIAL;c.log.push('⚖️ '+x+'님이 재판에 올랐습니다. 카톡방에서 최후 변론을 하고, 앱에서 처형 찬성/반대를 정하세요!')}
+if(x){c.def=x;c.df=c.df||{};c.df[c.day]=x;c.phase='trial';c.deadline=NOW()+TL(c,'t');c.log.push('⚖️ '+x+'님이 재판에 올랐습니다. 카톡방에서 최후 변론을 하고, 앱에서 처형 찬성/반대를 정하세요!')}
 else{c.log.push('⚖️ 동률이거나 투표가 없어 재판 대상이 없었습니다.');startNight(c)}}
-function startNight(c){c.def='';c.phase='night';c.deadline=NOW()+T_NIGHT;c.log.push('🌙 '+c.day+'일차 밤이 되었습니다. 마피아·의사·경찰이 움직이는 시간…')}
-function endTrial(c,F,V){F=F||{};V=V||{};const x=c.def,a=al(c);let y=0,n=0;a.forEach(v=>{if(v!==x){if(F[v]==='y')y++;else if(F[v]==='n')n++}});
+function startNight(c){c.def='';c.phase='night';c.deadline=NOW()+TL(c,'n');c.log.push('🌙 '+c.day+'일차 밤이 되었습니다. 마피아·의사·경찰이 움직이는 시간…')}
+function endTrial(c,F,V){F=F||{};V=V||{};const x=c.def,a=al(c);if(!x||!c.alive[x]){c.log.push('⚖️ 재판 대상이 없어 재판이 취소됐어요.');const w0=wc(c);if(w0)return fin(c,w0);return startNight(c)}let y=0,n=0;a.forEach(v=>{if(v!==x){if(F[v]==='y')y++;else if(F[v]==='n')n++}});
 const mv=a.find(v=>v!==x&&c.roles[v]==='mayor'&&F[v]),tie=y===n&&!!mv;c.log.push('⚖️ '+x+' 재판 · 찬성 '+y+' / 반대 '+n+(tie?' · 동률! 마을의 숨은 한 표가 결정했습니다':''));
 if(y>n||(tie&&F[mv]==='y')){die(c,x);c.ex=c.ex||{};c.ex[c.day]=x;if(isM(c.roles[x]))a.forEach(v=>{if(V[v]===x)ad(c,v,5)});c.log.push('⚖️ '+x+' 처형! '+(isM(c.roles[x])?'마피아였습니다 🔪':'마피아가 아니었습니다 😢'));if(c.roles[x]==='jester')return fin(c,'🤡 광대 '+x+' 단독 승리! 모두가 속았습니다.')}else c.log.push('🕊️ '+x+' 처형 부결! 찬성이 반대보다 많아야 처형돼요. 오늘은 살았습니다.');
 const w=wc(c);if(w)return fin(c,w);startNight(c)}
@@ -118,17 +184,20 @@ if(tg&&tg===dp){ad(g,dk,10);g.log.push('🛡️ '+g.day+'일차 밤, 마피아�
 else if(tg&&g.roles[tg]==='soldier'&&!(g.rev||[]).includes(tg)){g.rev=(g.rev||[]).concat([tg]);ad(g,tg,5);g.log.push('🪖 '+g.day+'일차 밤, 마피아의 습격! '+tg+'님은 군인이었습니다. 방패로 버텨냈어요! 아무도 죽지 않았어요.')}
 else if(tg){die(g,tg);g.kl=g.kl||{};g.kl[g.day]=tg;g.log.push('💀 '+g.day+'일차 밤, '+tg+' 사망했습니다.')}
 else g.log.push('🌙 '+g.day+'일차 밤은 평화로웠습니다. 아무도 죽지 않았어요.');
-const w=wc(g);if(w)return fin(g,w);g.day++;g.phase='vote';g.deadline=NOW()+T_VOTE;
+const w=wc(g);if(w)return fin(g,w);g.day++;g.phase='vote';g.deadline=NOW()+TL(g,'v');
 Object.keys(g.rise||{}).forEach(x=>{if(g.rise[x]<=g.day){g.alive[x]=true;delete g.rise[x];if(g.dd)delete g.dd[x];g.rev=(g.rev||[]).concat([x]);ad(g,x,10);g.log.push('✝️ '+x+'님이 부활하셨습니다! 예수님이었습니다. 3일 만에 다시 살아났어요!')}});
 g.log.push('☀️ '+g.day+'일차 낮이 밝았습니다. 처형할 사람에게 투표하세요!')}
 function step(c){const V=D.votes[c.day],F=D.fv[c.day],N=D.night[c.day];if(c.phase==='vote')endVote(c,V);else if(c.phase==='trial')endTrial(c,F,V);else if(c.phase==='night')endNight(c,N)}
-function need(g){if(!g||!g.roles)return false;const a=al(g);if(!a.length)return false;
-if(g.phase==='vote'){const V=D.votes[g.day]||{};return NOW()>=g.deadline||a.every(v=>V[v]&&g.alive[V[v]]&&V[v]!==v)}
-if(g.phase==='trial'){const F=D.fv[g.day]||{};return NOW()>=g.deadline||a.filter(v=>v!==g.def).every(v=>F[v]==='y'||F[v]==='n')}
-if(g.phase==='night'){const N=D.night[g.day]||{};const mf=a.filter(v=>isM(g.roles[v])).map(v=>(N.mafia||{})[v]),mOK=mf.every(Boolean)&&new Set(mf).size<=1;return NOW()>=g.deadline||mOK&&a.every(v=>{const r=g.roles[v];return isM(r)?true:r==='doctor'?!!(N.doctor&&N.doctor[v]):r==='police'?!!(N.police&&N.police[v]):r==='detective'?!!(N.detective&&N.detective[v]):true})}
-return false}
+function need(g){if(!g||!g.roles||!['vote','trial','night'].includes(g.phase))return false;
+const a=al(g).filter(v=>g.roles[v]);if(!a.length)return false;if(g.deadline&&NOW()>=g.deadline)return true;
+if(g.phase==='vote'){const V=D.votes[g.day]||{};return a.every(v=>V[v]&&g.alive[V[v]]&&V[v]!==v)}
+if(g.phase==='trial'){if(!g.def||!g.alive[g.def])return true;const F=D.fv[g.day]||{};return a.filter(v=>v!==g.def).every(v=>F[v]==='y'||F[v]==='n')}
+// 밤: "살아있는" 마피아만 확인 (죽은 마피아·이미 죽은 대상은 무시)
+const N=D.night[g.day]||{},ms=a.filter(v=>isM(g.roles[v])),mf=ms.map(v=>(N.mafia||{})[v]).filter(t=>t&&g.alive[t]&&!isM(g.roles[t]));
+const mOK=!ms.length||(mf.length===ms.length&&new Set(mf).size===1);
+return mOK&&a.every(v=>{const r=g.roles[v];return r==='doctor'?!!(N.doctor&&N.doctor[v]):r==='police'?!!(N.police&&N.police[v]):r==='detective'?!!(N.detective&&N.detective[v]):true})}
 //RESOLVE_END
-async function tick(){const g=G();if(!loaded||!g||!g.roles||busy||!need(g))return;busy=true;const sq=g.seq||0;
+async function tick(){const g=G();if(!loaded||!g||!g.roles||(busy&&Date.now()-busyAt<2e4)||!need(g))return;busy=true;busyAt=Date.now();const sq=g.seq||0;
 try{await runTransaction(ref(db,ROOT+'/game'),c=>{if(!c||(c.seq||0)!==sq||!need(c))return;step(c);c.seq=sq+1;return c})}catch(e){}busy=false}
 window.pick=n=>{$('nm').value=n};
 window.login=async()=>{const n=$('nm').value.trim(),p=$('pin').value.trim();if(!/^[가-힣A-Za-z0-9]{1,8}$/.test(n))return $('lm').textContent='이름 1~8자';if(!/^\d{4}$/.test(p))return $('lm').textContent='숫자 4자리';
@@ -143,12 +212,51 @@ if(k==='reporter'){if(g0.rp&&g0.rp[P()])return alert('이미 속보를 발행했
 if(k==='police'||k==='detective'){if(!confirm(t+'님을 조사할까요?\n하루에 딱 1명, 한 번 정하면 바꿀 수 없어요!'))return;
 await runTransaction(ref(db,path),c=>c===null?t:undefined);return}
 set(ref(db,path),t)};
-window.startG=async()=>{const ns=Object.keys(D.entries||{}).filter(n=>D.users[n]),n=ns.length;if(n<MIN)return alert('최소 '+MIN+'명 필요해요 (현재 '+n+'명)');if(G()&&G().phase!=='lobby'&&!confirm('진행 중인 게임을 지우고 새로 시작할까요?'))return;
-const {roles,alive,ms,wh}=makeRoles(ns,sh),m=Object.values(roles).filter(isM).length;
-await set(ref(db,ROOT+'/votes'),null);await set(ref(db,ROOT+'/night'),null);await set(ref(db,ROOT+'/ghost'),null);await set(ref(db,ROOT+'/fvotes'),null);await set(ref(db,ROOT+'/game'),{phase:'vote',day:1,seq:0,def:'',deadline:NOW()+T_VOTE,roles,alive,ms,wh,sid:NOW(),winner:'',log:['🌅 게임 시작! '+n+'명 참가 · 마피아 '+m+'명, 모두에게 직업이 배정됐어요','☀️ 1일차 낮이 시작됐어요. 카톡방에서 의심을 나누고 투표하세요. 모두 투표하면 바로 최후 변론으로 넘어가요!']})};
+window.startG=async()=>{const ns=Object.keys(D.entries||{}).filter(n=>D.users[n]),n=ns.length,cf=CF(),ck=cfgCheck(cf,n);if(!n)return alert('신청자가 없어요');if(ck.err)return alert('시작할 수 없어요: '+ck.err);
+if(G()&&!['lobby','end'].includes(G().phase)&&!confirm('진행 중인 게임을 지우고 새로 시작할까요?'))return;if(!confirm('이 구성으로 시작할까요?\n'+n+'명 · '+ck.txt))return;
+const {roles,alive,ms,wh}=makeRoles(ns,sh,cf),m=Object.values(roles).filter(isM).length,setup=cf.mode==='auto'?'🤖 자동 구성 · 마피아 '+m+'명':ck.txt;
+await set(ref(db,ROOT+'/votes'),null);await set(ref(db,ROOT+'/night'),null);await set(ref(db,ROOT+'/ghost'),null);await set(ref(db,ROOT+'/fvotes'),null);await set(ref(db,ROOT+'/game'),{phase:'vote',day:1,seq:0,def:'',deadline:NOW()+cf.tm.v*HR,tm:cf.tm,setup,roles,alive,ms,wh,sid:NOW(),winner:'',log:['🌅 게임 시작! '+n+'명 참가 · '+setup+' · 모두에게 직업이 배정됐어요','☀️ 1일차 낮이 시작됐어요. 카톡방에서 의심을 나누고 투표하세요. 모두 투표하면 바로 최후 변론으로 넘어가요!']})};
 window.closeNow=async()=>{if(!confirm('지금 이 단계를 바로 넘길까요? (비상용)'))return;await runTransaction(ref(db,ROOT+'/game'),c=>{if(!c||!c.roles||!['vote','trial','night'].includes(c.phase))return;step(c);c.seq=(c.seq||0)+1;return c})};
 window.resetG=async()=>{if(!confirm('한 판 더 하시겠어요? 이전 판의 투표·역할·기록과 참가 신청이 모두 지워지고, 참가 신청을 새로 받아요. (달란트와 구매 내역은 유지돼요)'))return;const g0=G();if(g0&&g0.phase==='end'&&g0.aw)for(const k of Object.keys(g0.aw))await claim(k,g0);if(g0&&g0.roles)await set(ref(db,ROOT+'/last'),Object.keys(g0.roles));for(const k of ['votes','night','ghost','fvotes','entries'])await set(ref(db,ROOT+'/'+k),null);await set(ref(db,ROOT+'/game'),{phase:'lobby'})};
 const lobbyNow=()=>{const g=G();return!g||g.phase==='lobby'};
+const inGame=()=>{const g=G();return!!(g&&['vote','trial','night'].includes(g.phase))};
+const saveCfg=async f=>{if(inGame())return alert('게임 중에는 직업 구성을 바꿀 수 없어요. 다음 판에 적용하려면 게임이 끝난 뒤 바꿔주세요.');const c=CF();f(c);await set(ref(db,ROOT+'/cfg'),c)};
+window.cfgRole=(k,d)=>saveCfg(c=>{c.mode='custom';c.c[k]=Math.max(0,Math.min(RMAX[k],(c.c[k]||0)+d))});
+window.cfgPool=k=>saveCfg(c=>{c.mode='custom';const i=c.pool.indexOf(k);if(i>=0)c.pool.splice(i,1);else c.pool.push(k);c.pk=Math.min(c.pk,c.pool.length)});
+window.cfgPk=d=>saveCfg(c=>{c.mode='custom';c.pk=Math.max(0,Math.min(c.pool.length,c.pk+d))});
+window.cfgTm=(k,d)=>saveCfg(c=>{c.tm[k]=Math.max(1,Math.min(48,c.tm[k]+d))});
+window.cfgMode=m=>saveCfg(c=>{if(m==='preset'){const P=JSON.parse(JSON.stringify(PRESET));Object.keys(P).forEach(k=>c[k]=P[k])}else c.mode=m});
+window.extendT=async h=>{await runTransaction(ref(db,ROOT+'/game'),c=>{if(!c||!['vote','trial','night'].includes(c.phase))return;c.deadline=Math.max(c.deadline||0,NOW())+h*HR;c.log=c.log||[];c.log.push('⏰ 운영자가 이번 단계 제한시간을 '+h+'시간 늘렸어요.');return c})};
+window.kick=async n=>{if(!confirm(n+'님을 퇴장(사망) 처리할까요?\n되돌릴 수 없어요. 마피아인지 아닌지만 공개돼요.'))return;
+await runTransaction(ref(db,ROOT+'/game'),c=>{if(!c||!c.roles||!c.alive||!c.alive[n]||!['vote','trial','night'].includes(c.phase))return;
+c.alive[n]=false;c.dd=c.dd||{};c.dd[n]=c.day;if(c.rise)delete c.rise[n];c.res=c.res||{};c.res[n]=1;c.log=c.log||[];
+c.log.push('🚪 '+n+'님이 운영자에 의해 퇴장(사망) 처리됐습니다. '+(isM(c.roles[n])?'마피아였습니다 🔪':'마피아가 아니었습니다'));
+const w=wc(c);if(w){fin(c,w);c.seq=(c.seq||0)+1;return c}
+if(c.phase==='trial'&&c.def===n){c.log.push('⚖️ 재판 대상이 퇴장해 재판이 취소됐어요.');startNight(c);c.seq=(c.seq||0)+1}
+return c})};
+let GA='100',GWHO='',diag=false;
+window.gaSet=v=>{GA=v};window.gwSet=v=>{GWHO=v};window.diagT=()=>{diag=!diag;render()};
+window.grant=async all=>{const amt=parseInt(GA,10),who=all?Object.keys(D.users).filter(n=>!D.users[n].bot):[GWHO].filter(Boolean);
+if(!amt)return alert('금액을 입력하세요');if(!who.length)return alert('받을 사람을 고르세요');if(!confirm(who.length+'명에게 '+amt+'달란트를 '+(amt>0?'지급':'차감')+'할까요?\n'+who.join(', ')))return;
+for(const n of who)await runTransaction(ref(db,ROOT+'/profiles/'+n),c=>{c=c||{t:0};c.t=Math.max(0,(c.t||0)+amt);return c});alert('완료! '+who.length+'명 · '+amt+'달란트')};
+function cfgUI(){const cf=CF(),n=Object.keys(D.entries||{}).filter(x=>D.users[x]).length,ck=cfgCheck(cf,n),ed=!inGame();
+const cnt=(lab,val,fm,fp)=>`<div class="row2"><div class="nm2">${lab}</div>${ed?btn('−',fm,0,'g'):''}<b style="min-width:24px;text-align:center">${val}</b>${ed?btn('+',fp,0,'g'):''}</div>`;
+let h=`<div class="t" style="margin-top:14px">📋 직업 구성 설정${ed?'':' (게임 중엔 변경 불가 · 다음 판부터 적용)'}</div>`;
+if(ed)h+=`<div class="g2">${btn('📌 기본 규칙으로','cfgMode(\'preset\')',0,'g')}${btn('🤖 자동(인원별)','cfgMode(\'auto\')',cf.mode==='auto','g')}${btn('✏️ 직접 설정','cfgMode(\'custom\')',cf.mode==='custom','g')}</div>`;
+if(cf.mode==='custom'){h+=`<div class="sm" style="margin-top:6px">고정 직업 (나머지 자리는 전부 🛋️백수)</div>`+RK.map(k=>cnt(RN[k]+(RMAX[k]===1?' <span class="sm">(최대 1)</span>':''),cf.c[k]||0,`cfgRole('${k}',-1)`,`cfgRole('${k}',1)`)).join('');
+h+=`<div class="sm" style="margin-top:8px">🎲 랜덤 후보 · 눌러서 넣기/빼기 (이 중에서 아래 개수만큼 무작위)</div><div class="g2">${POOLK.map(k=>btn(RN[k],ed?`cfgPool('${k}')`:'',cf.pool.includes(k),'g')).join('')}</div>`+cnt('🎲 랜덤으로 넣을 개수',cf.pk,'cfgPk(-1)','cfgPk(1)')}
+else h+=`<div class="q" style="font-size:.78rem;margin-top:6px">자동: 8~9명 마피아 2, 10명↑ 마피아 3 · 경찰·의사·광대 · 10명↑ 군인·탐정 · 11명↑ 예수님 · 12명↑ 갓파더 · 남는 자리는 이장/기자/술꾼/목격자 → 백수</div>`;
+h+=`<div class="sm" style="margin-top:8px">⏳ 제한시간 (시간 단위)</div>`+cnt('☀️ 낮 투표',cf.tm.v,"cfgTm('v',-1)","cfgTm('v',1)")+cnt('⚖️ 최후 변론',cf.tm.t,"cfgTm('t',-1)","cfgTm('t',1)")+cnt('🌙 밤',cf.tm.n,"cfgTm('n',-1)","cfgTm('n',1)");
+h+=`<div class="q" style="margin-top:6px;font-size:.8rem;background:rgba(255,255,255,.06);border-radius:8px;padding:8px">신청 ${n}명 → ${ck.txt}\n${ck.err?`<span style="color:#ff8787">⚠️ ${ck.err}</span>`:'<span style="color:#69db7c">✅ 이 구성으로 시작할 수 있어요</span>'}</div>`;return h}
+function progUI(g){if(!g||!g.roles||!['vote','trial','night'].includes(g.phase))return'';const a=al(g),d=g.day;let h=`<div class="t" style="margin-top:14px">📡 진행 상황 · 왜 안 넘어가지?</div>`;
+if(g.phase==='vote'){const V=D.votes[d]||{},w=a.filter(v=>!(V[v]&&g.alive[V[v]]&&V[v]!==v));h+=`<div class="q">아직 투표 안 한 사람 (${w.length}명): ${w.join(', ')||'없음 → 곧 넘어가요'}</div>`}
+else if(g.phase==='trial'){const F=D.fv[d]||{},w=a.filter(v=>v!==g.def&&!(F[v]==='y'||F[v]==='n'));h+=`<div class="q">아직 찬반 안 정한 사람 (${w.length}명): ${w.join(', ')||'없음 → 곧 넘어가요'}</div>`}
+else{const N=D.night[d]||{},ms=a.filter(v=>isM(g.roles[v])),mp=ms.map(v=>(N.mafia||{})[v]),mDone=!ms.length||(mp.every(Boolean)&&new Set(mp).size===1),w=a.filter(v=>{const r=g.roles[v];return(r==='doctor'&&!(N.doctor||{})[v])||(r==='police'&&!(N.police||{})[v])||(r==='detective'&&!(N.detective||{})[v])});
+h+=`<div class="q">🌙 남은 밤 행동: ${w.length+(mDone?0:1)}건 (죽은 사람은 기다리지 않아요)</div><div class="g2" style="margin-top:4px">${btn(diag?'🙈 숨기기':'🔍 누구 차례인지 보기 (스포 주의!)','diagT()',0,'g')}</div>`;
+if(diag)h+=`<div class="q" style="font-size:.78rem;color:#ffd8a8;margin-top:4px">${mDone?'🔪 마피아: 합의 완료':'🔪 살아있는 마피아: '+ms.map((v,i)=>v+'→'+(mp[i]||'미선택')).join(', ')+' (모두 같은 사람이어야 해요)'}${w.length?'\n'+w.map(v=>RN[g.roles[v]]+' '+v+' 아직 안 씀').join('\n'):''}</div>`}
+h+=`<div class="g2" style="margin-top:6px">${btn('⏰ +1시간','extendT(1)',0,'g')}${btn('⏰ +3시간','extendT(3)',0,'g')}</div>`;
+h+=`<div class="sm" style="margin:8px 0 4px">🚪 연락 안 되는 사람 퇴장(사망) 처리 · 진행이 계속 막힐 때만 쓰세요</div><div class="g2">${a.map(x=>btn('🚪 '+x,`kick('${x}')`,0,'g')).join('')}</div>`;return h}
+function grantUI(){const us=Object.keys(D.users).filter(n=>!D.users[n].bot);return`<div class="t" style="margin-top:14px">💰 달란트 지급</div><div class="g2" style="align-items:center;flex-wrap:nowrap"><input type="number" value="${GA}" oninput="gaSet(this.value)" style="width:90px;flex:0 0 90px"><select onchange="gwSet(this.value)" style="flex:1"><option value="">한 명 고르기</option>${us.map(n=>`<option ${GWHO===n?'selected':''} value="${n}">${n} (💰${((D.profiles||{})[n]||{}).t||0})</option>`).join('')}</select></div><div class="g2">${btn('👥 등록된 전원에게','grant(1)',0,'o')}${btn('👤 고른 사람에게','grant(0)',0,'g')}</div><div class="sm" style="margin-top:4px">빼려면 음수(예: -50)를 입력하세요.</div>`}
 window.admApply=async n=>{if(!lobbyNow())return alert('참가 신청 단계에서만 쓸 수 있어요. 먼저 "한 판 더"를 눌러주세요.');await set(ref(db,ROOT+'/entries/'+n),(D.entries&&D.entries[n])?null:true)};
 window.admAll=async mode=>{if(!lobbyNow())return alert('참가 신청 단계에서만 쓸 수 있어요. 먼저 "한 판 더"를 눌러주세요.');
 if(mode==='none'){if(!confirm('신청을 모두 해제할까요?'))return;for(const n of Object.keys(D.entries||{}))await set(ref(db,ROOT+'/entries/'+n),null);return}
@@ -370,13 +478,54 @@ const clm={};
 async function claim(name,g){const a=g.aw&&g.aw[name];if(!a||!g.sid)return;await runTransaction(ref(db,ROOT+'/profiles/'+name),c=>claimTx(c,a,g.sid))}
 function autoClaim(){const g=G();if(me&&g&&g.phase==='end'&&g.aw&&g.aw[me]&&g.sid&&!clm[g.sid+me]){clm[g.sid+me]=1;claim(me,g)}}
 function polList(g,p){let rs='';for(let d=1;d<=g.day;d++){const q=polRes(g,p,d);if(!q)continue;rs+=(d<g.day||g.phase==='end')?`<div>${d}일차: ${q.t} → <b>${PT[q.m]}</b></div>`:`<div>${d}일차: ${q.t} 조사 중… (결과는 다음 날 아침에 알려드려요)</div>`}return`<div class="q" style="margin-top:8px">🕵️ 조사 기록\n${rs||'아직 없어요'}</div>`}
+// ── 규칙서 (탭으로 정리) ──
+let rTab='flow';
+window.rulesOpen=()=>{$('ov').classList.add('op');document.body.style.overflow='hidden';rulesRender()};
+window.rulesClose=()=>{$('ov').classList.remove('op');document.body.style.overflow=''};
+window.rulesTab=t=>{rTab=t;rulesRender();$('rbody').scrollTop=0};
+function rulesRender(){const g=G(),live=g&&g.roles&&g.phase!=='lobby',tm=(live&&g.tm)||CF().tm,n=Object.keys(D.entries||{}).filter(x=>D.users[x]).length,st=live&&g.setup?g.setup:cfgCheck(CF(),n).txt;
+const T=[['flow','🎮 진행'],['roles','🎭 직업'],['coin','🪙 달란트'],['faq','❓ 궁금해요']];
+$('rtabs').innerHTML=T.map(([k,l])=>`<button class="tab ${rTab===k?'on':'g'}" onclick="rulesTab('${k}')">${l}</button>`).join('');
+const S=(no,ti,tx,pl)=>`<div class="stp"><div class="no">${no}</div><div><b>${ti}${pl?`<span class="pill">${pl}</span>`:''}</b><p>${tx}</p></div></div>`;
+let h='';
+if(rTab==='flow'){h=`<div class="q" style="font-size:.8rem">💬 대화는 <b>카톡방</b>에서, 앱에서는 <b>투표와 능력 사용</b>만 해요. 정해진 시각이 아니라 <b>모두 끝내면 바로</b> 다음 단계로 넘어가요.</div>`
++S('📝','참가 신청','운영자가 "한 판 더"로 신청을 열면 🙋참가 신청을 눌러요. 신청 안 하면 관전자예요. 모이면 운영자가 게임을 시작해요.')
++S('☀️','낮 · 처형 투표','처형할 사람 1명에게 투표해요. 마감 전엔 바꿀 수 있어요. 모두 투표하면 공개되고 최다 득표자가 재판에 올라요. 동률이거나 아무도 안 찍으면 바로 밤!','제한 '+tm.v+'시간')
++S('⚖️','최후 변론 · 찬반','재판 대상은 카톡방에서 변론하고, 나머지는 👍찬성 / 👎반대. 찬성이 더 많아야 처형돼요 (동률이면 부결). 처형되면 마피아였는지만 공개돼요.','제한 '+tm.t+'시간')
++S('🌙','밤 · 능력 사용','마피아·의사·경찰·탐정이 능력을 써요. 살아있는 사람이 모두 쓰면 바로 아침! 마피아끼리는 같은 사람을 골라야 해요.','제한 '+tm.n+'시간')
++`<div class="h2">🏆 승리 조건</div><div class="wins"><div style="background:rgba(28,126,214,.2)"><b>🎉</b>시민 팀<br>마피아 전멸</div><div style="background:rgba(201,42,42,.22)"><b>😈</b>마피아 팀<br>마피아 수 ≥ 나머지</div><div style="background:rgba(132,94,247,.22)"><b>🤡</b>광대<br>재판으로 처형되면 혼자 승리</div></div>`
++`<div class="h2">💀 죽으면?</div><div class="q" style="font-size:.8rem">• 쓰러진 캐릭터에 🔪마피아 / 🙂시민 표지만 붙어요 (광대·술꾼·예수님은 시민으로 보여요).\n• 유령 모드로 모든 직업과 밤 행동을 볼 수 있어요. <b>카톡방 스포는 절대 금지!</b>\n• 유령끼리 "오늘 누가 죽을까" 예측 게임으로 달란트를 벌 수 있어요.\n• 게임이 끝나면 모든 직업이 공개돼요.</div>`}
+else if(rTab==='roles'){const inS=k=>{const pt=st.split(' · ').find(x=>x.includes(RN[k]));return pt?(pt.includes('랜덤')?'랜덤 후보':'이번 판'):''},card=(k,cl)=>{const[e,...nm]=RN[k].split(' '),b=inS(k);return`<div class="rcd ${cl}">${b?`<span class="pill in">${b}</span>`:''}<div class="e">${e}</div><b>${nm.join(' ')}</b><p>${RD[k]}</p></div>`};
+h=`<div class="stp" style="display:block"><b style="font-family:'Black Han Sans';color:var(--gold)">📋 이번 판 구성</b><div class="chips">${st.split(' · ').map(x=>`<span>${x}</span>`).join('')}</div></div>`
++`<div class="h2">🔪 마피아 팀</div><div class="rg">${['mafia','godfather'].map(k=>card(k,'m')).join('')}</div>`
++`<div class="h2">🛡️ 시민 팀 · 능력자</div><div class="rg">${['police','doctor','soldier','detective','jesus','mayor','reporter'].map(k=>card(k,'c2')).join('')}</div>`
++`<div class="h2">🛡️ 시민 팀 · 일반</div><div class="rg">${['citizen','drunk','witness'].map(k=>card(k,'c2')).join('')}</div>`
++`<div class="h2">🃏 중립</div><div class="rg">${card('jester','j')}</div>`
++`<div class="sm" style="margin-top:10px">🎯 백수는 시작할 때 비밀 미션 카드를 받아요. 성공하면 +10달란트!</div>`}
+else if(rTab==='coin'){const R=(a,b)=>`<tr><td>${a}</td><td>${b}</td></tr>`;
+h=`<div class="q" style="font-size:.8rem">게임이 끝나면 자동으로 정산돼요. 모은 달란트로 🏪달란트시장에서 꾸미기 아이템을 살 수 있어요 (승패엔 영향 없음).</div><div class="h2">기본</div><table class="tb">${R('🙋 참가','+10')+R('📅 개근 (매일 투표)','+10')}</table><div class="h2">승리</div><table class="tb">${R('🛡️ 시민 팀 승리','+20')+R('🔪 마피아 팀 승리','+40')+R('🤡 광대 단독 승리','+50')+R('🌱 시민 팀 승리 + 끝까지 생존','+5')}</table><div class="h2">활약</div><table class="tb">${R('🗳️ 마피아 처형에 투표','+5')+R('🕵️ 경찰이 마피아 적발','+5')+R('💉 의사가 습격 방어','+10')+R('🪖 군인이 습격 버팀','+5')+R('✝️ 예수님 부활','+10')+R('🎯 비밀 미션 성공','+10')}</table><div class="h2">유령</div><table class="tb">${R('🔮 사망자 예측 적중 (1회당)','+3')+R('👻 유령 MVP (최다 적중)','+15')}</table>`}
+else{const F=(q,a)=>`<div class="fq"><b>Q. ${q}</b><p>${a}</p></div>`;
+h=F('왜 다음 단계로 안 넘어가요?','살아있는 사람이 모두 투표/능력을 써야 바로 넘어가요. 한 명이라도 안 하면 제한시간까지 기다려요. 죽은 사람은 기다리지 않아요. 계속 막히면 운영자에게 말해주세요 (시간 연장 · 퇴장 처리 가능).')
++F('투표를 바꿀 수 있나요?','낮 투표는 마감 전까지 몇 번이든 바꿀 수 있어요. 경찰·탐정 조사는 한 번 정하면 못 바꿔요.')
++F('경찰 조사 결과는 언제 나와요?','밤에 고르고, 다음 날 아침에 내 화면 "조사 기록"에서 확인해요. 갓파더는 "마피아 아님"으로 나오지만 같은 사람을 두 번 조사하면 정체가 드러나요. 술꾼은 마피아로 나와요!')
++F('의사는 자기 자신을 지킬 수 있나요?','네! 다만 같은 사람을 이틀 연속으로 지킬 수는 없어요.')
++F('마피아끼리 다른 사람을 고르면?','모두 같은 사람을 고를 때까지 기다려요. 제한시간이 지나면 가장 많이 찍힌 사람, 동률이면 무작위예요.')
++F('관전자는 뭘 볼 수 있어요?','공개된 투표와 결과만 볼 수 있어요. 직업과 밤 행동은 안 보여요.')}
+$('rbody').innerHTML=h}
+// ── 내 직업 카드 ──
+let hideRole=localStorage.getItem('m1_hide')==='1';window.toggleHide=()=>{hideRole=!hideRole;localStorage.setItem('m1_hide',hideRole?'1':'0');render()};
+const TEAM=r=>isM(r)?['tm','🔪 마피아 팀']:r==='jester'?['tj','🃏 중립 · 단독 승리']:['tc','🛡️ 시민 팀'];
+function roleCard(r,dead){const[cl,tn]=TEAM(r),[e,...nm]=RN[r].split(' ');return`<div class="rc ${cl}${dead?' dead':''}${hideRole?' hid':''}"><button class="eye" onclick="toggleHide()">${hideRole?'👁️ 보기':'🙈 가리기'}</button><div class="rc-e">${e}</div><div class="rc-n">${nm.join(' ')}${dead?' 💀':''}</div><div class="rc-tm">${tn}</div></div>`}
+// ── 기록 색깔 ──
+const lgc=x=>/^(🎉|😈|🤡 광대)/.test(x)?'w':/^(💀|🚪)/.test(x)?'k':/^(🛡️|🪖|✝️)/.test(x)?'s':/^⚖️/.test(x)?'j':/^🌙/.test(x)?'n':/^(☀️|🌅)/.test(x)?'dy':'';
+let lgAll=false;window.lgMore=()=>{lgAll=!lgAll;render()};
 function render(){const g=G(),p=P(),$u=Object.keys(D.users);hist(g,p);ringRender(g,p);awardRender(g);shopRender();autoClaim();
-$('hd').textContent=g&&g.phase==='end'?'🏁 게임 종료':g&&['vote','trial','night'].includes(g.phase)?'':'🛋️ 참가 신청 중 · 신청 '+Object.keys(D.entries||{}).filter(n=>D.users[n]).length+'명 (최소 '+MIN+'명)'+(TEST?' · 🧪테스트':'');cd();
+$('hd').textContent=g&&g.phase==='end'?'🏁 게임 종료':g&&['vote','trial','night'].includes(g.phase)?'':'🛋️ 참가 신청 중 · 신청 '+Object.keys(D.entries||{}).filter(n=>D.users[n]).length+'명 (최소 '+cfgCheck(CF(),0).min+'명)'+(TEST?' · 🧪테스트':'');cd();
 $('login').innerHTML=me?`<div class="g2" style="align-items:center;justify-content:space-between"><div>👤 <b>${me}</b> <span class="sm">💰${((D.profiles||{})[me]||{}).t||0}</span>${as?` → <b style="color:#ffd43b">${as}</b>로 보는 중`:''}</div>${btn('변경','logout()',0,'g')}</div>`:'<div class="t">👤 입장</div><div class="g2">'+ROSTER.map(n=>`<button class="g" onclick="pick('${n}')">${n}</button>`).join('')+'</div><input id="nm" maxlength="8" placeholder="이름"><input id="pin" type="password" inputmode="numeric" maxlength="4" placeholder="비밀번호 숫자 4자리 (처음이면 새로 설정)"><button style="width:100%" onclick="login()">입장</button><div class="sm" id="lm"></div>';
 const M=$('me'),A=$('act');M.style.display=A.style.display='none';
-if(p&&(!g||g.phase==='lobby')){A.style.display='block';const on=D.entries&&D.entries[p],cnt=Object.keys(D.entries||{}).filter(n=>D.users[n]).length;A.innerHTML=`<div class="t">📝 이번 판 참가 신청</div><div class="q">${on?'✅ 참가 신청 완료! 모두 모이면 운영자가 게임을 시작해요.':'이번 판에 참가하려면 신청해 주세요. 신청하지 않으면 관전만 할 수 있어요.'}</div><div class="g2" style="margin-top:6px">${btn(on?'신청 취소':'🙋 참가 신청','applyG()',on,'')}</div><div class="sm" style="margin-top:6px">현재 ${cnt}명 신청 (최소 ${MIN}명)</div>`}
+if(p&&(!g||g.phase==='lobby')){A.style.display='block';const on=D.entries&&D.entries[p],cnt=Object.keys(D.entries||{}).filter(n=>D.users[n]).length;A.innerHTML=`<div class="t">📝 이번 판 참가 신청</div><div class="q">${on?'✅ 참가 신청 완료! 모두 모이면 운영자가 게임을 시작해요.':'이번 판에 참가하려면 신청해 주세요. 신청하지 않으면 관전만 할 수 있어요.'}</div><div class="g2" style="margin-top:6px">${btn(on?'신청 취소':'🙋 참가 신청','applyG()',on,'')}</div><div class="sm" style="margin-top:6px">현재 ${cnt}명 신청 (최소 ${cfgCheck(CF(),0).min}명)</div><div class="q" style="margin-top:6px;font-size:.8rem">📋 이번 판 직업 구성\n${cfgCheck(CF(),cnt).txt}</div>`}
 if(p&&g&&g.phase!=='lobby'){const r=g.roles[p],dead=r&&!g.alive[p];M.style.display='block';
-M.innerHTML=!r?'<div class="role">👀 관전자</div><div class="q" style="text-align:center">이번 판은 참가 신청을 하지 않아 관전만 가능해요.\n직업과 능력 기록은 보이지 않고, 공개된 투표와 결과만 볼 수 있어요.</div>':`<div class="role">${RN[r]}${dead?' · 💀 사망':''}</div><div class="q" style="text-align:center">${dead?((g.rise&&g.rise[p])?'✝️ 부활 대기 중! '+g.rise[p]+'일차 낮에 다시 살아나요. 그동안은 죽은 사람처럼 말하지 마세요. (직업 정보는 볼 수 없어요)':'모든 직업을 아래에서 볼 수 있어요. (카톡방 스포 금지!)'):RD[r]+(r==='witness'&&g.wh&&g.wh[p]?'\n🔎 힌트: 마피아 팀 중 한 명의 이름은 「'+g.wh[p]+'」으로 시작해요':'')+(r==='citizen'&&g.ms&&g.ms[p]?'\n🎯 비밀 미션: '+MIS[g.ms[p]]+' (성공하면 +10달란트)':'')}${isM(r)?'\n동료: '+Object.keys(g.roles).filter(n=>isM(g.roles[n])&&n!==p).map(n=>n+(g.roles[n]==='godfather'?'(갓파더)':'')).join(', '):''}</div>`;
+M.innerHTML=!r?'<div class="rc tx"><div class="rc-e">👀</div><div class="rc-n">관전자</div></div><div class="q" style="text-align:center">이번 판은 참가 신청을 하지 않아 관전만 가능해요.\n직업과 능력 기록은 보이지 않고, 공개된 투표와 결과만 볼 수 있어요.</div>':`${roleCard(r,dead)}<div class="q" style="text-align:center">${dead?((g.rise&&g.rise[p])?'✝️ 부활 대기 중! '+g.rise[p]+'일차 낮에 다시 살아나요. 그동안은 죽은 사람처럼 말하지 마세요. (직업 정보는 볼 수 없어요)':'모든 직업을 아래에서 볼 수 있어요. (카톡방 스포 금지!)'):RD[r]+(r==='witness'&&g.wh&&g.wh[p]?'\n🔎 힌트: 마피아 팀 중 한 명의 이름은 「'+g.wh[p]+'」으로 시작해요':'')+(r==='citizen'&&g.ms&&g.ms[p]?'\n🎯 비밀 미션: '+MIS[g.ms[p]]+' (성공하면 +10달란트)':'')}${isM(r)?'\n동료: '+Object.keys(g.roles).filter(n=>isM(g.roles[n])&&n!==p).map(n=>n+(g.roles[n]==='godfather'?'(갓파더)':'')+(g.alive[n]?'':'💀')).join(', '):''}</div>${g.setup?`<div class="sm" style="text-align:center;margin-top:6px">📋 이번 판 구성: ${g.setup}</div>`:''}`;
 if(r&&!dead&&['vote','trial','night'].includes(g.phase)){A.style.display='block';const o=al(g).filter(n=>n!==p),d=g.day,V0=D.votes[d]||{},N=D.night[d]||{};let h='';
 if(g.phase==='vote'){const cur=V0[p];h=`<div class="t">🗳️ ${d}일차 낮 · 처형할 사람 (현재: ${cur||'미투표'})</div><div class="g2">${o.map(n=>btn(n,`vote('${n}')`,cur===n,'')).join('')}</div><div class="sm" style="margin:6px 0">투표 ${Object.keys(V0).filter(k=>g.alive[k]).length}/${al(g).length}명 · 모두 투표하면 바로 최후 변론으로 넘어가요 (그전까진 바꿀 수 있어요)</div>`}
 else if(g.phase==='trial'){const def=g.def,fvm=D.fv[d]||{},mn=fvm[p],cn={};Object.keys(V0).forEach(k=>{if(g.alive[k]&&g.alive[V0[k]]&&V0[k]!==k)cn[V0[k]]=(cn[V0[k]]||0)+1});
@@ -391,9 +540,9 @@ if(!isM(r)&&r!=='doctor'&&r!=='police'&&r!=='detective'&&r!=='reporter')h='<div 
 if(r==='police')h+=polList(g,p);if(r==='detective')h+=detList(g,p);
 A.innerHTML=h}}
 const AD=$('adm');AD.style.display=ADMINQ?'block':'none';
-if(ADMINQ){if(!admin)AD.innerHTML='<div class="t">🛠️ 운영자</div><input id="ap" type="password" placeholder="운영자 비밀번호" onkeydown="if(event.key===\'Enter\')unlock()"><button onclick="unlock()">확인</button>';
-else AD.innerHTML=`<div class="t">🛠️ 운영자 모드</div><div class="g2">${btn('▶ 신청 끝 · 게임 시작 (신청자로 직업 배정)','startG()',0,'o')}${g&&['vote','trial','night'].includes(g.phase)?btn('⏩ 이 단계 넘기기(비상용)','closeNow()',0,'r'):''}${btn('🔄 한 판 더 (참가 신청 열기)','resetG()',0,'g')}</div><div class="sm" style="margin-top:6px">순서: ① 🔄 한 판 더(신청 열기) → ② 모두 신청하면 ▶ 신청 끝·게임 시작</div><div class="sm" style="margin-top:4px">신청 ${Object.keys(D.entries||{}).filter(n=>D.users[n]).length}명${g&&g.roles?' · 이번 판 참가자 '+Object.keys(g.roles).length+'명':''}</div>${lobbyNow()?`<div class="sm" style="margin:8px 0 4px">👥 대신 신청 (운영자) · 참석 확인된 사람만 신청하세요</div><div class="g2">${btn('📋 지난 판 참가자 전원 신청 ('+(D.last||[]).length+'명)',"admAll('last')",0,'g')}${btn('👥 등록된 전원 신청',"admAll('all')",0,'g')}${btn('✖ 신청 전체 해제',"admAll('none')",0,'g')}</div><div class="g2" style="margin-top:6px">${$u.filter(n=>TEST||!D.users[n].bot).map(n=>btn((D.entries&&D.entries[n]?'✅ ':'')+n,`admApply('${n}')`,!!(D.entries&&D.entries[n]),'g')).join('')}</div>`:''}${TEST?`<div class="sm" style="margin:8px 0 4px">테스트 도구</div><div class="g2">${btn('🤖 봇 채우기(총9명 신청)','addBots()',0,'g')}${btn('봇 삭제','delBots()',0,'g')}${btn('🎲 봇 자동행동','auto()',0,'g')}</div><select onchange="setAs(this.value)"><option value="">👀 다른 사람으로 보기 (본인)</option>${$u.map(n=>`<option ${as===n?'selected':''} value="${n}">${n}${g&&g.roles&&g.roles[n]?' · '+RN[g.roles[n]]+(g.alive[n]?'':' 💀'):''}</option>`).join('')}</select>`:''}`}
+const fe=document.activeElement;if(ADMINQ&&!(fe&&AD.contains(fe)&&['INPUT','SELECT'].includes(fe.tagName))){if(!admin)AD.innerHTML='<div class="t">🛠️ 운영자</div><input id="ap" type="password" placeholder="운영자 비밀번호" onkeydown="if(event.key===\'Enter\')unlock()"><button onclick="unlock()">확인</button>';
+else AD.innerHTML=`<div class="t">🛠️ 운영자 모드</div><div class="g2">${btn('▶ 신청 끝 · 게임 시작 (신청자로 직업 배정)','startG()',0,'o')}${g&&['vote','trial','night'].includes(g.phase)?btn('⏩ 이 단계 넘기기(비상용)','closeNow()',0,'r'):''}${btn('🔄 한 판 더 (참가 신청 열기)','resetG()',0,'g')}</div><div class="sm" style="margin-top:6px">순서: ① 🔄 한 판 더(신청 열기) → ② 모두 신청하면 ▶ 신청 끝·게임 시작</div><div class="sm" style="margin-top:4px">신청 ${Object.keys(D.entries||{}).filter(n=>D.users[n]).length}명${g&&g.roles?' · 이번 판 참가자 '+Object.keys(g.roles).length+'명':''}</div>${progUI(g)}${cfgUI()}${grantUI()}${lobbyNow()?`<div class="t" style="margin-top:14px">👥 대신 신청</div><div class="sm" style="margin:0 0 4px"> (운영자) · 참석 확인된 사람만 신청하세요</div><div class="g2">${btn('📋 지난 판 참가자 전원 신청 ('+(D.last||[]).length+'명)',"admAll('last')",0,'g')}${btn('👥 등록된 전원 신청',"admAll('all')",0,'g')}${btn('✖ 신청 전체 해제',"admAll('none')",0,'g')}</div><div class="g2" style="margin-top:6px">${$u.filter(n=>TEST||!D.users[n].bot).map(n=>btn((D.entries&&D.entries[n]?'✅ ':'')+n,`admApply('${n}')`,!!(D.entries&&D.entries[n]),'g')).join('')}</div>`:''}${TEST?`<div class="sm" style="margin:8px 0 4px">테스트 도구</div><div class="g2">${btn('🤖 봇 채우기(총9명 신청)','addBots()',0,'g')}${btn('봇 삭제','delBots()',0,'g')}${btn('🎲 봇 자동행동','auto()',0,'g')}</div><select onchange="setAs(this.value)"><option value="">👀 다른 사람으로 보기 (본인)</option>${$u.map(n=>`<option ${as===n?'selected':''} value="${n}">${n}${g&&g.roles&&g.roles[n]?' · '+RN[g.roles[n]]+(g.alive[n]?'':' 💀'):''}</option>`).join('')}</select>`:''}`}
 $('pl').innerHTML=$u.map(n=>{const dead=g&&g.alive&&g.roles&&g.roles[n]&&!g.alive[n],vo=(g&&g.phase==='vote'&&(D.votes[g.day]||{})[n])||((!g||g.phase==='lobby')&&D.entries&&D.entries[n]);const spec=g&&g.roles&&(g.phase==='end'||(p&&(g.roles[p]&&!g.alive[p]&&!(g.rise&&g.rise[p]))));return`<span class="${dead?'d':''}" style="padding:4px 8px;background:rgba(255,255,255,.08);border-radius:8px;font-size:.8rem">${(()=>{const t=acc(((D.profiles||{})[n]||{}).eq).ti;return t?`<small style="color:#ffd43b">${t}</small> `:''})()}${n}${vo?' ✅':''}${dead?' 💀':''}${g&&g.roles&&!g.roles[n]?' · 👀관전':''}${spec&&g.roles[n]?' · '+RN[n===p?g.roles[n]:vis(g,g.roles[n])]:(dead&&g.roles[n]?(isM(g.roles[n])?' · 🔪 마피아':' · 🙂 시민'):'')}</span>`}).join('')||'<span class="sm">아직 없어요</span>';
-$('lg').innerHTML=g&&g.log?[...g.log].reverse().map(x=>`<div>${x}</div>`).join(''):'<div class="sm">게임이 시작되면 기록이 쌓여요</div>'}
+$('lg').innerHTML=g&&g.log?(()=>{const L=[...g.log].reverse();return(lgAll?L:L.slice(0,8)).map(x=>`<div class="${lgc(x)}">${x}</div>`).join('')+(L.length>8?btn(lgAll?'▲ 접기':'▼ 이전 기록 더 보기 ('+(L.length-8)+')','lgMore()',0,'g more'):'')})():'<div class="sm">게임이 시작되면 기록이 쌓여요</div>';if($('ov').classList.contains('op'))rulesRender()}
 render();setInterval(()=>{cd();tick()},1000);
 </script></body></html>
