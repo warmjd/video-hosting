@@ -125,6 +125,17 @@ input:focus,select:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(255,
 .fallfade{transform-box:fill-box;transform-origin:50% 100%;animation:ffade 2.4s ease-out forwards}@keyframes ffade{0%{transform:rotate(0);opacity:1}30%{transform:rotate(86deg);opacity:1}100%{transform:rotate(86deg);opacity:0}}
 .gravein{animation:gin 2.4s ease-out}@keyframes gin{0%,40%{opacity:0;transform:translateY(-10px)}70%{opacity:1;transform:translateY(0)}}
 .bloodin{transform-box:fill-box;transform-origin:50% 50%;animation:bin 2.2s ease-out}@keyframes bin{0%,25%{transform:scale(0)}100%{transform:scale(1)}}
+
+.fa-top,.fa-flick,.fa-wave,.fx-fly,.fx-float,.fx-streak,.fx-fw,.fa-conf{transform-box:fill-box;transform-origin:50% 50%}
+.fa-top{animation:fxt 2.2s ease-in-out infinite}@keyframes fxt{50%{transform:translateY(-3px)}}
+.fa-flick{transform-origin:50% 100%;animation:flk .5s steps(2) infinite alternate}@keyframes flk{0%{transform:scale(1,1)}100%{transform:scale(.88,1.15)}}
+.fa-wave{transform-origin:0 50%;animation:wav 1.2s ease-in-out infinite}@keyframes wav{0%,100%{transform:skewY(0)}50%{transform:skewY(-8deg) scaleX(.94)}}
+.fx-fly{animation:fly 3.4s ease-out infinite}@keyframes fly{0%{transform:translate(0,10px);opacity:0}15%{opacity:1}100%{transform:translate(34px,-46px);opacity:0}}
+.fx-float{transform-origin:50% 100%;animation:flt 2.6s ease-in-out infinite}@keyframes flt{0%,100%{transform:rotate(-7deg)}50%{transform:rotate(7deg) translateY(-3px)}}
+.fx-streak{animation:stk 2.6s ease-in infinite}@keyframes stk{0%{transform:translate(-40px,-6px);opacity:0}15%{opacity:1}70%{opacity:1}100%{transform:translate(40px,10px);opacity:0}}
+.fx-fw{animation:fw 1.8s ease-out infinite}@keyframes fw{0%{transform:scale(.1);opacity:0}15%{opacity:1}70%{transform:scale(1.3);opacity:.9}100%{transform:scale(1.5);opacity:0}}
+.fa-conf{animation:cnf 2.4s linear infinite}@keyframes cnf{0%{transform:translateY(0) rotate(0);opacity:0}10%{opacity:1}100%{transform:translateY(104px) rotate(540deg);opacity:0}}
+.nm.nm-dk{stroke:rgba(255,255,255,.55);stroke-width:1.6px}
 </style></head><body><div class="w">
 <div class="top"><div><h1><span style="color:initial;-webkit-text-fill-color:initial">🎭</span> 원우마을 마피아</h1><div class="tag">SLOW MAFIA · 카톡방 추리 게임</div></div><button class="rb" onclick="rulesOpen()">📖 규칙서</button></div>
 <div id="hd"></div>
@@ -448,8 +459,8 @@ I('o5','foot','금빛 오라',140,{rows:['.....yyyyyy.....','..yy........yy..','
 I('o6','foot','하트 이펙트',90,{rows:['..h...h..h...h..','.hh..hhh.hh..hh.','..h...h..h...h..','.......h........','................'].map(t=>t.slice(0,16)),pal:{h:'#f06595'}}),
 I('o7','foot','어둠의 안개',110,{rows:['..kk.kkk..kk.kk.','.kkkkkkkkkkkkkk.','kkkkkkkkkkkkkkkk','.kkkkkkkkkkkkkk.','..kk..kkk..kk...'],pal:{k:'#3b2a5c'}}),
 ...[['n1','하늘색 이름',30,'#74c0fc'],['n2','분홍 이름',30,'#f783ac'],['n3','연두 이름',30,'#69db7c'],['n4','황금 이름',40,'#ffd43b'],['n5','무지개 이름',70,'url(#rbg)'],['n6','보라 이름',30,'#b197fc'],['n7','주황 이름',30,'#ffa94d'],['n8','은빛 이름',40,'#ced4da'],['n9','형광 이름',50,'#a9e34b'],['n10','빨강 이름',30,'#ff6b6b']].map(([id,n,p,v])=>I(id,'nameC',n,p,v)),
-...[['d1','별빛',30,'✨'],['d2','장미 한 송이',30,'🌹'],['d3','촛불',40,'🕯️'],['d4','유령 승천',40,'👻'],['d5','벚꽃',40,'🌸'],['d6','낙엽',30,'🍂'],['d7','평화의 비둘기',50,'🕊️'],['d8','꽃다발',40,'💐'],['d9','묘비',50,'🪦'],['d10','풍선',30,'🎈'],['d11','눈꽃',40,'❄️'],['d12','별똥별',50,'💫']].map(([id,n,p,v])=>I(id,'dead',n,p,v)),
-...[['w1','폭죽',40,'🎉'],['w2','불꽃',50,'🔥'],['w3','승리의 왕관',60,'👑'],['w4','트로피',70,'🏆'],['w5','색종이',50,'🎊'],['w6','반짝임',40,'✨'],['w7','무지개',60,'🌈'],['w8','금메달',70,'🥇'],['w9','다이아',90,'💎'],['w10','불꽃놀이',60,'🎆'],['w11','샴페인',70,'🍾']].map(([id,n,p,v])=>I(id,'win',n,p,v))];
+I('d1','dead','별빛',30,{i:'spark',a:'twinkle'}),I('d2','dead','장미 한 송이',30,{i:'rose',a:'plant'}),I('d3','dead','촛불',40,{a:'candles'}),I('d4','dead','유령 승천',40,{i:'ghost',a:'soul'}),I('d5','dead','벚꽃',40,{i:'blossom',a:'rain'}),I('d6','dead','낙엽',30,{i:'leaf',a:'rain'}),I('d7','dead','평화의 비둘기',50,{i:'dove',a:'fly'}),I('d8','dead','꽃다발',40,{i:'bouquet',a:'plant'}),I('d9','dead','대리석 묘비',80,{i:'tomb2',a:'tomb'}),I('d10','dead','풍선',30,{i:'balloon',a:'float'}),I('d11','dead','눈꽃',40,{i:'snow',a:'rain'}),I('d12','dead','별똥별',50,{i:'comet',a:'streak'}),
+I('w1','win','폭죽',40,{i:'burst',a:'pop'}),I('w2','win','불꽃',50,{i:'flame',a:'flank'}),I('w3','win','승리의 왕관',60,{i:'crown',a:'top'}),I('w4','win','트로피',70,{i:'trophy',a:'top'}),I('w5','win','색종이',50,{a:'confetti'}),I('w6','win','반짝임',40,{i:'spark',a:'twinkle'}),I('w7','win','무지개',60,{i:'rainbow',a:'arc'}),I('w8','win','금메달',70,{i:'medal',a:'top'}),I('w9','win','다이아',90,{i:'gem',a:'spin'}),I('w10','win','불꽃놀이',60,{a:'fireworks'}),I('w11','win','샴페인',70,{i:'bottle',a:'bounce'})];
 // ===== 신규 치장 아이템 =====
 const emb=(base,ov)=>{const o={...base};for(const r in ov){const b=(o[r]||'................').split(''),t=ov[r];for(let i=0;i<16;i++)if(t[i]&&t[i]!=='.')b[i]=t[i];o[r]=b.join('')}return o};
 const CAMO=Object.fromEntries(Object.entries(CAPE).map(([r,t])=>[r,t.split('').map((ch,c)=>ch==='.'?'.':'abcd'[((+r)*7+c*3+((+r*c)%5))%4]).join('')]));
@@ -569,23 +580,23 @@ I('n20','nameC','얼음 이름',60,'url(#gIce)'),I('n21','nameC','은하수',120
 // 이름표
 I('pl1','plate','나무 명판',30,{f:'url(#pWood)',s:'#5c3d1e'}),
 I('pl2','plate','강철 명판',40,{f:'url(#pMetal)',s:'#495057',tc:'#111111'}),
-I('pl3','plate','군번줄',50,{f:'url(#pMetal)',s:'#adb5bd',r:7,d:['⛓️',''],tc:'#111111'}),
+I('pl3','plate','군번줄',50,{f:'url(#pMetal)',s:'#adb5bd',r:7,d:['chain',''],tc:'#111111'}),
 I('pl4','plate','황금 명판',120,{f:'url(#gGold)',s:'#e67700',tc:'#3b2a00'}),
 I('pl5','plate','네온 사인',90,{f:'#0b0e1a',s:'#22b8cf',c:'pl-neon'}),
 I('pl6','plate','불꽃 명판',100,{f:'url(#gFire)',s:'#c92a2a'}),
-I('pl7','plate','해골 명판',80,{f:'#111111',s:'#868e96',d:['💀','💀']}),
-I('pl8','plate','다이아 명판',150,{f:'url(#gIce)',s:'#74c0fc',d:['💎',''],tc:'#0b1d3b'}),
+I('pl7','plate','해골 명판',80,{f:'#111111',s:'#868e96',d:['skull','skull']}),
+I('pl8','plate','다이아 명판',150,{f:'url(#gIce)',s:'#74c0fc',d:['gem',''],tc:'#0b1d3b'}),
 I('pl9','plate','위장무늬 명판',70,{f:'url(#pCamo)',s:'#2b3a1a'}),
 I('pl10','plate','은하 명판',130,{f:'url(#gGal)',s:'#9775fa'}),
-I('pl11','plate','핏빛 명판',80,{f:'#5c0f0f',s:'#e03131',d:['🩸','']}),
+I('pl11','plate','핏빛 명판',80,{f:'#5c0f0f',s:'#e03131',d:['drop','']}),
 I('pl12','plate','매트릭스',90,{f:'#06140a',s:'#40c057',c:'pl-neong',tc:'#8ce99a'}),
-I('pl13','plate','번개 명판',100,{f:'#1c2541',s:'#ffd43b',d:['⚡','⚡'],c:'pl-flick'}),
-I('pl14','plate','왕의 명판',150,{f:'#4c2fb0',s:'#ffd43b',d:['👑','']}),
+I('pl13','plate','번개 명판',100,{f:'#1c2541',s:'#ffd43b',d:['bolt','bolt'],c:'pl-flick'}),
+I('pl14','plate','왕의 명판',150,{f:'#4c2fb0',s:'#ffd43b',d:['crown','']}),
 I('pl15','plate','폴리스 라인',70,{f:'#fab005',s:'#111111',dash:1,tc:'#111111'}),
-I('pl16','plate','마피아 명판',90,{f:'#111111',s:'#c92a2a',d:['🔪','']}),
+I('pl16','plate','마피아 명판',90,{f:'#111111',s:'#c92a2a',d:['knife','']}),
 I('pl17','plate','무지개 명판',140,{f:'url(#gRbA)',s:'#ffffff'}),
-I('pl18','plate','얼음 명판',80,{f:'url(#gIce)',s:'#a5d8ff',d:['❄️',''],tc:'#0b1d3b'}),
-I('pl19','plate','독극물 명판',80,{f:'url(#gToxic)',s:'#2b8a3e',d:['☣️',''],tc:'#0b2b12'}),
+I('pl18','plate','얼음 명판',80,{f:'url(#gIce)',s:'#a5d8ff',d:['snow',''],tc:'#0b1d3b'}),
+I('pl19','plate','독극물 명판',80,{f:'url(#gToxic)',s:'#2b8a3e',d:['bio',''],tc:'#0b2b12'}),
 I('pl20','plate','체커 명판',60,{f:'url(#pCheck)',s:'#ffffff'}),
 // 오라
 I('au1','aura','불꽃 오라',150,{k:'rise',c:['#ff922b','#ffd43b','#f03e3e']}),
@@ -593,31 +604,31 @@ I('au2','aura','번개 스파크',140,{k:'spark',c:['#ffd43b','#ffffff'],n:14}),
 I('au3','aura','냉기',120,{k:'fall',c:['#e7f5ff','#a5d8ff']}),
 I('au4','aura','어둠의 연기',140,{k:'rise',c:['#3b2a5c','#212529','#5f3dc4'],big:1}),
 I('au5','aura','독기',110,{k:'rise',c:['#94d82d','#5c940d']}),
-I('au6','aura','회전하는 별',120,{k:'orbit',e:'⭐',n:3}),
-I('au7','aura','해골 회전',130,{k:'orbit',e:'💀',n:3}),
-I('au8','aura','돈비',180,{k:'fallE',e:'💵',n:5}),
-I('au9','aura','칼날 회전',150,{k:'orbit',e:'🗡️',n:2,d:2.2}),
+I('au6','aura','회전하는 별',120,{k:'orbit',i:'star',n:3}),
+I('au7','aura','해골 회전',130,{k:'orbit',i:'skull',n:3}),
+I('au8','aura','돈비',180,{k:'fallE',i:'cash',n:5}),
+I('au9','aura','칼날 회전',150,{k:'orbit',i:'dagger',n:2,d:2.2}),
 I('au10','aura','전기장',130,{k:'spark',c:['#22b8cf','#e3fafc'],n:14}),
 I('au11','aura','피의 오라',140,{k:'rise',c:['#c92a2a','#7a0c0c']}),
 I('au12','aura','황금 오라',200,{k:'rise',c:['#ffd43b','#fff3bf','#fab005']}),
-I('au13','aura','음표',80,{k:'riseE',e:'🎵',n:3}),
-I('au14','aura','낙엽',70,{k:'fallE',e:'🍂',n:4}),
-I('au15','aura','불꽃 회전',160,{k:'orbit',e:'🔥',n:4}),
+I('au13','aura','음표',80,{k:'riseE',i:'note',n:3}),
+I('au14','aura','낙엽',70,{k:'fallE',i:'leaf',n:4}),
+I('au15','aura','불꽃 회전',160,{k:'orbit',i:'flame',n:4}),
 I('au16','aura','매트릭스 코드',130,{k:'fall',c:['#40c057','#8ce99a'],n:14}),
-I('au17','aura','분노',60,{k:'riseE',e:'💢',n:2}),
-I('au18','aura','졸음',50,{k:'riseE',e:'💤',n:2}),
+I('au17','aura','분노',60,{k:'riseE',i:'anger',n:2}),
+I('au18','aura','졸음',50,{k:'riseE',i:'zzz',n:2}),
 I('au19','aura','행성 궤도',140,{k:'ring',c:'#9775fa',c2:'#ffd43b'}),
 I('au20','aura','무지개 오라',180,{k:'rise',c:['#ff6b6b','#ffd43b','#69db7c','#4dabf7','#9775fa']}),
 // 쓰러짐
-I('d13','dead','분필 윤곽선',60,{a:'chalk'}),I('d14','dead','폴리스 라인',70,{a:'tape'}),I('d15','dead','승천하는 영혼',60,{e:'👻',a:'soul'}),
-I('d16','dead','지옥불',80,{e:'🔥',a:'burn'}),I('d17','dead','해적 깃발',60,{e:'🏴‍☠️',a:'swing'}),I('d18','dead','검이 꽂힌 무덤',70,{e:'⚔️',a:'pop'}),
-I('d19','dead','대폭발',80,{e:'💥',a:'pulse'}),I('d20','dead','연기',40,{e:'💨',a:'soul'}),I('d21','dead','관',60,{e:'⚰️'}),
-I('d22','dead','R.I.P 비석',50,{a:'rip'}),I('d23','dead','벼락 맞음',80,{e:'⚡',a:'flash'}),I('d24','dead','낙엽 비',50,{e:'🍂',a:'rain'}),I('d25','dead','별이 되다',70,{e:'⭐',a:'soul'}),
+I('d13','dead','분필 윤곽선',60,{a:'chalk'}),I('d14','dead','폴리스 라인',70,{a:'tape'}),I('d15','dead','승천하는 영혼',60,{i:'ghost',a:'soul'}),
+I('d16','dead','지옥불',80,{i:'flame',a:'burn'}),I('d17','dead','해적 깃발',60,{i:'jolly',a:'flag'}),I('d18','dead','검이 꽂힌 무덤',70,{i:'dagger',a:'stab'}),
+I('d19','dead','대폭발',80,{i:'boom',a:'pulse'}),I('d20','dead','연기',40,{i:'smoke',a:'soul'}),I('d21','dead','관',60,{i:'coffin',a:'plant'}),
+I('d22','dead','R.I.P 비석',50,{a:'rip'}),I('d23','dead','벼락 맞음',80,{i:'bolt',a:'strike'}),I('d24','dead','낙엽 비',50,{i:'leaf',a:'rain'}),I('d25','dead','별이 되다',70,{i:'star',a:'soul'}),
 // 승리
-I('w12','win','금화 비',120,{e:'🪙',a:'rain'}),I('w13','win','폭죽 비',80,{e:'🎉',a:'rain'}),I('w14','win','회전 트로피',100,{e:'🏆',a:'spin'}),
-I('w15','win','번개 강림',100,{e:'⚡',a:'flash'}),I('w16','win','스포트라이트',150,{a:'spot'}),I('w17','win','로켓 발사',90,{e:'🚀',a:'rocket'}),
-I('w18','win','다이아 비',150,{e:'💎',a:'rain'}),I('w19','win','브이',40,{e:'✌️',a:'bounce'}),I('w20','win','악당의 미소',70,{e:'😈',a:'bounce'}),
-I('w21','win','WIN! 문구',90,{e:'WIN!',a:'txt'}),I('w22','win','MVP 문구',120,{e:'MVP',a:'txt'}),I('w23','win','GG 문구',60,{e:'GG',a:'txt'}),I('w24','win','왕관 바운스',110,{e:'👑',a:'bounce'})
+I('w12','win','금화 비',120,{i:'coin',a:'rain'}),I('w13','win','별 비',80,{i:'star',a:'rain'}),I('w14','win','회전 트로피',100,{i:'trophy',a:'spin'}),
+I('w15','win','번개 강림',100,{i:'bolt',a:'strike'}),I('w16','win','스포트라이트',150,{a:'spot'}),I('w17','win','로켓 발사',90,{i:'rocket',a:'rocket'}),
+I('w18','win','다이아 비',150,{i:'gem',a:'rain'}),I('w19','win','브이',40,{i:'vsign',a:'bounce'}),I('w20','win','악당의 미소',70,{i:'devil',a:'bounce'}),
+I('w21','win','WIN! 문구',90,{e:'WIN!',a:'txt'}),I('w22','win','MVP 문구',120,{e:'MVP',a:'txt'}),I('w23','win','GG 문구',60,{e:'GG',a:'txt'}),I('w24','win','왕관 바운스',110,{i:'crown',a:'bounce'})
 );
 
 // ===== 옷 (상의·하의·한벌룩) =====
@@ -636,15 +647,15 @@ SKB={14:'.....wwwww......',15:'.....wkwkw......',16:'......www.......',17:'.....
 const NEON_T=fp(TR,isT,(r,c)=>c===5||c===10||r===16?'x':''),NEON_B=fp(BR,isB,(r,c)=>c===5||c===10?'x':'');
 const SETS={mafia:{n:'마피아 패밀리',d:'검은 연기와 붉은 기운',col:'#c92a2a',fx:{k:'rise',c:['#212529','#495057','#c92a2a'],n:9}},
 police:{n:'출동! 경찰',d:'경광등 스파크',col:'#339af0',fx:{k:'spark',c:['#ff2b2b','#339af0'],n:12}},doctor:{n:'명의',d:'치유의 기운',col:'#51cf66',fx:{k:'rise',c:['#b2f2bb','#ffffff'],n:8}},
-detective:{n:'명탐정',d:'돋보기 회전',col:'#d9a441',fx:{k:'orbit',e:'🔍',n:1,d:3}},army:{n:'특수부대',d:'훈장 상승',col:'#4b5320',fx:{k:'riseE',e:'🎖️',n:2}},
-prison:{n:'탈옥수',d:'쇠사슬 회전',col:'#adb5bd',fx:{k:'orbit',e:'⛓️',n:2}},reaper:{n:'저승사자',d:'저승의 안개',col:'#868e96',fx:{k:'rise',c:['#343a40','#adb5bd','#495057'],big:1,n:10}},
-yellow:{n:'노랑 트레이닝',d:'불꽃 주먹',col:'#fcc419',fx:{k:'riseE',e:'👊',n:2}},black:{n:'블랙 트레이닝',d:'그림자 기운',col:'#868e96',fx:{k:'rise',c:['#212529','#868e96'],n:8}},
+detective:{n:'명탐정',d:'돋보기 회전',col:'#d9a441',fx:{k:'orbit',i:'lens',n:1,d:3}},army:{n:'특수부대',d:'훈장 상승',col:'#4b5320',fx:{k:'riseE',i:'medal2',n:2}},
+prison:{n:'탈옥수',d:'쇠사슬 회전',col:'#adb5bd',fx:{k:'orbit',i:'chain',n:2}},reaper:{n:'저승사자',d:'저승의 안개',col:'#868e96',fx:{k:'rise',c:['#343a40','#adb5bd','#495057'],big:1,n:10}},
+yellow:{n:'노랑 트레이닝',d:'불꽃 주먹',col:'#fcc419',fx:{k:'riseE',i:'fist',n:2}},black:{n:'블랙 트레이닝',d:'그림자 기운',col:'#868e96',fx:{k:'rise',c:['#212529','#868e96'],n:8}},
 cyber:{n:'사이버 펑크',d:'전기 스파크',col:'#22b8cf',fx:{k:'spark',c:['#22b8cf','#e3fafc'],n:14}},gold:{n:'황금의 사나이',d:'황금빛 오라',col:'#ffd43b',fx:{k:'rise',c:['#ffd43b','#fff3bf'],n:12}},
-knight:{n:'성기사',d:'검 회전',col:'#adb5bd',fx:{k:'orbit',e:'⚔️',n:2}},ninja:{n:'그림자 닌자',d:'연막',col:'#495057',fx:{k:'rise',c:['#212529','#343a40'],big:1,n:10}},
-pirate:{n:'해적왕',d:'금화 비',col:'#c92a2a',fx:{k:'fallE',e:'🪙',n:3}},cowboy:{n:'무법자',d:'모래바람',col:'#d9a441',fx:{k:'fall',c:['#d9a441','#c8b48a'],n:10}},
-king:{n:'국왕',d:'왕관 회전',col:'#ffd43b',fx:{k:'orbit',e:'👑',n:2}},clown:{n:'광대',d:'카드 상승',col:'#e03131',fx:{k:'riseE',e:'🃏',n:2}},
-worker:{n:'현장 반장',d:'공사 중 표지',col:'#e9ff32',fx:{k:'riseE',e:'🚧',n:2}},biker:{n:'바이커',d:'배기 연기',col:'#868e96',fx:{k:'rise',c:['#868e96','#495057'],n:8}},
-fire:{n:'인페르노',d:'타오르는 불꽃',col:'#ff922b',fx:{k:'rise',c:['#ff922b','#ffd43b','#f03e3e'],n:14}},galaxy:{n:'은하 여행자',d:'별 회전',col:'#9775fa',fx:{k:'orbit',e:'✨',n:3}}};
+knight:{n:'성기사',d:'검 회전',col:'#adb5bd',fx:{k:'orbit',i:'swords',n:2}},ninja:{n:'그림자 닌자',d:'연막',col:'#495057',fx:{k:'rise',c:['#212529','#343a40'],big:1,n:10}},
+pirate:{n:'해적왕',d:'금화 비',col:'#c92a2a',fx:{k:'fallE',i:'coin',n:3}},cowboy:{n:'무법자',d:'모래바람',col:'#d9a441',fx:{k:'fall',c:['#d9a441','#c8b48a'],n:10}},
+king:{n:'국왕',d:'왕관 회전',col:'#ffd43b',fx:{k:'orbit',i:'crown',n:2}},clown:{n:'광대',d:'카드 상승',col:'#e03131',fx:{k:'riseE',i:'card',n:2}},
+worker:{n:'현장 반장',d:'공사 중 표지',col:'#e9ff32',fx:{k:'riseE',i:'barrier',n:2}},biker:{n:'바이커',d:'배기 연기',col:'#868e96',fx:{k:'rise',c:['#868e96','#495057'],n:8}},
+fire:{n:'인페르노',d:'타오르는 불꽃',col:'#ff922b',fx:{k:'rise',c:['#ff922b','#ffd43b','#f03e3e'],n:14}},galaxy:{n:'은하 여행자',d:'별 회전',col:'#9775fa',fx:{k:'orbit',i:'spark',n:3}}};
 const TP=(id,n,p,C,c,x)=>I(id,'top',n,p,{C,c,...(x||{})}),BT=(id,n,p,P,pp,x)=>I(id,'bot',n,p,{P,p:pp,...(x||{})}),ST=(id,n,p,x)=>I(id,'suit',n,p,x);
 SHOP.push(
 // 상의 · 기본
@@ -696,6 +707,74 @@ function setOf(eq){const e=eq||{},s=(ITEM[e.suit]||{}).v;if(s)return s.set||'';c
 const mergeTry=(eq,tr)=>{const o={...(eq||{}),...(tr||{})};if(tr&&(tr.top||tr.bot)&&!tr.suit)delete o.suit;if(tr&&tr.suit){delete o.top;delete o.bot}return o};
 
 const ITEM=Object.fromEntries(SHOP.map(i=>[i.id,i]));
+// ===== 도트 아이콘 라이브러리 (이모지 대체) =====
+const IC={
+star:{r:['....y....','....y....','...yYy...','yyyYYYyyy','.yYYYYYy.','..yYYYy..','..yY.Yy..','.yy...yy.','.y.....y.'],p:{y:'#fab005',Y:'#ffe066'}},
+spark:{r:['...w...','...w...','..wyw..','wwyyyww','..wyw..','...w...','...w...'],p:{w:'#fff9db',y:'#ffd43b'}},
+skull:{r:['.wwwwww.','wwwwwwgw','wkkwwkkw','wkkwwkkw','wwwkkwgw','.wwwwww.','.wkwkwk.','..wwww..'],p:{w:'#f1f3f5',g:'#ced4da',k:'#212529'}},
+cash:{r:['GGGGGGGGGG','GgggGGgggG','GgGgddgGgG','GgGgddgGgG','GgggGGgggG','GGGGGGGGGG'],p:{G:'#2b8a3e',g:'#8ce99a',d:'#ffd43b'}},
+dagger:{r:['..s..','..s..','.sSs.','.sSs.','.sSs.','.sSs.','yyyyy','..b..','..b..','..y..'],p:{s:'#f1f3f5',S:'#868e96',y:'#ffd43b',b:'#6b4423'}},
+note:{r:['..kkkkk','..kkkkk','..k...k','..k...k','kkk.kkk','kkk.kkk'],p:{k:'#ffe066'}},
+leaf:{r:['....oo.','..oooO.','.ooOoo.','oOooo..','ooOo...','.oo....','b......'],p:{o:'#e8590c',O:'#f08c00',b:'#6b4423'}},
+flame:{r:['...r...','..rr...','..rOr..','.rOOr.r','.rOYOrr','rOYYYOr','rOYWYOr','rOYYYOr','.rOOOr.'],p:{r:'#e03131',O:'#ff922b',Y:'#ffd43b',W:'#fff3bf'}},
+anger:{r:['.RR...RR.','RrR...RrR','Rr.....rR','.........','.........','Rr.....rR','RrR...RrR','.RR...RR.'],p:{r:'#ff8787',R:'#e03131'}},
+zzz:{r:['bbbb....','..b.....','.b......','bbbb.bbb','......b.','.....b..','.....bbb'],p:{b:'#a5d8ff'}},
+coin:{r:['..ooo..','.oyyyo.','oyyYyyo','oyYYYyo','oyyYyyo','.oyyyo.','..ooo..'],p:{o:'#e67700',y:'#ffd43b',Y:'#fff3bf'}},
+gem:{r:['..ccccc..','.cCcCcCc.','cCCCCCCCc','.cCCCCCc.','..cCCCc..','...cCc...','....c....'],p:{c:'#1c7ed6',C:'#a5d8ff'}},
+crown:{r:['y...y...y','yy.yyy.yy','yyyyyyyyy','yryyByyry','yyyyyyyyy','YYYYYYYYY'],p:{y:'#fab005',Y:'#e67700',r:'#e03131',B:'#4dabf7'}},
+trophy:{r:['.yyyyyyy.','yyYYYYYyy','y.yYYYy.y','yyyYYYyyy','..yYYYy..','...yYy...','....y....','..yyyyy..','..ooooo..'],p:{y:'#fab005',Y:'#ffe066',o:'#8b5a2b'}},
+bolt:{r:['..yyy','.yyy.','.yy..','yyyyy','..yy.','.yy..','.y...'],p:{y:'#ffe066'}},
+ghost:{r:['..wwww..','.wwwwww.','wwkwwkww','wwkwwkww','wwwwwwww','wwwkkwww','wwwwwwww','wwwwwwww','ww.ww.ww'],p:{w:'#f1f3f5',k:'#343a40'}},
+candle:{r:['..y..','.yoy.','..o..','..k..','.www.','.wWw.','.www.','.www.','bbbbb'],p:{y:'#ffd43b',o:'#ff922b',k:'#212529',w:'#f8f9fa',W:'#dee2e6',b:'#868e96'}},
+dove:{r:['w.......w','ww.....ww','.ww.w.ww.','..wwwww..','...www...','....w....'],p:{w:'#f8f9fa'}},
+balloon:{r:['.rrr.','rWrrr','rrrrr','rrrrr','.rrr.','..r..','..g..','...g.','..g..'],p:{r:'#e03131',W:'#ffc9c9',g:'#adb5bd'}},
+snow:{r:['...w...','.w.w.w.','..www..','wwwwwww','..www..','.w.w.w.','...w...'],p:{w:'#e7f5ff'}},
+comet:{r:['.......yy.','....oooyYy','ooooooyYYy','....oooyYy','.......yy.'],p:{o:'#ffa94d',y:'#ffd43b',Y:'#fff9db'}},
+burst:{r:['y...y...y','.y..y..y.','..y.r.y..','...rrr...','yyrrWrryy','...rrr...','..y.r.y..','.y..y..y.','y...y...y'],p:{y:'#ffd43b',r:'#ff6b6b',W:'#ffffff'}},
+rocket:{r:['...r...','..rrr..','..www..','.wwcww.','.wwcww.','.wwwww.','.wwwww.','rwwwwwr','rr.w.rr','..yoy..','...o...'],p:{r:'#e03131',w:'#f1f3f5',c:'#4dabf7',y:'#ffd43b',o:'#ff922b'}},
+vsign:{r:['s...s','s...s','ss.ss','.sss.','sssss','sssss','.sss.'],p:{s:'#f1c27d'}},
+devil:{r:['p......p','pp....pp','.pppppp.','ppyppypp','pppppppp','pkppppkp','.pkkkkp.','..pppp..'],p:{p:'#7048e8',y:'#ffd43b',k:'#1b1b2a'}},
+medal:{r:['r.....b','.r...b.','..r.b..','..yyy..','.yYYYy.','yYYyYYy','.yYYYy.','..yyy..'],p:{r:'#e03131',b:'#1c7ed6',y:'#e67700',Y:'#ffd43b'}},
+rainbow:{r:['..rrrrrrr..','.rooooooor.','royyyyyyyor','roygggggyor','royg...gyor','royg...gyor'],p:{r:'#ff6b6b',o:'#ffa94d',y:'#ffe066',g:'#69db7c'}},
+bottle:{r:['..y..','.yyy.','..g..','..g..','.ggg.','ggggg','gwwwg','gwwwg','ggggg','ggggg'],p:{y:'#ffd43b',g:'#2b8a3e',w:'#f1f3f5'}},
+jolly:{r:['bkkkkkkkkk','bkkkwwwkkk','bkkwkwkwkk','bkkkwwwkkk','bkkwkkkwkk','bkkkkkkkkk','b.........','b.........','b.........'],p:{b:'#8b5a2b',k:'#111111',w:'#f1f3f5'}},
+swords:{r:['s.......s','.s.....s.','..s...s..','...s.s...','....s....','...s.s...','..y...y..','.b.....b.','b.......b'],p:{s:'#f1f3f5',y:'#ffd43b',b:'#6b4423'}},
+boom:{r:['....y....','.y.yoy.y.','..yoooy..','.yorrroy.','yorrWrroy','.yorrroy.','..yoooy..','.y.yoy.y.','....y....'],p:{y:'#ffd43b',o:'#ff922b',r:'#e03131',W:'#fff3bf'}},
+smoke:{r:['..gg....','.gggg.gg','ggGggggg','gggggGgg','.gggggg.','..gg....'],p:{g:'#ced4da',G:'#adb5bd'}},
+coffin:{r:['.bbbbb.','bBbbbBb','bbbybbb','bbyyybb','bbbybbb','bbbbbbb','bBbbbBb','.bbbbb.','.bbbbb.','..bbb..'],p:{b:'#6b4423',B:'#4a2f1d',y:'#ffd43b'}},
+rose:{r:['.rrr.','rRrRr','rrRrr','.rrr.','..g..','.gg..','..gg.','..g..','..g..'],p:{r:'#e03131',R:'#a61e1e',g:'#2f9e44'}},
+blossom:{r:['.p.p.','ppppp','.pyp.','ppppp','.p.p.'],p:{p:'#fcc2d7',y:'#ffd43b'}},
+bouquet:{r:['.r.y.b.','rrryybb','.r.y.b.','..ggg..','..ggg..','.wwwww.','..www..','..www..','...w...'],p:{r:'#e03131',y:'#ffd43b',b:'#4dabf7',g:'#2f9e44',w:'#f8f9fa'}},
+tomb2:{r:['....yyy....','...yWWWy...','..wWWWWWw..','.wWWWyWWWw.','.wWWyyyWWw.','.wWWWyWWWw.','.wWWWyWWWw.','.wWWWWWWWw.','.wWkkkkkWw.','.wWWWWWWWw.','yyyyyyyyyyy','wwwwwwwwwww','ggggggggggg'],p:{y:'#fab005',W:'#f8f9fa',w:'#ced4da',k:'#868e96',g:'#5c3d1e'}},
+lens:{r:['.ssss...','s.cc.s..','s.c..s..','s....s..','.ssss...','....bb..','.....bb.','......bb'],p:{s:'#ffd43b',c:'#e7f5ff',b:'#6b4423'}},
+medal2:{r:['rwrwrwr','rwrwrwr','rwrwrwr','..yyy..','.yyYyy.','yyYYYyy','.yyYyy.','.y...y.'],p:{r:'#c92a2a',w:'#f1f3f5',y:'#fab005',Y:'#ffe066'}},
+chain:{r:['.sss...sss.','s...sss...s','s...sss...s','.sss...sss.'],p:{s:'#adb5bd'}},
+fist:{r:['.sssss.','sSsSsSs','sssssss','sssssss','Sssssss','.sssss.','..sss..'],p:{s:'#f1c27d',S:'#c68642'}},
+card:{r:['kkkkkk','krwwwk','kwwwwk','kwrrwk','kwrrwk','kwwwwk','kwwwrk','kkkkkk'],p:{k:'#212529',w:'#f8f9fa',r:'#e03131'}},
+barrier:{r:['k........k','yykkyykkyy','kkyykkyykk','yykkyykkyy','k........k','k........k'],p:{k:'#212529',y:'#fab005'}},
+drop:{r:['..r..','..r..','.rrr.','rrrrr','rRrrr','rrrrr','.rrr.'],p:{r:'#c92a2a',R:'#ff8787'}},
+bio:{r:['.yyyyy.','ykkykky','yykykyy','yyykyyy','yykykyy','ykyyyky','.yyyyy.'],p:{y:'#94d82d',k:'#1b1b2a'}},
+knife:{r:['.......s','......sS','.....sS.','....sS..','...sS...','..b.....','.bb.....','b.......'],p:{s:'#f1f3f5',S:'#868e96',b:'#3b2a1a'}},
+moonb:{r:['..ppp..','.ppkkp.','ppkkkkp','ppkkkkp','ppkkkkp','.ppkkp.','..ppp..'],p:{p:'#9775fa',k:'#1b1035'}},
+castle:{r:['s.s.s.s.s','sssssssss','sssssssss','sskssskss','sssssssss','sssbbbsss','sssbbbsss','sssbbbsss'],p:{s:'#adb5bd',k:'#1b1b2a',b:'#6b4423'}},
+pad:{r:['.kkkkkkkk.','kkwkkkkrkk','kwwwkkrkbk','kkwkkkkgkk','kkkkkkkkkk','.kk....kk.'],p:{k:'#495057',w:'#f1f3f5',r:'#e03131',b:'#4dabf7',g:'#51cf66'}},
+bag:{r:['...yy...','..bkkb..','.bbbbbb.','bbbyybbb','bbyybbbb','bbbyybbb','bbbbyybb','.bbbbbb.'],p:{y:'#ffd43b',b:'#c88a3a',k:'#6b4423'}},
+check:{r:['......g','.....gg','g...gg.','gg.gg..','.ggg...','..g....'],p:{g:'#51cf66'}},
+fedora:{r:['..kkk..','.kkkkk.','.rrrrr.','kkkkkkk'],p:{k:'#212529',r:'#c92a2a'}},
+badge:{r:['...y...','.yyyyy.','yyybyyy','.ybbby.','.yybyy.','..yyy..','...y...'],p:{y:'#fab005',b:'#1c3d6e'}},
+cross:{r:['.wwwww.','wwwrwww','wwwrwww','wrrrrrw','wwwrwww','wwwrwww','.wwwww.'],p:{w:'#f8f9fa',r:'#e03131'}},
+jmask:{r:['r.....b','rr...bb','.rwwwb.','.wkwkw.','.wwwww.','.wkkkw.','..www..'],p:{r:'#e03131',b:'#1971c2',w:'#f8f9fa',k:'#212529'}},
+helm:{r:['..ggg..','.ggggg.','ggGgGgg','ggggggg','G.....G'],p:{g:'#6b8e23',G:'#3d4f1f'}},
+xcross:{r:['..y..','yyyyy','..y..','..y..','..y..'],p:{y:'#ffd43b'}},
+paper:{r:['wwwwww','wkkkkw','wwwwww','wkkwkw','wwwwww','wkwkkw','wwwwww'],p:{w:'#f1f3f5',k:'#495057'}},
+eye:{r:['..kkk..','.kwwwk.','kwbbbwk','kwbkbwk','kwbbbwk','.kwwwk.','..kkk..'],p:{k:'#212529',w:'#f8f9fa',b:'#1c7ed6'}},
+shield:{r:['bbbbbbb','bBBwBBb','bBwwwBb','bBBwBBb','.bBBBb.','..bBb..','...b...'],p:{b:'#1c7ed6',B:'#4dabf7',w:'#f8f9fa'}}};
+const icR=(n,ps,pal)=>{const I=IC[n];if(!I)return'';const w=I.r[0].length,h=I.r.length;return`<g shape-rendering="crispEdges">${rowsSVG(I.r,pal?{...I.p,...pal}:I.p,ps,-w*ps/2,-h*ps/2)}</g>`};
+const pix=(n,x,y,ps,cls,st,pal)=>`<g transform="translate(${(+x).toFixed(1)} ${(+y).toFixed(1)})"><g${cls?` class="${cls}"`:''}${st?` style="${st}"`:''}>${icR(n,ps,pal)}</g></g>`;
+const icH=(n,s)=>{const I=IC[n];if(!I)return'';s=s||14;const w=I.r[0].length,h=I.r.length,m=Math.max(w,h);return`<svg viewBox="0 0 ${w} ${h}" style="width:${(s*w/m).toFixed(1)}px;height:${(s*h/m).toFixed(1)}px;vertical-align:-2px" shape-rendering="crispEdges">${rowsSVG(I.r,I.p,1,0,0)}</svg>`};
+const ROLEIC={mafia:'knife',godfather:'fedora',police:'badge',doctor:'cross',jester:'jmask',citizen:'zzz',soldier:'helm',detective:'lens',jesus:'xcross',mayor:'castle',reporter:'paper',drunk:'bottle',witness:'eye'};
+const FWPAL=[{r:'#ff6b6b',y:'#ffd43b'},{r:'#4dabf7',y:'#a5d8ff'},{r:'#69db7c',y:'#d8f5a2'},{r:'#b197fc',y:'#ffd43b'}];
+
 // ===== 공용 그라데이션/패턴 =====
 document.body.insertAdjacentHTML('afterbegin',`<svg width="0" height="0" style="position:absolute;width:0;height:0;overflow:hidden" aria-hidden="true"><defs>
 <linearGradient id="rbg" x1="0" x2="1"><stop offset="0" stop-color="#ff6b6b"/><stop offset=".5" stop-color="#ffd43b"/><stop offset="1" stop-color="#4dabf7"/></linearGradient>
@@ -732,13 +811,12 @@ const ACH=[
 ['a27','💸 큰손','달란트 1000 사용',(s,p)=>spentOf(p.own)>=1000],['a28','💰 저축왕','달란트 500 보유',(s,p)=>(p.t||0)>=500]];
 const ACHM=Object.fromEntries(ACH.map(a=>[a[0],a]));
 const achOK=(n,id)=>{const a=ACHM[id],p=pfOf(n);return!!a&&!!a[3](p.st||{},p)};
-const RANKT=[['r_pop','👑 원우마을 패셔니스타','인기도 1위','👑',n=>pfOf(n).pop||0],['r_rich','💰 달란트 재벌','번 달란트 누적 1위','💰',earned],['r_win','🏆 승리의 아이콘','최다 승리 1위','🏆',n=>stOf(n).w||0],['r_play','🎮 마을 터줏대감','최다 출전 1위','🎮',n=>stOf(n).g||0],['r_maf','🌑 밤의 지배자','마피아 팀 승리 1위','🌑',n=>stOf(n).wm||0],['r_lord','🏰 원우성 성주','성에 가장 많이 투자한 성주','🏰',n=>0]];
+const RANKT=[['r_pop','👑 원우마을 패셔니스타','인기도 1위','crown',n=>pfOf(n).pop||0],['r_rich','💰 달란트 재벌','번 달란트 누적 1위','bag',earned],['r_win','🏆 승리의 아이콘','최다 승리 1위','trophy',n=>stOf(n).w||0],['r_play','🎮 마을 터줏대감','최다 출전 1위','pad',n=>stOf(n).g||0],['r_maf','🌑 밤의 지배자','마피아 팀 승리 1위','moonb',n=>stOf(n).wm||0],['r_lord','🏰 원우성 성주','성에 가장 많이 투자한 성주','castle',n=>0]];
 const RANKM=Object.fromEntries(RANKT.map(r=>[r[0],r]));
 let RH={};
 function rankHolders(id){if(RH[id])return RH[id];if(id==='r_lord'){const l=lordOf();return RH[id]=l?[l]:[]}const r=RANKM[id];if(!r)return[];const us=realUsers(),v=us.map(n=>r[4](n)),mx=Math.max(0,...v);const top=mx>0?us.filter((n,i)=>v[i]===mx):[];return RH[id]=top.length<=2?top:[]}
-const rankBadges=n=>RANKT.filter(r=>rankHolders(r[0]).includes(n)).map(r=>r[3]).join('');
 const nmOf=id=>(ITEM[id]||{}).n||(ACHM[id]||[])[1]||(RANKM[id]||[])[1]||'';
-function titleOf(n,eq,pv){const id=(eq||{}).title;if(!id)return null;if(ITEM[id])return{t:ITEM[id].v,f:'#ffd43b',k:''};if(ACHM[id])return pv||achOK(n,id)?{t:ACHM[id][1],f:'#8ce99a',k:''}:null;if(RANKM[id])return pv||rankHolders(id).includes(n)?{t:RANKM[id][1],f:'url(#gGold)',k:'ti-glow'}:null;return null}
+function titleOf(n,eq,pv){const id=(eq||{}).title;if(!id)return null;if(ITEM[id])return{t:ITEM[id].v,f:'#ffd43b',k:''};if(ACHM[id])return pv||achOK(n,id)?{t:ACHM[id][1],f:'#8ce99a',k:'',ic:'medal2'}:null;if(RANKM[id])return pv||rankHolders(id).includes(n)?{t:RANKM[id][1],f:'url(#gGold)',k:'ti-glow',ic:RANKM[id][3]}:null;return null}
 const acc=(eq,n)=>{eq=eq||{};const g=k=>(ITEM[eq[k]]||{}).v||'',t=titleOf(n,eq);return{nc:g('nameC'),ti:t?t.t:'',dx:g('dead'),wx:g('win')}};
 const esc=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 // ===== 캐릭터 그리기 (정면/옆/뒤) =====
@@ -769,39 +847,59 @@ function footSVG(v){return v?`<g class="${v.a?'ft-'+v.a:''}">${rowsSVG(v.rows,v.
 function petSVG(v){if(!v)return'';const f=v.fly;return`<ellipse cx="-31" cy="1" rx="9" ry="2.2" fill="#000" opacity="${f?.15:.3}"/><g class="${f?'pet-f':'pet-b'}">${rowsSVG(v.rows,v.pal,PS,-41,f?-46:-14.4)}</g>`}
 function char(ch,eq,view){const e=eq||{};return footSVG((ITEM[e.foot]||{}).v)+`<ellipse cx="0" cy="1" rx="16" ry="3.5" fill="#000" opacity=".3"/>`+sprite(ch,e,view)+petSVG((ITEM[e.pet]||{}).v)}
 const RN01=i=>((i*73+17)%101)/101;
-function auraSVG(v){if(!v)return'';let o='';const n=v.n||(v.e?3:12);
+function auraSVG(v){if(!v)return'';let o='';const n=v.n||(v.i?3:12);
 if(['rise','fall','riseE','fallE'].includes(v.k)){const up=v.k.startsWith('rise'),em=v.k.endsWith('E');for(let i=0;i<n;i++){const x=-22+RN01(i)*44,y=up?-2-RN01(i+5)*18:-84+RN01(i+3)*12,du=(1.8+RN01(i+9)*1.6).toFixed(2),st=`--dx:${((RN01(i+4)-.5)*16).toFixed(1)}px;animation-duration:${du}s;animation-delay:${(-RN01(i+2)*3).toFixed(2)}s`,cl=up?'ar-up':'ar-dn';
-o+=em?`<text class="${cl}" x="${x.toFixed(1)}" y="${y.toFixed(1)}" font-size="9" style="${st}">${v.e}</text>`:`<rect class="${cl}" x="${x.toFixed(1)}" y="${y.toFixed(1)}" width="${v.big?3.6:2.4}" height="${v.big?3.6:2.4}" fill="${v.c[i%v.c.length]}" style="${st}"/>`}}
+o+=em?pix(v.i,x,y,1.2,cl,st):`<rect class="${cl}" x="${x.toFixed(1)}" y="${y.toFixed(1)}" width="${v.big?3.6:2.4}" height="${v.big?3.6:2.4}" fill="${v.c[i%v.c.length]}" style="${st}"/>`}}
 else if(v.k==='spark'){for(let i=0;i<n;i++){const a=RN01(i)*6.283,x=Math.cos(a)*(18+RN01(i+7)*8),y=-32+Math.sin(a)*34;o+=`<rect class="ar-sp" x="${x.toFixed(1)}" y="${y.toFixed(1)}" width="${i%3?2.4:4.8}" height="2.4" fill="${v.c[i%v.c.length]}" style="animation-delay:${(-RN01(i+1)*1.2).toFixed(2)}s"/>`}}
-else if(v.k==='orbit'){const m=v.n||3,d=v.d||3.5;o+=`<g><animateTransform attributeName="transform" type="rotate" from="0 0 -32" to="360 0 -32" dur="${d}s" repeatCount="indefinite"/>${Array.from({length:m},(_,i)=>{const a=i/m*6.283;return`<g transform="translate(${(Math.cos(a)*28).toFixed(1)} ${(-32+Math.sin(a)*28).toFixed(1)})"><g><animateTransform attributeName="transform" type="rotate" from="0" to="-360" dur="${d}s" repeatCount="indefinite"/><text font-size="10" text-anchor="middle" dy="3.5">${v.e}</text></g></g>`}).join('')}</g>`}
+else if(v.k==='orbit'){const m=v.n||3,d=v.d||3.5;o+=`<g><animateTransform attributeName="transform" type="rotate" from="0 0 -32" to="360 0 -32" dur="${d}s" repeatCount="indefinite"/>${Array.from({length:m},(_,i)=>{const a=i/m*6.283;return`<g transform="translate(${(Math.cos(a)*28).toFixed(1)} ${(-32+Math.sin(a)*28).toFixed(1)})"><g><animateTransform attributeName="transform" type="rotate" from="0" to="-360" dur="${d}s" repeatCount="indefinite"/>${icR(v.i,1.3)}</g></g>`}).join('')}</g>`}
 else if(v.k==='ring')o+=`<ellipse cx="0" cy="-30" rx="27" ry="7" fill="none" stroke="${v.c}" stroke-width="1.2" opacity=".55"/><circle r="2.6" fill="${v.c2||'#fff'}"><animateMotion dur="2.2s" repeatCount="indefinite" path="M27,-30 A27,7 0 1,1 -27,-30 A27,7 0 1,1 27,-30"/></circle>`;
 return`<g>${o}</g>`}
-function deadFX(v){const{e,a}=fxv(v);if(!e&&!a)return'';
-switch(a){case'chalk':return`<rect x="-6" y="-24" width="76" height="28" rx="12" fill="none" stroke="#f8f9fa" stroke-width="1.4" stroke-dasharray="4 3" opacity=".8"/>`;
-case'tape':return`<g transform="rotate(-8 30 -34)"><rect x="-14" y="-40" width="92" height="9" fill="#fab005"/><text x="32" y="-33.2" font-size="6.5" font-weight="900" text-anchor="middle" fill="#111">POLICE LINE · 접근금지</text></g>`;
-case'rip':return`<g transform="translate(48 0)"><path d="M-8 0V-16a8 8 0 0 1 16 0V0z" fill="#868e96" stroke="#343a40"/><text x="0" y="-6" font-size="5.5" font-weight="900" text-anchor="middle" fill="#212529">R.I.P</text></g>`;
-case'rain':return Array.from({length:5},(_,i)=>`<text class="fa-dn" x="${-6+i*16}" y="-52" font-size="10" style="animation-delay:${(-i*.55).toFixed(2)}s">${e}</text>`).join('');
-case'soul':return`<text class="fa-soul" x="30" y="-12" font-size="15" text-anchor="middle">${e}</text>`;
-case'burn':return[8,28,48].map((x,i)=>`<text class="fa-pulse" x="${x}" y="-2" font-size="12" style="animation-delay:${i*.3}s">${e}</text>`).join('');
-default:return`<text class="${a?'fa-'+a:''}" x="48" y="-4" font-size="14" text-anchor="middle">${e}</text>`}}
-function winFX(v,layer){const{e,a}=fxv(v);if(!e&&!a)return'';
-if(layer==='back')return a==='spot'?`<polygon class="fa-glow" points="-9,-120 9,-120 34,4 -34,4" fill="url(#gSpot)"/>`:'';
-switch(a){case'spot':return'';
-case'rain':return Array.from({length:6},(_,i)=>`<text class="fa-dn" x="${-30+i*12}" y="-98" font-size="10" text-anchor="middle" style="animation-delay:${(-i*.4).toFixed(2)}s">${e}</text>`).join('');
-case'rocket':return`<text class="fa-rocket" x="24" y="-40" font-size="13" text-anchor="middle">${e}</text>`;
+function deadFX(v){const{i,a,e}=fxv(v);if(!i&&!a){return e?`<text x="16" y="-6" font-size="14" text-anchor="middle">${e}</text>`:''}
+switch(a){case'chalk':return`<rect x="-30" y="-42" width="60" height="47" rx="16" fill="none" stroke="#f8f9fa" stroke-width="1.5" stroke-dasharray="4 3" opacity=".85"/>`;
+case'tape':return`<g transform="rotate(-12 0 -16)"><rect x="-44" y="-22" width="88" height="9" fill="#fab005"/>${Array.from({length:11},(_,k)=>`<rect x="${-44+k*8}" y="-22" width="4" height="9" fill="#212529" opacity=".85"/>`).join('')}<rect x="-27" y="-21" width="54" height="7" fill="#fab005"/><text x="0" y="-15.4" font-size="5.6" font-weight="900" text-anchor="middle" fill="#111">POLICE LINE</text></g>`;
+case'rip':return`<text x="0" y="-11" font-size="6.2" font-weight="900" text-anchor="middle" fill="#2b2f36">R.I.P</text>`;
+case'twinkle':return[[-20,-30],[18,-40],[22,-14],[-24,-8],[0,-50],[-12,-44]].map(([x,y],k)=>pix(i,x,y,1.2,'tw',`animation-delay:${(k*.33).toFixed(2)}s`)).join('');
+case'plant':return pix(i,16,-IC[i].r.length*.9,1.8);
+case'candles':return pix('candle',-17,-8,1.6)+pix('candle',17,-8,1.6)+`<circle cx="-17" cy="-15" r="7" fill="#ffd43b" fill-opacity=".18" class="fa-glow"/><circle cx="17" cy="-15" r="7" fill="#ffd43b" fill-opacity=".18" class="fa-glow"/>`;
+case'soul':return pix(i,0,-30,1.8,'fa-soul');
+case'rain':return Array.from({length:5},(_,k)=>pix(i,-28+k*14,-62,1.4,'fa-dn',`animation-delay:${(-k*.55).toFixed(2)}s`)).join('');
+case'fly':return pix(i,0,-30,1.8,'fx-fly');
+case'tomb':return pix(i,0,-16,2.6);
+case'float':return`<line x1="12" y1="-3" x2="12" y2="-24" stroke="#adb5bd" stroke-width=".8"/>`+pix(i,12,-32,1.8,'fx-float');
+case'streak':return pix(i,0,-48,1.6,'fx-streak');
+case'burn':return[-16,0,16].map((x,k)=>pix(i,x,-7,1.6,'fa-flick',`animation-delay:${(k*.2).toFixed(1)}s`)).join('');
+case'flag':return pix(i,18,-18,1.8,'fa-wave');
+case'stab':return`<g transform="translate(17 -10) rotate(18)">${icR(i,2.2)}</g>`;
+case'strike':return`<circle cx="0" cy="-20" r="22" fill="#fff9db" fill-opacity=".22" class="fa-flash"/>`+pix(i,0,-42,2.4,'fa-flash');
+default:return pix(i,16,-10,1.8,a?'fa-'+a:'')}}
+function winFX(v,layer){const{i,a,e}=fxv(v);if(!i&&!a&&!e)return'';
+if(layer==='back')return a==='spot'?`<polygon class="fa-glow" points="-9,-120 9,-120 34,4 -34,4" fill="url(#gSpot)"/>`:a==='arc'?pix(i,0,-84,3,'fa-glow'):'';
+if(!i&&!a)return`<text x="0" y="-80" font-size="16" text-anchor="middle">${e}</text>`;
+switch(a){case'spot':case'arc':return'';
+case'rain':return Array.from({length:6},(_,k)=>pix(i,-30+k*12,-100,1.4,'fa-dn',`animation-delay:${(-k*.4).toFixed(2)}s`)).join('');
+case'confetti':{const C=['#ff6b6b','#ffd43b','#69db7c','#4dabf7','#b197fc','#ffa94d'];return Array.from({length:18},(_,k)=>`<g transform="translate(${(-34+RN01(k)*68).toFixed(1)} -104)"><rect class="fa-conf" width="3" height="${k%2?2:4}" fill="${C[k%6]}" style="animation-delay:${(-RN01(k+3)*2.4).toFixed(2)}s;animation-duration:${(2+RN01(k+5)).toFixed(2)}s"/></g>`).join('')}
+case'fireworks':return[[-26,-92],[24,-100],[0,-114],[-12,-74]].map(([x,y],k)=>pix('burst',x,y,1.8,'fx-fw',`animation-delay:${(k*.45).toFixed(2)}s`,FWPAL[k%4])).join('');
+case'pop':return pix(i,0,-84,2.4,'fa-pop');
+case'twinkle':return[[-22,-60],[20,-70],[24,-30],[-26,-24],[0,-86],[-10,-78]].map(([x,y],k)=>pix(i,x,y,1.3,'tw',`animation-delay:${(k*.3).toFixed(1)}s`)).join('');
+case'flank':return pix(i,-22,-10,1.8,'fa-flick')+pix(i,22,-10,1.8,'fa-flick','animation-delay:.25s');
+case'strike':return`<ellipse cx="0" cy="-30" rx="34" ry="44" fill="#fff9db" fill-opacity=".16" class="fa-flash"/>`+pix(i,0,-94,2.6,'fa-flash');
+case'rocket':return pix(i,24,-40,1.8,'fa-rocket');
 case'txt':return`<text class="fa-bounce" x="0" y="-84" font-size="15" text-anchor="middle" font-family="'Black Han Sans',sans-serif" fill="url(#gGold)" stroke="#3b2a00" stroke-width=".8">${e}</text>`;
-default:return`<text class="${a?'fa-'+a:''}" x="0" y="-84" font-size="16" text-anchor="middle">${e}</text>`}}
-function nameTag(x,e,dead,pv){if(!x)return'';const nc=(ITEM[e.nameC]||{}).v,pl=(ITEM[e.plate]||{}).v,ti=titleOf(x,e,pv),w=Math.max(30,[...x].length*11+12),bd=pv===2?'':rankBadges(x);let s='';
-if(pl){s+=`<rect x="${-w/2}" y="4" width="${w}" height="15" rx="${pl.r??5}" fill="${pl.f}" stroke="${pl.s||'none'}" stroke-width="1.2" ${pl.dash?'stroke-dasharray="3 2"':''} class="${pl.c||''}"/>`;if(pl.d&&pl.d[0])s+=`<text x="${-w/2-1}" y="16" font-size="9" text-anchor="end">${pl.d[0]}</text>`;if(pl.d&&pl.d[1])s+=`<text x="${w/2+1}" y="16" font-size="9">${pl.d[1]}</text>`}
+default:return pix(i,0,-84,2,a?'fa-'+a:'')}}
+const stripE=t=>String(t).replace(/^[^가-힣A-Za-z0-9]+\s*/,'');
+const rankIcons=n=>RANKT.filter(r=>rankHolders(r[0]).includes(n)).map(r=>r[3]);
+const rankBadges=n=>rankIcons(n).map(k=>icH(k,13)).join('');
+function nameTag(x,e,dead,pv){if(!x)return'';const nc=(ITEM[e.nameC]||{}).v,pl=(ITEM[e.plate]||{}).v,ti=titleOf(x,e,pv),w=Math.max(30,[...x].length*11+12),bd=pv===2?[]:rankIcons(x);let s='';
+if(pl){s+=`<rect x="${-w/2}" y="4" width="${w}" height="15" rx="${pl.r??5}" fill="${pl.f}" stroke="${pl.s||'none'}" stroke-width="1.2" ${pl.dash?'stroke-dasharray="3 2"':''} class="${pl.c||''}"/>`;if(pl.d&&pl.d[0])s+=pix(pl.d[0],-w/2-6,11.5,1.1);if(pl.d&&pl.d[1])s+=pix(pl.d[1],w/2+6,11.5,1.1)}
 const nv=nc&&typeof nc==='object'?nc:{f:nc},fill=dead?'#868e96':(nv.f||(pl&&pl.tc)||'#fff');
-s+=`<text x="0" y="15.5" font-size="11" font-weight="800" text-anchor="middle" fill="${fill}" class="nm ${dead?'':(nv.c||'')}">${x}</text>`;
-if(bd)s+=`<text x="${-w/2-(pl&&pl.d&&pl.d[0]?12:2)}" y="15.5" font-size="10" text-anchor="end">${bd}</text>`;
-if(ti)s+=`<text x="0" y="29" font-size="8" font-weight="800" text-anchor="middle" class="ti ${ti.k}" fill="${ti.f}">${esc(ti.t)}</text>`;return s}
+s+=`<text x="0" y="15.5" font-size="11" font-weight="800" text-anchor="middle" fill="${fill}" class="nm ${!dead&&!nv.f&&pl&&pl.tc?'nm-dk':''} ${dead?'':(nv.c||'')}">${x}</text>`;
+let bx=-w/2-(pl&&pl.d&&pl.d[0]?13:4);bd.forEach(k=>{const iw=IC[k].r[0].length*1.05;s+=pix(k,bx-iw/2,11.5,1.05);bx-=iw+2});
+if(ti){const tt=ti.ic?stripE(ti.t):ti.t,tw=[...tt].length*7.6;s+=(ti.ic?pix(ti.ic,-tw/2-6,26.2,.85):'')+`<text x="${ti.ic?3:0}" y="29" font-size="8" font-weight="800" text-anchor="middle" class="ti ${ti.k}" fill="${ti.f}">${esc(tt)}</text>`}return s}
 function avatar(x,ch,eq,o){o=o||{};const e=eq||{},st=o.state||'idle',dead=st==='dead',wv=(ITEM[e.win]||{}).v,sf=SETS[setOf(e)];
 return(st==='win'?winFX(wv,'back'):'')+(dead?'':footSVG((ITEM[e.foot]||{}).v))+(sf&&!dead?`<ellipse class="fa-glow" cx="0" cy="1" rx="21" ry="5" fill="none" stroke="${sf.col}" stroke-width="1.6" opacity=".7"/>`:'')
 +(dead?(o.fall?`<g class="fallfade"><ellipse cx="0" cy="1" rx="16" ry="3.5" fill="#000" opacity=".3"/>${sprite(ch,e,o.view)}</g>`:'')+grave(o.fall):`<g class="fig idle" style="animation-delay:${o.dl||0}s"><ellipse cx="0" cy="1" rx="16" ry="3.5" fill="#000" opacity=".3"/>${sprite(ch,e,o.view)}</g>`)
 +(dead?'':auraSVG((ITEM[e.aura]||{}).v)+(sf?auraSVG(sf.fx):''))+petSVG((ITEM[e.pet]||{}).v)
-+(dead?`<g transform="translate(-34 -10) scale(1.2)">${deadFX((ITEM[e.dead]||{}).v)}</g>`:'')+(st==='win'?winFX(wv,'front'):'')+(o.noName?'':nameTag(x,e,dead,o.pv))}
++(dead?deadFX((ITEM[e.dead]||{}).v):'')+(st==='win'?winFX(wv,'front'):'')+(o.noName?'':nameTag(x,e,dead,o.pv))}
 
 function rowsSVG(rows,pal,ps,x0,y0){let o='';rows.forEach((t,r)=>{let c=0;while(c<t.length){const k=t[c];if(k==='.'){c++;continue}let e=c;while(e+1<t.length&&t[e+1]===k)e++;o+=`<rect x="${(x0+c*ps).toFixed(1)}" y="${(y0+r*ps).toFixed(1)}" width="${((e-c+1)*ps+.05).toFixed(2)}" height="${(ps+.05).toFixed(2)}" fill="${pal[k]}"/>`;c=e+1}});return o}
 const FIRE_A=['......R.....','.....RR.R...','....RROR.R..','...RROOORR..','..RROOYOORR.','..ROOYYYOOR.','.RROYYWYYOOR','.ROOYWWWYOOR','.ROYYWWWYYOR','.ROYYWWWYYOR','..ROYYYYYOR.','...ROOOOOR..'],
@@ -887,10 +985,10 @@ const has=g&&g.roles&&g.phase!=='lobby',names=has?Object.keys(g.roles):Object.ke
 const spec=has&&(g.phase==='end'||(p&&(g.roles[p]&&!g.alive[p]&&!(g.rise&&g.rise[p])))),n=names.length;
 const arr=names.map((x,i)=>{const a=-Math.PI/2+i*2*Math.PI/n,px=200+160*Math.cos(a),py=276+112*Math.sin(a),sc=(0.9+0.18*Math.sin(a))*(n>12?.88:1),dead=has&&!g.alive[x],h=hs(x);
 const fall=dead&&!known.has(x);if(dead)known.add(x);
-const role0=has&&(x===p||spec)?RN[x===p?g.roles[x]:vis(g,g.roles[x])].split(' ')[0]:'',role=has&&(g.rev||[]).includes(x)?(g.roles[x]==='jesus'?'✝️':'🪖'):role0,vo=has&&g.phase==='vote'&&(D.votes[g.day]||{})[x]?'✅':'';
+const role0=has&&(x===p||spec)?ROLEIC[x===p?g.roles[x]:vis(g,g.roles[x])]:'',role=has&&(g.rev||[]).includes(x)?(g.roles[x]==='jesus'?'xcross':'helm'):role0,vo=has&&g.phase==='vote'&&(D.votes[g.day]||{})[x];
 const eq=((D.profiles||{})[x]||{}).eq||{},stt=dead?'dead':(has&&g.phase==='end'&&won(g,x)?'win':'idle');
 const svg=`<g transform="translate(${px.toFixed(1)} ${py.toFixed(1)}) scale(${sc.toFixed(2)})">${avatar(x,chOf(x),eq,{state:stt,fall,dl:(h%7)*.35})}`
-+(dead?(()=>{const r=g.roles[x],mf=isM(r),lb=spec?RN[x===p?r:vis(g,r)]:(mf?'🔪 마피아':'🙂 시민');return`<rect x="-30" y="-50" width="60" height="16" rx="8" fill="${mf?'#c92a2a':'#2b8a3e'}" stroke="#fff" stroke-opacity=".5"/><text x="0" y="-38.5" font-size="10.5" font-weight="800" text-anchor="middle" fill="#fff">${lb}</text>`})():`${role?`<text x="0" y="-70" font-size="14" text-anchor="middle">${role}</text>`:''}${vo?`<text x="18" y="-62" font-size="10">${vo}</text>`:''}`)
++(dead?(()=>{const r=g.roles[x],mf=isM(r),rv=spec?(x===p?r:vis(g,r)):'',ic=spec?ROLEIC[rv]:(mf?'knife':'shield'),lb=spec?RN[rv].split(' ').slice(1).join(' '):(mf?'마피아':'시민');return`<rect x="-33" y="-51" width="66" height="17" rx="8" fill="${mf?'#c92a2a':'#2b8a3e'}" stroke="#fff" stroke-opacity=".5"/>${pix(ic,-22,-42.5,1.1)}<text x="5" y="-39" font-size="10" font-weight="800" text-anchor="middle" fill="#fff">${lb}</text>`})():`${role?pix(role,0,-75,1.7,'fa-top'):''}${vo?pix('check',17,-62,1.3):''}`)
 +'</g>';return[py,svg]});
 $('sfg').innerHTML=`<g transform="translate(10 54)">${campfire()}</g>${arr.sort((a,b)=>a[0]-b[0]).map(x=>x[1]).join('')}${n?'':'<text x="200" y="380" font-size="11" text-anchor="middle" fill="#fff" opacity=".7">아직 모닥불에 아무도 없어요…</text>'}`}
 
@@ -923,7 +1021,7 @@ const tw=(x,h,w)=>R(x,96-h,w,h,st)+Array.from({length:Math.floor(w/6)},(_,i)=>R(
 const flag=(x,y)=>R(x,y-16,1.5,16,'#495057')+`<polygon points="${x+1.5},${y-16} ${x+13},${y-12} ${x+1.5},${y-8}" fill="${lv>=4?'#c92a2a':'#1971c2'}"/>`;
 if(lv>=3)s+=tw(88,78,24)+flag(99,18);
 s+=R(50,58,100,38,st)+Array.from({length:9},(_,i)=>R(50+i*11.6,53,7,5,st)).join('')+R(50,58,100,2,dk)+R(88,72,24,24,'#3b2a1a')+`<path d="M88 72a12 12 0 0 1 24 0" fill="#3b2a1a"/>`;
-s+=tw(26,lv>=3?62:50,24)+tw(150,lv>=3?62:50,24);if(lv>=3)s+=flag(37,96-62-5)+flag(161,96-62-5);if(lv>=4)s+=R(50,82,100,2,dk)+`<text x="100" y="66" font-size="9" text-anchor="middle">👑</text>`;return s}
+s+=tw(26,lv>=3?62:50,24)+tw(150,lv>=3?62:50,24);if(lv>=3)s+=flag(37,96-62-5)+flag(161,96-62-5);if(lv>=4)s+=R(50,82,100,2,dk)+`${pix('crown',100,62,1.2)}`;return s}
 function castleUI(){const c=CS(),l=lordOf(),tot=cTotal(),lv=cLv(tot),inv=Object.entries(c.inv||{}).sort((a,b)=>b[1]-a[1]),rate=rateOf();
 let h=`<div class="stage" style="padding:0;overflow:hidden"><svg viewBox="0 0 200 142" style="width:100%;display:block;background:linear-gradient(180deg,#1b1640,#2a2050)">${castleSVG(lv)}${l?`<g transform="translate(100 118) scale(.62)">${avatar(l,chOf(l),pfOf(l).eq||{},{})}</g>`:`<text x="100" y="40" font-size="9" fill="#adb5bd" text-anchor="middle">아직 아무도 투자하지 않은 빈 땅</text>`}</svg></div>`;
 h+=`<div class="q" style="font-size:.8rem;margin-top:6px">🏰 <b>원우성</b> · ${CLN[lv]} (총 투자 ${tot})\n👑 성주: <b style="color:#ffd43b">${l||'없음'}</b>${l?` · 투자 ${cInv(l)} · 누적 세금 ${((c.tax||{})[l])||0}`:''}\n💸 현재 수수료: <b>${rate}%</b> (아이템 살 때 가격에 추가, 되팔 때 받는 돈에서 빠져요 → 성주에게)</div>`;
@@ -999,7 +1097,7 @@ window.like=async to=>{if(!me||to===me)return;const r=await runTransaction(ref(d
 function fameRender(){const el=$('fame'),us=realUsers();if(!us.length){el.style.display='none';return}el.style.display='block';
 const M={pop:['👍 인기',n=>pfOf(n).pop||0,'r_pop'],rich:['💰 번 달란트',earned,'r_rich'],win:['🏆 승리',n=>stOf(n).w||0,'r_win'],play:['🎮 출전',n=>stOf(n).g||0,'r_play'],maf:['🔪 마피아 승',n=>stOf(n).wm||0,'r_maf']},[,f,rid]=M[fameTab];
 const L=us.map(n=>[n,f(n)]).sort((a,b)=>b[1]-a[1]),mine=me?(((D.likes||{})[kday()]||{})[me]||{}):{},left=LIKE_MAX-Object.keys(mine).length;
-let h=`<div class="t">🏛️ 명예의 전당</div><div class="g2">${Object.keys(M).map(k=>btn(M[k][0],`fameSet('${k}')`,fameTab===k,'g')).join('')}</div><div class="q" style="font-size:.78rem;margin:8px 0">🥇 1위 보상: <b style="color:#ffd43b">${RANKM[rid][1]}</b> 칭호 + 이름 옆 ${RANKM[rid][3]} 배지${fameTab==='pop'?`\n치장이 멋진 사람에게 👍! 하루 ${LIKE_MAX}번, 한 사람에게 하루 1번 · 오늘 남은 👍 <b>${me?left:0}</b>개`:''}\n캐릭터를 누르면 크게 구경할 수 있어요.</div>`;
+let h=`<div class="t">🏛️ 명예의 전당</div><div class="g2">${Object.keys(M).map(k=>btn(M[k][0],`fameSet('${k}')`,fameTab===k,'g')).join('')}</div><div class="q" style="font-size:.78rem;margin:8px 0">🥇 1위 보상: <b style="color:#ffd43b">${RANKM[rid][1]}</b> 칭호 + 이름 옆 ${icH(RANKM[rid][3],14)} 배지${fameTab==='pop'?`\n치장이 멋진 사람에게 👍! 하루 ${LIKE_MAX}번, 한 사람에게 하루 1번 · 오늘 남은 👍 <b>${me?left:0}</b>개`:''}\n캐릭터를 누르면 크게 구경할 수 있어요.</div>`;
 if(peekN&&D.users[peekN])h+=`<div class="stage"><div class="sm" style="text-align:center">👀 ${esc(peekN)}님 구경 중</div><div id="pkbox" style="text-align:center">${stage(peekN,chOf(peekN),pfOf(peekN).eq||{})}</div>${viewCtl()}<div style="text-align:center;margin-top:6px">${btn('닫기',`peek('${peekN}')`,0,'g')}</div></div>`;
 let rk=0,pv=null;h+=L.map(([n,v],i)=>{if(v!==pv){rk=i+1;pv=v}const md=v>0?(['🥇','🥈','🥉'][rk-1]||rk+'.'):'-',ti=titleOf(n,pfOf(n).eq);return`<div class="fr${n===me?' me':''}"><div class="rk">${md}</div><div onclick="peek('${n}')" style="cursor:pointer">${fig(chOf(n),pfOf(n).eq,48)}</div><div class="nm2"><b>${esc(n)}</b> ${rankBadges(n)}${ti?`<div class="sm" style="color:#ffd43b">${esc(ti.t)}</div>`:''}</div><div class="vv">${v}</div>${fameTab==='pop'&&me&&n!==me?btn(mine[n]?'👍✓':'👍',`like('${n}')`,!!mine[n],left>0?'':'g'):''}</div>`}).join('');
 el.innerHTML=h}
