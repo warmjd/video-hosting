@@ -136,19 +136,27 @@ input:focus,select:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(255,
 .fx-fw{animation:fw 1.8s ease-out infinite}@keyframes fw{0%{transform:scale(.1);opacity:0}15%{opacity:1}70%{transform:scale(1.3);opacity:.9}100%{transform:scale(1.5);opacity:0}}
 .fa-conf{animation:cnf 2.4s linear infinite}@keyframes cnf{0%{transform:translateY(0) rotate(0);opacity:0}10%{opacity:1}100%{transform:translateY(104px) rotate(540deg);opacity:0}}
 .nm.nm-dk{stroke:rgba(255,255,255,.55);stroke-width:1.6px}
+.to{display:none}body.tx .to{display:inline}body.tx .gm,body.tx .tag,body.tx #ring,body.tx #shop,body.tx #fame,body.tx #pl svg,body.tx #me svg,body.tx #login svg{display:none}
+body.tx{background:#1c1c1e;color:#ddd}body.tx:before{display:none}
+body.tx .c{background:#2a2a2d;border:1px solid #3a3a3e;box-shadow:none;backdrop-filter:none;border-radius:8px}body.tx .c:before{display:none}
+body.tx .t,body.tx h1,body.tx .hx{font-family:-apple-system,'Apple SD Gothic Neo','Noto Sans KR',sans-serif;font-weight:700;color:#e5e5e5;background:none;-webkit-text-fill-color:#e5e5e5;filter:none;text-shadow:none;letter-spacing:0}
+body.tx h1{font-size:1.1rem}body.tx .tab{font-family:inherit}
+body.tx button{background:#3a3a3e;box-shadow:none;text-shadow:none;border:1px solid #4a4a4f;border-radius:6px;transition:none}
+body.tx button.on{background:#4a6fa5}body.tx button.r{background:#5a2d2d}body.tx button.o{background:#6a4a2a}body.tx button:active{transform:none}
+body.tx #hd{background:#2a2a2d;border:1px solid #3a3a3e;color:#ccc;box-shadow:none}
 </style></head><body><div class="w">
-<div class="top"><div><h1><span style="color:initial;-webkit-text-fill-color:initial">🎭</span> 원우마을 마피아</h1><div class="tag">SLOW MAFIA · 카톡방 추리 게임</div></div><button class="rb" onclick="rulesOpen()">📖 규칙서</button></div>
+<div class="top"><div><h1><span class="gm"><span style="color:initial;-webkit-text-fill-color:initial">🎭</span> 원우마을 마피아</span><span class="to">📝 메모</span></h1><div class="tag">SLOW MAFIA · 카톡방 추리 게임</div></div><div style="display:flex;gap:6px"><button class="rb g" id="txb" onclick="txToggle()">📝 텍스트</button><button class="rb" onclick="rulesOpen()">📖 규칙서</button></div></div>
 <div id="hd"></div>
 <div class="c" id="login"></div>
 <div class="c" id="me" style="display:none"></div>
 <div class="c" id="ys" style="display:none"></div>
 <div class="c" id="act" style="display:none"></div>
 <div class="c" id="award" style="display:none"></div>
-<div class="c"><div class="t">🔥 마을 모닥불</div><div id="ring"></div><div id="pl" class="g2" style="margin-top:6px"></div></div>
+<div class="c"><div class="t"><span class="gm">🔥 마을 모닥불</span><span class="to">참가자</span></div><div id="ring"></div><div id="pl" class="g2" style="margin-top:6px"></div></div>
 <div class="c" id="bd" style="display:none"></div>
 <div class="c" id="nt" style="display:none"></div>
 <div class="c" id="hist" style="display:none"></div>
-<div class="c"><div class="t">📜 마을 기록</div><div class="lg" id="lg"></div></div>
+<div class="c"><div class="t"><span class="gm">📜 마을 기록</span><span class="to">기록</span></div><div class="lg" id="lg"></div></div>
 <div class="c" id="shop" style="display:none"></div>
 <div class="c" id="fame" style="display:none"></div>
 <div class="c" id="adm" style="display:none"></div>
@@ -1114,9 +1122,10 @@ function polList(g,p){let rs='';for(let d=1;d<=g.day;d++){const q=polRes(g,p,d);
 // ===== 토론 정리 도구 (요약 · 한 줄 보드 · 직업 공개표 · 수첩) =====
 const why=(d,n)=>((D.why||{})[d]||{})[n]||'';
 const COR=['police','doctor','detective','soldier','mayor','reporter','witness','jesus','citizen'],UNQ=['police','doctor','detective','mayor','reporter'];
-let bdD=0,ntOpen=false;
-window.setWhy=t=>{const g=G(),p=P();if(!g||g.phase!=='vote'||!g.alive[p])return;set(ref(db,ROOT+'/why/'+g.day+'/'+p),String(t).trim().slice(0,40)||null)};
-window.bdSet=()=>{const g=G(),p=P();if(!g||!g.roles||!g.roles[p]||!g.alive[p]||g.phase==='end')return;const t=$('bt').value.trim().slice(0,50),co=$('bco').value;set(ref(db,ROOT+'/board/'+g.day+'/'+p),t||co?{t,co}:null)};
+let bdD=0,ntOpen=false,bdT=null,bdC=null,whyD=null;const unf=()=>{const a=document.activeElement;if(a&&a.blur)a.blur()};
+window.bdIn=(k,v)=>{if(k==='t')bdT=v;else bdC=v};window.whyIn=v=>{whyD=v};
+window.setWhy=t=>{const g=G(),p=P();if(!g||g.phase!=='vote'||!g.alive[p])return;set(ref(db,ROOT+'/why/'+g.day+'/'+p),String(t).trim().slice(0,40)||null);whyD=null};
+window.bdSet=()=>{const g=G(),p=P();if(!g||!g.roles||!g.roles[p]||!g.alive[p]||g.phase==='end')return;const t=$('bt').value.trim().slice(0,50),co=$('bco').value;set(ref(db,ROOT+'/board/'+g.day+'/'+p),t||co?{t,co}:null);bdT=bdC=null};
 window.bdDay=d=>{bdD=d;render()};
 function ysRender(g){const el=$('ys'),d=g&&g.roles?(g.phase==='vote'?g.day-1:['trial','night'].includes(g.phase)?g.day:0):0;if(d<1){el.style.display='none';return}el.style.display='block';
 const V=(D.votes||{})[d]||{},c={};Object.keys(V).forEach(k=>{if(V[k]&&V[k]!==k)c[V[k]]=(c[V[k]]||0)+1});
@@ -1133,17 +1142,19 @@ const hide=day===g.day&&g.phase==='vote',names=[...new Set([...Object.keys(E),..
 const rows=names.map(n=>{const e=E[n]||{},w=why(day,n),v=((D.votes||{})[day]||{})[n];return'<div class="row2"><div class="nm2"><b>'+esc(n)+'</b> '+(e.co?'<span class="pill">'+RN[e.co]+'</span>':'')+(e.t?'<div class="sm" style="color:#d3d9e8">'+esc(e.t)+'</div>':'')+(!hide&&v?'<div class="sm">🗳️ →'+esc(v)+(w?' 💬'+esc(w):'')+'</div>':'')+'</div></div>'}).join('');
 el.innerHTML='<div class="t">📌 오늘의 한 줄 · 직업 공개표</div>'+(tb?'<div class="q" style="font-size:.8rem;margin-bottom:8px">🙋 직업 공개표\n'+tb+'</div>':'<div class="sm" style="margin-bottom:6px">아직 직업을 밝힌 사람이 없어요.</div>')
 +'<div class="g2" style="margin-bottom:6px">'+Array.from({length:g.day},(_,i)=>btn((i+1)+'일차','bdDay('+(i+1)+')',day===i+1,'g')).join('')+'</div>'
-+(can?'<input id="bt" data-keep="1" maxlength="50" placeholder="한 줄 (의심 · 주장 · 조사결과) 하루 1개, 덮어쓰기 가능" value="'+esc(my.t||'')+'"><select id="bco" data-keep="1"><option value="">직업 밝히기 (선택 안 함)</option>'+COR.map(r=>'<option value="'+r+'"'+(my.co===r?' selected':'')+'>'+RN[r]+'</option>').join('')+'</select><button onclick="bdSet()" style="width:100%;margin:4px 0 8px">📌 올리기</button>':'')
++(can?'<input id="bt" data-keep="1" maxlength="50" placeholder="한 줄 (의심 · 주장 · 조사결과) 하루 1개, 덮어쓰기 가능" value="'+esc(bdT!==null?bdT:(my.t||''))+'" oninput="bdIn(\'t\',this.value)"><select id="bco" data-keep="1" onchange="bdIn(\'c\',this.value)"><option value="">직업 밝히기 (선택 안 함)</option>'+COR.map(r=>'<option value="'+r+'"'+((bdC!==null?bdC:my.co)===r?' selected':'')+'>'+RN[r]+'</option>').join('')+'</select><button onclick="bdSet()" style="width:100%;margin:4px 0 8px">📌 올리기</button>':'')
 +(rows||'<div class="sm">'+day+'일차에 올라온 한 줄이 아직 없어요.</div>')}
 const NT=()=>{try{return JSON.parse(localStorage.getItem('m1_nt')||'{}')}catch(e){return{}}},NTS=o=>localStorage.setItem('m1_nt',JSON.stringify(o));
-window.ntM=n=>{const o=NT();o[n]=o[n]||{};o[n].m=((o[n].m||0)+1)%4;NTS(o);render()};
+window.ntM=n=>{unf();const o=NT();o[n]=o[n]||{};o[n].m=((o[n].m||0)+1)%4;NTS(o);render()};
 window.ntT=(n,t)=>{const o=NT();o[n]=o[n]||{};o[n].t=t.slice(0,60);NTS(o)};
-window.ntTog=()=>{ntOpen=!ntOpen;render()};
+window.ntTog=()=>{unf();ntOpen=!ntOpen;render()};
 function ntRender(g,p){const el=$('nt');if(!p||!g||!g.roles||g.phase==='lobby'){el.style.display='none';return}el.style.display='block';
 if(g.sid&&localStorage.getItem('m1_nts')!==g.sid){localStorage.setItem('m1_nts',g.sid);localStorage.removeItem('m1_nt')}
 const o=NT(),MK=['➖','😇','🤔','😈'];
 el.innerHTML='<div class="t">📝 내 수첩 <span class="sm">(나만 보여요)</span></div>'+btn(ntOpen?'▲ 접기':'▼ 펼치기','ntTog()',0,'g')
-+(ntOpen?Object.keys(g.roles).filter(n=>n!==p).sort((a,b)=>(g.alive[b]?1:0)-(g.alive[a]?1:0)).map(n=>'<div class="row2"><button class="g" onclick="ntM(\''+n+'\')">'+MK[(o[n]||{}).m||0]+'</button><div class="nm2"><span class="'+(g.alive[n]?'':'d')+'">'+esc(n)+'</span><input data-keep="1" maxlength="60" placeholder="메모" value="'+esc((o[n]||{}).t||'')+'" onchange="ntT(\''+n+'\',this.value)"></div></div>').join(''):'')}
++(ntOpen?Object.keys(g.roles).filter(n=>n!==p).sort((a,b)=>(g.alive[b]?1:0)-(g.alive[a]?1:0)).map(n=>'<div class="row2"><button class="g" onclick="ntM(\''+n+'\')">'+MK[(o[n]||{}).m||0]+'</button><div class="nm2"><span class="'+(g.alive[n]?'':'d')+'">'+esc(n)+'</span><input data-keep="1" maxlength="60" placeholder="메모" value="'+esc((o[n]||{}).t||'')+'" oninput="ntT(\''+n+'\',this.value)"></div></div>').join(''):'')}
+const txApply=()=>{const on=localStorage.getItem('m1_tx')==='1';document.body.classList.toggle('tx',on);document.title=on?'메모':'원우마을 슬로우 마피아';const b=$('txb');if(b)b.textContent=on?'🎮 원래대로':'📝 텍스트'};
+window.txToggle=()=>{localStorage.setItem('m1_tx',localStorage.getItem('m1_tx')==='1'?'0':'1');txApply()};txApply();
 // ── 규칙서 (탭으로 정리) ──
 let rTab='flow';
 window.rulesOpen=()=>{$('ov').classList.add('op');document.body.style.overflow='hidden';rulesRender()};
@@ -1194,7 +1205,7 @@ if(p&&(!g||g.phase==='lobby')){A.style.display='block';const on=D.entries&&D.ent
 if(p&&g&&g.phase!=='lobby'){const r=g.roles[p],dead=r&&!g.alive[p];M.style.display='block';
 M.innerHTML=!r?'<div class="rc tx"><div class="rc-e">👀</div><div class="rc-n">관전자</div></div><div class="q" style="text-align:center">이번 판은 참가 신청을 하지 않아 관전만 가능해요.\n직업과 능력 기록은 보이지 않고, 공개된 투표와 결과만 볼 수 있어요.</div>':`${roleCard(r,dead)}<div class="q" style="text-align:center">${dead?((g.rise&&g.rise[p])?'✝️ 부활 대기 중! '+g.rise[p]+'일차 낮에 다시 살아나요. 그동안은 죽은 사람처럼 말하지 마세요. (직업 정보는 볼 수 없어요)':'모든 직업을 아래에서 볼 수 있어요. (카톡방 스포 금지!)'):RD[r]+(r==='witness'&&g.wh&&g.wh[p]?'\n🔎 힌트: 마피아 팀 중 한 명의 이름은 「'+g.wh[p]+'」으로 시작해요':'')+(r==='citizen'&&g.ms&&g.ms[p]?'\n🎯 비밀 미션: '+MIS[g.ms[p]]+' (성공하면 +10달란트)':'')}${isM(r)?'\n동료: '+Object.keys(g.roles).filter(n=>isM(g.roles[n])&&n!==p).map(n=>n+(g.roles[n]==='godfather'?'(갓파더)':'')+(g.alive[n]?'':'💀')).join(', '):''}</div>${g.setup?`<div class="sm" style="text-align:center;margin-top:6px">📋 이번 판 구성: ${g.setup}</div>`:''}`;
 if(r&&!dead&&['vote','trial','night'].includes(g.phase)){A.style.display='block';const o=al(g).filter(n=>n!==p),d=g.day,V0=D.votes[d]||{},N=D.night[d]||{};let h='';
-if(g.phase==='vote'){const cur=V0[p];h=`<div class="t">🗳️ ${d}일차 낮 · 처형할 사람 (현재: ${cur||'미투표'})</div><div class="g2">${o.map(n=>btn(n,`vote('${n}')`,cur===n,'')).join('')}</div><input data-keep="1" maxlength="40" placeholder="💬 내 투표 이유 한 줄 (선택 · 모두에게 공개)" value="${esc(why(d,p))}" onchange="setWhy(this.value)"><div class="sm" style="margin:6px 0">투표 ${Object.keys(V0).filter(k=>g.alive[k]).length}/${al(g).length}명 · 모두 투표하면 바로 최후 변론으로 넘어가요 (그전까진 바꿀 수 있어요)</div>`}
+if(g.phase==='vote'){const cur=V0[p];h=`<div class="t">🗳️ ${d}일차 낮 · 처형할 사람 (현재: ${cur||'미투표'})</div><div class="g2">${o.map(n=>btn(n,`vote('${n}')`,cur===n,'')).join('')}</div><input data-keep="1" maxlength="40" placeholder="💬 내 투표 이유 한 줄 (선택 · 모두에게 공개)" value="${esc(whyD!==null?whyD:why(d,p))}" oninput="whyIn(this.value)" onchange="setWhy(this.value)"><div class="sm" style="margin:6px 0">투표 ${Object.keys(V0).filter(k=>g.alive[k]).length}/${al(g).length}명 · 모두 투표하면 바로 최후 변론으로 넘어가요 (그전까진 바꿀 수 있어요)</div>`}
 else if(g.phase==='trial'){const def=g.def,fvm=D.fv[d]||{},mn=fvm[p],cn={};Object.keys(V0).forEach(k=>{if(g.alive[k]&&g.alive[V0[k]]&&V0[k]!==k)cn[V0[k]]=(cn[V0[k]]||0)+1});
 h=`<div class="t">⚖️ 최후 변론 · 처형 찬반 투표</div><div class="q" style="font-size:.8rem">📢 공개된 투표\n${Object.entries(cn).sort((a,b)=>b[1]-a[1]).map(([n,v])=>n+' '+v+'표').join(' · ')||'투표 없음'}\n${Object.keys(V0).filter(k=>g.alive[k]).map(k=>k+'→'+V0[k]+(why(d,k)?' 💬'+esc(why(d,k)):'')).join('\n')}</div>${p===def?'<div class="q" style="margin-top:6px">⚠️ 오늘의 재판 대상은 당신이에요! 카톡방에서 최후 변론을 하세요. (찬반 투표 불가)</div>':`<div class="q" style="margin-top:6px">재판 대상: <b>${def}</b>\n찬성이 반대보다 많으면 처형, 동률이면 부결이에요.${g.roles[p]==='mayor'?'\n🏛️ 이장: 동률이면 당신의 한 표가 결정해요!':''}</div><div class="g2">${btn('👍 처형 찬성','fv(\'y\')',mn==='y','r')}${btn('👎 처형 반대','fv(\'n\')',mn==='n','')}</div><div class="sm" style="margin:6px 0">찬반 참여 ${Object.keys(fvm).filter(k=>g.alive[k]&&k!==def).length}/${al(g).filter(n=>n!==def).length}명 · 모두 정하면 바로 밤으로 넘어가요</div>`}`}
 else{
