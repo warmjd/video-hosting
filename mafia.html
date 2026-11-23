@@ -1,33 +1,43 @@
 <!DOCTYPE html>
-<html lang="ko"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<html lang="ko"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#17142b"><meta name="apple-mobile-web-app-capable" content="yes">
 <title>원우마을 슬로우 마피아</title>
-<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
 <style>
-html{background:#05070f}:root{--gold:#ffd43b;--gold2:#ffa94d;--ink:#eef1f8;--mut:#9aa6c0;--line:rgba(255,212,59,.16)}
+html{background:#17142b}:root{--gold:#ffd86b;--gold2:#ffa94d;--pink:#ff8fb1;--ink:#f3efff;--mut:#a59ec6;--line:rgba(255,255,255,.07);--card:#24203c}
 *{box-sizing:border-box;margin:0;padding:0;font-family:-apple-system,BlinkMacSystemFont,'Apple SD Gothic Neo','Noto Sans KR',sans-serif;-webkit-tap-highlight-color:transparent}
-.hx,h1,.t,.rc-n,.tab,.stp b{font-family:'Black Han Sans','Apple SD Gothic Neo',sans-serif;font-weight:400;letter-spacing:.3px}
-body{background:radial-gradient(ellipse at 50% -10%,#3a2462 0%,transparent 55%),radial-gradient(ellipse at 100% 100%,#40150f 0%,transparent 45%),linear-gradient(170deg,#141029,#05070f 70%);background-attachment:fixed;color:var(--ink);min-height:100vh;padding:12px 12px 40px;display:flex;justify-content:center}
-body:before{content:'';position:fixed;inset:0;pointer-events:none;background-image:radial-gradient(1.2px 1.2px at 12% 18%,#fff8,transparent),radial-gradient(1px 1px at 72% 9%,#fff9,transparent),radial-gradient(1.4px 1.4px at 88% 32%,#fff6,transparent),radial-gradient(1px 1px at 33% 42%,#fff5,transparent),radial-gradient(1.2px 1.2px at 55% 22%,#fff7,transparent),radial-gradient(1px 1px at 8% 66%,#fff4,transparent),radial-gradient(1px 1px at 93% 74%,#fff5,transparent);animation:tw 5s ease-in-out infinite}
+.hx,h1,.t,.rc-n,.tab,.stp b{font-family:'Jua','Apple SD Gothic Neo',sans-serif;font-weight:400;letter-spacing:.2px}
+body{background:radial-gradient(ellipse at 50% -20%,#3b2d6b 0%,transparent 60%),#17142b;background-attachment:fixed;color:var(--ink);min-height:100vh;padding:0 12px calc(92px + env(safe-area-inset-bottom));display:flex;justify-content:center}
 .w{width:100%;max-width:440px;display:flex;flex-direction:column;gap:12px;position:relative}
-.top{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:4px 2px 0}
-h1{font-size:1.55rem;line-height:1.1;background:linear-gradient(180deg,#fff3bf,#ffd43b 45%,#f08c00);-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 2px 0 #5c2a00) drop-shadow(0 0 14px rgba(255,170,60,.35))}
-.tag{font-size:.68rem;color:var(--mut);margin-top:3px;letter-spacing:2px}
-.rb{flex:0 0 auto;padding:9px 12px;border-radius:12px;background:linear-gradient(180deg,#5b3fd1,#4527a0);box-shadow:0 3px 0 #2a1766,0 6px 14px rgba(90,60,220,.35);font-size:.82rem}
-#hd{display:block;text-align:center;font-weight:800;font-size:.86rem;padding:9px 12px;border-radius:999px;background:linear-gradient(90deg,rgba(255,212,59,.08),rgba(255,212,59,.18),rgba(255,212,59,.08));border:1px solid var(--line);color:#ffe8a3;box-shadow:inset 0 0 18px rgba(255,190,80,.08)}
+.top{position:sticky;top:0;z-index:30;display:flex;align-items:center;justify-content:space-between;gap:8px;margin:0 -12px;padding:calc(12px + env(safe-area-inset-top)) 16px 10px;background:rgba(23,20,43,.86);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)}
+h1{font-size:1.32rem;line-height:1.1;color:#fff}h1 b{color:var(--pink);font-weight:400}
+.tag{font-size:.6rem;color:var(--mut);margin-top:3px;letter-spacing:1.5px}
+.rb{flex:0 0 auto;padding:8px 13px;border-radius:999px;font-size:.8rem}
+#hd{display:block;text-align:center;font-weight:800;font-size:.84rem;padding:10px 14px;border-radius:16px;background:linear-gradient(90deg,rgba(255,143,177,.16),rgba(151,117,250,.16));color:#ffe3ec}
 #hd:empty{display:none}
-.c{position:relative;background:linear-gradient(180deg,rgba(38,42,74,.88),rgba(16,18,36,.92));border:1px solid var(--line);border-radius:18px;padding:14px;box-shadow:0 10px 26px rgba(0,0,0,.45),inset 0 1px 0 rgba(255,255,255,.07);backdrop-filter:blur(6px)}
-.c:before{content:'';position:absolute;left:18px;right:18px;top:-1px;height:1px;background:linear-gradient(90deg,transparent,rgba(255,212,59,.55),transparent)}
-.t{font-size:1.02rem;margin-bottom:9px;color:var(--gold);text-shadow:0 2px 0 rgba(0,0,0,.5)}
-button{border:0;border-radius:12px;padding:10px 13px;font-weight:800;color:#fff;font-size:.86rem;cursor:pointer;touch-action:manipulation;background:linear-gradient(180deg,#5c7cfa,#3b5bdb);box-shadow:0 3px 0 #233a99,0 5px 10px rgba(0,0,0,.3);transition:transform .06s,box-shadow .06s,filter .15s;text-shadow:0 1px 0 rgba(0,0,0,.35)}
-button:active{transform:translateY(3px);box-shadow:0 0 0 #000,0 2px 4px rgba(0,0,0,.3)}
-button.g{background:linear-gradient(180deg,#474d68,#353a52);box-shadow:0 3px 0 #1f2233,0 5px 10px rgba(0,0,0,.3)}
-button.r{background:linear-gradient(180deg,#f03e3e,#c92a2a);box-shadow:0 3px 0 #7a1414,0 5px 12px rgba(224,49,49,.3)}
-button.o{background:linear-gradient(180deg,#ff922b,#e8590c);box-shadow:0 3px 0 #8a3305,0 5px 12px rgba(255,146,43,.3)}
-button.on{background:linear-gradient(180deg,#51cf66,#2b8a3e);box-shadow:0 3px 0 #18562a,0 0 0 2px rgba(105,219,124,.5),0 5px 14px rgba(81,207,102,.35)}
-button[disabled]{opacity:.45;filter:grayscale(.6)}
-input,select{width:100%;padding:11px;border-radius:11px;border:1px solid rgba(255,255,255,.14);background:rgba(5,7,16,.75);color:#fff;font-size:1rem;margin:5px 0;outline:none}
-input:focus,select:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(255,212,59,.15)}
+.c{position:relative;background:var(--card);border:1px solid var(--line);border-radius:22px;padding:16px;box-shadow:0 8px 20px rgba(0,0,0,.22)}
+.t{font-size:1.08rem;margin-bottom:10px;color:#fff}
+button{border:0;border-radius:14px;padding:10px 14px;font-weight:800;color:#fff;font-size:.86rem;cursor:pointer;touch-action:manipulation;background:#7c6cf0;box-shadow:0 3px 0 #5646c4;transition:transform .06s,box-shadow .06s}
+button:active{transform:translateY(3px);box-shadow:0 0 0 transparent}
+button.g{background:#38325a;box-shadow:0 3px 0 #29243f;color:#e6e0ff}
+button.r{background:#ff6b81;box-shadow:0 3px 0 #cf4560}
+button.o{background:#ffa94d;box-shadow:0 3px 0 #d9822b}
+button.on{background:#3ccf9c;box-shadow:0 3px 0 #239e73;color:#fff}
+button[disabled]{opacity:.45}
+input,select{width:100%;padding:12px;border-radius:14px;border:1px solid rgba(255,255,255,.08);background:#1a1630;color:#fff;font-size:1rem;margin:5px 0;outline:none}
+input:focus,select:focus{border-color:var(--pink);box-shadow:0 0 0 3px rgba(255,143,177,.18)}
 .g2{display:flex;flex-wrap:wrap;gap:7px}.g2 button{flex:0 0 auto}
+.scr{flex-wrap:nowrap!important;overflow-x:auto;padding-bottom:6px;scrollbar-width:none;-webkit-overflow-scrolling:touch}.scr::-webkit-scrollbar{display:none}
+.seg{display:flex;gap:4px;background:#1a1630;border-radius:16px;padding:4px;margin:8px 0}.seg button{flex:1;padding:9px 2px;font-size:.78rem;background:none;box-shadow:none;color:var(--mut)}.seg button.on{background:#3d3566;color:#fff;box-shadow:none}
+.nav{position:fixed;left:0;right:0;bottom:0;z-index:40;display:flex;justify-content:center;background:rgba(20,17,38,.94);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-top:1px solid rgba(255,255,255,.06);padding:6px 8px calc(6px + env(safe-area-inset-bottom))}
+.nav>div{display:flex;width:100%;max-width:440px}
+.nav button{flex:1;background:none;box-shadow:none;padding:6px 0 4px;font-size:.66rem;font-weight:700;color:#8a83ab;display:flex;flex-direction:column;align-items:center;gap:3px;position:relative}
+.nav button:active{transform:scale(.92)}.nav .i{font-size:1.35rem;line-height:1;filter:grayscale(.8);opacity:.6;transition:transform .15s}
+.nav button.cur{color:#fff}.nav button.cur .i{filter:none;opacity:1;transform:translateY(-2px) scale(1.12)}
+.nav .dot{position:absolute;top:3px;left:calc(50% + 8px);width:9px;height:9px;border-radius:50%;background:#ff6b81;border:2px solid #14112a;display:none}.nav .dot.on{display:block}
+body[data-tab=game] .c[data-tab]:not([data-tab=game]),body[data-tab=talk] .c[data-tab]:not([data-tab=talk]),body[data-tab=look] .c[data-tab]:not([data-tab=look]),body[data-tab=town] .c[data-tab]:not([data-tab=town]),body[data-tab=more] .c[data-tab]:not([data-tab=more]){display:none!important}
+.emp{text-align:center;padding:28px 16px}.emp .big{font-size:2.6rem;margin-bottom:8px}
+.mrow{display:flex;align-items:center;gap:10px;width:100%;padding:14px;margin:6px 0;border-radius:16px;background:#2e2850;box-shadow:none;text-align:left;font-size:.92rem}.mrow span{flex:1}.mrow:after{content:'›';opacity:.5;font-size:1.2rem}
+body.tx .top{background:#1c1c1e}body.tx .nav{background:#1c1c1e}body.tx .nav button{background:none;border:0}
 .q{white-space:pre-line;line-height:1.65;font-size:.84rem;color:#d3d9e8}
 .role{text-align:center;font-size:1.3rem;font-weight:800;padding:8px}
 .d{color:#868e96;text-decoration:line-through}.sm{font-size:.72rem;color:#8d96b0;line-height:1.5}
@@ -69,7 +79,7 @@ input:focus,select:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(255,
 .pill{display:inline-block;font-size:.66rem;font-weight:800;padding:2px 7px;border-radius:999px;background:rgba(255,212,59,.15);color:#ffe08a;margin-left:4px;vertical-align:2px}
 .wins{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin:8px 0}
 .wins div{text-align:center;padding:10px 6px;border-radius:12px;font-size:.72rem;line-height:1.45;color:#dfe4f0}.wins b{display:block;font-size:1.4rem}
-.h2{font-family:'Black Han Sans',sans-serif;color:var(--gold);font-size:1rem;margin:16px 0 6px}
+.h2{font-family:'Jua',sans-serif;color:var(--gold);font-size:1rem;margin:16px 0 6px}
 .rg{display:grid;grid-template-columns:1fr 1fr;gap:8px}
 .rcd{position:relative;padding:10px;border-radius:13px;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.04)}
 .rcd .e{font-size:1.7rem}.rcd b{display:block;font-size:.92rem;margin:2px 0}.rcd p{font-size:.7rem;color:#bfc7da;line-height:1.5}
@@ -145,24 +155,26 @@ body.tx button{background:#3a3a3e;box-shadow:none;text-shadow:none;border:1px so
 body.tx button.on{background:#4a6fa5}body.tx button.r{background:#5a2d2d}body.tx button.o{background:#6a4a2a}body.tx button:active{transform:none}
 body.tx #hd{background:#2a2a2d;border:1px solid #3a3a3e;color:#ccc;box-shadow:none}
 </style></head><body><div class="w">
-<div class="top"><div><h1><span class="gm"><span style="color:initial;-webkit-text-fill-color:initial">🎭</span> 원우마을 마피아</span><span class="to">📝 메모</span></h1><div class="tag">SLOW MAFIA · 카톡방 추리 게임</div></div><div style="display:flex;gap:6px"><button class="rb g" id="txb" onclick="txToggle()">📝 텍스트</button><button class="rb" onclick="rulesOpen()">📖 규칙서</button></div></div>
+<div class="top"><div><h1><span class="gm">🎭 원우마을 <b>마피아</b></span><span class="to">📝 메모</span></h1><div class="tag">SLOW MAFIA · 카톡방 추리 게임</div></div><button class="rb g" onclick="rulesOpen()">📖 규칙</button></div>
 <div id="hd"></div>
-<div class="c" id="login"></div>
-<div class="c" id="me" style="display:none"></div>
-<div class="c" id="ys" style="display:none"></div>
-<div class="c" id="act" style="display:none"></div>
-<div class="c" id="award" style="display:none"></div>
-<div class="c"><div class="t"><span class="gm">🔥 마을 모닥불</span><span class="to">참가자</span></div><div id="ring"></div><div id="pl" class="g2" style="margin-top:6px"></div></div>
-<div class="c" id="bd" style="display:none"></div>
-<div class="c" id="nt" style="display:none"></div>
-<div class="c" id="vc" style="display:none"></div>
-<div class="c" id="hist" style="display:none"></div>
-<div class="c"><div class="t"><span class="gm">📜 마을 기록</span><span class="to">기록</span></div><div class="lg" id="lg"></div></div>
-<div class="c" id="shop" style="display:none"></div>
-<div class="c" id="fame" style="display:none"></div>
-<div class="c" id="adm" style="display:none"></div>
-<div class="c" style="text-align:center"><div class="q" style="font-size:.8rem;margin-bottom:8px">처음이라면 규칙서부터! 진행 순서 · 직업 · 달란트를 한눈에 볼 수 있어요.</div><button class="rb" style="width:100%" onclick="rulesOpen()">📖 규칙서 열기</button></div>
+<div class="c" id="login" data-tab="game"></div>
+<div class="c" id="me" data-tab="game" style="display:none"></div>
+<div class="c" id="act" data-tab="game" style="display:none"></div>
+<div class="c" id="award" data-tab="game" style="display:none"></div>
+<div class="c" id="ys" data-tab="game" style="display:none"></div>
+<div class="c" data-tab="game"><div class="t"><span class="gm">🔥 마을 모닥불</span><span class="to">참가자</span></div><div id="ring"></div><div id="pl" class="g2" style="margin-top:8px"></div></div>
+<div class="c" data-tab="game"><div class="t"><span class="gm">📜 마을 기록</span><span class="to">기록</span></div><div class="lg" id="lg"></div></div>
+<div class="c emp" id="talkEmpty" data-tab="talk"><div class="big">💬</div><div class="t">아직 토론할 게임이 없어요</div><div class="sm">게임이 시작되면 요약 · 오늘의 한 줄 · 직업 공개표 · 내 수첩이 여기에 모여요.</div></div>
+<div class="c" id="bd" data-tab="talk" style="display:none"></div>
+<div class="c" id="nt" data-tab="talk" style="display:none"></div>
+<div class="c" id="hist" data-tab="talk" style="display:none"></div>
+<div class="c" id="shop" data-tab="look" style="display:none"></div>
+<div class="c" id="fame" data-tab="town" style="display:none"></div>
+<div class="c" id="vc" data-tab="town" style="display:none"></div>
+<div class="c" data-tab="more"><div class="t">☰ 더보기</div><button class="mrow" onclick="rulesOpen()">📖<span>규칙서 · 직업 · 달란트 안내</span></button><button class="mrow" id="txb" onclick="txToggle()">📝 텍스트</button><div class="sm" style="margin-top:6px">📝 텍스트 모드: 그림 없이 메모장처럼 가볍게 보여줘요.</div></div>
+<div class="c" id="adm" data-tab="more" style="display:none"></div>
 </div>
+<nav class="nav"><div><button data-t="game" onclick="navT('game')"><span class="i">🔥</span>게임<i class="dot" id="dot_game"></i></button><button data-t="talk" onclick="navT('talk')"><span class="i">💬</span>토론<i class="dot" id="dot_talk"></i></button><button data-t="look" onclick="navT('look')"><span class="i">🎀</span>꾸미기<i class="dot" id="dot_look"></i></button><button data-t="town" onclick="navT('town')"><span class="i">🏆</span>마을<i class="dot" id="dot_town"></i></button><button data-t="more" onclick="navT('more')"><span class="i">☰</span>더보기<i class="dot" id="dot_more"></i></button></div></nav>
 <div class="ov" id="ov" onclick="if(event.target===this)rulesClose()"><div class="sheet"><div class="sh-h"><div class="hx">📖 마피아 규칙서</div><button class="g" onclick="rulesClose()">✕ 닫기</button></div><div class="tabs" id="rtabs"></div><div class="sh-b" id="rbody"></div></div></div>
 <script type="module">
 import{initializeApp}from"https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
@@ -385,14 +397,19 @@ const F0=D.fv[d]||{},yl=Object.keys(F0).filter(k=>F0[k]==='y'),nl=Object.keys(F0
 <div class="q" style="font-size:.78rem">🗳️ 투표: ${L(V)}${full?`\n🔪 마피아: ${L(N.mafia)}\n💉 의사: ${L(N.doctor)}\n🕵️ 경찰: ${pr}\n🔎 탐정: ${L(N.detective)}`:''}</div><div style="font-size:.82rem;margin-top:6px;line-height:1.6">${out}${fvt}</div>${extra}`}
 
 const PS=2.4,GW=16,GH=27;
+const blend=(a,b,t)=>{const x=parseInt(a.slice(1),16),y=parseInt(b.slice(1),16),f=s=>Math.round((x>>s&255)*(1-t)+(y>>s&255)*t);return'#'+((1<<24)+(f(16)<<16)+(f(8)<<8)+f(0)).toString(16).slice(1)};
 const mix=(hex,f)=>{const n=parseInt(hex.slice(1),16),r=Math.min(255,(n>>16&255)*f|0),g=Math.min(255,(n>>8&255)*f|0),b=Math.min(255,(n&255)*f|0);return'#'+((1<<24)+(r<<16)+(g<<8)+b).toString(16).slice(1)};
-const SKIN=['#f1c27d','#ffdbac','#e0ac69','#c68642','#8d5524'],HAIRC=['#2b2118','#5a3a1e','#d9a441','#c0392b','#3b5bdb','#f06595','#868e96','#f1f3f5'],SHIRT=['#e03131','#1971c2','#2f9e44','#f08c00','#9c36b5','#0c8599','#c2255c','#5f3dc4','#e8590c','#2b8a3e','#495057','#fab005'],PANTS=['#3b4252','#1c3d6e','#4a3b2a','#2b2b2b','#5c2d2d','#2f4f4f'],HAIRN=['단발','장발','뾰족','똥머리'];
+const SKIN=['#f1c27d','#ffdbac','#e0ac69','#c68642','#8d5524'],HAIRC=['#2b2118','#5a3a1e','#d9a441','#c0392b','#3b5bdb','#f06595','#868e96','#f1f3f5'],SHIRT=['#e03131','#1971c2','#2f9e44','#f08c00','#9c36b5','#0c8599','#c2255c','#5f3dc4','#e8590c','#2b8a3e','#495057','#fab005'],PANTS=['#3b4252','#1c3d6e','#4a3b2a','#2b2b2b','#5c2d2d','#2f4f4f'],HAIRN=['단발','장발','뾰족','똥머리','양갈래','포니테일','뱅 단발','웨이브'];
 const BASE=Object.fromEntries(['................','................','................','................','...oooooooooo...','...oSSSSSSSSo...','...oSSSSSSSSo...','...oSeSSSSeSo...','...oSeSSSSeSo...','...oSsSSSSsSo...','...oSSSmmSSSo...','...oSSSSSSSSo...','....oooooooo....','...oCCCCCCCCo...','..oCCCCCCCCCCo..','..oCCcCCCCcCCo..','..oSCCCCCCCCSo..','..oSCCCCCCCCSo..','...oCCCCCCCCo...','...obbbbbbbbo...','...oPPPooPPPo...','...oPPPooPPPo...','...oPPPooPPPo...','...oPpPooPpPo...','...oPPPooPPPo...','...oBBBooBBBo...','...oooo..oooo...'].map((r,i)=>[i,r]));
 const HAIR=[
 {4:'...oHHHHHHHHo...',5:'....HhhHHHHH....',6:'....HHHHHHHH....',7:'....H......H....'},
 {4:'...oHHHHHHHHo...',5:'....HhhHHHHH....',6:'....HHHHHHHH....',7:'...HH......HH...',8:'...HH......HH...',9:'...HH......HH...',10:'...HH......HH...',11:'...HH......HH...',12:'...HH......HH...',13:'..HH........HH..'},
 {3:'....H..HH..H....',4:'...HHHHHHHHHH...',5:'....HhHHHHHH....',6:'....HHHHHHHH....',7:'....H......H....'},
-{2:'......HHHH......',3:'.....HHhHHH.....',4:'...oHHHHHHHHo...',5:'....HHhHHHHH....',6:'....HHHHHHHH....',7:'....H......H....'}];
+{2:'......HHHH......',3:'.....HHhHHH.....',4:'...oHHHHHHHHo...',5:'....HHhHHHHH....',6:'....HHHHHHHH....',7:'....H......H....'},
+{3:'..hh........hh..',4:'..HoHHHHHHHHoH..',5:'....HhhHHHHH....',6:'..HHHHHHHHHHHH..',7:'.HHH........HHH.',8:'.HH..........HH.',9:'.HH..........HH.',10:'HHH..........HHH',11:'HH............HH',12:'.H............H.'},
+{2:'...........hh...',3:'..........HHHh..',4:'...oHHHHHHHHo...',5:'....HhhHHHHHHH..',6:'....HHHHHHHHHHH.',7:'....H.......HHH.',8:'............HHH.',9:'.............HH.',10:'.............HH.',11:'............HH..',12:'............H...'},
+{4:'...oHHHHHHHHo...',5:'...HhhHHHHHHH...',6:'...HHHHHHHHHH...',7:'...HH......HH...',8:'...HH......HH...',9:'...HH......HH...',10:'...HH......HH...',11:'....H......H....'},
+{4:'...oHHHHHHHHo...',5:'...HhhHHHHHHH...',6:'..HHHHHHHHHHHH..',7:'..HH........HH..',8:'..H.H......H.H..',9:'..HH........HH..',10:'..H.H......H.H..',11:'..HH........HH..',12:'..H.H......H.H..',13:'...H........H...'}];
 const CAPE={13:'...CCCCCCCCCC...',14:'..CCCCCCCCCCCC..',15:'..CCCCCCCCCCCC..',16:'.CCCCCCCCCCCCCC.',17:'.CCCCCCCCCCCCCC.',18:'.CCCCCCCCCCCCCC.',19:'.CCCCCCCCCCCCCC.',20:'.CCCCCCCCCCCCCC.',21:'CCCCCCCCCCCCCCCC',22:'CCCCCCCCCCCCCCCC',23:'CCDCCCCCCCCCCDCC',24:'CCCCCCCCCCCCCCCC',25:'CDCCCCCCCCCCCCDC'};
 const SLOT={title:'칭호',suit:'한벌룩',top:'상의',bot:'하의',hat:'모자',glass:'안경',face:'얼굴',cape:'망토/날개/등',hand:'손 도구',pet:'반려동물',aura:'오라 이펙트',foot:'발밑 효과',plate:'이름표',nameC:'이름색',dead:'쓰러짐',win:'승리'};
 const I=(id,s,n,p,v)=>({id,s,n,p,v}),vr=(a,b,t)=>Object.fromEntries(Array.from({length:b-a+1},(_,i)=>[a+i,t]));
@@ -479,7 +496,7 @@ const CAMO=Object.fromEntries(Object.entries(CAPE).map(([r,t])=>[r,t.split('').m
 const SKULL={15:'......www.......',16:'.....wwwww......',17:'.....wkwkw......',18:'......www.......',19:'......w.w.......'},BOLT={14:'........y.......',15:'.......y........',16:'......yyyy......',17:'........y.......',18:'.......y........'},STAR={15:'.......y........',16:'.....yyyyy......',17:'......yyy.......',18:'......y.y.......'};
 const RING=['.....aaaaaa.....','..aa........aa..','.a....bbbb....a.','..aa........aa..','.....aaaaaa.....'],DOTS=['a..b...a...b..a.','..a..b...a..b...','b...a..b....a..b','..b...a..b..a...','.a..b....a..b...'],FOG=['..kk.kkk..kk.kk.','.kkkkkkkkkkkkkk.','kkkkkkkkkkkkkkkk','.kkkkkkkkkkkkkk.','..kk..kkk..kk...'],MAGIC=['.....pppppp.....','..pp........pp..','.p....pppp....p.','..pp........pp..','.....pppppp.....'];
 const SWB=(()=>{const o={};for(let r=6;r<=22;r++){const c=Math.round(14-(r-6)*.75),b='................'.split('');b[c]=r<=8?'y':r===9?'k':'s';if(r>9&&c+1<16)b[c+1]='S';o[r]=b.join('')}return o})();
-const HIDE=new Set(['h1','h15','h25','g5','f5','c6','c12','o6','n2','d2','d5','d8','p7']);
+const HIDE=new Set();
 SHOP.push(
 ...[['마피아 보스',120],['침묵의 암살자',80],['냉혈한',60],['포커페이스',50],['진실의 눈',60],['마을 보안관',60],['밤의 사냥꾼',70],['전설의 형사',90],['배신의 아이콘',70],['의심병 말기',40],['눈치 9단',50],['훈수 장인',40],['카톡방 연설가',50],['빌런',60],['정의의 사도',60],['최후의 생존자',80],['판사님',60],['마을 사기꾼',50],['고독한 늑대',70],['팩트 폭격기',60],['심리전 고수',70],['은둔 고수',60],['강철 멘탈',60],['뒤통수 장인',60],['숨은 실세',80],['무적 군단',60],['어둠의 기사',90],['하이에나',50],['상남자',60],['갓생러',40],['전략가',60],['도박사',60],['킹메이커',90],['침묵은 금',40],['불도저',50],['마을 깡패',50],['로또 1등',100],['인간 거짓말 탐지기',90],['3수 끝에 합격',40],['돌아온 탕아',60]].map(([n,p],i)=>I('t'+(24+i),'title',n,p,n)),
 // 모자
@@ -715,6 +732,124 @@ ST('s15','광대 옷',120,{C:'#e03131',c:'#c92a2a',P:'#1971c2',p:'#1864ab',ov:mg
 ST('s16','현장 반장 (형광 조끼)',90,{C:'#e9ff32',c:'#c0d62b',P:'#2f4b7c',p:'#24395e',B:'#8b5a2b',ov:{15:'...xxxxxxxxxx...'.replace(/^\.\.\./,'...'),17:'....xxxxxxxx....'},op:{x:'#dee2e6'},set:'worker'}),
 ST('s17','은하 슈트',260,{C:'url(#cGal)',c:'#3b1f8f',P:'url(#cGal)',p:'#2a1550',B:'#111111',set:'galaxy'})
 );
+// ===== 귀여운 치장템 (파스텔 컬렉션) =====
+const SK=h=>({20:'...xxxxxxxxxx...',21:'..xxxxxxxxxxxx..',22:'..'+h+'..'});
+const NEW0=SHOP.length;
+Object.assign(SETS,{princess:{n:'공주님',d:'반짝이는 별가루',col:'#ff8fb1',fx:{k:'spark',c:['#ffc2d4','#ffffff','#ffe066'],n:12}},
+magic:{n:'마법소녀',d:'하트 뿅뿅',col:'#b197fc',fx:{k:'riseE',i:'heart',n:3}},pajama:{n:'꿀잠',d:'쿨쿨 zzz',col:'#ffc078',fx:{k:'riseE',i:'zzz',n:2}},
+school:{n:'청춘 교복',d:'벚꽃 흩날림',col:'#748ffc',fx:{k:'fallE',i:'blossom',n:4}},berry:{n:'딸기 요정',d:'딸기 둥실',col:'#ff6b9a',fx:{k:'riseE',i:'berry',n:3}},
+angel:{n:'천사',d:'구름 둥실',col:'#a5d8ff',fx:{k:'orbit',i:'cloud',n:2,d:5}},hanbok:{n:'꽃 한복',d:'꽃잎 바람',col:'#ff8fb1',fx:{k:'fallE',i:'blossom',n:5}}});
+SHOP.push(
+...[['귀요미',20],['공주님',50],['냥집사',30],['딸기우유',30],['솜사탕',30],['마을 아이돌',70],['힐링 요정',50],['사랑둥이',40],['갬성 장인',40],['핑크 마피아',60],['왕자님',50],['멍뭉미',30],['반짝반짝',30],['디저트 요정',40],['낭만 고양이',40],['별빛 소녀',50],['꽃미남',50],['츤데레',40],['애교 만렙',50],['무해한 척',60],['달빛 마녀',60],['토끼 같은 범인',70],['심쿵 유발자',60],['오늘도 귀여움',30]].map(([n,p],i)=>I('t'+(64+i),'title',n,p,n)),
+// 모자
+I('h48','hat','고양이 귀 머리띠',40,{rows:{2:'...p........p...',3:'...pP......Pp...',4:'...pppppppppp...'},pal:{p:'#ff8fb1',P:'#ffe3ec'}}),
+I('h49','hat','곰돌이 귀',40,{rows:{2:'..bb........bb..',3:'..bBb......bBb..',4:'...bb......bb...'},pal:{b:'#a0703f',B:'#ffc9a9'}}),
+I('h50','hat','왕리본',50,{rows:{1:'....pp....pp....',2:'....pPp..pPp....',3:'....pPPkkPPp....',4:'.....p....p.....'},pal:{p:'#ff6b9a',P:'#ffc2d4',k:'#e64980'}}),
+I('h51','hat','딸기 비니',50,{rows:{1:'.......gg.......',2:'......gggg......',3:'....rrrrrrrr....',4:'...rrwrrrrwrr...',5:'...rrrrrwrrrr...'},pal:{g:'#51cf66',r:'#ff4d6d',w:'#ffe3ec'}}),
+I('h52','hat','빨간 버섯 모자',60,{rows:{1:'.....rrrrrr.....',2:'....rrwrrrrr....',3:'...rrrrrrwwrr...',4:'..rwwrrrrrrrrr..',5:'..rrrrrrrrrrrr..'},pal:{r:'#fa5252',w:'#ffffff'}}),
+I('h53','hat','꽃 화관',60,{rows:{3:'....p...b...p...',4:'..gpYpgbYbgpYpg.',5:'....p...b...p...'},pal:{g:'#51cf66',p:'#ff8fb1',b:'#a5d8ff',Y:'#ffe066'}}),
+I('h54','hat','병아리 친구',50,{rows:{0:'......yy........',1:'.....yeyo.......',2:'.....yyyy.......',3:'....yyyyy.......'},pal:{y:'#ffe066',e:'#222222',o:'#ff922b'}}),
+I('h55','hat','개구리 모자',50,{rows:{2:'...ggg....ggg...',3:'...gkw....gkw...',4:'...gggggggggg...',5:'...gggggggggg...'},pal:{g:'#69db7c',w:'#ffffff',k:'#222222'}}),
+I('h56','hat','티아라',90,{rows:{2:'.......pp.......',3:'....y.yyyy.y....',4:'...yyyyyyyyyy...'},pal:{y:'#ffd43b',p:'#ff6b9a'}}),
+I('h57','hat','하트 머리핀',20,{rows:{4:'..........r.r...',5:'.........rrrrr..',6:'..........rrr...',7:'...........r....'},pal:{r:'#ff6b9a'}}),
+I('h58','hat','핑크 토끼 귀',50,{rows:{0:'.....pp..pp.....',1:'.....pP..Pp.....',2:'.....pP..Pp.....',3:'.....pP..Pp.....',4:'...pppppppppp...'},pal:{p:'#ffc2d4',P:'#ff8fb1'}}),
+I('h59','hat','구름 모자',50,{rows:{2:'.....wwww.......',3:'...wwwwwwwww....',4:'..wwwWwwwwwww...'},pal:{w:'#ffffff',W:'#d0ebff'}}),
+I('h60','hat','라벤더 마녀 모자',70,{rows:{0:'.......pp.......',1:'......pppp......',2:'.....ppyppp.....',3:'....pppppppp....',4:'..PPPPPPPPPPPP..'},pal:{p:'#b197fc',P:'#845ef7',y:'#ffe066'}}),
+I('h61','hat','곰돌이 후드',70,{rows:{2:'..bb........bb..',3:'..bbbbbbbbbbbb..',4:'..bbBBBBBBBBbb..',5:'..bb........bb..',6:'..bb........bb..',7:'..bb........bb..',8:'..b..........b..'},pal:{b:'#a0703f',B:'#c8935a'}}),
+// 안경 · 얼굴
+I('g17','glass','딸기우유 안경',30,{rows:{6:'....ppp..ppp....',7:'....p.pppp.p....',8:'....p.p..p.p....',9:'....ppp..ppp....'},pal:{p:'#ff8fb1'}}),
+I('g18','glass','라벤더 고글',50,{rows:{6:'...kkkkkkkkkk...',7:'...kooooooook...',8:'...kooooooook...',9:'...kkkkkkkkkk...'},pal:{o:'#d0bfff',k:'#845ef7'}}),
+I('f21','face','초롱초롱 눈',20,{rows:{7:'.....w....w.....'},pal:{w:'#ffffff'}}),
+I('f22','face','왕눈이 눈',40,{rows:{6:'.....e....e.....',7:'....ewe..ewe....',8:'....eee..eee....'},pal:{e:'#1b1b2a',w:'#ffffff'}}),
+I('f23','face','고양이 수염',30,{rows:{9:'..kk...pp...kk..',10:'..kk........kk..'},pal:{k:'#495057',p:'#ff8fb1'}}),
+I('f24','face','하트 스티커',20,{rows:{9:'.........r.r....',10:'.........rrr....',11:'..........r.....'},pal:{r:'#ff6b9a'}}),
+I('f25','face','눈물점',10,{rows:{9:'...........k....'},pal:{k:'#5c3d1e'}}),
+I('f26','face','반짝이 스티커',20,{rows:{6:'...........y....',9:'....y...........'},pal:{y:'#ffe066'}}),
+// 날개 · 등
+I('c27','cape','나비 날개',150,WING({w:'#d0bfff',g:'#ff8fb1'})),
+I('c28','cape','하트 날개',160,{rows:{8:'.pp..........pp.',9:'pPPp........pPPp',10:'pPPPp......pPPPp',11:'pPPPp......pPPPp',12:'.pPPp......pPPp.',13:'..pPp......pPp..',14:'...p........p...'},pal:{p:'#ff6b9a',P:'#ffc2d4'}}),
+I('c29','cape','라벤더 망토',50,{rows:CAPE,pal:{C:'#b197fc',D:'#9775fa'}}),
+I('c30','cape','민트 망토',50,{rows:CAPE,pal:{C:'#63e6be',D:'#38d9a9'}}),
+I('c31','cape','솜사탕 날개',180,WING({w:'#ffc2d4',g:'#a5d8ff'})),
+I('c32','cape','곰돌이 백팩',70,{rows:{13:'....b......b....',14:'....bbbbbbbb....',15:'....bBkBBkBb....',16:'....bBBnnBBb....',17:'....bBBBBBBb....',18:'....bbbbbbbb....'},pal:{b:'#a0703f',B:'#c8935a',k:'#222222',n:'#5c3d1e'}}),
+// 손
+I('k27','hand','하트 요술봉',70,{a:'glow',rows:{4:'.............p.p',5:'.............ppp',6:'..............p.',...vr(7,15,'..............w.'),16:'.............ww.',17:'.............ww.',...vr(18,22,'..............w.')},pal:{p:'#ff6b9a',w:'#ffe066'}}),
+I('k28','hand','꽃다발',50,{rows:{7:'............rpy.',8:'...........pyrbp',9:'............bpr.',10:'............ggg.',...vr(11,15,'.............g..'),16:'.............gg.',17:'.............gg.'},pal:{r:'#ff6b9a',p:'#ffc2d4',y:'#ffe066',b:'#a5d8ff',g:'#51cf66'}}),
+I('k29','hand','곰인형',60,{rows:{13:'............b..b',14:'............bbbb',15:'............kbbk',16:'............bnnb',17:'...........bbbbb',18:'............bbbb',19:'............b..b'},pal:{b:'#c8935a',k:'#222222',n:'#ff8fb1'}}),
+I('k30','hand','롤리팝',30,{rows:{5:'.............ppp',6:'.............pwp',7:'.............ppp',...vr(8,15,'..............w.'),16:'.............ww.',17:'.............ww.'},pal:{p:'#ff6b9a',w:'#f8f9fa'}}),
+I('k31','hand','버블티',40,{rows:{10:'...............s',11:'..............s.',12:'.............www',13:'.............bbb',14:'.............bbb',15:'.............bbb',16:'.............kbk',17:'.............bkb',18:'.............bbb'},pal:{s:'#ff8fb1',w:'#ffffff',b:'#e8c39e',k:'#3b2a1a'}}),
+I('k32','hand','고양이 풍선',40,{rows:{0:'............p..p',1:'............pppp',2:'............kppk',3:'............pppp',4:'.............pp.',...vr(5,15,'..............g.'),16:'.............gg.',17:'.............gg.'},pal:{p:'#ffc2d4',k:'#222222',g:'#adb5bd'}}),
+// 반려동물
+I('p24','pet','햄스터',50,{rows:['........','.o....o.','.oooooo.','.oeooeo.','.pwwwwp.','..oooo..'],pal:{o:'#f4b26b',e:'#222222',w:'#fff4e0',p:'#ff9fb0'},w:8}),
+I('p25','pet','아기 흰냥이',60,{rows:['w.w.....','wpw...w.','wew..ww.','wwwwwww.','wwwwwww.','w.w.w.w.'],pal:{w:'#f8f9fa',p:'#ffc2d4',e:'#4dabf7'},w:8}),
+I('p26','pet','꼬마 버섯',60,{rows:['..rrrr..','.rwrrwr.','rrrrrrrr','..ssss..','..esse..','..ssss..'],pal:{r:'#fa5252',w:'#ffffff',s:'#fff4e6',e:'#222222'},w:8}),
+I('p27','pet','핑크 슬라임',50,{rows:['........','..bbbb..','.bbbbbb.','.bkbbkb.','bbbppbbb','bbbbbbbb'],pal:{b:'#ff8fb1',k:'#5c2340',p:'#ffc2d4'},w:8}),
+I('p28','pet','별 요정',90,{fly:1,rows:['...y....','..yyy...','yyyyyyy.','.yeyey..','.yyyyy..','.y...y..'],pal:{y:'#ffe066',e:'#5c3d1e'},w:8}),
+I('p29','pet','아기 판다',80,{rows:['k....k..','kwwwwk..','wkewke..','wwwkww..','.kwwk...','.k..k...'],pal:{k:'#222222',w:'#ffffff',e:'#ffffff'},w:8}),
+I('p30','pet','아기 양',60,{rows:['..www...','.wwwww..','wkewwww.','wkkwwww.','.wwwwww.','.k.k.k..'],pal:{w:'#f8f9fa',k:'#495057',e:'#ffffff'},w:8}),
+I('p31','pet','해파리',80,{fly:1,rows:['.pppp...','pPPPPp..','pePPep..','pppppp..','p.p.p...','.p.p.p..'],pal:{p:'#d0bfff',P:'#f3d9fa',e:'#5f3dc4'},w:8}),
+I('p32','pet','하늘 고래',110,{fly:1,rows:['......b.','.....bb.','.bbbbbb.','bebbbbbb','bwwwwbb.','.......b'],pal:{b:'#74c0fc',e:'#222222',w:'#e7f5ff'},w:8}),
+I('p33','pet','코기',70,{rows:['o.o.....','ooo.....','oeo...oo','owoooooo','.oooooo.','.o.o.o..'],pal:{o:'#f08c00',e:'#222222',w:'#ffffff'},w:8}),
+// 발밑
+I('o19','foot','뭉게구름',90,{a:'pulse',rows:['..wwww....wwww..','.wwwwww..wwwwww.','wwwwwwwwwwwwwwww','.wwwwwwwwwwwwww.','................'],pal:{w:'#f1f3ff'}}),
+I('o20','foot','벚꽃잎',70,{a:'glow',rows:DOTS,pal:{a:'#ffc2d4',b:'#fff0f6'}}),
+I('o21','foot','비눗방울 링',80,{a:'pulse',rows:RING,pal:{a:'#a5d8ff',b:'#fcc2d7'}}),
+I('o22','foot','별사탕',80,{a:'flick',rows:DOTS,pal:{a:'#d0bfff',b:'#ffe066'}}),
+I('o23','foot','하트 마법진',120,{a:'pulse',rows:MAGIC,pal:{p:'#ff8fb1'}}),
+I('o24','foot','클로버 밭',60,{rows:['g.G..g..G.g..G.g','.G.g..G.g..g.G..','g..G.g..g.G..g.G','.g..G..g.G..G.g.','G.g..g.G..g..G..'],pal:{g:'#51cf66',G:'#b2f2bb'}}),
+// 오라
+I('au21','aura','하트 뿅뿅',100,{k:'riseE',i:'heart',n:3}),
+I('au22','aura','파스텔 반짝이',90,{k:'spark',c:['#ffc2d4','#d0bfff','#a5d8ff','#ffffff'],n:14}),
+I('au23','aura','비눗방울',80,{k:'riseE',i:'bubble',n:4}),
+I('au24','aura','벚꽃 바람',90,{k:'fallE',i:'blossom',n:4}),
+I('au25','aura','리본 회전',110,{k:'orbit',i:'bow',n:3}),
+I('au26','aura','구름 둥실',100,{k:'orbit',i:'cloud',n:2,d:5}),
+I('au27','aura','별사탕 비',90,{k:'fall',c:['#ffe066','#ffc2d4','#d0bfff'],n:14}),
+I('au28','aura','고양이 발자국',70,{k:'riseE',i:'paw',n:3}),
+I('au29','aura','행운 클로버',90,{k:'orbit',i:'clover',n:3}),
+I('au30','aura','달님',80,{k:'orbit',i:'moon',n:1,d:4}),
+// 이름색 · 이름표
+I('n24','nameC','라벤더 이름',30,'#d0bfff'),I('n25','nameC','복숭아 이름',30,'#ffc9a9'),I('n26','nameC','민트 이름',30,'#96f2d7'),
+I('n27','nameC','솜사탕 이름',90,'url(#gCandy)'),I('n28','nameC','체리 이름',30,'#ff6b9a'),I('n29','nameC','네온 핑크',70,{f:'#ff8fb1',c:'nm-neon'}),
+I('pl21','plate','리본 명판',80,{f:'#ff8fb1',s:'#ffe3ec',r:8,d:['bow','bow']}),
+I('pl22','plate','구름 명판',70,{f:'#f8f9fa',s:'#a5d8ff',r:9,tc:'#5c7cfa',d:['cloud','']}),
+I('pl23','plate','솜사탕 명판',110,{f:'url(#gCandy)',s:'#ffffff',tc:'#7048e8'}),
+I('pl24','plate','딸기 명판',70,{f:'#ff6b9a',s:'#ffffff',d:['berry','']}),
+I('pl25','plate','라벤더 명판',80,{f:'#9775fa',s:'#e5dbff',d:['heart','heart']}),
+I('pl26','plate','케이크 명판',80,{f:'#fff4e6',s:'#ffc2d4',tc:'#c2255c',d:['cake','']}),
+// 쓰러짐 · 승리
+I('d26','dead','하트 풍선',40,{i:'heart',a:'float'}),I('d27','dead','구름 타고 승천',50,{i:'cloud',a:'soul'}),I('d28','dead','선물 상자',40,{i:'gift',a:'plant'}),
+I('d29','dead','네잎클로버',40,{i:'clover',a:'plant'}),I('d30','dead','꿈나라',30,{i:'zzz',a:'soul'}),
+I('w25','win','하트 비',70,{i:'heart',a:'rain'}),I('w26','win','리본 바운스',60,{i:'bow',a:'bounce'}),I('w27','win','딸기 비',70,{i:'berry',a:'rain'}),
+I('w28','win','LOVE 문구',80,{e:'LOVE',a:'txt'}),I('w29','win','선물 팡!',60,{i:'gift',a:'pop'}),I('w30','win','축하 케이크',70,{i:'cake',a:'top'}),I('w31','win','꽃비',60,{i:'blossom',a:'rain'}),
+// 상의
+TP('u26','핑크 후드티',35,'#ffc2d4','#f783ac',{fr:{17:'.....xxxxxx.....',14:'......w..w......'},op:{x:'#f783ac',w:'#ffffff'}}),
+TP('u27','딸기 우유 티',40,'#ffe3ec','#fcc2d7',{fr:{15:'.......g........',16:'......rrr.......',17:'......rwr.......',18:'.......r........'},op:{g:'#51cf66',r:'#ff4d6d',w:'#ffe3ec'}}),
+TP('u28','세일러 블라우스',60,'#f8f9fa','#dee2e6',{fr:{13:'....nnnnnnnn....',14:'....nwn..nwn....',15:'.......rr.......',16:'......r..r......'},op:{n:'#364fc7',w:'#ffffff',r:'#ff4d6d'}}),
+TP('u29','라벤더 가디건',45,'#d0bfff','#b197fc',{fr:mg(BTN,{13:'.......ww.......'}),op:{y:'#ffffff',w:'#ffffff'}}),
+TP('u30','민트 체크 셔츠',40,'#96f2d7','#63e6be',{ov:PLAID_T,op:{x:'#38d9a9'}}),
+TP('u31','곰돌이 맨투맨',60,'#c8935a','#a0703f',{fr:{15:'......b..b......',16:'.......nn.......'},op:{b:'#3b2a1a',n:'#5c3d1e'}}),
+TP('u32','하트 니트',50,'#ff8fb1','#f06595',{fr:{15:'......w.w.......',16:'......www.......',17:'.......w........'},op:{w:'#ffffff'}}),
+TP('u33','구름 맨투맨',45,'#a5d8ff','#74c0fc',{fr:{15:'.......ww.......',16:'.....wwwwww.....',17:'......wwww......'},op:{w:'#ffffff'}}),
+TP('u34','솜사탕 티',150,'url(#cCandy)','#b197fc'),
+// 하의 (스커트는 스타킹 + 구두)
+BT('b19','핑크 플리츠 스커트',40,'#fff4f8','#ffe3ec',{ov:SK('xyxyxyxyxyxy'),op:{x:'#ff8fb1',y:'#f06595'},B:'#c2255c'}),
+BT('b20','네이비 체크 스커트',45,'#f8f9fa','#e9ecef',{ov:SK('xyxxyxxyxxyx'),op:{x:'#364fc7',y:'#748ffc'},B:'#212529'}),
+BT('b21','데님 스커트',35,'#343a40','#212529',{ov:SK('xxxxxxxxxxxx'),op:{x:'#5c7cfa'},B:'#868e96'}),
+BT('b22','하늘 멜빵바지',50,'#74c0fc','#4dabf7',{ov:{13:'....x......x....',14:'....x......x....',15:'....x......x....',16:'....xxxxxxxx....',17:'....xxxxxxxx....',18:'....xxxxxxxx....',19:'....xxxxxxxx....'},op:{x:'#74c0fc'}}),
+BT('b23','라벤더 조거',30,'#d0bfff','#b197fc',{B:'#ffffff'}),
+BT('b24','노랑 미니스커트',35,'#fff4f8','#ffe3ec',{ov:SK('xxxxxxxxxxxx'),op:{x:'#ffd43b'},B:'#ff8fb1'}),
+// 한벌룩 (세트 효과)
+ST('s18','공주 드레스',220,{C:'#ffc2d4',c:'#f783ac',P:'#fff4f8',p:'#ffe3ec',B:'#ffd43b',ov:{20:'..xxxxxxxxxxxx..',21:'.xxxxxxxxxxxxxx.',22:'.xxxxxxxxxxxxxx.',23:'.yxyxyxyxyxyxyx.'},fr:{13:'....wwwwwwww....',15:'.......yy.......'},op:{x:'#ffc2d4',y:'#fff0f6',w:'#ffffff'},set:'princess'}),
+ST('s19','마법소녀 드레스',240,{C:'#d0bfff',c:'#b197fc',P:'#ffffff',p:'#f1f3f5',B:'#ff6b9a',ov:SK('xyxyxyxyxyxy'),fr:{13:'.....rr..rr.....',14:'......rkkr......',15:'.....rr..rr.....'},op:{x:'#d0bfff',y:'#f3d9fa',r:'#ff6b9a',k:'#e64980'},set:'magic'}),
+ST('s20','곰돌이 잠옷',140,{C:'#ffd8a8',c:'#ffc078',P:'#ffd8a8',p:'#ffc078',B:'#fff4e6',ov:fp([...TR,...BR],ch=>isT(ch)||isB(ch),(r,c)=>(r+c)%4===0?'x':''),fr:{15:'......b..b......',16:'.......nn.......'},op:{x:'#fff4e6',b:'#3b2a1a',n:'#5c3d1e'},set:'pajama'}),
+ST('s21','세일러 교복',160,{C:'#f8f9fa',c:'#dee2e6',P:'#343a40',p:'#212529',B:'#212529',ov:SK('xyxxyxxyxxyx'),fr:{13:'....nnnnnnnn....',14:'....nwn..nwn....',15:'.......rr.......',16:'......r..r......'},op:{x:'#364fc7',y:'#4c6ef5',n:'#364fc7',w:'#ffffff',r:'#ff4d6d'},set:'school'}),
+ST('s22','딸기 원피스',180,{C:'#ff6b9a',c:'#f06595',P:'#fff4f8',p:'#ffe3ec',B:'#ffffff',ov:mg(fp(TR,isT,(r,c)=>(r*3+c)%5===0?'w':''),{20:'...xxxxxxxxxx...',21:'..xxwxxxxwxxxx..',22:'..gggggggggggg..'}),op:{x:'#ff6b9a',w:'#ffe3ec',g:'#ffffff'},set:'berry'}),
+ST('s23','천사 원피스',200,{C:'#ffffff',c:'#e9ecef',P:'#ffffff',p:'#f1f3f5',B:'#ffe066',ov:SK('xyxyxyxyxyxy'),op:{x:'#ffffff',y:'#e7f5ff'},set:'angel'}),
+ST('s24','꽃 한복',220,{C:'#ffc2d4',c:'#f783ac',P:'#d0bfff',p:'#b197fc',B:'#ffffff',ov:{20:'..xxxxxxxxxxxx..',21:'.xxxxxxxxxxxxxx.',22:'.xxxxxxxxxxxxxx.',23:'.xxxxxxxxxxxxxx.',24:'..xxxxxxxxxxxx..'},fr:{13:'.....w....w.....',14:'......w..w......',15:'.......rr.......',16:'.......r.r......'},op:{x:'#d0bfff',w:'#ffffff',r:'#ff4d6d'},set:'hanbok'})
+);
+const NEWI=new Set(SHOP.slice(NEW0).map(i=>i.id));
+
 function setOf(eq){const e=eq||{},s=(ITEM[e.suit]||{}).v;if(s)return s.set||'';const t=(ITEM[e.top]||{}).v,b=(ITEM[e.bot]||{}).v;return t&&b&&t.set&&t.set===b.set?t.set:''}
 const mergeTry=(eq,tr)=>{const o={...(eq||{}),...(tr||{})};if(tr&&(tr.top||tr.bot)&&!tr.suit)delete o.suit;if(tr&&tr.suit){delete o.top;delete o.bot}return o};
 
@@ -781,6 +916,18 @@ xcross:{r:['..y..','yyyyy','..y..','..y..','..y..'],p:{y:'#ffd43b'}},
 paper:{r:['wwwwww','wkkkkw','wwwwww','wkkwkw','wwwwww','wkwkkw','wwwwww'],p:{w:'#f1f3f5',k:'#495057'}},
 eye:{r:['..kkk..','.kwwwk.','kwbbbwk','kwbkbwk','kwbbbwk','.kwwwk.','..kkk..'],p:{k:'#212529',w:'#f8f9fa',b:'#1c7ed6'}},
 shield:{r:['bbbbbbb','bBBwBBb','bBwwwBb','bBBwBBb','.bBBBb.','..bBb..','...b...'],p:{b:'#1c7ed6',B:'#4dabf7',w:'#f8f9fa'}}};
+Object.assign(IC,{
+heart:{r:['.rr.rr.','rWrrrrr','rrrrrrr','.rrrrr.','..rrr..','...r...'],p:{r:'#ff6b9a',W:'#ffe3ec'}},
+bow:{r:['pp...pp','pPpkpPp','pPPkPPp','pPpkpPp','pp...pp'],p:{p:'#ff8fb1',P:'#ffc2d4',k:'#e64980'}},
+berry:{r:['..g.g..','.ggggg.','rrrrrrr','rwrrrwr','rrrrrrr','.rwrrr.','..rrr..'],p:{g:'#51cf66',r:'#ff4d6d',w:'#ffe3ec'}},
+gift:{r:['.p...p.','..p.p..','yyypyyy','yYypyYy','yyypyyy','yyypyyy'],p:{y:'#74c0fc',Y:'#a5d8ff',p:'#ff8fb1'}},
+cloud:{r:['..www....','.wwwww.ww','wwwWwwwww','wwwwwwwww','.wwwwwww.'],p:{w:'#ffffff',W:'#e7f5ff'}},
+bubble:{r:['.ccc.','cw..c','c...c','c...c','.ccc.'],p:{c:'#a5d8ff',w:'#ffffff'}},
+clover:{r:['.gg.gg.','gGggGgg','.ggggg.','gGggGgg','.gg.gg.','...g...','...g...'],p:{g:'#51cf66',G:'#b2f2bb'}},
+cake:{r:['...r...','..www..','.pppppp','.wwwwww','.pppppp','yyyyyyy'],p:{r:'#ff4d6d',w:'#fff4e6',p:'#ffc2d4',y:'#ffd8a8'}},
+moon:{r:['..yyy.','.yyy..','yyy...','yyy...','yyy...','.yyy..','..yyy.'],p:{y:'#ffe066'}},
+paw:{r:['.p.p.','p.p.p','.....','.ppp.','ppppp','.ppp.'],p:{p:'#ff8fb1'}}});
+
 const icR=(n,ps,pal)=>{const I=IC[n];if(!I)return'';const w=I.r[0].length,h=I.r.length;return`<g shape-rendering="crispEdges">${rowsSVG(I.r,pal?{...I.p,...pal}:I.p,ps,-w*ps/2,-h*ps/2)}</g>`};
 const pix=(n,x,y,ps,cls,st,pal)=>`<g transform="translate(${(+x).toFixed(1)} ${(+y).toFixed(1)})"><g${cls?` class="${cls}"`:''}${st?` style="${st}"`:''}>${icR(n,ps,pal)}</g></g>`;
 const icH=(n,s)=>{const I=IC[n];if(!I)return'';s=s||14;const w=I.r[0].length,h=I.r.length,m=Math.max(w,h);return`<svg viewBox="0 0 ${w} ${h}" style="width:${(s*w/m).toFixed(1)}px;height:${(s*h/m).toFixed(1)}px;vertical-align:-2px" shape-rendering="crispEdges">${rowsSVG(I.r,I.p,1,0,0)}</svg>`};
@@ -802,6 +949,7 @@ document.body.insertAdjacentHTML('afterbegin',`<svg width="0" height="0" style="
 <pattern id="pCamo" width="14" height="10" patternUnits="userSpaceOnUse"><rect width="14" height="10" fill="#4b5320"/><ellipse cx="3" cy="3" rx="3" ry="2" fill="#2b3a1a"/><ellipse cx="10" cy="7" rx="3.5" ry="2" fill="#a68a64"/><ellipse cx="11" cy="2" rx="2" ry="1.4" fill="#6b705c"/></pattern>
 <pattern id="pCheck" width="6" height="6" patternUnits="userSpaceOnUse"><rect width="6" height="6" fill="#111"/><rect width="3" height="3" fill="#495057"/><rect x="3" y="3" width="3" height="3" fill="#495057"/></pattern>
 <linearGradient id="cFire" gradientUnits="userSpaceOnUse" x1="0" y1="-40" x2="0" y2="0" spreadMethod="repeat"><stop offset="0" stop-color="#ffd43b"/><stop offset="0.35" stop-color="#ff922b"/><stop offset="0.7" stop-color="#e03131"/><stop offset="1" stop-color="#ffd43b"/><animateTransform attributeName="gradientTransform" type="translate" from="0 0" to="0 -40" dur="1.6s" repeatCount="indefinite"/></linearGradient><linearGradient id="cGold" gradientUnits="userSpaceOnUse" x1="-20" y1="0" x2="20" y2="0" spreadMethod="repeat"><stop offset="0" stop-color="#b8860b"/><stop offset="0.3" stop-color="#ffd43b"/><stop offset="0.5" stop-color="#fff9db"/><stop offset="0.7" stop-color="#ffd43b"/><stop offset="1" stop-color="#b8860b"/><animateTransform attributeName="gradientTransform" type="translate" from="0 0" to="40 0" dur="2.4s" repeatCount="indefinite"/></linearGradient><linearGradient id="cGal" gradientUnits="userSpaceOnUse" x1="-20" y1="0" x2="20" y2="0" spreadMethod="repeat"><stop offset="0" stop-color="#2a1550"/><stop offset="0.35" stop-color="#7950f2"/><stop offset="0.65" stop-color="#4dabf7"/><stop offset="1" stop-color="#2a1550"/><animateTransform attributeName="gradientTransform" type="translate" from="0 0" to="40 0" dur="4s" repeatCount="indefinite"/></linearGradient><linearGradient id="cRbA" gradientUnits="userSpaceOnUse" x1="-20" y1="0" x2="20" y2="0" spreadMethod="repeat"><stop offset="0" stop-color="#ff6b6b"/><stop offset="0.25" stop-color="#ffd43b"/><stop offset="0.5" stop-color="#69db7c"/><stop offset="0.75" stop-color="#4dabf7"/><stop offset="1" stop-color="#ff6b6b"/><animateTransform attributeName="gradientTransform" type="translate" from="0 0" to="40 0" dur="2.6s" repeatCount="indefinite"/></linearGradient><linearGradient id="cNeon" gradientUnits="userSpaceOnUse" x1="-20" y1="0" x2="20" y2="0" spreadMethod="repeat"><stop offset="0" stop-color="#0c8599"/><stop offset="0.5" stop-color="#e3fafc"/><stop offset="1" stop-color="#0c8599"/><animateTransform attributeName="gradientTransform" type="translate" from="0 0" to="40 0" dur="1.2s" repeatCount="indefinite"/></linearGradient>
+<linearGradient id="gCandy" x1="0" x2="1" spreadMethod="repeat"><stop offset="0" stop-color="#ffc2d4"/><stop offset=".5" stop-color="#d0bfff"/><stop offset="1" stop-color="#a5d8ff"/><animateTransform attributeName="gradientTransform" type="translate" from="0 0" to="1 0" dur="3s" repeatCount="indefinite"/></linearGradient><linearGradient id="cCandy" gradientUnits="userSpaceOnUse" x1="-20" y1="0" x2="20" y2="0" spreadMethod="repeat"><stop offset="0" stop-color="#ffc2d4"/><stop offset=".5" stop-color="#d0bfff"/><stop offset="1" stop-color="#ffc2d4"/><animateTransform attributeName="gradientTransform" type="translate" from="0 0" to="40 0" dur="3s" repeatCount="indefinite"/></linearGradient>
 <radialGradient id="glow"><stop offset="0" stop-color="#ff9d3c" stop-opacity=".55"/><stop offset=".6" stop-color="#ff7a1a" stop-opacity=".16"/><stop offset="1" stop-color="#ff7a1a" stop-opacity="0"/></radialGradient>
 <linearGradient id="gSpot" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#fff3bf" stop-opacity=".7"/><stop offset="1" stop-color="#ffd43b" stop-opacity="0"/></linearGradient>
 </defs></svg>`);
@@ -838,7 +986,7 @@ const blank=()=>Array.from({length:GH},()=>Array(GW).fill(null));
 const cutS=G=>G.map(row=>row.filter((_,c)=>c<4||c>6)),mir=G=>G.map(row=>[...row].reverse());
 function gridSVG(G){let out='';const W=G[0].length;for(let r=0;r<GH;r++){let c=0;while(c<W){const col=G[r][c];if(!col){c++;continue}let e=c;while(e+1<W&&G[r][e+1]===col)e++;out+=`<rect x="${((c-W/2)*PS).toFixed(2)}" y="${((r-GH)*PS).toFixed(2)}" width="${((e-c+1)*PS+.05).toFixed(2)}" height="${(PS+.05).toFixed(2)}" fill="${col}"/>`;c=e+1}}return out}
 function sprite(ch,eq,view){view=view||'f';const sk=SKIN[ch.sk]||SKIN[0],hc=HAIRC[ch.hc]||HAIRC[0],sh=SHIRT[ch.sh]||SHIRT[0],pc=PANTS[ch.pc]||PANTS[0],it=k=>(ITEM[(eq||{})[k]]||{}).v;
-const pal={o:'#1b1b2a',S:sk,s:mix(sk,.86),e:'#1b1b2a',m:mix(sk,.6),C:sh,c:mix(sh,.78),P:pc,p:mix(pc,.75),B:'#4a2f1d',b:'#3d2b1f',H:hc,h:mix(hc,1.35)};
+const pal={o:'#1b1b2a',S:sk,s:blend(sk,'#ff7a9a',.38),e:'#1b1b2a',m:mix(sk,.6),C:sh,c:mix(sh,.78),P:pc,p:mix(pc,.75),B:'#4a2f1d',b:'#3d2b1f',H:hc,h:mix(hc,1.35)};
 const sut=it('suit'),tp=sut||it('top'),bt=sut||it('bot'),dk=(x,f)=>x[0]==='#'?mix(x,f):x;
 if(tp){pal.C=tp.C;pal.c=tp.c||dk(tp.C,.78)}if(bt){pal.P=bt.P;pal.p=bt.p||dk(bt.P,.75);if(bt.B)pal.B=bt.B;if(bt.bl)pal.b=bt.bl}
 const back=view==='b',side=view==='s'||view==='l';let G=blank();const cape=it('cape');
@@ -896,7 +1044,7 @@ case'twinkle':return[[-22,-60],[20,-70],[24,-30],[-26,-24],[0,-86],[-10,-78]].ma
 case'flank':return pix(i,-22,-10,1.8,'fa-flick')+pix(i,22,-10,1.8,'fa-flick','animation-delay:.25s');
 case'strike':return`<ellipse cx="0" cy="-30" rx="34" ry="44" fill="#fff9db" fill-opacity=".16" class="fa-flash"/>`+pix(i,0,-94,2.6,'fa-flash');
 case'rocket':return pix(i,24,-40,1.8,'fa-rocket');
-case'txt':return`<text class="fa-bounce" x="0" y="-84" font-size="15" text-anchor="middle" font-family="'Black Han Sans',sans-serif" fill="url(#gGold)" stroke="#3b2a00" stroke-width=".8">${e}</text>`;
+case'txt':return`<text class="fa-bounce" x="0" y="-84" font-size="15" text-anchor="middle" font-family="'Jua',sans-serif" fill="url(#gGold)" stroke="#3b2a00" stroke-width=".8">${e}</text>`;
 default:return pix(i,0,-84,2,a?'fa-'+a:'')}}
 const stripE=t=>String(t).replace(/^[^가-힣A-Za-z0-9]+\s*/,'');
 const rankIcons=n=>RANKT.filter(r=>rankHolders(r[0]).includes(n)).map(r=>r[3]);
@@ -968,6 +1116,8 @@ const NPCS=[{n:'촌장 할아버지',ch:{sk:1,hs:0,hc:7,sh:0,pc:0},eq:{hat:'h44'
 {n:'음유시인',ch:{sk:3,hs:1,hc:2,sh:4,pc:0},eq:{hat:'h36',top:'u13',bot:'b1',hand:'k18'},say:['🎵 마피아는~ 우리 곁에~','🎵 모닥불 앞에 거짓말이 춤추네~','🎵 오늘 밤 누가 사라질까~']},
 {n:'보안관',ch:{sk:2,hs:0,hc:0,sh:1,pc:1},eq:{hat:'h33',suit:'s2'},say:['증거 없인 처형 안 돼!','다들 알리바이는 있나?','오늘 투표 결과가 궁금하군.']},
 {n:'대장장이',ch:{sk:4,hs:3,hc:0,sh:0,pc:3},eq:{top:'u7',bot:'b5',hand:'k12',face:'f10'},say:['땡! 땡! 칼 갈아줄까?','요즘 도끼가 잘 팔리더라… 수상해.','망치질하다 잠깐 쉬러 왔네.']}];
+NPCS.push({n:'꽃집 언니',ch:{sk:1,hs:4,hc:5,sh:2,pc:0},eq:{hat:'h53',suit:'s22',pet:'p24'},say:['꽃 사세요~ 오늘의 꽃말은 「의심」이에요 🌸','어젯밤 꽃밭이 밟혀 있었어요… 범인은 누굴까?','딸기 원피스 예쁘죠? 시장에 들어왔대요!']},
+{n:'마법학교 학생',ch:{sk:0,hs:5,hc:4,sh:4,pc:0},eq:{hat:'h60',suit:'s19',hand:'k27',pet:'p28'},say:['진실의 마법… 아직 연습 중이에요!','이번 판엔 꼭 마피아를 찾을 거예요 ✨','투표는 하셨나요? 뿅!']});
 function npcLines(npc){const g=G(),L=[...npc.say],us=realUsers(),pick=a=>a[Math.random()*a.length|0],ph=g&&g.phase,w=weatherNow(),l=lordOf();
 if(!g||ph==='lobby')L.push('다들 모였나? 곧 한 판 시작이라네.','참가 신청들은 했어?');
 if(ph==='vote')L.push('오늘은 누굴 의심하나?','카톡방이 시끌시끌하구먼!','벌써 '+g.day+'일째로군.');
@@ -1006,7 +1156,7 @@ $('sfg').innerHTML=`<g transform="translate(10 54)">${campfire()}</g>${arr.sort(
 
 function detRes(g,p,d){const N=D.night[d]||{},t=(N.detective||{})[p];if(!t)return null;const r=g.roles[t];let x='';if(isM(r))x=(N.mafia||{})[t];else if(r==='doctor')x=(N.doctor||{})[t];else if(r==='police')x=(N.police||{})[t];else if(r==='detective')x=(N.detective||{})[t];return{t,x:x||''}}
 function detList(g,p){let rs='';for(let d=1;d<=g.day;d++){const q=detRes(g,p,d);if(!q)continue;rs+=(d<g.day||g.phase==='end')?`<div>${d}일차: ${q.t} → <b>${q.x?'간밤에 '+q.x+'님에게 능력을 썼어요':'간밤에 아무에게도 능력을 쓰지 않았어요'}</b></div>`:`<div>${d}일차: ${q.t} 조사 중… (결과는 다음 날 아침에 알려드려요)</div>`}return`<div class="q" style="margin-top:8px">🔎 조사 기록\n${rs||'아직 없어요'}</div>`}
-let cwOpen=false,cwTab='look',shopSlot='hat',tryOn={},pvView='f',pvState='idle',pvSpin=false,fameTab='pop',peekN='';
+let cwOpen=true,cwTab='look',shopSlot='hat',tryOn={},pvView='f',pvState='idle',pvSpin=false,fameTab='pop',peekN='';
 const VIEWS=['f','s','b','l'],LIKE_MAX=3,SELL=.7;
 const kday=()=>new Date(NOW()+9*36e5).toISOString().slice(0,10);
 const fig=(ch,eq,w)=>`<svg viewBox="-46 -74 92 84" style="width:${w}px;height:${Math.round(w*84/92)}px">${avatar('',ch,eq,{noName:1})}</svg>`;
@@ -1087,20 +1237,20 @@ const A=ACH.filter(a=>!onlyOK||achOK(me,a[0])),K=RANKT.filter(r=>!onlyOK||rankHo
 if(A.length)h+=`<div class="sm" style="margin:8px 0 2px;color:#8ce99a">🏅 업적 칭호 (무료 · 조건 달성 시 자동 해금) ${onlyOK?'':'· '+ACH.filter(a=>achOK(me,a[0])).length+'/'+ACH.length}</div>`+A.map(a=>row(a[0],a[1],a[2],achOK(me,a[0]))).join('');
 if(K.length)h+=`<div class="sm" style="margin:8px 0 2px;color:#ffd43b">👑 랭킹 칭호 (1위만 · 1위를 뺏기면 사라져요)</div>`+K.map(r=>{const hd=rankHolders(r[0]);return row(r[0],r[1],r[2]+' · 현재: '+(hd.join(', ')||'없음'),hd.includes(me))}).join('');return h}
 const swatch=(f,arr,cur)=>`<div class="g2" style="margin:4px 0">${arr.map((c,i)=>`<button class="sw ${cur===i?'on':''}" style="background:${c}" onclick="setCh('${f}',${i})"></button>`).join('')}</div>`;
-function shopRender(){const el=$('shop');if(!me){el.style.display='none';return}el.style.display='block';const pf=pfOf(me),t=pf.t||0,own=pf.own||{},eq=pf.eq||{},ch=chOf(me);
-const top=`<div class="g2" style="align-items:center;justify-content:space-between"><div class="t" style="margin:0">🎒 내 캐릭터 · 시장</div><div class="g2" style="align-items:center"><span class="coin">💰 ${t}</span>${btn(cwOpen?'닫기':'열기','cwToggle()',0,'g')}</div></div>`;
+function shopRender(){const el=$('shop');if(!me){el.style.display='block';el.innerHTML='<div class="emp"><div class="big">🎀</div><div class="t">내 캐릭터 꾸미기</div><div class="sm">🔥게임 탭에서 입장하면 캐릭터를 꾸미고 달란트시장을 이용할 수 있어요.</div></div>';return}el.style.display='block';const pf=pfOf(me),t=pf.t||0,own=pf.own||{},eq=pf.eq||{},ch=chOf(me);
+const top=`<div class="g2" style="align-items:center;justify-content:space-between"><div class="t" style="margin:0">🎒 내 캐릭터 · 시장</div><div class="g2" style="align-items:center"><span class="coin">💰 ${t}</span></div></div>`;
 if(!cwOpen){el.innerHTML=top+`<div style="text-align:center;margin-top:6px"><svg viewBox="-75 -124 150 160" style="width:170px">${avatar(me,ch,eq,{})}</svg></div>`;return}
 const pe=mergeTry(eq,tryOn),tn=Object.values(tryOn).map(nmOf).filter(Boolean),sa=SETS[setOf(pe)];
-const tabs=`<div class="g2" style="margin:8px 0">${[['look','🎨 꾸미기'],['inv','🎒 인벤토리'],['shop','🏪 달란트시장'],['castle','🏰 성']].map(([k,l])=>btn(l,`cwTabSet('${k}')`,cwTab===k,'g')).join('')}</div>`;
+const tabs=`<div class="seg">${[['look','🎨 외형'],['inv','🎒 가방'],['shop','🏪 시장'],['castle','🏰 성']].map(([k,l])=>btn(l,`cwTabSet('${k}')`,cwTab===k,'g')).join('')}</div>`;
 const prev=cwTab==='castle'?'':`<div class="stage"><div id="pvbox" style="text-align:center">${stage(me,ch,pe)}</div>${sa?`<div class="sm" style="text-align:center;color:${sa.col};font-weight:800;margin-bottom:6px">✨ 세트 효과 발동: ${sa.n} · ${sa.d}</div>`:''}${viewCtl()}${tn.length?`<div class="sm" style="text-align:center;color:#ffd43b;margin-top:6px">👀 입어보는 중: ${tn.map(esc).join(', ')} (구매 전)</div><div style="text-align:center;margin-top:4px">${btn('입어보기 해제','clearTry()',0,'g')}</div>`:''}</div>`;
 let body='';
 if(cwTab==='look')body=`<div class="t" style="margin-top:6px">피부색</div>${swatch('sk',SKIN,ch.sk)}<div class="t">머리 모양</div><div class="g2" style="margin:4px 0">${HAIRN.map((n,i)=>btn(n,`setCh('hs',${i})`,ch.hs===i,'g')).join('')}</div><div class="t">머리색</div>${swatch('hc',HAIRC,ch.hc)}<div class="t">상의 색</div>${swatch('sh',SHIRT,ch.sh)}<div class="t">하의 색</div>${swatch('pc',PANTS,ch.pc)}<div class="sm" style="margin-top:6px">외형은 무료예요. 바로 저장되고 다른 사람 화면에도 보여요!</div>`;
 else if(cwTab==='inv'){const mine=SHOP.filter(i=>own[i.id]),pd=myPend();body=`<div class="sm" style="margin:6px 0">보유 ${mine.length}개 · 착용/해제 · 💱 되팔기는 70%(수수료 별도) · ↩️ 환불은 운영자 승인 시 전액</div>`+myRefunds()+
 (Object.keys(SLOT).map(k=>{let x=mine.filter(i=>i.s===k).map(i=>`<div class="row2">${thumb(i,ch)}<div class="nm2">${esc(i.n)}${eq[k]===i.id?' <span class="pill">착용 중</span>':''}</div>${eq[k]===i.id?btn('해제',`equip('${k}','')`,1,''):btn('착용',`equip('${k}','${i.id}')`,0,'')}${btn('💱','sell(\''+i.id+'\')',0,'g')}${pd.has(i.id)?'<button class="g" disabled>⏳</button>':btn('↩️',`reqRefund('${i.id}')`,0,'g')}</div>`).join('');if(k==='title')x+=spTitleRows(eq,true);return x?`<div class="t" style="margin-top:10px">${SLOT[k]}</div>`+x:''}).join('')||'<div class="q">아직 가진 아이템이 없어요. 달란트시장에서 구매해 보세요!</div>')}
 else if(cwTab==='castle')body=castleUI();
-else{const fee=lordOf()&&lordOf()!==me?rateOf():0,L=SHOP.filter(i=>i.s===shopSlot&&(!HIDE.has(i.id)||own[i.id]));
-body=`<div class="g2" style="margin:6px 0">${Object.keys(SLOT).map(k=>btn(SLOT[k],`shopTab('${k}')`,k===shopSlot,'g')).join('')}</div><div class="sm" style="margin-bottom:6px">👀 입어보기로 구매 전에 미리 확인! 쓰러짐·승리 효과는 위에서 자세가 자동으로 바뀌어요.${fee?` · 🏰 마을 수수료 ${fee}% 별도`:''}</div>`
-+L.map(i=>`<div class="row2">${thumb(i,ch)}<div class="nm2">${esc(i.n)}<div class="sm">${i.p}달란트${fee?' +'+feeOf(i.p):''}</div></div>${btn(tryOn[i.s]===i.id?'입는 중':'👀',`tryItem('${i.id}')`,tryOn[i.s]===i.id,'g')}${own[i.id]?(eq[i.s]===i.id?btn('해제',`equip('${i.s}','')`,1,''):btn('착용',`equip('${i.s}','${i.id}')`,0,'')):btn('구매',`buy('${i.id}')`,0,t>=i.p+feeOf(i.p)?'o':'g')}</div>`).join('')+(shopSlot==='title'?spTitleRows(eq,false):'')}
+else{const fee=lordOf()&&lordOf()!==me?rateOf():0,L=SHOP.filter(i=>i.s===shopSlot&&(!HIDE.has(i.id)||own[i.id])).sort((a,b)=>NEWI.has(b.id)-NEWI.has(a.id));
+body=`<div class="g2 scr" style="margin:6px 0">${Object.keys(SLOT).map(k=>btn(SLOT[k],`shopTab('${k}')`,k===shopSlot,'g')).join('')}</div><div class="sm" style="margin-bottom:6px">👀 입어보기로 구매 전에 미리 확인! 쓰러짐·승리 효과는 위에서 자세가 자동으로 바뀌어요.${fee?` · 🏰 마을 수수료 ${fee}% 별도`:''}</div>`
++L.map(i=>`<div class="row2">${thumb(i,ch)}<div class="nm2">${esc(i.n)}${NEWI.has(i.id)?' <span class="pill" style="background:rgba(255,143,177,.22);color:#ffc2d4">NEW</span>':''}<div class="sm">${i.p}달란트${fee?' +'+feeOf(i.p):''}</div></div>${btn(tryOn[i.s]===i.id?'입는 중':'👀',`tryItem('${i.id}')`,tryOn[i.s]===i.id,'g')}${own[i.id]?(eq[i.s]===i.id?btn('해제',`equip('${i.s}','')`,1,''):btn('착용',`equip('${i.s}','${i.id}')`,0,'')):btn('구매',`buy('${i.id}')`,0,t>=i.p+feeOf(i.p)?'o':'g')}</div>`).join('')+(shopSlot==='title'?spTitleRows(eq,false):'')}
 el.innerHTML=top+tabs+prev+body}
 // ===== 명예의 전당 · 인기도 =====
 window.fameSet=t=>{fameTab=t;render()};
@@ -1109,7 +1259,7 @@ window.like=async to=>{if(!me||to===me)return;const r=await runTransaction(ref(d
 function fameRender(){const el=$('fame'),us=realUsers();if(!us.length){el.style.display='none';return}el.style.display='block';
 const M={pop:['👍 인기',n=>pfOf(n).pop||0,'r_pop'],rich:['💰 번 달란트',earned,'r_rich'],win:['🏆 승리',n=>stOf(n).w||0,'r_win'],play:['🎮 출전',n=>stOf(n).g||0,'r_play'],maf:['🔪 마피아 승',n=>stOf(n).wm||0,'r_maf']},[,f,rid]=M[fameTab];
 const L=us.map(n=>[n,f(n)]).sort((a,b)=>b[1]-a[1]),mine=me?(((D.likes||{})[kday()]||{})[me]||{}):{},left=LIKE_MAX-Object.keys(mine).length;
-let h=`<div class="t">🏛️ 명예의 전당</div><div class="g2">${Object.keys(M).map(k=>btn(M[k][0],`fameSet('${k}')`,fameTab===k,'g')).join('')}</div><div class="q" style="font-size:.78rem;margin:8px 0">🥇 1위 보상: <b style="color:#ffd43b">${RANKM[rid][1]}</b> 칭호 + 이름 옆 ${icH(RANKM[rid][3],14)} 배지${fameTab==='pop'?`\n치장이 멋진 사람에게 👍! 하루 ${LIKE_MAX}번, 한 사람에게 하루 1번 · 오늘 남은 👍 <b>${me?left:0}</b>개`:''}\n캐릭터를 누르면 크게 구경할 수 있어요.</div>`;
+let h=`<div class="t">🏛️ 명예의 전당</div><div class="g2 scr">${Object.keys(M).map(k=>btn(M[k][0],`fameSet('${k}')`,fameTab===k,'g')).join('')}</div><div class="q" style="font-size:.78rem;margin:8px 0">🥇 1위 보상: <b style="color:#ffd43b">${RANKM[rid][1]}</b> 칭호 + 이름 옆 ${icH(RANKM[rid][3],14)} 배지${fameTab==='pop'?`\n치장이 멋진 사람에게 👍! 하루 ${LIKE_MAX}번, 한 사람에게 하루 1번 · 오늘 남은 👍 <b>${me?left:0}</b>개`:''}\n캐릭터를 누르면 크게 구경할 수 있어요.</div>`;
 if(peekN&&D.users[peekN])h+=`<div class="stage"><div class="sm" style="text-align:center">👀 ${esc(peekN)}님 구경 중</div><div id="pkbox" style="text-align:center">${stage(peekN,chOf(peekN),pfOf(peekN).eq||{})}</div>${viewCtl()}<div style="text-align:center;margin-top:6px">${btn('닫기',`peek('${peekN}')`,0,'g')}</div></div>`;
 let rk=0,pv=null;h+=L.map(([n,v],i)=>{if(v!==pv){rk=i+1;pv=v}const md=v>0?(['🥇','🥈','🥉'][rk-1]||rk+'.'):'-',ti=titleOf(n,pfOf(n).eq);return`<div class="fr${n===me?' me':''}"><div class="rk">${md}</div><div onclick="peek('${n}')" style="cursor:pointer">${fig(chOf(n),pfOf(n).eq,48)}</div><div class="nm2"><b>${esc(n)}</b> ${rankBadges(n)}${ti?`<div class="sm" style="color:#ffd43b">${esc(ti.t)}</div>`:''}</div><div class="vv">${v}</div>${fameTab==='pop'&&me&&n!==me?btn(mine[n]?'👍✓':'👍',`like('${n}')`,!!mine[n],left>0?'':'g'):''}</div>`}).join('');
 el.innerHTML=h}
@@ -1154,7 +1304,10 @@ if(g.sid&&localStorage.getItem('m1_nts')!==g.sid){localStorage.setItem('m1_nts',
 const o=NT(),MK=['➖','😇','🤔','😈'];
 el.innerHTML='<div class="t">📝 내 수첩 <span class="sm">(나만 보여요)</span></div>'+btn(ntOpen?'▲ 접기':'▼ 펼치기','ntTog()',0,'g')
 +(ntOpen?Object.keys(g.roles).filter(n=>n!==p).sort((a,b)=>(g.alive[b]?1:0)-(g.alive[a]?1:0)).map(n=>'<div class="row2"><button class="g" onclick="ntM(\''+n+'\')">'+MK[(o[n]||{}).m||0]+'</button><div class="nm2"><span class="'+(g.alive[n]?'':'d')+'">'+esc(n)+'</span><input data-keep="1" maxlength="60" placeholder="메모" value="'+esc((o[n]||{}).t||'')+'" oninput="ntT(\''+n+'\',this.value)"></div></div>').join(''):'')}
-const txApply=()=>{const on=localStorage.getItem('m1_tx')==='1';document.body.classList.toggle('tx',on);document.title=on?'메모':'원우마을 슬로우 마피아';const b=$('txb');if(b)b.textContent=on?'🎮 원래대로':'📝 텍스트'};
+const txApply=()=>{const on=localStorage.getItem('m1_tx')==='1';document.body.classList.toggle('tx',on);document.title=on?'메모':'원우마을 슬로우 마피아';const b=$('txb');if(b)b.innerHTML=on?'🎮<span>원래 화면으로 돌아가기</span>':'📝<span>텍스트 모드로 보기</span>'};
+let TAB=localStorage.getItem('m1_tab')||'game';
+window.navT=t=>{TAB=t;localStorage.setItem('m1_tab',t);document.body.dataset.tab=t;document.querySelectorAll('.nav button').forEach(b=>b.classList.toggle('cur',b.dataset.t===t));window.scrollTo(0,0)};navT(TAB);
+function navBadge(g,p){const on=(()=>{if(!p||!g||!g.roles||!g.roles[p]||!g.alive[p])return false;const d=g.day;if(g.phase==='vote')return!(D.votes[d]||{})[p];if(g.phase==='trial')return p!==g.def&&!(D.fv[d]||{})[p];if(g.phase==='night'){const r=g.roles[p],N=D.night[d]||{};if(isM(r))return!(N.mafia||{})[p];if(['doctor','police','detective'].includes(r))return!(N[r]||{})[p]}return false})();const el=$('dot_game');if(el)el.classList.toggle('on',on&&TAB!=='game')}
 window.txToggle=()=>{localStorage.setItem('m1_tx',localStorage.getItem('m1_tx')==='1'?'0':'1');txApply()};txApply();
 // ===== 마을 · 자동 진행 · 점수 · 프로필 =====
 const MAXP=10,VCAP=8,DL_H=21,RESET_H=6;let ysTxt='',vcOpen=false,vcSel='';
@@ -1200,9 +1353,9 @@ Object.keys(grp).sort().forEach(v=>{h+='<div class="sm" style="margin-top:8px"><
 if(vcSel&&D.users[vcSel]){const c=D.card[vcSel]||{},cm=vcSel===me?[]:common(vcSel,me);h+='<div class="q" style="margin-top:6px">👤 '+esc(vcSel)+(D.vil[vcSel]?' · '+esc(D.vil[vcSel]):'')+(D.keepers[vcSel]?' · 🛡️ 마을지기':'')+(c.m?' · '+c.m:'')+(cm.length?'\n🤝 나와 공통: '+cm.join(' · '):'')+'</div>'+(admin?btn(D.keepers[vcSel]?'🛡️ 마을지기 해제':'🛡️ 마을지기로 지정',"setKeeper('"+vcSel+"')",0,'g'):'')+(op&&vcSel!==me?btn('🎁 타마을 모임 참석 +50',"grantVisit('"+vcSel+"')",0,'o'):'')}
 if(op){const t=NOW(),kv=D.vil[me],ia=Object.keys(grp).filter(v=>admin||v===kv).map(v=>{const l=grp[v].filter(n=>t-(D.seen[n]||0)>7*864e5&&t-(D.lp[n]||0)>14*864e5);return l.length?esc(v)+': '+l.map(esc).join(', '):''}).filter(Boolean);h+='<div class="q" style="margin-top:8px;font-size:.8rem">🛡️ '+(admin?'운영자':'마을지기')+' 패널 · 오래 안 보인 사람 (접속 7일·참여 14일 이상 없음)\n'+(ia.join('\n')||'없어요 👍')+'</div>'+(inGame()?btn('⏩ 이 단계 넘기기 (잠수·비상용)','closeNow()',0,'r'):'')+(g&&g.phase==='end'?btn('🔄 지금 새 판 열기 (안 눌러도 '+RESET_H+'시간 뒤 자동)','resetG()',0,'g'):'')+btn('🧹 한 줄·투표 이유 지우기','clearNotes()',0,'g')+(kp&&!admin?cfgUI():'')}
 el.innerHTML=h}
-const FOLD=['bd','vc','hist','shop','fame'];let fd=Object.assign({shop:1,fame:1},JSON.parse(localStorage.getItem('m1_fd')||'{}'));
+const FOLD=['bd','vc','hist','fame'];let fd=Object.assign({},JSON.parse(localStorage.getItem('m1_fd')||'{}'));
 window.foldT=id=>{fd[id]=!fd[id];localStorage.setItem('m1_fd',JSON.stringify(fd));render()};
-function foldApply(){FOLD.forEach(id=>{const el=$(id);if(!el||el.style.display==='none')return;const t=el.querySelector('.t');if(!t)return;const f=!!fd[id];t.style.cursor='pointer';t.onclick=()=>foldT(id);t.querySelectorAll('.fa').forEach(x=>x.remove());t.insertAdjacentHTML('beforeend','<span class="fa" style="float:right;opacity:.6">'+(f?'▸ 펼치기':'▾ 접기')+'</span>');[...el.children].forEach(c=>{if(c!==t)c.style.display=f?'none':''})})}
+function foldApply(){FOLD.forEach(id=>{const el=$(id);if(!el||el.style.display==='none')return;const t=el.querySelector('.t');if(!t)return;const f=!!fd[id];t.style.cursor='pointer';t.onclick=()=>foldT(id);t.querySelectorAll('.fa').forEach(x=>x.remove());t.insertAdjacentHTML('beforeend','<span class="fa" style="float:right;opacity:.6">'+(f?'▸ 펼치기':'▾ 접기')+'</span>');[...el.children].forEach(c=>{if(c!==t&&!c.contains(t))c.style.display=f?'none':''})})}
 // ── 규칙서 (탭으로 정리) ──
 let rTab='flow';
 window.rulesOpen=()=>{$('ov').classList.add('op');document.body.style.overflow='hidden';rulesRender()};
@@ -1221,7 +1374,7 @@ if(rTab==='flow'){h=`<div class="q" style="font-size:.8rem">💬 대화는 <b>�
 +`<div class="h2">🏆 승리 조건</div><div class="wins"><div style="background:rgba(28,126,214,.2)"><b>🎉</b>시민 팀<br>마피아 전멸</div><div style="background:rgba(201,42,42,.22)"><b>😈</b>마피아 팀<br>마피아 수 ≥ 나머지</div><div style="background:rgba(132,94,247,.22)"><b>🤡</b>광대<br>재판으로 처형되면 혼자 승리</div></div>`
 +`<div class="h2">💀 죽으면?</div><div class="q" style="font-size:.8rem">• 쓰러진 캐릭터에 🔪마피아 / 🙂시민 표지만 붙어요 (광대·술꾼·예수님은 시민으로 보여요).\n• 유령 모드로 모든 직업과 밤 행동을 볼 수 있어요. <b>카톡방 스포는 절대 금지!</b>\n• 유령끼리 "오늘 누가 죽을까" 예측 게임으로 달란트를 벌 수 있어요.\n• 게임이 끝나면 모든 직업이 공개돼요.</div>`}
 else if(rTab==='roles'){const inS=k=>{const pt=st.split(' · ').find(x=>x.includes(RN[k]));return pt?(pt.includes('랜덤')?'랜덤 후보':'이번 판'):''},card=(k,cl)=>{const[e,...nm]=RN[k].split(' '),b=inS(k);return`<div class="rcd ${cl}">${b?`<span class="pill in">${b}</span>`:''}<div class="e">${e}</div><b>${nm.join(' ')}</b><p>${RD[k]}</p></div>`};
-h=`<div class="stp" style="display:block"><b style="font-family:'Black Han Sans';color:var(--gold)">📋 이번 판 구성</b><div class="chips">${st.split(' · ').map(x=>`<span>${x}</span>`).join('')}</div></div>`
+h=`<div class="stp" style="display:block"><b style="font-family:'Jua';color:var(--gold)">📋 이번 판 구성</b><div class="chips">${st.split(' · ').map(x=>`<span>${x}</span>`).join('')}</div></div>`
 +`<div class="h2">🔪 마피아 팀</div><div class="rg">${['mafia','godfather'].map(k=>card(k,'m')).join('')}</div>`
 +`<div class="h2">🛡️ 시민 팀 · 능력자</div><div class="rg">${['police','doctor','soldier','detective','jesus','mayor','reporter'].map(k=>card(k,'c2')).join('')}</div>`
 +`<div class="h2">🛡️ 시민 팀 · 일반</div><div class="rg">${['citizen','drunk','witness'].map(k=>card(k,'c2')).join('')}</div>`
@@ -1269,6 +1422,6 @@ const AD=$('adm');AD.style.display=ADMINQ?'block':'none';
 const fe=document.activeElement;if(ADMINQ&&!(fe&&AD.contains(fe)&&['INPUT','SELECT'].includes(fe.tagName))){if(!admin)AD.innerHTML='<div class="t">🛠️ 운영자</div><input id="ap" type="password" placeholder="운영자 비밀번호" onkeydown="if(event.key===\'Enter\')unlock()"><button onclick="unlock()">확인</button>';
 else AD.innerHTML=`<div class="t">🛠️ 운영자 모드</div><div class="g2">${btn('▶ 신청 끝 · 게임 시작 (신청자로 직업 배정)','startG()',0,'o')}${g&&['vote','trial','night'].includes(g.phase)?btn('⏩ 이 단계 넘기기(비상용)','closeNow()',0,'r'):''}${btn('🔄 한 판 더 (참가 신청 열기)','resetG()',0,'g')}</div><div class="sm" style="margin-top:6px">순서: ① 🔄 한 판 더(신청 열기) → ② 모두 신청하면 ▶ 신청 끝·게임 시작</div><div class="sm" style="margin-top:4px">신청 ${Object.keys(D.entries||{}).filter(n=>D.users[n]).length}명${g&&g.roles?' · 이번 판 참가자 '+Object.keys(g.roles).length+'명':''}</div>${refundUI()}${progUI(g)}${cfgUI()}${grantUI()}${keeperUI()}${lobbyNow()?`<div class="t" style="margin-top:14px">👥 대신 신청</div><div class="sm" style="margin:0 0 4px"> (운영자) · 참석 확인된 사람만 신청하세요</div><div class="g2">${btn('📋 지난 판 참가자 전원 신청 ('+(D.last||[]).length+'명)',"admAll('last')",0,'g')}${btn('👥 등록된 전원 신청',"admAll('all')",0,'g')}${btn('✖ 신청 전체 해제',"admAll('none')",0,'g')}</div><div class="g2" style="margin-top:6px">${$u.filter(n=>TEST||!D.users[n].bot).map(n=>btn((D.entries&&D.entries[n]?'✅ ':'')+n,`admApply('${n}')`,!!(D.entries&&D.entries[n]),'g')).join('')}</div>`:''}${TEST?`<div class="sm" style="margin:8px 0 4px">테스트 도구</div><div class="g2">${btn('🤖 봇 채우기(총9명 신청)','addBots()',0,'g')}${btn('봇 삭제','delBots()',0,'g')}${btn('🎲 봇 자동행동','auto()',0,'g')}</div><select onchange="setAs(this.value)"><option value="">👀 다른 사람으로 보기 (본인)</option>${$u.map(n=>`<option ${as===n?'selected':''} value="${n}">${n}${g&&g.roles&&g.roles[n]?' · '+RN[g.roles[n]]+(g.alive[n]?'':' 💀'):''}</option>`).join('')}</select>`:''}`}
 $('pl').innerHTML=$u.map(n=>{const dead=g&&g.alive&&g.roles&&g.roles[n]&&!g.alive[n],vo=(g&&g.phase==='vote'&&(D.votes[g.day]||{})[n])||((!g||g.phase==='lobby')&&D.entries&&D.entries[n]);const spec=g&&g.roles&&(g.phase==='end'||(p&&(g.roles[p]&&!g.alive[p]&&!(g.rise&&g.rise[p]))));return`<span class="${dead?'d':''}" style="padding:4px 8px;background:rgba(255,255,255,.08);border-radius:8px;font-size:.8rem">${(()=>{const t=acc(((D.profiles||{})[n]||{}).eq,n).ti;return t?`<small style="color:#ffd43b">${t}</small> `:''})()}${n}${vo?' ✅':''}${dead?' 💀':''}${g&&g.roles&&!g.roles[n]?' · 👀관전':''}${spec&&g.roles[n]?' · '+RN[n===p?g.roles[n]:vis(g,g.roles[n])]:(dead&&g.roles[n]?(isM(g.roles[n])?' · 🔪 마피아':' · 🙂 시민'):'')}</span>`}).join('')||'<span class="sm">아직 없어요</span>';
-$('lg').innerHTML=g&&g.log?(()=>{const L=[...g.log].reverse();return(lgAll?L:L.slice(0,8)).map(x=>`<div class="${lgc(x)}">${x}</div>`).join('')+(L.length>8?btn(lgAll?'▲ 접기':'▼ 이전 기록 더 보기 ('+(L.length-8)+')','lgMore()',0,'g more'):'')})():'<div class="sm">게임이 시작되면 기록이 쌓여요</div>';if($('ov').classList.contains('op'))rulesRender()}
+$('talkEmpty').style.display=$('bd').style.display==='none'?'':'none';navBadge(g,p);$('lg').innerHTML=g&&g.log?(()=>{const L=[...g.log].reverse();return(lgAll?L:L.slice(0,8)).map(x=>`<div class="${lgc(x)}">${x}</div>`).join('')+(L.length>8?btn(lgAll?'▲ 접기':'▼ 이전 기록 더 보기 ('+(L.length-8)+')','lgMore()',0,'g more'):'')})():'<div class="sm">게임이 시작되면 기록이 쌓여요</div>';if($('ov').classList.contains('op'))rulesRender()}
 render();setInterval(()=>{cd();tick()},1000);
 </script></body></html>
