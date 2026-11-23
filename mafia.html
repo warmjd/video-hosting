@@ -181,6 +181,11 @@ body.tx #hd{background:#2a2a2d;border:1px solid #3a3a3e;color:#ccc;box-shadow:no
 .story{display:flex;flex-direction:column;gap:8px}.st-d{background:rgba(255,255,255,.05);border-radius:14px;padding:10px 12px;font-size:.84rem;line-height:1.6}.st-n{background:rgba(80,90,180,.14)}.st-h{font-weight:800;font-size:.78rem;color:var(--mut);margin-bottom:2px}.st-m{color:#ff8787}.st-s{color:#69db7c}
 .dex{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}.dx{background:rgba(255,255,255,.05);border-radius:14px;padding:8px 4px;text-align:center;display:flex;flex-direction:column;align-items:center;gap:2px}.dx .di{height:34px;display:flex;align-items:center}.dx b{font-size:.74rem}.dx small{font-size:.62rem;color:var(--mut)}.dx.lock .di{filter:grayscale(1) brightness(.4)}.dx.lock b{color:var(--mut)}
 button.season{background:linear-gradient(90deg,#ffb86b,#ff8fb1);color:#fff}button.season.on{box-shadow:0 0 0 2px #fff inset}
+body.tvm{padding:0 2vw 2vh}body.tvm .w{max-width:none;display:grid;grid-template-columns:minmax(0,2.2fr) minmax(0,1fr);gap:16px;align-items:start}
+body.tvm .top,body.tvm #hd{grid-column:1/-1}body.tvm .nav,body.tvm #hdc,body.tvm .rb:not(#sndb){display:none}
+body.tvm .c[data-tab]{display:none!important}body.tvm .c#ringc{display:block!important;grid-row:span 3}body.tvm .c#logc{display:block!important}body.tvm .c#story{display:block!important}body.tvm .c#story[style*="none"]{display:none!important}
+body.tvm .scene{max-width:calc((100vh - 250px)*400/340);margin:0 auto}body.tvm #hdt b{font-size:2rem}body.tvm #hdt span{font-size:1.15rem}body.tvm .lg div{font-size:1rem}body.tvm h1{font-size:2rem}
+.offtb{display:flex;flex-wrap:wrap;gap:6px;cursor:pointer}.offtb span{background:rgba(255,255,255,.07);border-radius:10px;padding:6px 10px;font-size:.82rem}.offtb.hid span{filter:blur(6px)}
 *{font-family:'Gowun Dodum','Apple SD Gothic Neo','Noto Sans KR',sans-serif}
 #sndb.mut{opacity:.55}
 </style></head><body><div class="w">
@@ -192,8 +197,8 @@ button.season{background:linear-gradient(90deg,#ffb86b,#ff8fb1);color:#fff}butto
 <div class="c" id="award" data-tab="game" style="display:none"></div>
 <div class="c" id="story" data-tab="game" style="display:none"></div>
 <div class="c" id="ys" data-tab="game" style="display:none"></div>
-<div class="c" data-tab="game"><div class="t"><span class="gm">🔥 마을 모닥불</span><span class="to">참가자</span></div><div id="ring"></div><div id="pl" class="g2" style="margin-top:8px"></div></div>
-<div class="c" data-tab="game"><div class="t"><span class="gm">📜 마을 기록</span><span class="to">기록</span></div><div class="lg" id="lg"></div></div>
+<div class="c" id="ringc" data-tab="game"><div class="t"><span class="gm">🔥 마을 모닥불</span><span class="to">참가자</span></div><div id="ring"></div><div id="pl" class="g2" style="margin-top:8px"></div></div>
+<div class="c" id="logc" data-tab="game"><div class="t"><span class="gm">📜 마을 기록</span><span class="to">기록</span></div><div class="lg" id="lg"></div></div>
 <div class="c emp" id="talkEmpty" data-tab="talk"><div class="big">💬</div><div class="t">아직 토론할 게임이 없어요</div><div class="sm">게임이 시작되면 요약 · 오늘의 한 줄 · 직업 공개표 · 내 수첩이 여기에 모여요.</div></div>
 <div class="c" id="bd" data-tab="talk" style="display:none"></div>
 <div class="c" id="nt" data-tab="talk" style="display:none"></div>
@@ -203,10 +208,11 @@ button.season{background:linear-gradient(90deg,#ffb86b,#ff8fb1);color:#fff}butto
 <div class="c" id="fame" data-tab="town" style="display:none"></div>
 <div class="c" id="dex" data-tab="town" style="display:none"></div>
 <div class="c" id="vc" data-tab="town" style="display:none"></div>
-<div class="c" data-tab="more"><div class="t">☰ 더보기</div><button class="mrow" onclick="rulesOpen()">📖<span>규칙서 · 직업 · 달란트 안내</span></button><button class="mrow" onclick="introOpen()">👋<span>처음 안내 다시 보기</span></button><button class="mrow" id="txb" onclick="txToggle()">📝 텍스트</button><div class="sm" style="margin:6px 2px 0">텍스트 모드는 그림 없이 메모장처럼 가볍게 보여줘요.</div><div id="acct" style="margin-top:14px"></div></div>
+<div class="c" data-tab="more"><div class="t">☰ 더보기</div><button class="mrow" onclick="rulesOpen()">📖<span>규칙서 · 직업 · 달란트 안내</span></button><button class="mrow" onclick="tvOpen()">📺<span>진행자 화면 (TV·빔프로젝터에 띄우기)</span></button><button class="mrow" onclick="offOpen()">🃏<span>오프라인 한 판 (폰 하나로 돌려 하기)</span></button><button class="mrow" onclick="introOpen()">👋<span>처음 안내 다시 보기</span></button><button class="mrow" id="txb" onclick="txToggle()">📝 텍스트</button><div class="sm" style="margin:6px 2px 0">텍스트 모드는 그림 없이 메모장처럼 가볍게 보여줘요.</div><div id="acct" style="margin-top:14px"></div></div>
 <div class="c" id="adm" data-tab="more" style="display:none"></div>
 </div>
 <nav class="nav"><div><button data-t="game" onclick="navT('game')"><span class="i">🔥</span>게임<i class="dot" id="dot_game"></i></button><button data-t="talk" onclick="navT('talk')"><span class="i">💬</span>토론<i class="dot" id="dot_talk"></i></button><button data-t="look" onclick="navT('look')"><span class="i">🎀</span>꾸미기<i class="dot" id="dot_look"></i></button><button data-t="town" onclick="navT('town')"><span class="i">🏆</span>마을<i class="dot" id="dot_town"></i></button><button data-t="more" onclick="navT('more')"><span class="i">☰</span>더보기<i class="dot" id="dot_more"></i></button></div></nav>
+<div class="ov" id="off"><div class="sheet" style="padding:20px 18px calc(24px + env(safe-area-inset-bottom))"><div id="offB"></div></div></div>
 <div class="ov" id="ann"><div class="sheet" style="padding:22px 20px calc(24px + env(safe-area-inset-bottom))"><div id="annB"></div></div></div>
 <div class="ov" id="intro"><div class="sheet" style="padding:22px 20px calc(24px + env(safe-area-inset-bottom))"><div id="introB"></div></div></div>
 <div class="ov" id="ov" onclick="if(event.target===this)rulesClose()"><div class="sheet"><div class="sh-h"><div class="hx">📖 마피아 규칙서</div><button class="g" onclick="rulesClose()">✕ 닫기</button></div><div class="tabs" id="rtabs"></div><div class="sh-b" id="rbody"></div></div></div>
@@ -416,7 +422,7 @@ const r=RES(g,d);return`[원우마을 마피아] ${d}일차 밤이 됐어요\n${
 /* ===== 아침·밤 발표 · 유언 · 그날 밤 무슨 일이 ===== */
 const lying=n=>`<svg viewBox="-36 -26 72 34" style="width:190px;height:90px"><ellipse cx="-2" cy="4" rx="34" ry="4" fill="rgba(0,0,0,.35)"/><g transform="translate(28 0) rotate(-90)">${sprite(chOf(n),pfOf(n).eq||{})}</g></svg>`;
 const lwq=n=>{const t=(D.lw||{})[n];return t?`<div class="lwq">“${esc(t)}”<small>${esc(n)}님의 마지막 한마디</small></div>`:''};
-function annCheck(g){if(!me||!g||!g.sid||!g.roles||!['vote','night'].includes(g.phase))return;const key=g.sid+'_'+g.day+g.phase;if(localStorage.getItem('m1_ann')===key||$('ann').classList.contains('op')||$('intro').classList.contains('op'))return;
+function annCheck(g){if((!me&&!document.body.classList.contains('tvm'))||!g||!g.sid||!g.roles||!['vote','night'].includes(g.phase))return;const key=g.sid+'_'+g.day+g.phase;if(localStorage.getItem('m1_ann')===key||$('ann').classList.contains('op')||$('intro').classList.contains('op'))return;
 if(g.phase==='vote'&&g.day<2){localStorage.setItem('m1_ann',key);return}let h='';
 if(g.phase==='vote'){const r=RES(g,g.day-1);h=`<div class="hx ann-t">${g.day}일차 아침</div>`+(r.kl?`<div class="annfig">${lying(r.kl)}</div><p><b>${esc(r.kl)}</b>님이 쓰러진 채 발견됐어요.</p>`:`<div class="annfig">${icH('heart',60)}</div><p>${r.saved?'의사가 마피아의 습격을 막아냈어요!':r.sold?'군인이 마피아의 습격을 버텨냈어요!':'평화로운 밤이었어요. 아무도 다치지 않았어요.'}</p>`)+`<p class="sm">처형 투표는 ${hm(g.deadline)}까지예요.</p>`}
 else{const r=RES(g,g.day);h=`<div class="hx ann-t">${g.day}일차 밤</div>`+(r.ex?`<div class="annfig">${lying(r.ex.n)}</div><p><b>${esc(r.ex.n)}</b>님이 처형됐어요.<br>${r.ex.maf?'<b style="color:#ff8787">마피아였어요!</b>':'마피아가 아니었어요…'}</p>${lwq(r.ex.n)}`:`<div class="annfig">${icH('moon',60)}</div><p>오늘은 아무도 처형되지 않았어요.</p>`)+`<p class="sm">밤이 깊었어요. 능력자는 ${hm(g.deadline)}까지 행동해 주세요.</p>`}
@@ -440,6 +446,36 @@ h+=`<div class="st-d st-n"><div class="st-h">${d}일차 밤</div>`+(ml.length?`<
 +el2.map(([a,t])=>`<div>탐정 ${esc(a)} → ${esc(t)} 추적</div>`).join('')
 +`<div>${r.kl?`→ <b>${esc(r.kl)}</b> 사망 (${R(r.kl)})`:'→ 아무도 죽지 않았어요'}</div></div>`}
 h+='</div><div class="sm" style="margin-top:8px">투표 화살표가 있는 날짜별 상세 기록은 토론 탭에 있어요.</div>';el.innerHTML=h}
+
+/* ===== 진행자 화면 (?tv) ===== */
+window.tvOpen=()=>window.open(location.pathname+'?tv','_blank');
+if(new URLSearchParams(location.search).has('tv')){document.body.classList.add('tvm');setTimeout(()=>{lgAll=true},0)}
+/* ===== 오프라인 한 판: 폰 하나 돌려 가며 ===== */
+let OFG=(()=>{try{return JSON.parse(localStorage.getItem('m1_off'))||null}catch(e){return null}})()||{st:'setup',sel:[],extra:[]};
+const offSave=()=>{try{localStorage.setItem('m1_off',JSON.stringify(OFG))}catch(e){}};
+const offComp=n=>{const m=n>=10?3:n>=7?2:1,o=[];for(let i=0;i<m;i++)o.push('mafia');if(n>=5){o.push('doctor');o.push('police')}if(n>=8)o.push('jester');while(o.length<n)o.push('citizen');return o};
+const offNames=()=>[...new Set([...(OFG.sel||[]),...(OFG.extra||[])])];
+function offR(){const el=$('offB');let h='';
+if(OFG.st==='setup'){const pool=[...new Set([...ROSTER,...Object.keys(D.users||{}).filter(n=>!(D.users[n]||{}).bot)])],ns=offNames(),cp=offComp(ns.length),cnt={};cp.forEach(r=>cnt[r]=(cnt[r]||0)+1);
+h=`<div class="hx ann-t" style="text-align:center">오프라인 한 판</div><p class="sm" style="text-align:center;margin:6px 0 12px">모여서 하는 빠른 마피아예요. 폰 하나를 돌려 가며 각자 직업을 확인하고, 진행은 사회자 한 명이 맡아요(사회자는 게임에 참여하지 않아요).</p>
+<div class="sm" style="margin-bottom:6px">참가자 고르기 (${ns.length}명)</div><div class="g2">${pool.map(n=>btn(n,`offPick('${n}')`,ns.includes(n),'g')).join('')}</div>
+<div style="display:flex;gap:6px;margin-top:8px"><input id="offIn" data-keep="1" maxlength="8" placeholder="다른 이름 추가" style="margin:0"><button class="g" onclick="offAdd()">추가</button></div>
+<div class="q" style="margin-top:10px;font-size:.84rem">${ns.length<4?'4명 이상이어야 시작할 수 있어요.':'직업 구성: '+Object.keys(cnt).map(r=>RN[r].split(' ').slice(1).join(' ')+' '+cnt[r]).join(' · ')}</div>
+<button class="p" style="width:100%;padding:13px;margin-top:12px" ${ns.length<4?'disabled':''} onclick="offDeal()">직업 나눠주기</button><button class="g" style="width:100%;margin-top:8px" onclick="offClose()">닫기</button>`}
+else if(OFG.st==='deal'){const i=OFG.i,n=OFG.order[i];
+if(!OFG.show)h=`<div class="intro"><div class="sm">${i+1} / ${OFG.order.length}</div><div class="ie">${icH('eye',64)}</div><div class="hx ann-t">${esc(n)}님 차례</div><p>${esc(n)}님에게 폰을 건네주세요.<br>다른 사람은 화면을 보지 않기!</p><button class="p" style="width:100%;padding:14px" onclick="offShow()">내 직업 보기</button></div>`;
+else{const r=OFG.roles[n],mates=r==='mafia'?OFG.order.filter(x=>x!==n&&OFG.roles[x]==='mafia'):[];h=`<div class="intro"><div class="ie">${icH(ROLEIC[r],72)}</div><div class="hx ann-t">${RN[r].split(' ').slice(1).join(' ')}</div><p>${RD[r]||''}${mates.length?'<br><b style="color:#ff8787">동료 마피아: '+mates.map(esc).join(', ')+'</b>':''}</p><button class="p" style="width:100%;padding:14px" onclick="offNext()">확인했어요 · 가리고 다음 사람</button></div>`}}
+else{const ns=OFG.order;h=`<div class="hx ann-t" style="text-align:center">진행 가이드</div><p class="sm" style="text-align:center;margin:6px 0 12px">여기서부터는 사회자가 폰을 들고 진행해요.</p>
+<div class="story">${[['밤','모두 눈을 감아요. 사회자가 차례대로 부릅니다.'],['마피아','눈을 뜨고 서로 확인한 뒤, 제거할 한 명을 손가락으로 가리켜요. 사회자는 기억해 둬요.'],['의사','눈을 뜨고 오늘 밤 지킬 한 명을 가리켜요.'],['경찰','눈을 뜨고 조사할 한 명을 가리켜요. 사회자는 마피아면 고개를 끄덕여 줘요.'],['아침','모두 눈을 뜨고, 사회자가 간밤에 누가 쓰러졌는지(혹은 의사가 살렸는지) 발표해요.'],['낮','자유롭게 토론하고 하나, 둘, 셋에 동시에 의심 가는 사람을 가리켜요. 가장 많이 지목된 사람이 처형돼요.'],['끝','마피아가 모두 처형되면 시민 승리, 마피아 수가 시민 수와 같아지면 마피아 승리예요. 광대는 처형당하면 혼자 이겨요.']].map(([a,b])=>`<div class="st-d"><div class="st-h">${a}</div>${b}</div>`).join('')}</div>
+<div class="sm" style="margin:12px 0 6px">사회자용 직업표 (누르면 보여요)</div><div class="offtb${OFG.peek?'':' hid'}" onclick="offPeek()">${ns.map(n=>`<span>${esc(n)} · ${RN[OFG.roles[n]].split(' ').slice(1).join(' ')}</span>`).join('')}</div>
+<button class="p" style="width:100%;margin-top:12px" onclick="offReset()">새 게임 (같은 사람들로)</button><button class="g" style="width:100%;margin-top:8px" onclick="offClose()">닫기</button>`}
+el.innerHTML=h;deE(el)}
+window.offOpen=()=>{$('off').classList.add('op');offR()};window.offClose=()=>{$('off').classList.remove('op')};
+window.offPick=n=>{const i=OFG.sel.indexOf(n);if(i>=0)OFG.sel.splice(i,1);else{OFG.sel.push(n);const j=OFG.extra.indexOf(n);if(j>=0)OFG.extra.splice(j,1)}offSave();offR()};
+window.offAdd=()=>{const v=($('offIn').value||'').trim().slice(0,8);if(!v)return;if(!OFG.extra.includes(v)&&!OFG.sel.includes(v))OFG.extra.push(v);offSave();offR()};
+window.offDeal=()=>{const ns=offNames().sort(()=>Math.random()-.5),rs=offComp(ns.length).sort(()=>Math.random()-.5);OFG.order=ns;OFG.roles={};ns.forEach((n,i)=>OFG.roles[n]=rs[i]);OFG.i=0;OFG.show=false;OFG.peek=false;OFG.st='deal';offSave();offR()};
+window.offShow=()=>{OFG.show=true;offR()};window.offNext=()=>{OFG.show=false;OFG.i++;if(OFG.i>=OFG.order.length)OFG.st='guide';offSave();offR()};
+window.offPeek=()=>{OFG.peek=!OFG.peek;offR()};window.offReset=()=>{OFG.st='setup';offSave();offR()};
 window.cpNotice=()=>{const g=G();localStorage.setItem('m1_ntc',g?(g.sid||0)+'_'+(g.seq||0)+g.phase:'lobby');cpTxt(noticeTxt());render()};
 
 let hp=0,HT=0;
