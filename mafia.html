@@ -204,7 +204,7 @@ const ROSTER=['조원우','서충원','나선엽','류태웅','박경민','박�
 const RN={mafia:'🔪 마피아',doctor:'💉 의사',police:'🕵️ 경찰',jester:'🤡 광대',citizen:'🛋️ 백수',godfather:'🕴️ 갓파더',soldier:'🪖 군인',detective:'🔎 탐정',jesus:'✝️ 예수님',mayor:'🏛️ 이장',reporter:'📰 기자',drunk:'🍺 술꾼',witness:'👀 목격자'};
 const vis=(g,r)=>g.phase==='end'||!['jester','drunk','jesus'].includes(r)?r:'citizen';
 const RD={mafia:'밤마다 1명을 지목해 제거하세요. 들키지 마세요.',doctor:'밤마다 1명을 보호하세요. 같은 사람 연속 불가, 본인 가능.',police:'밤에 1명을 조사하면 다음 날 아침에 마피아인지 알려줘요. 갓파더는 같은 사람을 두 번 조사하면 정체가 드러나요.',jester:'투표로 처형당하면 혼자 승리! 의심받아야 이겨요.',jesus:'시민 편이에요. 처형이든 습격이든 죽으면 3일 뒤 낮에 부활해요 (1번). 죽어 있는 동안은 유령 모드 없이, 죽은 사람처럼 카톡방에서 말하면 안 돼요.',mayor:'재판 찬반이 동률이면 당신의 한 표가 결정해요.',reporter:'게임당 1번 밤에 속보를 발행하면, 아침에 "간밤에 능력을 쓴 사람 수"가 모두에게 공개돼요.',drunk:'시민 편이에요. 하지만 경찰이 조사하면 마피아로 나와요! 억울하게 몰리지 않게 조심하세요.',witness:'시민 편이에요. 시작할 때 마피아 팀 한 명의 이름 초성을 힌트로 받아요.',detective:'밤에 1명을 조사하면 다음 날 아침 "그 사람이 간밤에 능력을 누구에게 썼는지" 알려줘요. 직업은 알려주지 않아요.',godfather:'마피아 편이에요! 경찰이 조사해도 마피아 아님으로 나와요. 매일 1명을 지목해 제거하세요.',soldier:'마피아의 밤 습격을 1번 버텨요. 발동하면 정체가 공개돼요. 투표 처형은 못 막아요.',citizen:'시민 편이에요. 특별한 능력은 없지만 카톡 대화와 투표로 마피아를 찾아내세요.'};
-const CASTLE_ON=false;const $=id=>document.getElementById(id);
+const CASTLE_ON=true;const $=id=>document.getElementById(id);
 const toast=m=>{document.querySelectorAll('.toast').forEach(x=>x.remove());const d=document.createElement('div');d.className='toast';d.textContent=m;document.body.appendChild(d);setTimeout(()=>d.remove(),2600)};
 const db=getDatabase(initializeApp(cfg));let OFF=0;const NOW=()=>Date.now()+OFF;onValue(ref(db,'.info/serverTimeOffset'),x=>{OFF=x.val()||0});
 let D={users:{},game:null,votes:{},night:{},ghost:{},fv:{},entries:{},profiles:{},last:[],cfg:null,refunds:{},likes:{},castle:{},board:{},why:{},lobbyDl:0,lobbyMsg:'',hello:{},vil:{},card:{},plays:{},lp:{},seen:{},keepers:{},endAt:0},me=localStorage.getItem('m1_me')||'',as='',admin=false,loaded=false,busy=false,busyAt=0;
@@ -323,6 +323,7 @@ if(!auto&&G()&&!['lobby','end'].includes(G().phase)&&!confirm('진행 중인 게
 const {roles,alive,ms,wh}=makeRoles(ns,sh,cf),m=Object.values(roles).filter(isM).length,setup=cf.mode==='auto'?'🤖 자동 구성 · 마피아 '+m+'명':ck.txt;
 await set(ref(db,ROOT+'/votes'),null);await set(ref(db,ROOT+'/night'),null);await set(ref(db,ROOT+'/ghost'),null);await set(ref(db,ROOT+'/fvotes'),null);for(const k of ['board','why'])try{await set(ref(db,ROOT+'/'+k),null)}catch(e){console.error(e)}await set(ref(db,ROOT+'/game'),{phase:'vote',day:1,seq:0,def:'',deadline:NOW()+cf.tm.v*HR,tm:cf.tm,setup,roles,alive,ms,wh,sid:NOW(),winner:'',log:['🌅 게임 시작! '+n+'명 참가 · '+setup+' · 모두에게 직업이 배정됐어요','☀️ 1일차 낮이 시작됐어요. 카톡방에서 의심을 나누고 투표하세요. 모두 투표하면 바로 최후 변론으로 넘어가요!']})};
 window.closeNow=async()=>{if(!confirm('지금 이 단계를 바로 넘길까요? (비상용)'))return;await runTransaction(ref(db,ROOT+'/game'),c=>{if(!c||!c.roles||!['vote','trial','night'].includes(c.phase))return;step(c);c.seq=(c.seq||0)+1;return c})};
+window.openNext=async()=>{if(!confirm('다음 판 참가 신청을 지금 열까요?\n이번 판 달란트는 모두 정산되고 기록은 정리돼요.'))return;await resetG(true)};
 window.resetG=async(auto)=>{if(!auto&&!confirm('한 판 더 하시겠어요? 이전 판의 투표·역할·기록과 참가 신청이 모두 지워지고, 참가 신청을 새로 받아요. (달란트와 구매 내역은 유지돼요)'))return;const g0=G();if(g0&&g0.phase==='end'&&g0.aw)for(const k of Object.keys(g0.aw))await claim(k,g0);if(g0&&g0.roles)await set(ref(db,ROOT+'/last'),Object.keys(g0.roles));for(const k of ['votes','night','ghost','fvotes','entries','board','why','hello','lobbyDl','lobbyMsg'])try{await set(ref(db,ROOT+'/'+k),null)}catch(e){console.error(e)}await set(ref(db,ROOT+'/game'),{phase:'lobby'});try{await set(ref(db,ROOT+'/endAt'),null)}catch(e){console.error(e)}};
 const lobbyNow=()=>{const g=G();return!g||g.phase==='lobby'};
 const inGame=()=>{const g=G();return!!(g&&['vote','trial','night'].includes(g.phase))};
@@ -378,7 +379,7 @@ else if(g.phase==='trial'){if(b!==g.def)await set(ref(db,ROOT+'/fvotes/'+d+'/'+b
 else if(g.phase==='night'){if(isM(r))await set(ref(db,ROOT+'/night/'+d+'/mafia/'+b),pk(b));if(r==='doctor')await set(ref(db,ROOT+'/night/'+d+'/doctor/'+b),a[Math.random()*a.length|0]);if(r==='police')await set(ref(db,ROOT+'/night/'+d+'/police/'+b),pk(b));if(r==='detective')await set(ref(db,ROOT+'/night/'+d+'/detective/'+b),pk(b))}}};
 window.unlock=()=>{if($('ap').value===ADMIN_PIN){admin=true;render()}else $('ap').value=''};
 window.setAs=v=>{as=v;render()};
-const face=n=>{const e=((D.profiles||{})[n]||{}).eq||{};return`<svg viewBox="-14 -66 28 33" class="fc">${sprite(chOf(n),{hat:e.hat,glass:e.glass,face:e.face})}</svg>`};
+const face=n=>{const e=((D.profiles||{})[n]||{}).eq||{};return`<svg viewBox="-15 -61 30 35" class="fc">${sprite(chOf(n),{hat:e.hat,glass:e.glass,face:e.face})}</svg>`};
 const fbtn=(n,fn,on,cls,x)=>`<button class="fbn ${on?'on':cls||''}" onclick="${fn}">${face(n)}<span>${esc(n)}${x||''}</span></button>`;
 const btn=(t,fn,on,cls)=>`<button class="${on?'on':cls||''}" onclick="${fn}">${t}</button>`;
 const hm=t=>{const d=new Date(t),n=new Date(NOW()),tm=d.toLocaleTimeString('ko-KR',{hour:'numeric',minute:'2-digit'}),tw=new Date(NOW()+864e5);return(d.toDateString()===n.toDateString()?'오늘 ':d.toDateString()===tw.toDateString()?'내일 ':(d.getMonth()+1)+'/'+d.getDate()+' ')+tm};
@@ -433,8 +434,8 @@ const F0=D.fv[d]||{},yl=Object.keys(F0).filter(k=>F0[k]==='y'),nl=Object.keys(F0
 const PS=2.4,GW=16,GH=27;
 const blend=(a,b,t)=>{const x=parseInt(a.slice(1),16),y=parseInt(b.slice(1),16),f=s=>Math.round((x>>s&255)*(1-t)+(y>>s&255)*t);return'#'+((1<<24)+(f(16)<<16)+(f(8)<<8)+f(0)).toString(16).slice(1)};
 const mix=(hex,f)=>{const n=parseInt(hex.slice(1),16),r=Math.min(255,(n>>16&255)*f|0),g=Math.min(255,(n>>8&255)*f|0),b=Math.min(255,(n&255)*f|0);return'#'+((1<<24)+(r<<16)+(g<<8)+b).toString(16).slice(1)};
-const SKIN=['#f1c27d','#ffdbac','#e0ac69','#c68642','#8d5524'],HAIRC=['#2b2118','#5a3a1e','#d9a441','#c0392b','#3b5bdb','#f06595','#868e96','#f1f3f5'],SHIRT=['#e03131','#1971c2','#2f9e44','#f08c00','#9c36b5','#0c8599','#c2255c','#5f3dc4','#e8590c','#2b8a3e','#495057','#fab005'],PANTS=['#3b4252','#1c3d6e','#4a3b2a','#2b2b2b','#5c2d2d','#2f4f4f'],HAIRN=['단발','장발','뾰족','똥머리','양갈래','포니테일','뱅 단발','웨이브'];
-const BASE=Object.fromEntries(['................','................','................','................','...oooooooooo...','...oSSSSSSSSo...','...oSSSSSSSSo...','...oSeSSSSeSo...','...oSeSSSSeSo...','...oSsSSSSsSo...','...oSSSmmSSSo...','...oSSSSSSSSo...','....oooooooo....','...oCCCCCCCCo...','..oCCCCCCCCCCo..','..oCCcCCCCcCCo..','..oSCCCCCCCCSo..','..oSCCCCCCCCSo..','...oCCCCCCCCo...','...obbbbbbbbo...','...oPPPooPPPo...','...oPPPooPPPo...','...oPPPooPPPo...','...oPpPooPpPo...','...oPPPooPPPo...','...oBBBooBBBo...','...oooo..oooo...'].map((r,i)=>[i,r]));
+const SKIN=['#ffe2cc','#f8d0b2','#e4b492','#c08c6c','#946852'],HAIRC=['#8c645c','#463a48','#704a3c','#ecc678','#f4a0b8','#8cbce8','#aa8cd6','#d6d6e4'],SHIRT=['#96d0c6','#ffbacc','#c4b4f0','#ffdc96','#a8d2f4','#ffc8aa','#fafafa','#7c82a0','#bee2a0','#ff968c','#4a4458','#ffe066'],PANTS=['#8ea6d8','#6b7a9e','#a58a78','#5c5470','#c98f8f','#7fa69a'],HAIRN=['단발','장발','뾰족','똥머리','양갈래','포니테일','뱅 단발','웨이브'];
+const BASE=Object.fromEntries(['................','................','................','.....HHHHHH.....','....HHHHHHHH....','...HHhhHHHHHH...','...HHHHHHHHHH...','...HHSSSSSSHH...','...HSeSSSSeSH...','...HsESSSSEsH...','...HSSSmmSSSH...','....SSSSSSSS....','.....SSSSSS.....','....CCCCCCCC....','...CCCccccCCC...','...CCCCCCCCCC...','...CCCCCCCCCC...','...CCCCCCCCCC...','...CccccccccC...','...S.PPPPPP.S...','.....PPPPPP.....','.....PP..PP.....','.....PP..PP.....','.....PP..PP.....','.....pP..Pp.....','.....BB..BB.....','................'].map((r,i)=>[i,r]));
 const HAIR=[
 {4:'...oHHHHHHHHo...',5:'....HhhHHHHH....',6:'....HHHHHHHH....',7:'....H......H....'},
 {4:'...oHHHHHHHHo...',5:'....HhhHHHHH....',6:'....HHHHHHHH....',7:'...HH......HH...',8:'...HH......HH...',9:'...HH......HH...',10:'...HH......HH...',11:'...HH......HH...',12:'...HH......HH...',13:'..HH........HH..'},
@@ -1019,23 +1020,28 @@ function chOf(n){const c=((D.profiles||{})[n]||{}).ch||{},h=hs(n);return{sk:c.sk
 function putL(G,rows,pal){for(const r in rows){const t=rows[r];if(!G[+r])continue;for(let c=0;c<GW;c++){const k=t[c];if(k&&k!=='.'&&pal[k])G[+r][c]=pal[k]}}}
 const blank=()=>Array.from({length:GH},()=>Array(GW).fill(null));
 const cutS=G=>G.map(row=>row.filter((_,c)=>c<4||c>6)),mir=G=>G.map(row=>[...row].reverse());
-function gridSVG(G){let out='';const W=G[0].length;for(let r=0;r<GH;r++){let c=0;while(c<W){const col=G[r][c];if(!col){c++;continue}let e=c;while(e+1<W&&G[r][e+1]===col)e++;out+=`<rect x="${((c-W/2)*PS).toFixed(2)}" y="${((r-GH)*PS).toFixed(2)}" width="${((e-c+1)*PS+.05).toFixed(2)}" height="${(PS+.05).toFixed(2)}" fill="${col}"/>`;c=e+1}}return out}
+const RMAP=[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,17,18,19,20,21,21,22,22,23,24],GH2=25,OUTC='#584870';
+function squash(G){const W=G[0].length,o=Array.from({length:GH2},()=>Array(W).fill(null));for(let r=0;r<GH;r++)for(let c=0;c<W;c++)if(G[r][c])o[RMAP[r]][c]=G[r][c];return o}
+function outl(G,avoid){const H=G.length,W=G[0].length,add=[];for(let r=0;r<H;r++)for(let c=0;c<W;c++){if(G[r][c]||(avoid&&avoid[r][c]))continue;if((r>0&&G[r-1][c])||(r<H-1&&G[r+1][c])||(c>0&&G[r][c-1])||(c<W-1&&G[r][c+1]))add.push([r,c])}add.forEach(([r,c])=>G[r][c]=OUTC);return G}
+function gridSVG(G){let out='';const W=G[0].length,H=G.length;for(let r=0;r<H;r++){let c=0;while(c<W){const col=G[r][c];if(!col){c++;continue}let e=c;while(e+1<W&&G[r][e+1]===col)e++;out+=`<rect x="${((c-W/2)*PS).toFixed(2)}" y="${((r-H)*PS).toFixed(2)}" width="${((e-c+1)*PS+.05).toFixed(2)}" height="${(PS+.05).toFixed(2)}" fill="${col}"/>`;c=e+1}}return out}
+const putSh=(G,rows,pal)=>{const o={};for(const r in rows){const t=rows[r];o[+r+1]=t}putL(G,o,pal)};
 function sprite(ch,eq,view){view=view||'f';const sk=SKIN[ch.sk]||SKIN[0],hc=HAIRC[ch.hc]||HAIRC[0],sh=SHIRT[ch.sh]||SHIRT[0],pc=PANTS[ch.pc]||PANTS[0],it=k=>(ITEM[(eq||{})[k]]||{}).v;
-const pal={o:'#1b1b2a',S:sk,s:blend(sk,'#ff7a9a',.38),e:'#1b1b2a',m:mix(sk,.6),C:sh,c:mix(sh,.78),P:pc,p:mix(pc,.75),B:'#4a2f1d',b:'#3d2b1f',H:hc,h:mix(hc,1.35)};
+const pal={o:OUTC,S:sk,s:blend(sk,'#ff8096',.4),e:'#2c223c',E:'#68548a',m:blend(sk,'#c45468',.42),C:sh,c:mix(sh,.84),P:pc,p:mix(pc,.82),B:'#9e7460',b:'#7a5848',H:hc,h:mix(hc,1.18)};
 const sut=it('suit'),tp=sut||it('top'),bt=sut||it('bot'),dk=(x,f)=>x[0]==='#'?mix(x,f):x;
-if(tp){pal.C=tp.C;pal.c=tp.c||dk(tp.C,.78)}if(bt){pal.P=bt.P;pal.p=bt.p||dk(bt.P,.75);if(bt.B)pal.B=bt.B;if(bt.bl)pal.b=bt.bl}
+if(tp){pal.C=tp.C;pal.c=tp.c||dk(tp.C,.82)}if(bt){pal.P=bt.P;pal.p=bt.p||dk(bt.P,.8);if(bt.B)pal.B=bt.B;if(bt.bl)pal.b=bt.bl}
 const back=view==='b',side=view==='s'||view==='l';let G=blank();const cape=it('cape');
 const ovl=x=>{if(!x)return;const op={};for(const k in(x.op||{}))op[k]=x.op[k]==='$S'?pal.S:x.op[k];if(x.ov)putL(G,x.ov,op);if(!back&&x.fr)putL(G,x.fr,op);if(back&&x.bk)putL(G,x.bk,op)};
 if(cape&&!back)putL(G,cape.rows,cape.pal);
-putL(G,BASE,pal);if(sut)ovl(sut);else{ovl(it('top'));ovl(it('bot'))}putL(G,HAIR[ch.hs]||HAIR[0],pal);
-if(back){const fc=[pal.S,pal.s,pal.e,pal.m];for(let r=5;r<=11;r++)for(let c=4;c<=11;c++)if(fc.includes(G[r][c]))G[r][c]=r>=10?mix(hc,.8):hc}
+putL(G,BASE,pal);if(sut)ovl(sut);else{ovl(it('top'));ovl(it('bot'))}if(ch.hs)putL(G,HAIR[ch.hs]||HAIR[0],pal);
+if(back){const fc=[pal.S,pal.s,pal.e,pal.E,pal.m];for(let r=7;r<=12;r++)for(let c=3;c<=12;c++)if(fc.includes(G[r][c]))G[r][c]=r>=11?mix(hc,.85):hc}
 if(side)for(let c=0;c<GW;c++)if(G[10][c]===pal.m)G[10][c]=pal.S;
-if(!back){const f=it('face'),gl=it('glass');if(f)putL(G,f.rows,f.pal);if(gl)putL(G,gl.rows,gl.pal)}
+if(!back){const f=it('face'),gl=it('glass');if(f)putSh(G,f.rows,f.pal);if(gl)putSh(G,gl.rows,gl.pal)}
 const hat=it('hat');if(hat)putL(G,hat.rows,hat.pal);
 if(back&&cape)putL(G,cape.rows,cape.pal);
 const hd=it('hand');let H=null;if(hd){H=blank();putL(H,hd.rows,hd.pal);if(back)H=mir(H);if(!hd.a){for(let r=0;r<GH;r++)for(let c=0;c<GW;c++)if(H[r][c])G[r][c]=H[r][c];H=null}}
 if(side){G=cutS(G);if(!G[9][10])G[9][10]=pal.S;if(G[10][8]===pal.S)G[10][8]=pal.m;if(H)H=cutS(H)}
 if(view==='l'){G=mir(G);if(H)H=mir(H)}
+G=outl(squash(G));if(H)H=outl(squash(H),G);
 return`<g shape-rendering="crispEdges">${gridSVG(G)}${H?`<g class="hx-${hd.a}">${gridSVG(H)}</g>`:''}</g>`}
 const fxv=v=>!v?{}:typeof v==='string'?{e:v}:v;
 function footSVG(v){return v?`<g class="${v.a?'ft-'+v.a:''}">${rowsSVG(v.rows,v.pal,PS,-19.2,-4)}</g>`:''}
@@ -1116,29 +1122,31 @@ const SKY={day:['#5fb4f0','#cdeeff'],dusk:['#3b1f5c','#ff9a62'],night:['#03050f'
 const GRD={day:['#5c8d3a','#4a7a2e','#a47a4c','#8a6440'],dusk:['#4f6f32','#3f5c28','#8f6a44','#76573a'],night:['#1d3322','#16281a','#4a3a2a','#3b2e22']};
 function pine(x,y,s,c1,c2){let o='';for(let i=0;i<3;i++){const w=(14-i*3.5)*s,yy=y-i*8*s;o+=`<polygon points="${x-w},${yy} ${x},${yy-13*s} ${x+w},${yy}" fill="${i%2?c2:c1}"/>`}return o+`<rect x="${x-1.5*s}" y="${y}" width="${3*s}" height="${5*s}" fill="#4a2f1d"/>`}
 function tent(x,y,col,night){return`<g transform="translate(${x} ${y})" shape-rendering="crispEdges"><polygon points="-22,0 0,-28 22,0" fill="${col}"/><polygon points="-22,0 0,-28 -6,0" fill="rgba(0,0,0,.18)"/><polygon points="-6,0 0,-16 6,0" fill="${night?'#ffd43b':'#2b1d12'}" opacity="${night?.85:1}"/>${night?'<circle cx="0" cy="-6" r="14" fill="#ffd43b" opacity=".12"/>':''}<rect x="-1" y="-32" width="2" height="5" fill="#6b4423"/><polygon points="1,-32 9,-30 1,-28" fill="#e03131"/></g>`}
-function bgSVG(mode,wt,lv){const sk=wt==='rain'&&mode==='day'?SKY.rain:SKY[mode],gc=GRD[mode],night=mode==='night',R=(i,lo,hi)=>lo+RN01(i)*(hi-lo);
-let s=`<defs><linearGradient id="skyG" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="${sk[0]}"/><stop offset="1" stop-color="${sk[1]}"/></linearGradient><radialGradient id="dirtG" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="${gc[2]}"/><stop offset=".8" stop-color="${gc[3]}"/><stop offset="1" stop-color="${gc[3]}" stop-opacity="0"/></radialGradient></defs><rect width="400" height="150" fill="url(#skyG)"/>`;
-if(night){for(let i=0;i<34;i++)s+=`<rect class="tw" x="${R(i,4,396).toFixed(0)}" y="${R(i+40,4,95).toFixed(0)}" width="${i%5?1.6:2.4}" height="${i%5?1.6:2.4}" fill="#fff" style="animation-delay:${(RN01(i+7)*2).toFixed(2)}s"/>`;s+=`<circle cx="330" cy="36" r="20" fill="#fff9db" opacity=".12"/><circle cx="330" cy="36" r="11" fill="#fff3bf"/><circle cx="335" cy="32" r="10" fill="${sk[0]}"/>`}
-else if(wt!=='rain')s+=mode==='day'?`<circle cx="335" cy="38" r="24" fill="#fff3bf" opacity=".25"/><circle cx="335" cy="38" r="13" fill="#ffe066"/>`:`<circle cx="330" cy="98" r="22" fill="#ff922b" opacity=".35"/><circle cx="330" cy="98" r="14" fill="#ff6b3d"/>`;
+function house(x,y,wall,roof,night,sc,church){const win=night?'#ffd43b':'#bfe3ff';return`<g transform="translate(${x} ${y}) scale(${sc||1})" shape-rendering="crispEdges"><ellipse cx="0" cy="0" rx="17" ry="2.5" fill="rgba(0,0,0,.18)"/><rect x="-13" y="-16" width="26" height="16" fill="${wall}"/><rect x="-13" y="-16" width="26" height="2" fill="rgba(0,0,0,.12)"/><polygon points="-16,-15 0,-29 16,-15" fill="${roof}"/><polygon points="0,-29 16,-15 9,-15" fill="rgba(0,0,0,.18)"/>`+(church?`<rect x="-4" y="-45" width="8" height="17" fill="${wall}"/><polygon points="-6,-44 0,-52 6,-44" fill="${roof}"/><rect x="-.8" y="-60" width="1.6" height="8" fill="#ffd43b"/><rect x="-3" y="-57.5" width="6" height="1.6" fill="#ffd43b"/><rect x="-2.5" y="-11" width="5" height="11" fill="#7a5a44"/><rect x="-10" y="-12" width="4" height="6" fill="${win}"/><rect x="6" y="-12" width="4" height="6" fill="${win}"/>`:`<rect x="-3" y="-9" width="6" height="9" fill="#7a5a44"/><rect x="-10" y="-12" width="5" height="5" fill="${win}"/><rect x="5" y="-12" width="5" height="5" fill="${win}"/><rect x="7" y="-27" width="4" height="7" fill="#8a6a54"/>`)+(night?`<circle cx="0" cy="-8" r="18" fill="#ffd43b" opacity=".07"/>`:'')+`</g>`}
+function bgSVG(mode,wt,lv){const sk=wt==='rain'&&mode==='day'?SKY.rain:SKY[mode],gc=GRD[mode],night=mode==='night',dusk=mode==='dusk',R=(i,lo,hi)=>lo+RN01(i)*(hi-lo);
+let s=`<defs><linearGradient id="skyG" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="${sk[0]}"/><stop offset="1" stop-color="${sk[1]}"/></linearGradient><linearGradient id="gndG" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="${gc[1]}"/><stop offset=".35" stop-color="${gc[0]}"/><stop offset="1" stop-color="${mix(gc[0],1.08)}"/></linearGradient><radialGradient id="dirtG" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="${gc[2]}" stop-opacity=".9"/><stop offset=".7" stop-color="${gc[2]}" stop-opacity=".55"/><stop offset="1" stop-color="${gc[2]}" stop-opacity="0"/></radialGradient></defs><rect width="400" height="150" fill="url(#skyG)"/>`;
+if(night){for(let i=0;i<34;i++)s+=`<rect class="tw" x="${R(i,4,396).toFixed(0)}" y="${R(i+40,4,90).toFixed(0)}" width="${i%5?1.6:2.4}" height="${i%5?1.6:2.4}" fill="#fff" style="animation-delay:${(RN01(i+7)*2).toFixed(2)}s"/>`;s+=`<circle cx="330" cy="34" r="20" fill="#fff9db" opacity=".12"/><circle cx="330" cy="34" r="11" fill="#fff3bf"/><circle cx="335" cy="30" r="10" fill="${sk[0]}"/>`}
+else if(wt!=='rain')s+=mode==='day'?`<circle cx="335" cy="36" r="24" fill="#fff3bf" opacity=".25"/><circle cx="335" cy="36" r="13" fill="#ffe066"/>`:`<circle cx="320" cy="92" r="24" fill="#ff922b" opacity=".3"/><circle cx="320" cy="92" r="15" fill="#ff6b3d"/>`;
 const cl=(x,y,sc,c)=>`<g class="cloud" style="animation-duration:${(70+x/4).toFixed(0)}s;animation-delay:-${(x/5).toFixed(0)}s"><g transform="translate(${x} ${y}) scale(${sc})" shape-rendering="crispEdges"><rect x="0" y="6" width="44" height="8" fill="${c}"/><rect x="8" y="0" width="18" height="8" fill="${c}"/><rect x="22" y="2" width="14" height="6" fill="${c}"/></g></g>`;
-if(!night){const cc=wt==='rain'?'#7d8a99':mode==='dusk'?'#f7b48a':'#ffffff';s+=cl(30,24,1,cc)+cl(200,14,.8,cc)+cl(120,50,.7,cc)+(wt!=='clear'?cl(260,40,1.2,cc)+cl(-10,60,1.1,cc):'')}
-const mt=night?'#121a35':mode==='dusk'?'#5b3a66':'#8fb3cf';s+=`<polygon points="0,118 50,78 95,108 150,70 210,112 260,82 320,110 370,76 400,98 400,130 0,130" fill="${mt}"/>`;
-const cs=castleSVG(lv,1);s+=`<g transform="translate(140 46) scale(.6)">${night?cs.replace(/#1b1b2a/g,'#ffd43b'):cs}</g>`;
-const t1=night?'#0e2416':mode==='dusk'?'#2e4a24':'#2f6b2a',t2=night?'#123020':mode==='dusk'?'#38582c':'#3d8a35';
-for(let i=0;i<16;i++){const x=i*26+R(i,-6,6);if(x>140&&x<262)continue;s+=pine(x,132+R(i+3,-4,4),R(i+9,.9,1.3),t1,t2)}
-s+=`<rect y="128" width="400" height="352" fill="${gc[0]}"/>`;
-for(let i=0;i<14;i++){const x=i*30+R(i+2,-8,8);s+=pine(x,150+R(i+5,-2,6),R(i+11,1.1,1.5),t2,t1)}
-s+=`<ellipse cx="200" cy="278" rx="198" ry="150" fill="url(#dirtG)"/>`;
-for(let i=0;i<60;i++){const x=R(i,0,400),y=R(i+90,150,445),dx=(x-200)/198,dy=(y-278)/150;if(dx*dx+dy*dy<.8)continue;s+=`<rect x="${x.toFixed(0)}" y="${y.toFixed(0)}" width="2" height="4" fill="${gc[1]}"/><rect x="${(x+2).toFixed(0)}" y="${(y+1).toFixed(0)}" width="2" height="3" fill="${gc[1]}"/>`}
-for(let i=0;i<40;i++){const x=R(i+5,30,370),y=R(i+60,160,420);s+=`<rect x="${x.toFixed(0)}" y="${y.toFixed(0)}" width="2" height="2" fill="${gc[3]}" opacity=".7"/>`}
-[[34,214,7],[372,240,9],[60,392,6],[345,400,8],[110,180,5],[300,176,5]].forEach(([x,y,w])=>s+=`<g shape-rendering="crispEdges"><rect x="${x}" y="${y}" width="${w}" height="${w*.6}" fill="${night?'#495057':'#868e96'}"/><rect x="${x}" y="${y+w*.6}" width="${w}" height="2" fill="${night?'#2b2f3a':'#5c636a'}"/></g>`);
-s+=tent(36,196,'#c2632f',night)+tent(366,206,'#2f6c9e',night)+`<g transform="translate(66 204)"><rect x="-10" y="-4" width="20" height="5" fill="#6b4423"/><rect x="-10" y="-4" width="20" height="1.5" fill="#8b5a2b"/></g>`;
-s+=`<rect y="456" width="400" height="24" fill="${gc[3]}" opacity=".8"/><rect y="456" width="400" height="2" fill="${gc[2]}"/>`;
+if(!night){const cc=wt==='rain'?'#7d8a99':dusk?'#f7b48a':'#ffffff';s+=cl(30,20,1,cc)+cl(200,12,.8,cc)+cl(120,46,.7,cc)+(wt!=='clear'?cl(260,36,1.2,cc)+cl(-10,56,1.1,cc):'')}
+const m1=night?'#1a2448':dusk?'#7a4f7e':'#b4cde3',m2=night?'#131b38':dusk?'#5b3a66':'#8fb3cf';
+s+=`<polygon points="0,112 45,86 85,100 135,74 190,98 240,80 290,100 345,78 400,96 400,130 0,130" fill="${m1}"/><polygon points="0,122 60,100 110,116 170,96 230,118 280,102 340,116 400,104 400,132 0,132" fill="${m2}"/>`;
+const t1=night?'#0e2416':dusk?'#2e4a24':'#2f6b2a',t2=night?'#123020':dusk?'#38582c':'#3d8a35';
+for(let i=0;i<26;i++){const x=i*16+R(i,-5,5);s+=pine(x,128+R(i+3,-3,2),R(i+9,.6,.85),t1,t2)}
+s+=`<rect y="126" width="400" height="214" fill="url(#gndG)"/>`;
+const cs=castleSVG(lv,1);s+=`<g transform="translate(-6 79) scale(.55)">${night?cs.replace(/#1b1b2a/g,'#ffd43b'):cs}</g>`;
+s+=house(258,140,night?'#b8b0c0':'#e8e1f0',night?'#3b4a7a':'#5b7fd1',night,.72)+house(312,142,night?'#d8d0c0':'#fff8ee',night?'#5c3d6b':'#9b6bd1',night,.95,1)+house(360,146,night?'#c9b8a0':'#f6e7d0',night?'#3b6b4a':'#4aa36b',night,.8);
+s+=`<ellipse cx="200" cy="228" rx="190" ry="104" fill="url(#dirtG)"/>`;
+for(let i=0;i<70;i++){const x=R(i,0,400),y=R(i+90,138,338),dx=(x-200)/180,dy=(y-228)/98;if(dx*dx+dy*dy<.85)continue;const sc=.6+(y-138)/200;s+=`<rect x="${x.toFixed(0)}" y="${y.toFixed(0)}" width="${(2*sc).toFixed(1)}" height="${(4*sc).toFixed(1)}" fill="${gc[1]}"/><rect x="${(x+2*sc).toFixed(1)}" y="${(y+sc).toFixed(1)}" width="${(2*sc).toFixed(1)}" height="${(3*sc).toFixed(1)}" fill="${gc[1]}"/>`}
+const FC=night?['#8a7fb0','#6d7fa8','#9a8a7a']:['#ff8fb1','#ffe066','#ffffff','#b197fc'];
+for(let i=0;i<34;i++){const x=R(i+200,4,396),y=R(i+300,142,336),dx=(x-200)/180,dy=(y-228)/98;if(dx*dx+dy*dy<1)continue;s+=`<rect x="${x.toFixed(0)}" y="${y.toFixed(0)}" width="2.4" height="2.4" fill="${FC[i%FC.length]}"/><rect x="${(x+.6).toFixed(1)}" y="${(y+2.4).toFixed(1)}" width="1.2" height="2" fill="${gc[1]}"/>`}
+[[26,196,7],[384,236,8],[30,318,6],[360,326,7],[150,150,4],[262,152,4]].forEach(([x,y,w])=>s+=`<g shape-rendering="crispEdges"><ellipse cx="${x+w/2}" cy="${y+w*.6+1}" rx="${w*.7}" ry="1.5" fill="rgba(0,0,0,.2)"/><rect x="${x}" y="${y}" width="${w}" height="${w*.6}" fill="${night?'#5c636a':'#a5adb5'}"/><rect x="${x}" y="${y}" width="${w}" height="1.5" fill="${night?'#6c757d':'#ced4da'}"/></g>`);
+s+=`<g opacity=".95">${pine(-4,346,1.9,t1,t2)}${pine(404,350,2.1,t1,t2)}</g>`;
 return s}
 function fxSVG(mode,wt){let s='';const night=mode==='night';
-if(night)s+=`<defs><radialGradient id="vig" cx=".5" cy=".6" r=".7"><stop offset=".35" stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".45"/></radialGradient></defs><rect width="400" height="480" fill="url(#vig)"/>`+Array.from({length:9},(_,i)=>`<circle class="ffly" cx="${(30+RN01(i)*340).toFixed(0)}" cy="${(170+RN01(i+20)*230).toFixed(0)}" r="1.6" fill="#e9ff70" style="animation-delay:-${(RN01(i+3)*6).toFixed(2)}s;animation-duration:${(5+RN01(i+8)*4).toFixed(1)}s"/>`).join('');
-else if(mode==='dusk')s+=`<rect width="400" height="480" fill="#ff6b3d" opacity=".07"/>`;
-if(wt==='rain')s+=`<rect width="400" height="480" fill="#1c2b40" opacity=".12"/>`+Array.from({length:46},(_,i)=>`<rect class="rain" x="${(RN01(i)*420-10).toFixed(0)}" y="-20" width="1.2" height="9" fill="#a5d8ff" opacity=".7" style="animation-delay:-${(RN01(i+5)*1.2).toFixed(2)}s;animation-duration:${(.7+RN01(i+9)*.4).toFixed(2)}s"/>`).join('')+`<rect class="lightning" width="400" height="480" fill="#fff"/>`;
+if(night)s+=`<defs><radialGradient id="vig" cx=".5" cy=".62" r=".75"><stop offset=".35" stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".45"/></radialGradient></defs><rect width="400" height="340" fill="url(#vig)"/>`+Array.from({length:9},(_,i)=>`<circle class="ffly" cx="${(30+RN01(i)*340).toFixed(0)}" cy="${(150+RN01(i+20)*170).toFixed(0)}" r="1.6" fill="#e9ff70" style="animation-delay:-${(RN01(i+3)*6).toFixed(2)}s;animation-duration:${(5+RN01(i+8)*4).toFixed(1)}s"/>`).join('');
+else if(mode==='dusk')s+=`<rect width="400" height="340" fill="#ff6b3d" opacity=".07"/>`;
+if(wt==='rain')s+=`<rect width="400" height="340" fill="#1c2b40" opacity=".12"/>`+Array.from({length:46},(_,i)=>`<rect class="rain" x="${(RN01(i)*420-10).toFixed(0)}" y="-20" width="1.2" height="9" fill="#a5d8ff" opacity=".7" style="animation-delay:-${(RN01(i+5)*1.2).toFixed(2)}s;animation-duration:${(.7+RN01(i+9)*.4).toFixed(2)}s"/>`).join('')+`<rect class="lightning" width="400" height="340" fill="#fff"/>`;
 if(wt==='snow')s+=Array.from({length:40},(_,i)=>`<rect class="snow" x="${(RN01(i)*400).toFixed(0)}" y="-10" width="${i%3?2:3}" height="${i%3?2:3}" fill="#fff" style="--dx:${((RN01(i+4)-.5)*40).toFixed(0)}px;animation-delay:-${(RN01(i+5)*8).toFixed(2)}s;animation-duration:${(6+RN01(i+9)*5).toFixed(1)}s"/>`).join('');
 return s}
 // ===== 무덤 (쓰러지면) =====
@@ -1168,26 +1176,26 @@ function bubble(txt,y){const w=Math.min(250,[...txt].length*6.6+16);return`<g tr
 function spawn(html,dur){const L=$('snpc');if(!L)return;const g=document.createElementNS(SVGNS,'g');g.innerHTML=html;L.appendChild(g);setTimeout(()=>g.remove(),dur*1000+300)}
 window.npcTalk=el=>{const n=NPCS[+el.dataset.i],b=el.querySelector('.bubtxt');if(!n||!b)return;b.innerHTML=bubble(n.n+': '+npcLines(n),-44);b.style.animation='none';b.getBoundingClientRect();b.style.animation='bubq 3.5s forwards'};
 function walkNPC(){if(document.querySelectorAll('#snpc .npc').length)return;const i=Math.random()*NPCS.length|0,n=NPCS[i],r=Math.random()<.5,dur=18,x0=r?-30:430,x1=r?430:-30;
-spawn(`<g class="mover" style="--x0:${x0}px;--x1:${x1}px;animation-duration:${dur}s"><g transform="translate(0 472)"><g class="npc" data-i="${i}" onclick="npcTalk(this)" style="cursor:pointer"><rect x="-14" y="-44" width="28" height="46" fill="transparent"/><g transform="scale(.6)"><ellipse cx="0" cy="1" rx="14" ry="3" fill="#000" opacity=".3"/><g class="walkb">${sprite(n.ch,n.eq,r?'s':'l')}</g>${petSVG((ITEM[n.eq.pet]||{}).v)}</g><g class="bubtxt" style="animation:bub ${dur}s linear forwards">${bubble(n.n+': '+npcLines(n),-44)}</g></g></g></g>`,dur)}
+spawn(`<g class="mover" style="--x0:${x0}px;--x1:${x1}px;animation-duration:${dur}s"><g transform="translate(0 160) scale(.8)"><g class="npc" data-i="${i}" onclick="npcTalk(this)" style="cursor:pointer"><rect x="-14" y="-44" width="28" height="46" fill="transparent"/><g transform="scale(.6)"><ellipse cx="0" cy="1" rx="14" ry="3" fill="#000" opacity=".3"/><g class="walkb">${sprite(n.ch,n.eq,r?'s':'l')}</g>${petSVG((ITEM[n.eq.pet]||{}).v)}</g><g class="bubtxt" style="animation:bub ${dur}s linear forwards">${bubble(n.n+': '+npcLines(n),-44)}</g></g></g></g>`,dur)}
 const FROG=['........','..g..g..','.gegggg.','gggggggg','.gGGGGg.','g.g..g.g'],CRIT=[{n:'cat',rows:null,id:'p1',say:'냥~',dur:14},{n:'dog',id:'p2',say:'멍!',dur:12},{n:'frog',rows:FROG,pal:{g:'#40c057',G:'#2f9e44',e:'#111'},say:'개굴',dur:16,hop:1},{n:'chick',id:'p3',say:'삐약',dur:15},{n:'frog2',rows:FROG,pal:{g:'#40c057',G:'#2f9e44',e:'#111'},say:'개굴개굴',dur:14,hop:1}];
 function walkCritter(night){if(night&&Math.random()<.5){const y=40+Math.random()*60,r=Math.random()<.5,v=ITEM.p18.v;spawn(`<g class="mover" style="--x0:${r?-20:420}px;--x1:${r?420:-20}px;animation-duration:9s"><g transform="translate(0 ${y.toFixed(0)}) scale(${r?-1:1} 1)"><g class="pet-f">${rowsSVG(v.rows,v.pal,2,-8,-6)}</g></g></g>`,9);return}
-const c=CRIT[Math.random()*CRIT.length|0],v=c.rows?{rows:c.rows,pal:c.pal}:ITEM[c.id].v,y=200+Math.random()*230,r=Math.random()<.5;
+const c=CRIT[Math.random()*CRIT.length|0],v=c.rows?{rows:c.rows,pal:c.pal}:ITEM[c.id].v,y=150+Math.random()*30,r=Math.random()<.5;
 spawn(`<g class="mover" style="--x0:${r?-20:420}px;--x1:${r?420:-20}px;animation-duration:${c.dur}s"><g transform="translate(0 ${y.toFixed(0)})"><g class="${c.hop?'hop':'pet-b'}"><g transform="scale(${r?-1:1} 1)">${rowsSVG(v.rows,v.pal,2.2,-9,-13)}</g></g><g style="animation:bub ${c.dur}s linear forwards">${bubble(c.say,-16)}</g></g></g>`,c.dur)}
 function walkBirds(){const y=20+Math.random()*50;spawn(`<g class="mover" style="--x0:-20px;--x1:420px;animation-duration:12s">${[0,10,18].map((d,i)=>`<g transform="translate(${-d} ${(y+i*5).toFixed(0)})"><path class="flap" d="M-4 0l4 2 4-2" stroke="#2b2b2b" stroke-width="1.2" fill="none"/></g>`).join('')}</g>`,12)}
 let ambT=null;function startAmbient(){if(ambT)return;setTimeout(walkNPC,2500);ambT=setInterval(()=>{if(document.hidden)return;const night=skyMode(G())==='night',r=Math.random();if(r<.42)walkNPC();else if(r<.75)walkCritter(night);else if(r<.88&&!night&&weatherNow()!=='rain')walkBirds()},9000)}
 let sceneKey='';
-function ringRender(g,p){const el=$('ring');if(!el.dataset.init){el.dataset.init=1;el.innerHTML=`<div class="scene"><svg id="sbg" viewBox="0 0 400 480"></svg><svg id="sfg" viewBox="0 0 400 480"></svg><svg id="sfx" viewBox="0 0 400 480"><g id="swx"></g><g id="snpc"></g></svg></div>`;startAmbient()}
+function ringRender(g,p){const el=$('ring');if(!el.dataset.init){el.dataset.init=1;el.innerHTML=`<div class="scene"><svg id="sbg" viewBox="0 0 400 340"></svg><svg id="sfg" viewBox="0 0 400 340"></svg><svg id="sfx" viewBox="0 0 400 340"><g id="swx"></g><g id="snpc"></g></svg></div>`;startAmbient()}
 const mode=skyMode(g),wt=weatherNow(),lv=cLv(cTotal()),key=mode+wt+lv;if(key!==sceneKey){sceneKey=key;$('sbg').innerHTML=bgSVG(mode,wt,lv);$('swx').innerHTML=fxSVG(mode,wt)}
 const has=g&&g.roles&&g.phase!=='lobby',names=has?Object.keys(g.roles):Object.keys(D.entries||{}).filter(n=>D.users[n]);
 const spec=has&&(g.phase==='end'||(p&&(g.roles[p]&&!g.alive[p]&&!(g.rise&&g.rise[p])))),n=names.length;
-const arr=names.map((x,i)=>{const a=-Math.PI/2+i*2*Math.PI/n,px=200+160*Math.cos(a),py=276+112*Math.sin(a),sc=(0.9+0.18*Math.sin(a))*(n>12?.88:1),dead=has&&!g.alive[x],h=hs(x);
+const arr=names.map((x,i)=>{const a=-Math.PI/2+i*2*Math.PI/n,px=200+158*Math.cos(a),py=226+84*Math.sin(a),sc=(0.86+0.16*Math.sin(a))*(n>12?.86:1),dead=has&&!g.alive[x],h=hs(x);
 const fall=dead&&!known.has(x);if(dead)known.add(x);
 const role0=has&&(x===p||spec)?ROLEIC[x===p?g.roles[x]:vis(g,g.roles[x])]:'',role=has&&(g.rev||[]).includes(x)?(g.roles[x]==='jesus'?'xcross':'helm'):role0,vo=has&&g.phase==='vote'&&(D.votes[g.day]||{})[x];
 const eq=((D.profiles||{})[x]||{}).eq||{},stt=dead?'dead':(has&&g.phase==='end'&&won(g,x)?'win':'idle');
 const svg=`<g transform="translate(${px.toFixed(1)} ${py.toFixed(1)}) scale(${sc.toFixed(2)})">${avatar(x,chOf(x),eq,{state:stt,fall,dl:(h%7)*.35})}`
-+(dead?(()=>{const r=g.roles[x],mf=isM(r),rv=spec?(x===p?r:vis(g,r)):'',ic=spec?ROLEIC[rv]:(mf?'knife':'shield'),lb=spec?RN[rv].split(' ').slice(1).join(' '):(mf?'마피아':'시민');return`<rect x="-33" y="-51" width="66" height="17" rx="8" fill="${mf?'#c92a2a':'#2b8a3e'}" stroke="#fff" stroke-opacity=".5"/>${pix(ic,-22,-42.5,1.1)}<text x="5" y="-39" font-size="10" font-weight="800" text-anchor="middle" fill="#fff">${lb}</text>`})():`${role?pix(role,0,-75,1.7,'fa-top'):''}${vo?pix('check',17,-62,1.3):''}`)
++(dead?(()=>{const r=g.roles[x],mf=isM(r),rv=spec?(x===p?r:vis(g,r)):'',ic=spec?ROLEIC[rv]:(mf?'knife':'shield'),lb=spec?RN[rv].split(' ').slice(1).join(' '):(mf?'마피아':'시민');return`<rect x="-33" y="-51" width="66" height="17" rx="8" fill="${mf?'#c92a2a':'#2b8a3e'}" stroke="#fff" stroke-opacity=".5"/>${pix(ic,-22,-42.5,1.1)}<text x="5" y="-39" font-size="10" font-weight="800" text-anchor="middle" fill="#fff">${lb}</text>`})():`${role?pix(role,0,-74,1.7,'fa-top'):''}${vo?pix('check',17,-62,1.3):''}`)
 +'</g>';return[py,svg]});
-$('sfg').innerHTML=`<g transform="translate(10 54)">${campfire()}</g>${arr.sort((a,b)=>a[0]-b[0]).map(x=>x[1]).join('')}${n?'':'<text x="200" y="380" font-size="11" text-anchor="middle" fill="#fff" opacity=".7">아직 모닥불에 아무도 없어요…</text>'}`}
+$('sfg').innerHTML=`<g transform="translate(10 4)">${campfire()}</g>${arr.sort((a,b)=>a[0]-b[0]).map(x=>x[1]).join('')}${n?'':'<text x="200" y="300" font-size="11" text-anchor="middle" fill="#fff" opacity=".7">아직 모닥불에 아무도 없어요…</text>'}`}
 
 function detRes(g,p,d){const N=D.night[d]||{},t=(N.detective||{})[p];if(!t)return null;const r=g.roles[t];let x='';if(isM(r))x=(N.mafia||{})[t];else if(r==='doctor')x=(N.doctor||{})[t];else if(r==='police')x=(N.police||{})[t];else if(r==='detective')x=(N.detective||{})[t];return{t,x:x||''}}
 function detList(g,p){let rs='';for(let d=1;d<=g.day;d++){const q=detRes(g,p,d);if(!q)continue;rs+=(d<g.day||g.phase==='end')?`<div>${d}일차: ${q.t} → <b>${q.x?'간밤에 '+q.x+'님에게 능력을 썼어요':'간밤에 아무에게도 능력을 쓰지 않았어요'}</b></div>`:`<div>${d}일차: ${q.t} 조사 중… (결과는 다음 날 아침에 알려드려요)</div>`}return`<div class="q" style="margin-top:8px">🔎 조사 기록\n${rs||'아직 없어요'}</div>`}
@@ -1195,7 +1203,7 @@ let shopSort='new';window.shopSortSet=k=>{shopSort=k;render()};
 let cwOpen=true,cwTab='look',shopSlot='hat',tryOn={},pvView='f',pvState='idle',pvSpin=false,fameTab='pop',peekN='';
 const VIEWS=['f','s','b','l'],LIKE_MAX=3,SELL=.7;
 const kday=()=>new Date(NOW()+9*36e5).toISOString().slice(0,10);
-const fig=(ch,eq,w)=>`<svg viewBox="-46 -74 92 84" style="width:${w}px;height:${Math.round(w*84/92)}px">${avatar('',ch,eq,{noName:1})}</svg>`;
+const fig=(ch,eq,w)=>`<svg viewBox="-42 -70 84 80" style="width:${w}px;height:${Math.round(w*80/84)}px">${avatar('',ch,eq,{noName:1})}</svg>`;
 function stage(n,ch,eq){return`<svg viewBox="-75 -124 150 160" style="width:250px;max-width:100%"><ellipse cx="0" cy="2" rx="54" ry="9" fill="rgba(255,212,59,.07)" stroke="rgba(255,212,59,.2)"/>${avatar(n,ch,eq,{view:pvView,state:pvState,pv:1})}</svg>`}
 setInterval(()=>{if(!pvSpin)return;pvView=VIEWS[(VIEWS.indexOf(pvView)+1)%4];const b=$('pvbox');if(b&&me)b.innerHTML=stage(me,chOf(me),mergeTry(pfOf(me).eq,tryOn));const k=$('pkbox');if(k&&peekN)k.innerHTML=stage(peekN,chOf(peekN),pfOf(peekN).eq||{})},700);
 window.pvSet=(k,v)=>{if(k==='view'){pvView=v;pvSpin=false}else if(k==='spin')pvSpin=!pvSpin;else pvState=v;render()};
@@ -1230,10 +1238,10 @@ if((c.log||[]).length)h+=`<div class="sm" style="margin-top:6px">📜 ${c.log.sl
 // ===== 썸네일 =====
 const MB='background:rgba(255,255,255,.05);border-radius:8px';
 function thumb(it,ch){const id=it.id,s=it.s;
-if(s==='hat'||s==='glass')return`<svg viewBox="-16 -68 32 32" style="width:52px;height:52px;${MB}">${sprite(ch,{[s]:id})}</svg>`;
-if(s==='face')return`<svg viewBox="-16 -56 32 42" style="width:52px;height:68px;${MB}">${sprite(ch,{face:id})}</svg>`;
-if(s==='top'||s==='bot'||s==='suit')return`<svg viewBox="-22 -40 44 42" style="width:48px;height:46px;${MB}">${sprite(ch,{[s]:id})}</svg>`;
-if(s==='cape'||s==='hand')return`<svg viewBox="-26 -70 52 76" style="width:46px;height:67px;${MB}">${sprite(ch,{[s]:id},s==='cape'?'b':'f')}</svg>`;
+if(s==='hat'||s==='glass')return`<svg viewBox="-17 -61 34 34" style="width:52px;height:52px;${MB}">${sprite(ch,{[s]:id})}</svg>`;
+if(s==='face')return`<svg viewBox="-15 -46 30 26" style="width:58px;height:50px;${MB}">${sprite(ch,{face:id})}</svg>`;
+if(s==='top'||s==='bot'||s==='suit')return`<svg viewBox="-19 -31 38 33" style="width:52px;height:46px;${MB}">${sprite(ch,{[s]:id})}</svg>`;
+if(s==='cape'||s==='hand')return`<svg viewBox="-24 -63 48 67" style="width:50px;height:70px;${MB}">${sprite(ch,{[s]:id},s==='cape'?'b':'f')}</svg>`;
 if(s==='pet')return`<svg viewBox="-44 ${it.v.fly?-50:-18} 26 22" style="width:64px;height:54px;${MB}">${petSVG(it.v)}</svg>`;
 if(s==='foot')return`<svg viewBox="-22 -7 44 18" style="width:52px;height:22px;${MB}">${footSVG(it.v)}</svg>`;
 if(s==='aura')return`<svg viewBox="-40 -92 80 98" style="width:50px;height:62px;${MB}">${avatar('',ch,{aura:id},{noName:1})}</svg>`;
@@ -1277,7 +1285,7 @@ function shopRender(){const el=$('shop');if(!me){el.style.display='block';el.inn
 const top=`<div class="g2" style="align-items:center;justify-content:space-between"><div class="t" style="margin:0">내 캐릭터</div><span class="coin">${t} 달란트</span></div>`;
 if(!cwOpen){el.innerHTML=top+`<div style="text-align:center;margin-top:6px"><svg viewBox="-75 -124 150 160" style="width:170px">${avatar(me,ch,eq,{})}</svg></div>`;return}
 const pe=mergeTry(eq,tryOn),tn=Object.values(tryOn).map(nmOf).filter(Boolean),sa=SETS[setOf(pe)];
-const tabs=`<div class="seg">${[['look','🎨 외형'],['inv','🎒 가방'],['shop','🏪 시장']].map(([k,l])=>btn(l,`cwTabSet('${k}')`,cwTab===k,'g')).join('')}</div>`;
+const tabs=`<div class="seg">${[['look','🎨 외형'],['inv','🎒 가방'],['shop','🏪 시장'],['castle','🏰 성']].map(([k,l])=>btn(l,`cwTabSet('${k}')`,cwTab===k,'g')).join('')}</div>`;
 const prev=cwTab==='castle'?'':`<div class="stage"><div id="pvbox" style="text-align:center">${stage(me,ch,pe)}</div>${sa?`<div class="sm" style="text-align:center;color:${sa.col};font-weight:800;margin-bottom:6px">세트 효과 · ${sa.n} (${sa.d})</div>`:''}${viewCtl()}${tn.length?`<div class="sm" style="text-align:center;color:#ffc2d4;margin-top:6px">입어보는 중: ${tn.map(esc).join(', ')}</div><div style="text-align:center;margin-top:4px">${btn('입어보기 해제','clearTry()',0,'g')}</div>`:''}</div>`;
 let body='';
 if(cwTab==='look')body=`<div class="t" style="margin-top:6px">피부색</div>${swatch('sk',SKIN,ch.sk)}<div class="t">머리 모양</div><div class="g2" style="margin:4px 0">${HAIRN.map((n,i)=>btn(n,`setCh('hs',${i})`,ch.hs===i,'g')).join('')}</div><div class="t">머리색</div>${swatch('hc',HAIRC,ch.hc)}<div class="t">상의 색</div>${swatch('sh',SHIRT,ch.sh)}<div class="t">하의 색</div>${swatch('pc',PANTS,ch.pc)}<div class="sm" style="margin-top:8px">외형은 무료예요.</div>`;
@@ -1348,7 +1356,7 @@ window.navT=t=>{TAB=t;localStorage.setItem('m1_tab',t);document.body.dataset.tab
 function navBadge(g,p){const on=(()=>{if(!p||!g||!g.roles||!g.roles[p]||!g.alive[p])return false;const d=g.day;if(g.phase==='vote')return!(D.votes[d]||{})[p];if(g.phase==='trial')return p!==g.def&&!(D.fv[d]||{})[p];if(g.phase==='night'){const r=g.roles[p],N=D.night[d]||{};if(isM(r))return!(N.mafia||{})[p];if(['doctor','police','detective'].includes(r))return!(N[r]||{})[p]}return false})();const el=$('dot_game');if(el)el.classList.toggle('on',on&&TAB!=='game')}
 window.txToggle=()=>{localStorage.setItem('m1_tx',localStorage.getItem('m1_tx')==='1'?'0':'1');txApply()};txApply();
 // ===== 마을 · 자동 진행 · 점수 · 프로필 =====
-const MAXP=10,VCAP=8,DL_H=21,RESET_H=6;let ysTxt='',vcOpen=false,vcSel='';
+const MAXP=10,VCAP=8,DL_H=21,RESET_H=1;let ysTxt='',vcOpen=false,vcSel='';
 const fmtDl=()=>D.lobbyDl?new Date(D.lobbyDl).toLocaleString('ko-KR',{month:'numeric',day:'numeric',hour:'2-digit',minute:'2-digit'}):'-';
 const nextDl=()=>{const d=new Date(NOW());d.setHours(DL_H,0,0,0);if(d.getTime()<=NOW()+36e5)d.setDate(d.getDate()+1);return d.getTime()};
 window.cpTxt=async t=>{try{await navigator.clipboard.writeText(t);toast('복사했어요. 카톡방에 붙여넣으세요')}catch(e){prompt('길게 눌러 복사하세요',t)}};
@@ -1443,6 +1451,7 @@ $('login').style.display=me?'none':'';if(!me&&!$('nm'))$('login').innerHTML='<di
 $('acct').innerHTML=me?`<div class="sm" style="margin:0 2px 6px">내 계정</div><div class="row2" style="background:#2e2850;border-radius:16px;padding:12px 14px"><div class="nm2"><b>${esc(me)}</b> <span class="sm">· ${((D.profiles||{})[me]||{}).t||0} 달란트</span>${as?` · <b style="color:#ffd43b">${as}</b>로 보는 중`:''}</div>${btn('로그아웃','logout()',0,'g')}</div>`:'';
 const M=$('me'),A=$('act');M.style.display=A.style.display='none';
 if(p&&(!g||g.phase==='lobby')){A.style.display='block';const on=D.entries&&D.entries[p],cnt=Object.keys(D.entries||{}).filter(n=>D.users[n]).length;A.innerHTML=`<div class="t">📝 이번 판 참가 신청</div><div class="q">${on?'✅ 참가 신청 완료! 마감 시각에 인원이 차 있으면 자동으로 시작돼요.':'이번 판에 참가하려면 신청해 주세요. 신청하지 않으면 관전만 할 수 있어요.'}</div><div class="g2" style="margin-top:6px">${btn(on?'신청 취소':'참가 신청하기','applyG()',0,on?'g':'p')}</div><div class="sm" style="margin-top:6px">현재 ${cnt}명 신청 (최소 ${cfgCheck(CF(),0).min}명)</div>${lobbyExtra(p)}<div class="q" style="margin-top:6px;font-size:.8rem">📋 이번 판 직업 구성\n${cfgCheck(CF(),cnt).txt}</div>`}
+if(p&&g&&g.phase==='end'){A.style.display='block';const at=(D.endAt>1?D.endAt:NOW())+RESET_H*36e5;A.innerHTML=`<div class="t">게임이 끝났어요</div><div class="q">다음 판 참가 신청은 ${hm(at)}에 자동으로 열려요. 지금 바로 하고 싶으면 아래 버튼을 눌러 주세요.</div><button class="p" style="width:100%;margin-top:10px" onclick="openNext()">다음 판 신청 열기</button>`}
 if(p&&g&&g.phase!=='lobby'){const r=g.roles[p],dead=r&&!g.alive[p];M.style.display='block';
 M.innerHTML=!r?'<div class="rc tx"><div class="rc-e">👀</div><div class="rc-n">관전자</div></div><div class="q" style="text-align:center">이번 판은 참가 신청을 하지 않아 관전만 가능해요.\n직업과 능력 기록은 보이지 않고, 공개된 투표와 결과만 볼 수 있어요.</div>':`${roleCard(r,dead)}<div class="q" style="text-align:center">${dead?((g.rise&&g.rise[p])?'✝️ 부활 대기 중! '+g.rise[p]+'일차 낮에 다시 살아나요. 그동안은 죽은 사람처럼 말하지 마세요. (직업 정보는 볼 수 없어요)':'모든 직업을 아래에서 볼 수 있어요. (카톡방 스포 금지!)'):RD[r]+(r==='witness'&&g.wh&&g.wh[p]?'\n🔎 힌트: 마피아 팀 중 한 명의 이름은 「'+g.wh[p]+'」으로 시작해요':'')+(r==='citizen'&&g.ms&&g.ms[p]?'\n🎯 비밀 미션: '+MIS[g.ms[p]]+' (성공하면 +15달란트)':'')}${isM(r)?'\n동료: '+Object.keys(g.roles).filter(n=>isM(g.roles[n])&&n!==p).map(n=>n+(g.roles[n]==='godfather'?'(갓파더)':'')+(g.alive[n]?'':'💀')).join(', '):''}</div>${g.setup?`<div class="sm" style="text-align:center;margin-top:6px">📋 이번 판 구성: ${g.setup}</div>`:''}`;
 if(r&&!dead&&['vote','trial','night'].includes(g.phase)){A.style.display='block';const o=al(g).filter(n=>n!==p),d=g.day,V0=D.votes[d]||{},N=D.night[d]||{};let h='';
