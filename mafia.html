@@ -509,10 +509,10 @@ window.offShow=()=>{OFG.show=true;offR()};window.offNext=()=>{OFG.show=false;OFG
 window.offPeek=()=>{OFG.peek=!OFG.peek;offR()};window.offReset=()=>{OFG.st='setup';offSave();offR()};
 
 /* ===== 마을 광장: 접속 표시 · 말풍선 · 반응 · LIVE · 관람석 · 마을 앞마당 ===== */
-const ONLINE_MS=90000,isOn=n=>{const q=(D.pres||{})[n];return q&&NOW()-(q.t||0)<ONLINE_MS},onl=()=>Object.keys(D.pres||{}).filter(n=>isOn(n)&&D.users[n]);
+const ONLINE_MS=90000,nightHide=n=>{const g=G();return!!(g&&g.roles&&g.phase==='night'&&g.roles[n]&&g.alive[n])},isOn=n=>{const q=(D.pres||{})[n];return q&&NOW()-(q.t||0)<ONLINE_MS&&!nightHide(n)},onl=()=>Object.keys(D.pres||{}).filter(n=>isOn(n)&&D.users[n]);
 const liveG=g=>g&&g.roles&&['vote','trial','night'].includes(g.phase);
-function presSt(){const g=G();if(document.hidden)return'잠수';
-if(TAB==='game'){if(liveG(g)){const r=g.roles[me];if(!r)return'구경 중';if(!g.alive[me])return'관람 중';if(g.phase==='vote')return(D.votes[g.day]||{})[me]?'투표 완료':'투표 고민 중';if(g.phase==='trial')return'최후 변론 듣는 중';return'밤 행동 중'}return'모닥불 앞'}
+function presSt(){const g=G();if(liveG(g)&&g.phase==='night'&&g.roles[me]&&g.alive[me])return'자는 중';if(document.hidden)return'잠수';
+if(TAB==='game'){if(liveG(g)){const r=g.roles[me];if(!r)return'구경 중';if(!g.alive[me])return'관람 중';if(g.phase==='vote')return(D.votes[g.day]||{})[me]?'투표 완료':'투표 고민 중';if(g.phase==='trial')return'최후 변론 듣는 중';return'자는 중'}return'모닥불 앞'}
 return{talk:'토론 정리 중',look:'꾸미는 중',town:'광장 산책 중',more:'둘러보는 중'}[TAB]||'접속 중'}
 let presLast='',presMe='';
 function presUp(force){if(!me||TEST&&!window.FAKE&&0)return;const st=presSt();if(!force&&st===presLast)return;presLast=st;
@@ -538,7 +538,7 @@ on.forEach((n,i)=>{const[x,y]=slots[i],q=D.pres[n],sh=(D.shout||{})[n],sp=sh&&fr
 fg+=`<g transform="translate(${x.toFixed(0)} ${y})" style="cursor:pointer" onclick="plzTap('${n}')"><ellipse cx="0" cy="1" rx="13" ry="3" fill="rgba(0,0,0,.25)"/><g transform="scale(.7)" class="fig idle">${sprite(chOf(n),pfOf(n).eq||{})}</g>${sel?'<ellipse cx="0" cy="1" rx="16" ry="4.5" fill="none" stroke="#ff8fb1" stroke-width="1.6"/>':''}<text y="13" text-anchor="middle" font-size="8.5" font-weight="900" fill="#fff" class="nm">${esc(n)}</text><text y="22" text-anchor="middle" font-size="6.8" font-weight="700" fill="${q.st==='잠수'?'#adb5bd':'#ffd8a8'}" class="ti">${esc(q.st||'')}</text>`
 +(sp?(()=>{const m=esc(sh.m),w=Math.min(150,14+[...sh.m].length*7.2);return`<g transform="translate(0 -54)"><rect x="${-w/2}" y="-12" width="${w}" height="16" rx="7" fill="#fff"/><path d="M-3 4L0 9L3 4z" fill="#fff"/><text y="-1" text-anchor="middle" font-size="8" font-weight="800" fill="#2b2549">${m}</text></g>`})():'')
 +pk.map(([f,v],j)=>`<text x="${j*10-5}" y="-46" font-size="14" class="pkr">${v.e}</text>`).join('')+`</g>`});
-if(!N)fg+=`<text x="200" y="250" text-anchor="middle" fill="#fff" font-size="11" class="nm">지금은 광장이 조용해요</text>`;
+if(!N)fg+=`<text x="200" y="250" text-anchor="middle" fill="#fff" font-size="11" class="nm">지금은 광장이 조용해요</text>`;if(g&&g.roles&&g.phase==='night')fg+=`<text x="200" y="332" text-anchor="middle" fill="#d0bfff" font-size="8.5" font-weight="700" class="nm">밤에는 게임 참가자들이 집에서 자고 있어서 광장에 안 보여요</text>`;
 const vils=[...new Set(Object.values(D.vil||{}).filter(Boolean))],vm=v=>Object.keys(D.vil||{}).filter(n=>D.vil[n]===v&&D.users[n]);
 let h=`<div class="t">마을 광장 <span class="sm" style="font-weight:600">· 지금 ${N}명 접속 중</span></div><div class="scene plz"><svg viewBox="0 98 400 242">${bgSVG(mode,'clear',cLv(cTotal())).replace(/id="(skyG|gndG|dirtG)"/g,'id="p$1"').replace(/url\(#(skyG|gndG|dirtG)\)/g,'url(#p$1)')}${fg}</svg></div>`;
 if(plzSel&&me&&plzSel!==me)h+=`<div class="plzpick"><span>${esc(plzSel)}님에게</span>${['❤️','👏','😂','🎉','👋','🔥'].map(e=>`<button class="g ke" onclick="plzPoke('${e}')">${e}</button>`).join('')}</div>`;
