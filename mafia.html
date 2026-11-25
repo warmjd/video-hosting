@@ -360,8 +360,8 @@ ent(D.ghost).forEach(d=>{const dn=+d;if(!(dn>=1&&dn<=g.day))return;const dd=[(g.
 const mx=Math.max(0,...Object.values(hit));
 names.forEach(n=>{let t=0;const why=[],put=(v,x)=>{if(v>0){t+=v;why.push(x+' +'+v)}},r=g.roles[n];
 put(20,'참가');const lim=Math.min((g.dd||{})[n]||g.day,g.day);let ok=lim>=1;for(let d=1;d<=lim;d++)if(!V(d)[n])ok=false;if(ok)put(15,'개근');
-if(g.win==='m'&&tm(r)==='m')put(60,'마피아팀 승리');else if(g.win==='c'&&tm(r)==='c')put(40,'시민팀 승리');else if(g.win==='j'&&r==='jester')put(80,'광대 단독 승리');
-put((g.pt||{})[n]||0,'활약');if(g.win==='c'&&tm(r)==='c'&&g.alive[n])put(10,'끝까지 생존');
+if(g.win==='m'&&tm(r)==='m')put(60,'마피아팀 승리');else if(g.win==='c'&&tm(r)==='c')put(40,'시민팀 승리');else if(g.win==='j'&&r==='jester')put(150,'광대 단독 승리');
+put((g.pt||{})[n]||0,'활약');put((g.dsv||{})[n]||0,'의사 연속 방어');if(g.win==='c'&&tm(r)==='c'&&g.alive[n])put(10,'끝까지 생존');
 const ms=(g.ms||{})[n];if(ms&&missionOK(g,n,ms))put(15,'비밀 미션');
 if(hit[n])put(hit[n]*3,'유령 예측');if(mx>=1&&hit[n]===mx)put(15,'유령 MVP');
 const cn=k=>((g[k]||{})[n])||0,tr=tm(r),w1=(g.win==='m'&&tr==='m')||(g.win==='c'&&tr==='c')||(g.win==='j'&&r==='jester')?1:0;
@@ -382,7 +382,7 @@ const t2=tally(mp,g),tg=t2.mx>0?t2.top[Math.random()*t2.top.length|0]:'';
 const dk=Object.keys(N.doctor||{}).find(k=>g.alive[k]&&g.roles[k]==='doctor'),dp=dk?N.doctor[dk]:'';
 const pk=Object.keys(N.police||{}).find(k=>g.alive[k]&&g.roles[k]==='police');if(pk){const t=N.police[pk],r=g.roles[t];let hit=r==='mafia';if(r==='godfather')for(let e=1;e<g.day;e++)if(((D.night[e]||{}).police||{})[pk]===t)hit=true;if(hit){ad(g,pk,5);inc(g,'ct',pk)}}
 Object.keys(N.reporter||{}).forEach(k=>{if(g.alive[k]&&g.roles[k]==='reporter'&&!(g.rp&&g.rp[k])){g.rp=g.rp||{};g.rp[k]=1;const cnt=new Set(['mafia','doctor','police','detective'].flatMap(q=>Object.keys(N[q]||{}))).size;g.log.push('📰 속보! 간밤에 능력을 사용한 사람은 총 '+cnt+'명이었습니다.')}});
-if(tg&&tg===dp){ad(g,dk,10);inc(g,'sv',dk);g.log.push('🛡️ '+g.day+'일차 밤, 마피아의 습격이 있었지만 의사가 막아냈습니다! 아무도 죽지 않았어요.')}
+if(tg&&tg===dp){ad(g,dk,10);inc(g,'sv',dk);{g.svd=g.svd||{};g.svk=g.svk||{};g.svk[dk]=g.svd[dk]===g.day-1?(g.svk[dk]||1)+1:1;g.svd[dk]=g.day;const b=g.svk[dk]>=3?300:g.svk[dk]===2?100:0;if(b){g.dsv=g.dsv||{};g.dsv[dk]=(g.dsv[dk]||0)+b}}g.log.push('🛡️ '+g.day+'일차 밤, 마피아의 습격이 있었지만 의사가 막아냈습니다! 아무도 죽지 않았어요.')}
 else if(tg&&g.roles[tg]==='soldier'&&!(g.rev||[]).includes(tg)){g.rev=(g.rev||[]).concat([tg]);ad(g,tg,5);inc(g,'sb',tg);g.log.push('🪖 '+g.day+'일차 밤, 마피아의 습격! '+tg+'님은 군인이었습니다. 방패로 버텨냈어요! 아무도 죽지 않았어요.')}
 else if(tg){die(g,tg);g.kl=g.kl||{};g.kl[g.day]=tg;g.log.push('💀 '+g.day+'일차 밤, '+tg+' 사망했습니다.')}
 else g.log.push('🌙 '+g.day+'일차 밤은 평화로웠습니다. 아무도 죽지 않았어요.');
@@ -2676,7 +2676,7 @@ h=`<div class="stp" style="display:block"><b style="font-family:'Jua';color:var(
 +`<div class="h2">🃏 중립</div><div class="rg">${card('jester','j')}</div>`
 +`<div class="sm" style="margin-top:10px">🎯 백수는 시작할 때 비밀 미션 카드를 받아요. 성공하면 +15달란트!</div>`}
 else if(rTab==='coin'){const R=(a,b)=>`<tr><td>${a}</td><td>${b}</td></tr>`;
-h=`<div class="q" style="font-size:.8rem">게임이 끝나면 자동으로 정산돼요. 모은 달란트로 🏪달란트시장에서 꾸미기 아이템을 살 수 있어요 (승패엔 영향 없음).</div><div class="h2">기본</div><table class="tb">${R('출석 (하루 1번)','+10')+R('🙋 참가','+20')+R('📅 개근 (매일 투표)','+15')}</table><div class="h2">승리</div><table class="tb">${R('🛡️ 시민 팀 승리','+40')+R('🔪 마피아 팀 승리','+60')+R('🤡 광대 단독 승리','+80')+R('🌱 시민 팀 승리 + 끝까지 생존','+10')}</table><div class="h2">활약</div><table class="tb">${R('🗳️ 마피아 처형에 투표','+5')+R('🕵️ 경찰이 마피아 적발','+5')+R('💉 의사가 습격 방어','+10')+R('🪖 군인이 습격 버팀','+5')+R('✝️ 예수님 부활','+10')+R('🎯 비밀 미션 성공','+15')}</table><div class="h2">유령</div><table class="tb">${R('🔮 사망자 예측 적중 (1회당)','+3')+R('👻 유령 MVP (최다 적중)','+15')}</table>`}
+h=`<div class="q" style="font-size:.8rem">게임이 끝나면 자동으로 정산돼요. 모은 달란트로 🏪달란트시장에서 꾸미기 아이템을 살 수 있어요 (승패엔 영향 없음).</div><div class="h2">기본</div><table class="tb">${R('출석 (하루 1번)','+10')+R('🙋 참가','+20')+R('📅 개근 (매일 투표)','+15')}</table><div class="h2">승리</div><table class="tb">${R('🛡️ 시민 팀 승리','+40')+R('🔪 마피아 팀 승리','+60')+R('🤡 광대 단독 승리','+150')+R('🌱 시민 팀 승리 + 끝까지 생존','+10')}</table><div class="h2">활약</div><table class="tb">${R('🗳️ 마피아 처형에 투표','+5')+R('🕵️ 경찰이 마피아 적발','+5')+R('💉 의사가 습격 방어','+10')+R('💉 의사가 이틀 밤 연속 방어','+100 추가')+R('💉 의사가 사흘 밤 연속 방어 (이후 매번)','+300 추가')+R('🪖 군인이 습격 버팀','+5')+R('✝️ 예수님 부활','+10')+R('🎯 비밀 미션 성공','+15')}</table><div class="h2">유령</div><table class="tb">${R('🔮 사망자 예측 적중 (1회당)','+3')+R('👻 유령 MVP (최다 적중)','+15')}</table>`}
 else if(rTab==='clue'){const F=(q,a)=>`<div class="fq"><b>Q. ${q}</b><p>${a}</p></div>`;
 h=`<div class="q" style="font-size:.8rem">운영자가 켰을 때만 하는 <b>선택 모드</b>예요. 아침마다 나만 보이는 단서 카드가 오고, 공개된 단서를 모아 마피아를 추리해요. 카톡은 안 해도 되지만 해도 괜찮아요.</div>`
 +F('단서 카드는 언제, 몇 장 와요?','매일 아침(1일차 포함) 살아있는 사람마다 1장씩 와요. 게임 탭 맨 위 "단서 카드"와 아침 안내 창에서 볼 수 있어요. 죽은 사람은 더 이상 받지 않아요.')
