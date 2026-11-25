@@ -198,6 +198,7 @@ body.tvm .scene{max-width:calc((100vh - 250px)*400/340);margin:0 auto}body.tvm #
 .rmi{display:flex;align-items:center;gap:10px;width:100%;text-align:left;padding:12px 14px;border-radius:14px;background:rgba(255,255,255,.05);margin-bottom:8px;border:1px solid transparent;color:#fff}
 .rmi.cur{border-color:rgba(255,212,59,.4)}.rmi b{font-size:1rem}.rmi small{display:block;font-size:.75rem;opacity:.7;margin-top:2px}.rmi .bg{margin-left:auto;font-size:.7rem;padding:3px 8px;border-radius:8px;background:rgba(255,212,59,.18);color:#ffe066;white-space:nowrap}
 .rmi .lv{width:8px;height:8px;border-radius:50%;background:#555;flex:none}.rmi .lv.on{background:#69db7c;box-shadow:0 0 8px #69db7c}.rmi .lv.rcx{background:#ffd43b}
+.vdot{display:inline-block;width:7px;height:7px;border-radius:50%;margin-right:4px;vertical-align:middle;box-shadow:0 0 0 1px rgba(0,0,0,.35)}
 .clc{padding:12px 14px;border-radius:14px;background:linear-gradient(160deg,#3a3360,#2a2548);border:1px solid rgba(255,212,59,.28);font-size:.95rem;font-weight:700;line-height:1.45;color:#fff4c2}
 .clc small{display:block;font-size:.68rem;font-weight:600;color:#c9bdf5;margin-bottom:3px}.clc.bl{color:#aaa3c8;border-color:var(--line);font-weight:500}.clc.sm2{font-size:.85rem;padding:9px 12px;margin-top:6px}
 .cold{margin-top:8px}.cold summary{font-size:.78rem;color:#c9bdf5;cursor:pointer;padding:4px 0}
@@ -519,18 +520,19 @@ else if(g.phase==='night'){if(isM(r))await set(ref(db,ROOT+'/night/'+d+'/mafia/'
 window.unlock=()=>{if($('ap').value===ADMIN_PIN){admin=true;render()}else $('ap').value=''};
 window.setAs=v=>{as=v;render()};
 const face=n=>{const e=((D.profiles||{})[n]||{}).eq||{};return`<svg viewBox="-16 -60 32 36" class="fc">${sprite(chOf(n),{hat:e.hat,glass:e.glass,face:e.face})}</svg>`};
-const fbtn=(n,fn,on,cls,x)=>`<button class="fbn ${on?'on':cls||''}" onclick="${fn}">${face(n)}<span>${esc(n)}${x||''}</span></button>`;
+const vdot=n=>{const v=(D.vil||{})[n];return v?`<i class="vdot" style="background:${hsl(v==='원우마을'?45:flHue(v),75,58)}" title="${esc(v)}"></i>`:''};
+const fbtn=(n,fn,on,cls,x)=>`<button class="fbn ${on?'on':cls||''}" onclick="${fn}">${face(n)}<span>${vdot(n)}${esc(n)}${x||''}</span></button>`;
 const btn=(t,fn,on,cls)=>`<button class="${on?'on':cls||''}" onclick="${fn}">${t}</button>`;
 const hm=t=>{const d=new Date(t),n=new Date(NOW()),tm=d.toLocaleTimeString('ko-KR',{hour:'numeric',minute:'2-digit'}),tw=new Date(NOW()+864e5);return(d.toDateString()===n.toDateString()?'오늘 ':d.toDateString()===tw.toDateString()?'내일 ':(d.getMonth()+1)+'/'+d.getDate()+' ')+tm};
 const PHN={vote:'낮 투표',trial:'최후 변론',night:'밤'};
 function cd(){const g=G(),el=$('hdt');if(!el||!g||!['vote','trial','night'].includes(g.phase))return;const s=Math.max(0,Math.floor((g.deadline-NOW())/1000)),h=s/3600|0,m=s/60%60|0;el.innerHTML=`<b>${g.day}일차 · ${PHN[g.phase]}</b><span>${hm(g.deadline)} 마감 · ${h?h+'시간 ':''}${h||m?m+'분':s+'초'} 남음</span>`}
 function noticeTxt(){const g=G(),u=location.href.split('?')[0],n=Object.keys(D.entries||{}).filter(k=>D.users[k]).length;
-if(!g||g.phase==='lobby')return`[원우마을 마피아] 참가 신청 받는 중\n현재 ${n}/${MAXP}명${D.lobbyDl?' · '+hm(D.lobbyDl)+' 마감':''}\n${u}`;
-if(g.phase==='end')return`[원우마을 마피아] 게임 종료\n${stripE(g.winner||'')}\n${u}`;
+if(!g||g.phase==='lobby')return`[${RNM()} 마피아] 참가 신청 받는 중\n현재 ${n}/${MAXP}명${D.lobbyDl?' · '+hm(D.lobbyDl)+' 마감':''}\n${u}`;
+if(g.phase==='end')return`[${RNM()} 마피아] 게임 종료\n${stripE(g.winner||'')}\n${u}`;
 const d=g.day,dl=hm(g.deadline);
-if(g.phase==='vote'){const r=RES(g,d-1);return`[원우마을 마피아] ${d}일차 낮이 밝았어요\n${d>1?(r.kl?'간밤에 '+r.kl+'님이 사망했어요':'간밤엔 아무도 죽지 않았어요')+'\n':''}처형 투표는 ${dl}까지\n생존 ${al(g).length}명: ${al(g).join(', ')}\n${u}`}
-if(g.phase==='trial')return`[원우마을 마피아] ${d}일차 재판\n재판 대상: ${g.def}\n최후 변론을 듣고 ${dl}까지 찬반 투표해 주세요\n${u}`;
-const r=RES(g,d);return`[원우마을 마피아] ${d}일차 밤이 됐어요\n${r.ex?r.ex.n+'님이 처형됐어요 ('+(r.ex.maf?'마피아였어요':'마피아가 아니었어요')+')\n':'오늘은 처형이 없었어요\n'}능력자는 ${dl}까지 행동해 주세요\n${u}`}
+if(g.phase==='vote'){const r=RES(g,d-1);return`[${RNM()} 마피아] ${d}일차 낮이 밝았어요\n${d>1?(r.kl?'간밤에 '+r.kl+'님이 사망했어요':'간밤엔 아무도 죽지 않았어요')+'\n':''}처형 투표는 ${dl}까지\n생존 ${al(g).length}명: ${al(g).join(', ')}\n${u}`}
+if(g.phase==='trial')return`[${RNM()} 마피아] ${d}일차 재판\n재판 대상: ${g.def}\n최후 변론을 듣고 ${dl}까지 찬반 투표해 주세요\n${u}`;
+const r=RES(g,d);return`[${RNM()} 마피아] ${d}일차 밤이 됐어요\n${r.ex?r.ex.n+'님이 처형됐어요 ('+(r.ex.maf?'마피아였어요':'마피아가 아니었어요')+')\n':'오늘은 처형이 없었어요\n'}능력자는 ${dl}까지 행동해 주세요\n${u}`}
 
 /* ===== 아침·밤 발표 · 유언 · 그날 밤 무슨 일이 ===== */
 const lying=n=>`<svg viewBox="-36 -26 72 34" style="width:190px;height:90px"><ellipse cx="-2" cy="4" rx="34" ry="4" fill="rgba(0,0,0,.35)"/><g transform="translate(28 0) rotate(-90)">${sprite(chOf(n),pfOf(n).eq||{})}</g></svg>`;
@@ -1267,6 +1269,17 @@ function setOf(eq){const e=eq||{},s=(ITEM[e.suit]||{}).v;if(s)return s.set||'';c
 const mergeTry=(eq,tr)=>{const o={...(eq||{}),...(tr||{})};if(tr&&(tr.top||tr.bot)&&!tr.suit)delete o.suit;if(tr&&tr.suit){delete o.top;delete o.bot}return o};
 
 const ITEM=Object.fromEntries(SHOP.map(i=>[i.id,i]));
+const flagN=p=>Object.keys((p&&p.own)||{}).filter(k=>k.startsWith('fl_')).length;
+const flId=k=>'fl_'+(k==='_main'?'main':k);
+function flHue(k){let h=0;for(const c of k)h=(h*31+c.codePointAt(0))%360;return h}
+const hsl=(h,s2,l)=>{s2/=100;l/=100;const f=n=>{const k=(n+h/30)%12,a=s2*Math.min(l,1-l);return Math.round(255*(l-a*Math.max(-1,Math.min(k-3,9-k,1)))).toString(16).padStart(2,'0')};return'#'+f(0)+f(8)+f(4)};
+function flagReg(k,nm){const id=flId(k);if(ITEM[id])return ITEM[id];const h=k==='_main'?45:flHue(k),F=hsl(h,75,58),f=hsl(h,80,80);
+const it=I(id,'hand',(nm||k)+' 깃발',0,{rows:{0:'...............y',1:'..........FFFFFb',2:'..........FfffFb',3:'..........FFFFFb',...vr(4,15,'...............b'),16:'..............bb',17:'..............bb',...vr(18,24,'...............b')},pal:{F,f,b:'#8b5a2b',y:'#ffd43b'}});
+it.flag=1;SHOP.push(it);ITEM[id]=it;HIDE.add(id);return it}
+function flagSync(){const R=D.rooms||{};flagReg('_main',(R._main||{}).nm||'원우마을');Object.keys(R).forEach(k=>flagReg(k,(R[k]||{}).nm||k));Object.keys(pfOf(me).own||{}).forEach(id=>{if(id.startsWith('fl_')&&!ITEM[id])flagReg(id.slice(3)==='main'?'_main':id.slice(3),id.slice(3))})}
+let flGot='';
+function flagGive(g){if(!me||!g||g.phase!=='end'||!g.roles||!g.roles[me]||flGot===g.sid)return;flGot=g.sid;const it=flagReg(RKEY,RNM());if((pfOf(me).own||{})[it.id])return;
+runTransaction(ref(db,DBB+'/profiles/'+me),c=>{c=c||{t:0,own:{},eq:{}};c.own=c.own||{};if(c.own[it.id])return;c.own[it.id]=1;return c}).then(r=>{if(r&&r.committed)toast(it.n+'을 받았어요! 가방 > 손 도구에서 들 수 있어요')}).catch(()=>{})}
 // ===== 도트 아이콘 라이브러리 (이모지 대체) =====
 const IC={
 star:{r:['....y....','....y....','...yYy...','yyyYYYyyy','.yYYYYYy.','..yYYYy..','..yY.Yy..','.yy...yy.','.y.....y.'],p:{y:'#fab005',Y:'#ffe066'}},
@@ -1618,9 +1631,10 @@ const ACH=[
 ['a20','☠️ 마피아의 표적','밤에 습격당해 3번 사망',s=>(s.kd||0)>=3],['a21','⚖️ 억울한 영혼','시민인데 처형 2번',s=>(s.exi||0)>=2],['a22','🗳️ 정확한 한 표','마피아 처형에 5번 투표',s=>(s.mv||0)>=5],
 ['a23','🌟 인기스타','인기도 10 받기',(s,p)=>(p.pop||0)>=10],['a24','🔥 마을 셀럽','인기도 50 받기',(s,p)=>(p.pop||0)>=50],['a25','🛍️ 수집가','아이템 20개 보유',(s,p)=>oc(p)>=20],['a26','🏛️ 박물관장','아이템 60개 보유',(s,p)=>oc(p)>=60],
 ['a27','💸 큰손','달란트 1000 사용',(s,p)=>spentOf(p.own)>=1000],['a28','💰 저축왕','달란트 500 보유',(s,p)=>(p.t||0)>=500]];
+ACH.push(['a_u2','🚩 연합 원정대','마을 깃발 2개 모으기 (다른 마을 판 끝까지 하기)',(s,p)=>flagN(p)>=2],['a_u4','🏰 연합의 수호자','마을 깃발 4개 모으기',(s,p)=>flagN(p)>=4]);
 const ACHM=Object.fromEntries(ACH.map(a=>[a[0],a]));
 const achOK=(n,id)=>{const a=ACHM[id],p=pfOf(n);return!!a&&!!a[3](p.st||{},p)};
-const RANKT=[['r_pop','👑 원우마을 패셔니스타','인기도 1위','crown',n=>pfOf(n).pop||0],['r_rich','💰 달란트 재벌','번 달란트 누적 1위','bag',earned],['r_win','🏆 승리의 아이콘','최다 승리 1위','trophy',n=>stOf(n).w||0],['r_play','🎮 마을 터줏대감','최다 출전 1위','pad',n=>stOf(n).g||0],['r_maf','🌑 밤의 지배자','마피아 팀 승리 1위','moonb',n=>stOf(n).wm||0],['r_lord','🏰 원우마을 대표','성에 가장 많이 투자한 대표','castle',n=>0],['r_season','🌟 지난 시즌 챔피언','지난 시즌 점수 1위','star',n=>sScore(n,SN()-1)]];
+const RANKT=[['r_pop','👑 연합 패셔니스타','인기도 1위','crown',n=>pfOf(n).pop||0],['r_rich','💰 달란트 재벌','번 달란트 누적 1위','bag',earned],['r_win','🏆 승리의 아이콘','최다 승리 1위','trophy',n=>stOf(n).w||0],['r_play','🎮 마을 터줏대감','최다 출전 1위','pad',n=>stOf(n).g||0],['r_maf','🌑 밤의 지배자','마피아 팀 승리 1위','moonb',n=>stOf(n).wm||0],['r_lord','🏰 연합 대표','연합 성에 가장 많이 투자한 대표','castle',n=>0],['r_season','🌟 지난 시즌 챔피언','지난 시즌 점수 1위','star',n=>sScore(n,SN()-1)]];
 if(!CASTLE_ON)RANKT.splice(RANKT.findIndex(r=>r[0]==='r_lord'),1);
 const RANKM=Object.fromEntries(RANKT.map(r=>[r[0],r]));
 let RH={};
@@ -2336,7 +2350,9 @@ if(ph==='end')L.push('수고했네! 한 판 더 하겠나?','이번 판 정말 �
 if(g&&g.alive){const dd=Object.keys(g.alive).filter(n=>!g.alive[n]);if(dd.length)L.push(pick(dd)+'… 좋은 사람이었는데. 명복을 비네.')}
 const fan=us.filter(n=>Object.keys(pfOf(n).eq||{}).length>=3);if(fan.length)L.push(pick(fan)+' 옷 멋지구먼! 👍 눌러줘야겠어.');
 const top=rankHolders('r_pop');if(top.length)L.push('요즘 인기 1위가 '+top[0]+'(이)라며?');
-if(l)L.push('대표 '+l+'님 납시오~');
+if(l)L.push('연합 대표 '+l+'님 납시오~','연합 성은 모든 마을이 같이 짓는 거라네.');
+{const R=D.rooms||{},o=Object.keys(R).filter(k=>k!==RKEY&&NOW()-((R[k]||{}).at||0)<3*864e5).map(k=>R[k]);o.forEach(r=>{const nm=r.nm||'이웃 마을';if(['vote','trial','night'].includes(r.ph))L.push('요즘 '+nm+'은(는) '+(r.day||1)+'일차라던데… 거기도 시끌시끌하겠군.');else if(r.e)L.push(nm+'에서 사람을 모으고 있다더군. 원정 가볼 텐가?');else L.push(nm+' 사람들도 우리 연합 식구라네.')});
+const fl=us.filter(n=>flagN(pfOf(n))>=2);if(fl.length)L.push(pick(fl)+'(은)는 깃발이 '+flagN(pfOf(pick(fl)))+'개나 있다던데? 원정을 많이 다녔군.');L.push('마을은 달라도 우린 한 연합이지!')}
 if(w==='rain')L.push('비가 오네… 감기 조심하게!');if(w==='snow')L.push('눈이다! 눈사람 만들 사람?');return pick(L)}
 function bubble(txt,y){const w=Math.min(250,[...txt].length*6.6+16);return`<g transform="translate(0 ${y})"><rect x="${-w/2}" y="-15" width="${w}" height="17" rx="7" fill="#fffef5" stroke="#3b2a1a" stroke-width="1"/><polygon points="-4,2 4,2 0,7" fill="#fffef5"/><text x="0" y="-3.5" font-size="8.5" font-weight="700" text-anchor="middle" fill="#2b1d12">${esc(txt)}</text></g>`}
 function spawn(html,dur){const L=$('snpc');if(!L)return;const g=document.createElementNS(SVGNS,'g');g.innerHTML=html;L.appendChild(g);setTimeout(()=>g.remove(),dur*1000+300)}
@@ -2398,7 +2414,7 @@ s+=R(50,58,100,38,st)+Array.from({length:9},(_,i)=>R(50+i*11.6,53,7,5,st)).join(
 s+=tw(26,lv>=3?62:50,24)+tw(150,lv>=3?62:50,24);if(lv>=3)s+=flag(37,96-62-5)+flag(161,96-62-5);if(lv>=4)s+=R(50,82,100,2,dk)+`${pix('crown',100,62,1.2)}`;return s}
 function castleUI(){const c=CS(),l=lordOf(),tot=cTotal(),lv=cLv(tot),inv=Object.entries(c.inv||{}).sort((a,b)=>b[1]-a[1]),rate=rateOf();
 let h=`<div class="stage" style="padding:0;overflow:hidden"><svg viewBox="0 0 200 142" style="width:100%;display:block;background:linear-gradient(180deg,#1b1640,#2a2050)">${castleSVG(lv)}${l?`<g transform="translate(100 118) scale(.62)">${avatar(l,chOf(l),pfOf(l).eq||{},{})}</g>`:`<text x="100" y="40" font-size="9" fill="#adb5bd" text-anchor="middle">아직 아무도 투자하지 않은 빈 땅</text>`}</svg></div>`;
-h+=`<div class="q" style="font-size:.8rem;margin-top:6px">🏰 <b>원우마을</b> · ${CLN[lv]} (총 투자 ${tot})\n👑 대표: <b style="color:#ffd43b">${l||'없음'}</b>${l?` · 투자 ${cInv(l)} · 누적 세금 ${((c.tax||{})[l])||0}`:''}\n💸 현재 수수료: <b>${rate}%</b> (아이템 살 때 가격에 추가, 되팔 때 받는 돈에서 빠져요 → 대표에게)</div>`;
+h+=`<div class="q" style="font-size:.8rem;margin-top:6px">🏰 <b>마을 연합 성</b> · ${CLN[lv]} (총 투자 ${tot})\n👑 대표: <b style="color:#ffd43b">${l||'없음'}</b>${l?` · 투자 ${cInv(l)} · 누적 세금 ${((c.tax||{})[l])||0}`:''}\n💸 현재 수수료: <b>${rate}%</b> (아이템 살 때 가격에 추가, 되팔 때 받는 돈에서 빠져요 → 대표에게)</div>`;
 if(l===me)h+=`<div class="row2"><div class="nm2">👑 수수료율 정하기 (0~20%)</div>${btn('−','setRate(-1)',0,'g')}<b style="min-width:34px;text-align:center">${rate}%</b>${btn('+','setRate(1)',0,'g')}</div><div class="sm">너무 높으면 아무도 안 사요. 대표 자리는 누가 더 많이 투자하면 넘어가요!</div>`;
 h+=`<div class="t" style="margin-top:10px">💰 성에 투자하기</div><div class="sm">누적 투자 1위가 대표가 돼요. 투자한 달란트는 돌려받지 못해요. 내 투자: ${cInv(me)}${l&&l!==me?` · 대표가 되려면 ${cInv(l)-cInv(me)+1} 더`:''}</div><div class="g2" style="flex-wrap:nowrap;align-items:center"><input id="civ" type="number" min="10" value="50" style="flex:1"><button class="o" onclick="invest()">🏰 투자</button></div>`;
 if(inv.length)h+=`<div class="sm" style="margin-top:8px">🏅 투자 순위: ${inv.slice(0,6).map(([n,v],i)=>(i===0?'👑':(i+1)+'.')+' '+n+' '+v).join(' · ')}</div>`;
@@ -2566,7 +2582,7 @@ if(g.sid&&localStorage.getItem('m1_nts')!==g.sid){localStorage.setItem('m1_nts',
 const o=NT(),MK=['➖','😇','🤔','😈'];
 el.innerHTML='<div class="t">📝 내 수첩 <span class="sm">(나만 보여요)</span></div>'+btn(ntOpen?'▲ 접기':'▼ 펼치기','ntTog()',0,'g')
 +(ntOpen?Object.keys(g.roles).filter(n=>n!==p).sort((a,b)=>(g.alive[b]?1:0)-(g.alive[a]?1:0)).map(n=>'<div class="row2"><button class="g" onclick="ntM(\''+n+'\')">'+MK[(o[n]||{}).m||0]+'</button><div class="nm2"><span class="'+(g.alive[n]?'':'d')+'">'+esc(n)+'</span><input data-keep="1" maxlength="60" placeholder="메모" value="'+esc((o[n]||{}).t||'')+'" oninput="ntT(\''+n+'\',this.value)"></div></div>').join(''):'')}
-const txApply=()=>{const on=localStorage.getItem('m1_tx')==='1';document.body.classList.toggle('tx',on);document.title=on?'메모':'원우마을 슬로우 마피아';const b=$('txb');if(b)b.innerHTML=on?'🎮<span>원래 화면으로 돌아가기</span>':'📝<span>텍스트 모드로 보기</span>'};
+const txApply=()=>{const on=localStorage.getItem('m1_tx')==='1';document.body.classList.toggle('tx',on);document.title=on?'메모':RNM()+' · 슬로우 마피아';const b=$('txb');if(b)b.innerHTML=on?'🎮<span>원래 화면으로 돌아가기</span>':'📝<span>텍스트 모드로 보기</span>'};
 let TAB=localStorage.getItem('m1_tab')||'game';
 window.navT=t=>{TAB=t;setTimeout(()=>{try{presUp()}catch(e){}},0);localStorage.setItem('m1_tab',t);document.body.dataset.tab=t;document.querySelectorAll('.nav button').forEach(b=>b.classList.toggle('cur',b.dataset.t===t));window.scrollTo(0,0)};navT(TAB);
 function navBadge(g,p){const on=(()=>{if(!p||!g||!g.roles||!g.roles[p]||!g.alive[p])return false;const d=g.day;if(g.phase==='vote')return!(D.votes[d]||{})[p];if(g.phase==='trial')return p!==g.def&&!(D.fv[d]||{})[p];if(g.phase==='night'){const r=g.roles[p],N=D.night[d]||{};if(isM(r))return!(N.mafia||{})[p];if(['doctor','police','detective'].includes(r))return!(N[r]||{})[p]}return false})();const el=$('dot_game');if(el)el.classList.toggle('on',on&&TAB!=='game')}
@@ -2678,7 +2694,7 @@ function roleCard(r,dead){const[cl,tn]=TEAM(r),[e,...nm]=RN[r].split(' ');return
 // ── 기록 색깔 ──
 const lgc=x=>/^(🎉|😈|🤡 광대)/.test(x)?'wn':/^(💀|🚪)/.test(x)?'k':/^(🛡️|🪖|✝️)/.test(x)?'s':/^⚖️/.test(x)?'j':/^🌙/.test(x)?'n':/^(☀️|🌅)/.test(x)?'dy':'';
 let lgAll=false;window.lgMore=()=>{lgAll=!lgAll;render()};
-function render(){const fe0=document.activeElement;if(fe0&&fe0.dataset&&fe0.dataset.keep)return;RH={};const g=G(),p=P(),$u=Object.keys(D.users);hist(g,p);ringRender(g,p);awardRender(g);storyRender(g);tresRender(g);clueRender(g,p);roomHead();svyRender(g,p);calRender();plazaRender(g);seatRender(g);presUp();shopRender();fameRender();dexRender();autoClaim();ysRender(g);bdRender(g,p);ntRender(g,p);vcRender(g,p);foldApply();
+function render(){const fe0=document.activeElement;if(fe0&&fe0.dataset&&fe0.dataset.keep)return;RH={};const g=G(),p=P(),$u=Object.keys(D.users);hist(g,p);ringRender(g,p);awardRender(g);storyRender(g);tresRender(g);clueRender(g,p);roomHead();flagSync();flagGive(g);svyRender(g,p);calRender();plazaRender(g);seatRender(g);presUp();shopRender();fameRender();dexRender();autoClaim();ysRender(g);bdRender(g,p);ntRender(g,p);vcRender(g,p);foldApply();
 {const gp=g&&['vote','trial','night'].includes(g.phase),N=Object.keys(D.entries||{}).filter(n=>D.users[n]).length;$('hdt').innerHTML=g&&g.phase==='end'?'<b>게임 종료</b><span>'+esc(stripE(g.winner||''))+'</span>':gp?'':'<b>참가 신청 중</b><span>신청 '+N+'명 · 최소 '+cfgCheck(CF(),0).min+'명'+(D.lobbyDl?' · '+hm(D.lobbyDl)+' 마감':'')+(TEST?' · 테스트':'')+'</span>';const hc=$('hdc');hc.style.display=me?'':'none';hc.classList.toggle('nw',!!(g&&gp&&localStorage.getItem('m1_ntc')!==(g.sid||0)+'_'+(g.seq||0)+g.phase))}cd();
 $('login').style.display=me?'none':'';if(!me&&!$('nm'))$('login').innerHTML='<div class="t">입장하기</div><div class="sm" style="margin-bottom:10px">이름을 고르고 비밀번호 숫자 4자리를 넣어주세요. 처음이면 지금 넣은 번호가 비밀번호가 돼요.</div><div class="g2">'+ROSTER.map(n=>`<button class="g" onclick="pick('${n}')">${n}</button>`).join('')+'</div><input id="nm" maxlength="8" placeholder="이름" style="margin-top:10px"><input id="pin" type="password" inputmode="numeric" maxlength="4" placeholder="비밀번호 4자리"><button class="p" style="width:100%;margin-top:6px" onclick="login()">입장</button><div class="sm" id="lm"></div>';
 $('acct').innerHTML=me?autoRow(me)+`<div class="sm" style="margin:0 2px 6px">내 계정</div><div class="row2" style="background:#2e2850;border-radius:16px;padding:12px 14px"><div class="nm2"><b>${esc(me)}</b> <span class="sm">· ${((D.profiles||{})[me]||{}).t||0} 달란트</span>${as?` · <b style="color:#ffd43b">${as}</b>로 보는 중`:''}</div>${btn('로그아웃','logout()',0,'g')}</div>`:'';
