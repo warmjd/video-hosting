@@ -88,7 +88,7 @@ body.tx .nav{background:#1c1c1e}body.tx .nav button{background:none;border:0}
 .sheet{position:absolute;left:0;right:0;bottom:0;margin:0 auto;max-width:460px;max-height:90vh;display:flex;flex-direction:column;background:linear-gradient(180deg,#22264a,#0f1124);border:1px solid var(--line);border-bottom:0;border-radius:22px 22px 0 0;box-shadow:0 -10px 40px rgba(0,0,0,.6);animation:up .28s ease-out}
 .sh-h{display:flex;align-items:center;justify-content:space-between;padding:14px 14px 8px}
 .sh-h .hx{font-size:1.3rem;color:var(--gold)}
-.tabs{display:flex;gap:6px;padding:0 12px 10px;overflow-x:auto}
+.tabs{display:flex;gap:6px;padding:0 12px 10px;overflow-x:auto;flex:none}
 .tab{flex:1 0 auto;padding:9px 10px;font-size:.9rem;border-radius:11px}
 .sh-b{overflow-y:auto;padding:4px 14px 30px;-webkit-overflow-scrolling:touch}
 .stp{display:flex;gap:10px;padding:11px;margin:8px 0;border-radius:14px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.07)}
@@ -2591,7 +2591,7 @@ window.rulesOpen=()=>{$('ov').classList.add('op');document.body.style.overflow='
 window.rulesClose=()=>{$('ov').classList.remove('op');document.body.style.overflow=''};
 window.rulesTab=t=>{rTab=t;rulesRender();$('rbody').scrollTop=0};
 function rulesRender(){const g=G(),live=g&&g.roles&&g.phase!=='lobby',tm=(live&&g.tm)||CF().tm,n=Object.keys(D.entries||{}).filter(x=>D.users[x]).length,st=live&&g.setup?g.setup:cfgCheck(CF(),n).txt;
-const T=[['flow','🎮 진행'],['roles','🎭 직업'],['coin','🪙 달란트'],['faq','❓ 궁금해요']];
+const T=[['flow','🎮 진행'],['roles','🎭 직업'],['clue','🧩 단서'],['coin','🪙 달란트'],['faq','❓ 궁금해요']];
 $('rtabs').innerHTML=T.map(([k,l])=>`<button class="tab ${rTab===k?'on':'g'}" onclick="rulesTab('${k}')">${l}</button>`).join('');
 const S=(no,ti,tx,pl)=>`<div class="stp"><div class="no">${no}</div><div><b>${ti}${pl?`<span class="pill">${pl}</span>`:''}</b><p>${tx}</p></div></div>`;
 let h='';
@@ -2611,6 +2611,23 @@ h=`<div class="stp" style="display:block"><b style="font-family:'Jua';color:var(
 +`<div class="sm" style="margin-top:10px">🎯 백수는 시작할 때 비밀 미션 카드를 받아요. 성공하면 +15달란트!</div>`}
 else if(rTab==='coin'){const R=(a,b)=>`<tr><td>${a}</td><td>${b}</td></tr>`;
 h=`<div class="q" style="font-size:.8rem">게임이 끝나면 자동으로 정산돼요. 모은 달란트로 🏪달란트시장에서 꾸미기 아이템을 살 수 있어요 (승패엔 영향 없음).</div><div class="h2">기본</div><table class="tb">${R('출석 (하루 1번)','+10')+R('🙋 참가','+20')+R('📅 개근 (매일 투표)','+15')}</table><div class="h2">승리</div><table class="tb">${R('🛡️ 시민 팀 승리','+40')+R('🔪 마피아 팀 승리','+60')+R('🤡 광대 단독 승리','+80')+R('🌱 시민 팀 승리 + 끝까지 생존','+10')}</table><div class="h2">활약</div><table class="tb">${R('🗳️ 마피아 처형에 투표','+5')+R('🕵️ 경찰이 마피아 적발','+5')+R('💉 의사가 습격 방어','+10')+R('🪖 군인이 습격 버팀','+5')+R('✝️ 예수님 부활','+10')+R('🎯 비밀 미션 성공','+15')}</table><div class="h2">유령</div><table class="tb">${R('🔮 사망자 예측 적중 (1회당)','+3')+R('👻 유령 MVP (최다 적중)','+15')}</table>`}
+else if(rTab==='clue'){const F=(q,a)=>`<div class="fq"><b>Q. ${q}</b><p>${a}</p></div>`;
+h=`<div class="q" style="font-size:.8rem">운영자가 켰을 때만 하는 <b>선택 모드</b>예요. 아침마다 나만 보이는 단서 카드가 오고, 공개된 단서를 모아 마피아를 추리해요. 카톡은 안 해도 되지만 해도 괜찮아요.</div>`
++F('단서 카드는 언제, 몇 장 와요?','매일 아침(1일차 포함) 살아있는 사람마다 1장씩 와요. 게임 탭 맨 위 "단서 카드"와 아침 안내 창에서 볼 수 있어요. 죽은 사람은 더 이상 받지 않아요.')
++F('"단서를 찾지 못했어요"는 뭐예요?','빈 카드예요. 꽤 자주 나와요. 빈 카드는 공개할 게 없어서, 추리판의 "오늘 공개 안 한 사람"에 그대로 남아요. 그래서 안 낸 사람이 숨긴 건지 빈 카드였는지는 알 수 없어요.')
++F('카드 내용은 믿어도 돼요?','시스템이 준 카드는 100% 사실이에요. 마피아가 받은 진짜 카드도 사실이에요. 거짓말은 마피아가 직접 만든 "가짜 단서"뿐이에요.')
++F('카드 종류는 어떤 게 있어요?','① "A, B, C, D, E 중 마피아는 정확히 2명" ② "A와 B는 같은 팀 / 서로 다른 팀" ③ "A와 B 중 최소 한 명은 시민" ④ "마피아 중에 모자 쓴 사람이 있어요 / 없어요" (모자·안경·펫·망토). 카드에 내 이름은 나오지 않아요.')
++F('"팀"은 어떻게 나눠요? 광대·술꾼은?','마피아·갓파더만 마피아 팀이고, 나머지(광대·술꾼·예수님 등 전부)는 단서에서 시민 쪽으로 쳐요.')
++F('외형 단서는 지금 옷 기준이에요?','아니요. 게임 시작 순간 입고 있던 모습 기준이에요. 중간에 옷을 바꿔도 단서는 그대로예요. 추리판 "외형" 탭에 그때 모습이 표로 있어요. "마피아 중에"는 이미 죽은 마피아까지 포함해요.')
++F('공개하면 어떻게 돼요? 취소돼요?','추리판에 내 이름과 함께 올라가고 되돌릴 수 없어요. 숨기기는 언제든 다시 공개로 바꿀 수 있어요. 지난 날 카드도 게임이 끝나기 전까지는 나중에 공개할 수 있어요.')
++F('그냥 다 공개하면 안 돼요?','시민은 웬만하면 공개하는 게 유리해요. 다만 공개하면 마피아도 그 정보를 보고, 추리에 도움 된 사람을 밤에 노릴 수 있어요. 언제 낼지는 각자 판단이에요.')
++F('마피아의 가짜 단서는 뭐예요?','마피아는 한 판에 1번, 그날 받은 진짜 카드 대신 직접 만든 가짜를 공개할 수 있어요. 겉보기엔 진짜와 똑같아요. 그날 카드를 이미 공개했다면 그날은 못 내요. 마피아끼리 서로 받은 카드는 볼 수 없어요.')
++F('가짜 단서는 들킬 수 있어요?','다른 단서들과 모순이 생기면 들킬 수 있어요. 공개된 단서들로 따져서 그 사람이 거짓말한 게 확실하면, 추리판에 "거짓 단서를 낸 게 확실한 사람"으로 떠요. 판이 끝나면 가짜 단서는 빨갛게 표시되고, 숨겼던 카드도 전부 공개돼요.')
++F('가능성 %는 어떻게 계산해요?','공개된 단서와 모순 없는 마피아 조합을 전부 세서, 각 사람이 마피아로 들어간 조합의 비율을 보여줘요. 이미 죽은 사람의 정체도 반영하고, 가짜 단서는 마피아만 낼 수 있다는 것까지 따져요. 시민인 사람한테는 "나는 시민"인 걸 빼고 계산한 값이 보여서 사람마다 숫자가 조금 다를 수 있어요.')
++F('%가 제일 높은 사람이 마피아예요?','아니요, 확률일 뿐이에요. 단서가 적으면 다 비슷하고, 가짜 단서가 섞이면 틀릴 수도 있어요. 경찰 조사, 투표 흐름, 누가 단서를 숨기는지도 같이 보세요.')
++F('경찰·의사 같은 직업은 그대로예요?','네, 직업과 밤 능력은 기본 모드와 똑같아요. 경찰 조사 결과는 계산기에 자동으로 들어가지 않아요. 직접 말하거나 "오늘의 한 줄"에 올려야 해요.')
++F('재판 대상이 되면?','앱에 최후 변론을 3줄까지 남길 수 있어요. 다른 사람들 찬반 화면에 바로 떠요. 카톡으로 해도 괜찮아요.')
++F('판 끝나고 설문은 뭐예요?','재밌었다 / 너무 쉬웠다 / 너무 어려웠다 / 지루했다 중 하나만 누르면 돼요. 그 결과를 보고 단서 양을 조절해요.')}
 else{const F=(q,a)=>`<div class="fq"><b>Q. ${q}</b><p>${a}</p></div>`;
 h=F('왜 다음 단계로 안 넘어가요?','살아있는 사람이 모두 투표/능력을 써야 바로 넘어가요. 한 명이라도 안 하면 제한시간까지 기다려요. 죽은 사람은 기다리지 않아요. 계속 막히면 운영자에게 말해주세요 (시간 연장 · 퇴장 처리 가능).')
 +F('투표를 바꿀 수 있나요?','낮 투표는 마감 전까지 몇 번이든 바꿀 수 있어요. 경찰·탐정 조사는 한 번 정하면 못 바꿔요.')
