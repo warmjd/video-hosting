@@ -455,7 +455,7 @@ const saveCfg=async f=>{if(inGame())return alert('게임 중에는 직업 구성
 window.cfgRole=(k,d)=>saveCfg(c=>{c.mode='custom';c.c[k]=Math.max(0,Math.min(RMAX[k],(c.c[k]||0)+d))});
 window.cfgPool=k=>saveCfg(c=>{c.mode='custom';const i=c.pool.indexOf(k);if(i>=0)c.pool.splice(i,1);else c.pool.push(k);c.pk=Math.min(c.pk,c.pool.length)});
 window.cfgPk=d=>saveCfg(c=>{c.mode='custom';c.pk=Math.max(0,Math.min(c.pool.length,c.pk+d))});
-window.cfgClue=v=>saveCfg(c=>{c.clue=v});
+window.cfgClue=async v=>{const c=CF();c.clue=v;await set(ref(db,ROOT+'/cfg'),c);toast(inGame()?'다음 판부터 적용돼요':'적용했어요')};
 window.cfgTm=(k,d)=>saveCfg(c=>{c.tm[k]=Math.max(1,Math.min(48,c.tm[k]+d))});
 window.cfgMode=m=>saveCfg(c=>{if(m==='preset'){const P=JSON.parse(JSON.stringify(PRESET));Object.keys(P).forEach(k=>c[k]=P[k])}else c.mode=m});
 window.extendT=async h=>{await runTransaction(ref(db,ROOT+'/game'),c=>{if(!c||!['vote','trial','night'].includes(c.phase))return;c.deadline=Math.max(c.deadline||0,NOW())+h*HR;c.log=c.log||[];c.log.push('⏰ 운영자가 이번 단계 제한시간을 '+h+'시간 늘렸어요.');return c})};
@@ -478,7 +478,7 @@ if(ed)h+=`<div class="g2">${btn('📌 기본 규칙으로','cfgMode(\'preset\')'
 if(cf.mode==='custom'){h+=`<div class="sm" style="margin-top:6px">고정 직업 (나머지 자리는 전부 🛋️백수)</div>`+RK.map(k=>cnt(RN[k]+(RMAX[k]===1?' <span class="sm">(최대 1)</span>':''),cf.c[k]||0,`cfgRole('${k}',-1)`,`cfgRole('${k}',1)`)).join('');
 h+=`<div class="sm" style="margin-top:8px">🎲 랜덤 후보 · 눌러서 넣기/빼기 (이 중에서 아래 개수만큼 무작위)</div><div class="g2">${POOLK.map(k=>btn(RN[k],ed?`cfgPool('${k}')`:'',cf.pool.includes(k),'g')).join('')}</div>`+cnt('🎲 랜덤으로 넣을 개수',cf.pk,'cfgPk(-1)','cfgPk(1)')}
 else h+=`<div class="q" style="font-size:.78rem;margin-top:6px">자동: 8~9명 마피아 2, 10명↑ 마피아 3 · 경찰·의사·광대 · 10명↑ 군인·탐정 · 11명↑ 예수님 · 12명↑ 갓파더 · 남는 자리는 이장/기자/술꾼/목격자 → 백수</div>`;
-h+=`<div class="sm" style="margin-top:8px">단서 카드 퍼즐 (실험 모드 · 카톡 없이 추리)</div><div class="g2">${[[0,'끄기'],[1,'단서 적게'],[2,'보통'],[3,'단서 많이']].map(([v,l])=>btn(l,ed?`cfgClue(${v})`:'',(cf.clue||0)===v,'g')).join('')}</div>${cf.clue?'<div class="sm" style="margin:4px 2px 0">매일 아침 각자 단서 카드 1장 · 공개/숨김 선택 · 마피아는 한 판에 1번 가짜 단서 가능</div>':''}`;
+h+=`<div class="sm" style="margin-top:8px">단서 카드 퍼즐 (실험 모드 · 카톡 없이 추리)</div><div class="g2">${[[0,'끄기'],[1,'단서 적게'],[2,'보통'],[3,'단서 많이']].map(([v,l])=>btn(l,`cfgClue(${v})`,(cf.clue||0)===v,'g')).join('')}</div>${ed?'':'<div class="sm" style="margin:4px 2px 0">게임 중에도 바꿀 수 있어요 · 다음 판부터 적용</div>'}${cf.clue?'<div class="sm" style="margin:4px 2px 0">매일 아침 각자 단서 카드 1장 · 공개/숨김 선택 · 마피아는 한 판에 1번 가짜 단서 가능</div>':''}`;
 h+=`<div class="sm" style="margin-top:8px">⏳ 제한시간 (시간 단위)</div>`+cnt('☀️ 낮 투표',cf.tm.v,"cfgTm('v',-1)","cfgTm('v',1)")+cnt('⚖️ 최후 변론',cf.tm.t,"cfgTm('t',-1)","cfgTm('t',1)")+cnt('🌙 밤',cf.tm.n,"cfgTm('n',-1)","cfgTm('n',1)");
 h+=`<div class="q" style="margin-top:6px;font-size:.8rem;background:rgba(255,255,255,.06);border-radius:8px;padding:8px">신청 ${n}명 → ${ck.txt}\n${ck.err?`<span style="color:#ff8787">⚠️ ${ck.err}</span>`:'<span style="color:#69db7c">✅ 이 구성으로 시작할 수 있어요</span>'}</div>`;return h}
 function progUI(g){if(!g||!g.roles||!['vote','trial','night'].includes(g.phase))return'';const a=al(g),d=g.day;let h=`<div class="t" style="margin-top:14px">📡 진행 상황 · 왜 안 넘어가지?</div>`;
