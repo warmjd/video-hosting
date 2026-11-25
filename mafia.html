@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="ko"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#17142b"><meta name="apple-mobile-web-app-capable" content="yes">
-<title>원우마을 슬로우 마피아</title>
+<title>슬로우 마피아</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&family=Jua&display=swap" rel="stylesheet">
 <style>
 html{background:#17142b}:root{--gold:#ffd86b;--gold2:#ffa94d;--pink:#ff8fb1;--ink:#f3efff;--mut:#a59ec6;--line:rgba(255,255,255,.07);--card:#24203c}
@@ -192,7 +192,7 @@ body.tvm .scene{max-width:calc((100vh - 250px)*400/340);margin:0 auto}body.tvm #
 .vtt{display:flex;align-items:center;gap:8px}.vtt b{flex:0 0 auto;min-width:52px;font-size:.9rem}.vtb{flex:1;height:8px;border-radius:4px;background:rgba(255,255,255,.07);overflow:hidden}.vtb i{display:block;height:100%;border-radius:4px;background:#ffa94d}.vtr.def .vtb i{background:#ff6b81}.vtt em{flex:0 0 auto;font-style:normal;font-weight:900;font-size:.84rem}
 .vtv{display:flex;flex-wrap:wrap;gap:4px 10px;margin-top:6px;font-size:.74rem;color:var(--mut)}.vtv span:before{content:'← '}.vtv q{display:block;quotes:none;color:#d3d9e8;font-size:.74rem;margin:1px 0 0 14px}.vtv q:before{content:'“'}.vtv q:after{content:'”'}
 .vtv span:has(q){flex-basis:100%}
-.rmc{font-size:.55em;opacity:.6;vertical-align:middle}
+.rmb{margin-top:4px;padding:4px 10px;border-radius:10px;background:rgba(255,212,59,.12);border:1px solid rgba(255,212,59,.3);color:#ffe066;font-size:.78rem;font-weight:700;box-shadow:none;min-height:0;width:auto}.rmb small{opacity:.65;font-weight:500;margin-left:2px}
 .rmo{position:fixed;inset:0;background:rgba(5,4,15,.7);display:none;align-items:flex-end;justify-content:center;z-index:90}.rmo.on{display:flex}
 .rms{width:100%;max-width:480px;max-height:80vh;overflow:auto;background:#1e1b38;border-radius:20px 20px 0 0;padding:18px 16px 24px;border-top:1px solid rgba(255,255,255,.1)}
 .rmi{display:flex;align-items:center;gap:10px;width:100%;text-align:left;padding:12px 14px;border-radius:14px;background:rgba(255,255,255,.05);margin-bottom:8px;border:1px solid transparent;color:#fff}
@@ -247,7 +247,7 @@ body.tvm .scene{max-width:calc((100vh - 250px)*400/340);margin:0 auto}body.tvm #
 #pl .chip.no{border-color:rgba(255,169,77,.55);background:rgba(255,169,77,.12)}#pl .chip.ok{border-color:rgba(60,207,156,.4);background:rgba(60,207,156,.1)}#pl .chip.def{border-color:rgba(255,107,129,.6);background:rgba(255,107,129,.16)}
 .plsp{margin-top:14px;padding-top:10px;border-top:1px solid var(--line);font-size:.72rem;color:var(--mut);line-height:1.6}
 </style></head><body><div class="w">
-<div class="top"><div><h1><span class="gm" onclick="roomOpen()" style="cursor:pointer">🎭 <span id="rmN">원우마을</span> <b>마피아</b> <small class="rmc">▾</small></span><span class="to">📝 메모</span></h1><div class="tag">SLOW MAFIA · 카톡방 추리 게임</div></div><div style="display:flex;gap:6px"><button class="rb g" id="sndb" onclick="sndToggle()">♪ 소리 켬</button><button class="rb g" onclick="rulesOpen()">📖 규칙</button></div></div>
+<div class="top"><div><h1><span class="gm">🎭 슬로우 <b>마피아</b></span><span class="to">📝 메모</span></h1><button class="rmb" onclick="roomOpen()"><span id="rmN">원우마을</span> <small>▾ 마을</small></button></div><div style="display:flex;gap:6px"><button class="rb g" id="sndb" onclick="sndToggle()">효과음 켬</button><button class="rb g" onclick="rulesOpen()">📖 규칙</button></div></div>
 <div id="hd"><div id="hdt"></div><button class="g" id="hdc" onclick="cpNotice()">카톡 공지</button></div>
 <div class="c" id="login" data-tab="game"></div>
 <div class="c" id="me" data-tab="game" style="display:none"></div>
@@ -286,7 +286,7 @@ body.tvm .scene{max-width:calc((100vh - 250px)*400/340);margin:0 auto}body.tvm #
 import{initializeApp}from"https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
 import{getDatabase,ref,set,onValue,runTransaction,onDisconnect}from"https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
 const cfg={apiKey:"AIzaSyBk2bAqCq_SGeiPJUvoPTRMk0zk3psVewU",authDomain:"jowonu-107aa.firebaseapp.com",databaseURL:"https://jowonu-107aa-default-rtdb.asia-southeast1.firebasedatabase.app",projectId:"jowonu-107aa",storageBucket:"jowonu-107aa.firebasestorage.app",messagingSenderId:"332313627395",appId:"1:332313627395:web:eb5e98f35ff3070129f736"};
-const Q=location.search,TEST=Q.includes('test'),ADMINQ=Q.includes('admin')||TEST,DBB=TEST?'m1test':'m1',VK=(new URLSearchParams(Q).get('v')||'').replace(/[.#$\[\]\/\s]/g,'').slice(0,12),ROOT=VK?DBB+'r/'+VK:DBB,RNM=VK||'원우마을',RKEY=VK||'_main',ADMIN_PIN='0000',MIN=TEST?4:8;
+const Q=location.search,TEST=Q.includes('test'),ADMINQ=Q.includes('admin')||TEST,DBB=TEST?'m1test':'m1',VK=(new URLSearchParams(Q).get('v')||'').replace(/[.#$\[\]\/\s]/g,'').slice(0,12),ROOT=VK?DBB+'r/'+VK:DBB,RNM0=VK||'원우마을',RKEY=VK||'_main',ADMIN_PIN='0000',MIN=TEST?4:8;
 const ROSTER=['조원우','서충원','나선엽','류태웅','박경민','박승호','이다원','유한춘','이재형','한빛','조돌맹','현지석','황동범'];
 const RN={mafia:'🔪 마피아',doctor:'💉 의사',police:'🕵️ 경찰',jester:'🤡 광대',citizen:'🛋️ 백수',godfather:'🕴️ 갓파더',soldier:'🪖 군인',detective:'🔎 탐정',jesus:'✝️ 예수님',mayor:'🏛️ 이장',reporter:'📰 기자',drunk:'🍺 술꾼',witness:'👀 목격자'};
 const vis=(g,r)=>g.phase==='end'||!['jester','drunk','jesus'].includes(r)?r:'citizen';
@@ -296,7 +296,7 @@ const toast=m=>{document.querySelectorAll('.toast').forEach(x=>x.remove());const
 const db=getDatabase(initializeApp(cfg));let OFF=0;const NOW=()=>Date.now()+OFF;onValue(ref(db,'.info/serverTimeOffset'),x=>{OFF=x.val()||0});
 let D={users:{},game:null,votes:{},night:{},ghost:{},fv:{},entries:{},profiles:{},last:[],cfg:null,refunds:{},likes:{},castle:{},board:{},why:{},lobbyDl:0,lobbyMsg:'',hello:{},vil:{},card:{},plays:{},lp:{},seen:{},keepers:{},endAt:0},me=localStorage.getItem('m1_me')||'',as='',admin=false,loaded=false,busy=false,busyAt=0;
 const SHK=new Set(["users", "profiles", "likes", "castle", "refunds", "plays", "lp", "seen", "vil", "card", "keepers", "grants", "survey", "yard", "rooms", "where"]);
-const DK={rooms:{},where:{},cpub:{},dfs:{},survey:{},qa:{},pin:{},news:{},archIdx:{},pres:{},shout:{},poke:{},cheer:{},yard:{},lw:{},optout:{},users:{},game:null,votes:{},night:{},ghost:{},fvotes:{},entries:{},profiles:{},last:[],cfg:null,refunds:{},likes:{},castle:{},board:{},why:{},lobbyDl:0,lobbyMsg:'',hello:{},vil:{},card:{},plays:{},lp:{},seen:{},keepers:{},endAt:0};
+const DK={rinfo:{},rooms:{},where:{},cpub:{},dfs:{},survey:{},qa:{},pin:{},news:{},archIdx:{},pres:{},shout:{},poke:{},cheer:{},yard:{},lw:{},optout:{},users:{},game:null,votes:{},night:{},ghost:{},fvotes:{},entries:{},profiles:{},last:[],cfg:null,refunds:{},likes:{},castle:{},board:{},why:{},lobbyDl:0,lobbyMsg:'',hello:{},vil:{},card:{},plays:{},lp:{},seen:{},keepers:{},endAt:0};
 let got=0,rq=0;const kickR=()=>{if(rq)return;rq=1;setTimeout(()=>{rq=0;render();tick()},40)};
 Object.keys(DK).forEach(k=>{let first=1;onValue(ref(db,(SHK.has(k)?DBB:ROOT)+'/'+k),x=>{const v=x.val(),d=DK[k];D[k==='fvotes'?'fv':k]=v==null?(Array.isArray(d)?[]:d&&typeof d==='object'?{}:d):v;if(first){first=0;got++}if(got>=Object.keys(DK).length){loaded=true;kickR()}})});
 async function H(s){const b=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(s));return[...new Uint8Array(b)].map(x=>x.toString(16).padStart(2,'0')).join('')}
@@ -676,6 +676,13 @@ return h+`<button class="g" style="width:100%;margin-top:14px" onclick="arcClose
 
 
 /* ===== 여러 마을 동시 진행 ===== */
+const RNM=()=>((D.rinfo||{}).nm)||RNM0;
+const isKp=n=>!!(n&&((D.rinfo||{}).kp||{})[n]);
+let kpTry=0;function kpClaim(){if(kpTry||!loaded||!VK||!me||(D.users[me]||{}).bot)return;if(Object.keys((D.rinfo||{}).kp||{}).length){kpTry=1;return}kpTry=1;runTransaction(ref(db,ROOT+'/rinfo'),c=>{c=c||{};if(c.kp&&Object.keys(c.kp).length)return;c.kp={[me]:true};c.nm=c.nm||VK;return c}).then(r=>{if(r&&r.committed)toast('이 마을의 첫 손님이라 마을지기가 되었어요. 운영자 화면에서 마을 이름과 설정을 바꿀 수 있어요')}).catch(()=>{})}
+const rnBox=()=>{const kp=Object.keys((D.rinfo||{}).kp||{});return`<div class="sm" style="margin:2px 0 6px">마을 설정</div><div style="display:flex;gap:6px"><input id="rnIn" maxlength="12" value="${esc(RNM())}" placeholder="마을 이름" style="flex:1"><button class="g" style="width:auto" onclick="rnSave()">이름 저장</button></div><div class="sm" style="margin:8px 0 4px">마을지기 ${kp.length?'':'(아직 없음)'}</div><div class="g2">${kp.map(n=>btn(esc(n)+' ✕',`kpDel('${esc(n)}')`,0,'g')).join('')}</div><div style="display:flex;gap:6px;margin:6px 0 12px"><input id="kpIn" maxlength="8" placeholder="마을지기 추가 (이름)" style="flex:1"><button class="g" style="width:auto" onclick="kpAdd()">추가</button></div>`};
+window.rnSave=()=>{const v=($('rnIn').value||'').trim().slice(0,12);if(!v)return;set(ref(db,ROOT+'/rinfo/nm'),v);toast('마을 이름을 바꿨어요')};
+window.kpAdd=()=>{const v=($('kpIn').value||'').trim();if(!v)return;if(!D.users[v])return alert('가입한 사람 이름을 적어주세요');set(ref(db,ROOT+'/rinfo/kp/'+v),true);$('kpIn').value=''};
+window.kpDel=n=>{const k=Object.keys((D.rinfo||{}).kp||{});if(k.length<=1&&!ADMINQ)return alert('마을지기는 최소 1명 있어야 해요');if(!confirm(n+'님을 마을지기에서 뺄까요?'))return;set(ref(db,ROOT+'/rinfo/kp/'+n),null)};
 const rmUrl=k=>{const u=new URLSearchParams(location.search);if(k&&k!=='_main')u.set('v',k);else u.delete('v');const q=u.toString();return location.pathname+(q?'?'+q:'')};
 const rmLive=r=>r&&['vote','trial','night'].includes(r.ph);
 function rmList(){const R={...(D.rooms||{})};R._main=R._main||{nm:'원우마을',ph:'lobby',at:NOW()};return Object.keys(R).map(k=>({k,...R[k]})).filter(r=>r.k==='_main'||r.k===RKEY||NOW()-(r.at||0)<3*864e5).sort((a,b)=>(b.k==='_main')-(a.k==='_main')||(rmLive(b)-rmLive(a))||(b.at||0)-(a.at||0))}
@@ -688,9 +695,9 @@ window.roomClose=()=>$('rmo').classList.remove('on');
 window.roomGo=k=>{if(k===RKEY)return roomClose();location.href=rmUrl(k)};
 window.roomNew=()=>{const v=($('rmNew').value||'').replace(/[.#$\[\]\/\s]/g,'').slice(0,12);if(!v)return alert('마을 이름을 적어주세요');if(v==='원우마을'||v==='_main')return roomGo('_main');location.href=rmUrl(v)};
 let rmLast='',rmAt=0,rmShown=0;
-function roomHead(){const e=$('rmN');if(e&&e.textContent!==RNM){e.textContent=RNM;document.title=RNM+' 마피아'}if(!rmShown&&loaded){rmShown=1;setTimeout(roomPing,500);let ss='';try{ss=sessionStorage.getItem('m1_rmo')}catch(x){}const act=rmList().filter(r=>rmLive(r)||r.e).length;if(!ss&&act>=2&&!VK)setTimeout(roomOpen,800)}}
+function roomHead(){const e=$('rmN');if(e&&e.textContent!==RNM()){e.textContent=RNM();document.title=RNM()+' · 슬로우 마피아'}kpClaim();if(!rmShown&&loaded){rmShown=1;setTimeout(roomPing,500);let ss='';try{ss=sessionStorage.getItem('m1_rmo')}catch(x){}const act=rmList().filter(r=>rmLive(r)||r.e).length;if(!ss&&act>=2&&!VK)setTimeout(roomOpen,800)}}
 function roomPing(){if(!loaded)return;const g=G(),live=g&&g.roles&&['vote','trial','night'].includes(g.phase),ph=g&&g.roles?g.phase:'lobby',e=Object.keys(D.entries||{}).length;
-const pl=live?Object.keys(g.roles):ph==='lobby'||!g||!g.roles?Object.keys(D.entries||{}):[];const o={nm:RNM,ph,day:live?g.day:0,n:live?Object.keys(g.roles).length:0,e:ph==='lobby'?e:0,pl};
+const pl=live?Object.keys(g.roles):ph==='lobby'||!g||!g.roles?Object.keys(D.entries||{}):[];const o={nm:RNM(),ph,day:live?g.day:0,n:live?Object.keys(g.roles).length:0,e:ph==='lobby'?e:0,pl};
 const j=JSON.stringify(o);if(j===rmLast&&NOW()-rmAt<6e5)return;rmLast=j;rmAt=NOW();set(ref(db,DBB+'/rooms/'+RKEY),{...o,at:NOW()})}
 setInterval(roomPing,15000);
 /* ===== 단서 카드 · 추리판 ===== */
@@ -1591,8 +1598,8 @@ const Snd=(()=>{
   return{init,resume,setTrack,setIntense,sfx,setVol,setMute,vol,chime,hfx,get ready(){return!!ctx}};
 })();
 let SND_ON=localStorage.getItem('m1_snd')!=='0';
-function bgmPick(){if(!Snd.ready||!SND_ON)return;const g=G(),ph=g&&g.phase;Snd.setIntense(ph==='trial');Snd.setTrack(ph==='night'?'night':ph==='trial'?'fish':ph==='end'?'dream':skyMode(g)==='night'?'night':'town')}
-const sndUpd=()=>{const b=$('sndb');if(b){b.textContent=SND_ON?'♪ 소리 켬':'♪ 소리 끔';b.classList.toggle('mut',!SND_ON)}};
+function bgmPick(){return;if(!Snd.ready||!SND_ON)return;const g=G(),ph=g&&g.phase;Snd.setIntense(ph==='trial');Snd.setTrack(ph==='night'?'night':ph==='trial'?'fish':ph==='end'?'dream':skyMode(g)==='night'?'night':'town')}
+const sndUpd=()=>{const b=$('sndb');if(b){b.textContent=SND_ON?'효과음 켬':'효과음 끔';b.classList.toggle('mut',!SND_ON)}};
 window.sndToggle=()=>{SND_ON=!SND_ON;localStorage.setItem('m1_snd',SND_ON?'1':'0');if(SND_ON){Snd.init();Snd.resume();Snd.setMute(false);bgmPick()}else if(Snd.ready)Snd.setMute(true);sndUpd()};
 document.addEventListener('pointerdown',e=>{if(!SND_ON)return;const first=!Snd.ready;Snd.init();Snd.resume();if(first)Snd.setMute(false);bgmPick();const b=e.target.closest&&e.target.closest('button');if(b&&!first)Snd.sfx('tap')},{passive:true});
 // ===== 프로필·업적·랭킹 =====
@@ -2695,9 +2702,9 @@ if(r==='reporter'){const c=(N.reporter||{})[p],used=g.rp&&g.rp[p];h+=`<div class
 if(!isM(r)&&r!=='doctor'&&r!=='police'&&r!=='detective'&&r!=='reporter')h='<div class="q">🌙 밤이에요. 당신은 할 일이 없어요. 💤 아침을 기다려 주세요.</div>'}
 if(r==='police')h+=polList(g,p);if(r==='detective')h+=detList(g,p);
 A.innerHTML=h}}
-const AD=$('adm');AD.style.display=ADMINQ?'block':'none';
-const fe=document.activeElement;if(ADMINQ&&!(fe&&AD.contains(fe)&&['INPUT','SELECT'].includes(fe.tagName))){if(!admin)AD.innerHTML='<div class="t">🛠️ 운영자</div><input id="ap" type="password" placeholder="운영자 비밀번호" onkeydown="if(event.key===\'Enter\')unlock()"><button onclick="unlock()">확인</button>';
-else AD.innerHTML=`<div class="t">🛠️ 운영자 모드</div><div class="g2">${btn('▶ 신청 끝 · 게임 시작 (신청자로 직업 배정)','startG()',0,'o')}${g&&['vote','trial','night'].includes(g.phase)?btn('⏩ 이 단계 넘기기(비상용)','closeNow()',0,'r'):''}${btn('🔄 한 판 더 (참가 신청 열기)','resetG()',0,'g')}</div><div class="sm" style="margin-top:6px">순서: ① 🔄 한 판 더(신청 열기) → ② 모두 신청하면 ▶ 신청 끝·게임 시작</div><div class="sm" style="margin-top:4px">신청 ${Object.keys(D.entries||{}).filter(n=>D.users[n]).length}명${g&&g.roles?' · 이번 판 참가자 '+Object.keys(g.roles).length+'명':''}</div>${refundUI()}${progUI(g)}${cfgUI()}${grantUI()}${keeperUI()}${lobbyNow()?`<div class="t" style="margin-top:14px">👥 대신 신청</div><div class="sm" style="margin:0 0 4px"> (운영자) · 참석 확인된 사람만 신청하세요</div><div class="g2">${btn('📋 지난 판 참가자 전원 신청 ('+(D.last||[]).length+'명)',"admAll('last')",0,'g')}${btn('👥 등록된 전원 신청',"admAll('all')",0,'g')}${btn('✖ 신청 전체 해제',"admAll('none')",0,'g')}</div><div class="g2" style="margin-top:6px">${$u.filter(n=>TEST||!D.users[n].bot).map(n=>btn((D.entries&&D.entries[n]?'✅ ':'')+n,`admApply('${n}')`,!!(D.entries&&D.entries[n]),'g')).join('')}</div>`:''}${TEST?`<div class="sm" style="margin:8px 0 4px">테스트 도구</div><div class="g2">${btn('🤖 봇 채우기(총9명 신청)','addBots()',0,'g')}${btn('봇 삭제','delBots()',0,'g')}${btn('🎲 봇 자동행동','auto()',0,'g')}</div><select onchange="setAs(this.value)"><option value="">👀 다른 사람으로 보기 (본인)</option>${$u.map(n=>`<option ${as===n?'selected':''} value="${n}">${n}${g&&g.roles&&g.roles[n]?' · '+RN[g.roles[n]]+(g.alive[n]?'':' 💀'):''}</option>`).join('')}</select>`:''}`}
+const KPm=isKp(me);if(KPm)admin=true;const AQ=ADMINQ||KPm;const AD=$('adm');AD.style.display=AQ?'block':'none';
+const fe=document.activeElement;if(AQ&&!(fe&&AD.contains(fe)&&['INPUT','SELECT'].includes(fe.tagName))){if(!admin)AD.innerHTML='<div class="t">🛠️ 운영자</div><input id="ap" type="password" placeholder="운영자 비밀번호" onkeydown="if(event.key===\'Enter\')unlock()"><button onclick="unlock()">확인</button>';
+else AD.innerHTML=`<div class="t">🛠️ ${KPm?'마을지기':'운영자'} 모드</div>${rnBox()}<div class="g2">${btn('▶ 신청 끝 · 게임 시작 (신청자로 직업 배정)','startG()',0,'o')}${g&&['vote','trial','night'].includes(g.phase)?btn('⏩ 이 단계 넘기기(비상용)','closeNow()',0,'r'):''}${btn('🔄 한 판 더 (참가 신청 열기)','resetG()',0,'g')}</div><div class="sm" style="margin-top:6px">순서: ① 🔄 한 판 더(신청 열기) → ② 모두 신청하면 ▶ 신청 끝·게임 시작</div><div class="sm" style="margin-top:4px">신청 ${Object.keys(D.entries||{}).filter(n=>D.users[n]).length}명${g&&g.roles?' · 이번 판 참가자 '+Object.keys(g.roles).length+'명':''}</div>${refundUI()}${progUI(g)}${cfgUI()}${grantUI()}${keeperUI()}${lobbyNow()?`<div class="t" style="margin-top:14px">👥 대신 신청</div><div class="sm" style="margin:0 0 4px"> (운영자) · 참석 확인된 사람만 신청하세요</div><div class="g2">${btn('📋 지난 판 참가자 전원 신청 ('+(D.last||[]).length+'명)',"admAll('last')",0,'g')}${btn('👥 등록된 전원 신청',"admAll('all')",0,'g')}${btn('✖ 신청 전체 해제',"admAll('none')",0,'g')}</div><div class="g2" style="margin-top:6px">${$u.filter(n=>TEST||!D.users[n].bot).map(n=>btn((D.entries&&D.entries[n]?'✅ ':'')+n,`admApply('${n}')`,!!(D.entries&&D.entries[n]),'g')).join('')}</div>`:''}${TEST?`<div class="sm" style="margin:8px 0 4px">테스트 도구</div><div class="g2">${btn('🤖 봇 채우기(총9명 신청)','addBots()',0,'g')}${btn('봇 삭제','delBots()',0,'g')}${btn('🎲 봇 자동행동','auto()',0,'g')}</div><select onchange="setAs(this.value)"><option value="">👀 다른 사람으로 보기 (본인)</option>${$u.map(n=>`<option ${as===n?'selected':''} value="${n}">${n}${g&&g.roles&&g.roles[n]?' · '+RN[g.roles[n]]+(g.alive[n]?'':' 💀'):''}</option>`).join('')}</select>`:''}`}
 lwRender(g,p);annCheck(g);
 $('pl').innerHTML=(()=>{const spec=g&&g.roles&&(g.phase==='end'||(p&&(g.roles[p]&&!g.alive[p]&&!(g.rise&&g.rise[p])))),lab=n=>spec&&g.roles[n]?RN[n===p?g.roles[n]:vis(g,g.roles[n])].split(' ').slice(1).join(' '):(g.alive[n]?'':(isM(g.roles[n])?'마피아':'시민')),
 chip=(n,c,l)=>`<span class="chip ${c}">${c==='ok'?'<i class="ok"></i>':''}${esc(n)}${l?'<small>'+l+'</small>':''}</span>`,
