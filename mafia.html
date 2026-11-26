@@ -216,6 +216,7 @@ body.tvm .scene{max-width:calc((100vh - 250px)*400/340);margin:0 auto}body.tvm #
 .gfg{display:grid;grid-template-columns:repeat(5,1fr);gap:6px}.gfc{position:relative;aspect-ratio:1;display:flex;align-items:center;justify-content:center;padding:4px;border-radius:10px;background:rgba(255,255,255,.05);border:1px solid color-mix(in srgb,var(--rc) 45%,transparent);box-shadow:none;min-height:0}.gfc img{max-width:100%;max-height:100%;image-rendering:pixelated}.gfc.no{border-color:rgba(255,255,255,.06)}.gfc.sel{background:rgba(140,255,230,.15)}.gfc i{position:absolute;top:1px;right:4px;font-style:normal;color:#ffe066;font-size:.7rem}
 .gfpg{display:flex;align-items:center;justify-content:center;gap:10px;margin-top:8px}.gfpg button{width:auto;padding:6px 14px}
 .gfd{margin-top:8px;padding:10px 12px;border-radius:12px;background:rgba(255,255,255,.05);font-size:.85rem}.gfd small{opacity:.7}.gfd p{margin:4px 0}
+.gftier{position:absolute;left:4px;top:4px;width:7px;height:7px;border-radius:50%;box-shadow:0 0 6px currentColor}.row2{position:relative}
 .gfw{display:grid;grid-template-columns:1fr 1fr;gap:6px}.gfw>div{padding:7px 9px;border-radius:10px;background:rgba(255,255,255,.04);font-size:.8rem;display:flex;flex-direction:column;gap:1px}.gfw small{opacity:.6;font-size:.68rem}.gfw b{font-size:.68rem;opacity:.45}.gfw .ok{background:rgba(140,255,230,.1)}.gfw .ok b{opacity:1;color:#8cffe6}.gfw .ok span{color:#b8fff0}
 .gfrk{margin-bottom:10px}.gfrk>div:not(.sm){display:flex;align-items:center;gap:8px;padding:4px 0;font-size:.85rem}.gfrk span{width:1.4em;text-align:center;opacity:.6}.gfrk em{margin-left:auto;font-style:normal;font-weight:700;color:#b8fff0}
 .glr{display:flex;gap:4px;margin-top:5px;flex-wrap:wrap}.glr button{width:auto;min-height:0;padding:2px 8px;font-size:.72rem;border-radius:999px;background:rgba(255,255,255,.06);box-shadow:none;color:#cfe8ff}.glr button.on{background:rgba(165,216,255,.3);color:#fff}
@@ -1611,6 +1612,32 @@ const i0=gfInit(me);if(i0&&(f.name[0]===i0||(!GF.L.some(q=>q.name[0]===i0)&&cho(
 if(f.rar>=3){if(!H.s3||H.s3.s!==x.key)H.s3={s:x.key,a:[0,0,0]};H.s3.a[f.sp]=1;if(H.s3.a[0]&&H.s3.a[1]&&H.s3.a[2])un('h15')}}
 async function gfMissRec(kind,mx){if(!me||kind==='early')return;const newH=[];try{await runTransaction(ref(db,DBB+'/gfish/'+me),c=>{c=c||{};const H=c.h=c.h||{};H.t=H.t||{};const un=k=>{if(!H.t[k]){H.t[k]=1;newH.push(k)}};H.ms=(H.ms||0)+1;if(H.ms>=10)un('h1');if(kind==='nib'){H.fn=(H.fn||0)+1;if(H.fn>=50)un('h2')}if(kind==='reel'&&mx>=.9)un('h3');return c});
 if(newH.length){await runTransaction(ref(db,DBB+'/profiles/'+me),c=>{c=c||{t:0,own:{},eq:{}};c.ght=c.ght||{};newH.forEach(k=>c.ght[k]=1);const hn=Object.keys(c.ght).length;c.own=c.own||{};if(hn>=5)c.own.h_gat=1;if(hn>=15)c.own.pl_gsec=1;return c});toast('숨겨진 칭호 「'+newH.map(k=>GFH[k][0]).join('」「')+'」를 찾았어요!')}}catch(e){console.error(e)}}
+/* ===== 낚싯대 · 찌 그리기 (성능 차이 없음 · 모양과 효과만) ===== */
+const GFTIP={skull:[".www.","wkwkw","wwwww",".w.w."],orb:[".o.","ooo",".o."],heart:["o.o","ooo",".o."],star:["..o..",".ooo.","ooooo",".o.o."],flower:[".o.","ooo",".o."],gem:[".o.","ooo","ooo",".o."],trident:["o.o.o","ooooo","..o.."],bolt:["..o",".o.","ooo",".o.","o.."],flame:[".o.","ooo","ooo",".o."],planet:["..o..","ooooo","..o.."],leaf:["..o",".oo","oo.","o.."]};
+const hexA2=(h,a)=>{h=h.replace('#','');const n=parseInt(h.length===3?h.split('').map(c=>c+c).join(''):h,16);return`rgba(${n>>16&255},${n>>8&255},${n&255},${a})`};
+function gfRodDraw(x,x1,y1,x2,y2,it,t,lx,ly){const v=it&&it.v,col=v?v.col:['#6a5a7a'],fx=v&&v.fx||{},n=8;
+if(fx.glow){x.save();x.globalCompositeOperation='lighter';x.strokeStyle=hexA2(fx.glow,.35+.15*Math.sin(t*3));x.lineWidth=4;x.beginPath();x.moveTo(x1,y1);x.lineTo(x2,y2);x.stroke();x.restore()}
+x.lineWidth=1.7;for(let i=0;i<n;i++){const a=i/n,b=(i+1)/n;let c=col[i%col.length];if(fx.rb)c=`hsl(${(t*80+i*40)%360},90%,70%)`;x.strokeStyle=c;x.beginPath();x.moveTo(x1+(x2-x1)*a,y1+(y2-y1)*a);x.lineTo(x1+(x2-x1)*b,y1+(y2-y1)*b);x.stroke()}x.lineWidth=1;
+if(fx.tip&&GFTIP[fx.tip]){const p=GFTIP[fx.tip],w=p[0].length,h=p.length;p.forEach((r,yy)=>{for(let xx=0;xx<r.length;xx++){if(r[xx]==='.')continue;x.fillStyle=r[xx]==='k'?'#202020':fx.tc||'#fff';x.fillRect(Math.round(x2-w/2+xx),Math.round(y2-h+yy),1,1)}})}
+if(fx.along){for(let k=0;k<4;k++){const p=(t*.45+k/4)%1;let px0,py0;if(lx!=null&&k%2){px0=x2+(lx-x2)*p;py0=y2+(ly-y2)*p}else{px0=x1+(x2-x1)*p;py0=y1+(y2-y1)*p}x.fillStyle=hexA2(fx.along[k%fx.along.length],.5+.5*Math.sin(t*6+k));x.fillRect(px0-.5,py0-1.5,1,1)}}
+if(fx.trail){for(let k=0;k<3;k++){const p=(t*.8+k/3)%1;x.fillStyle=hexA2((fx.along||[fx.tc||'#fff'])[k%((fx.along||[1]).length)],1-p);x.fillRect(x2+Math.sin(t*3+k)*3,y2+p*14,1,1)}}
+if(fx.bolt&&Math.sin(t*2.3)>.85){x.strokeStyle='rgba(255,240,120,.9)';x.beginPath();x.moveTo(x2,y2);x.lineTo(x2+3,y2-4);x.lineTo(x2-1,y2-7);x.lineTo(x2+2,y2-11);x.stroke()}}
+const gfBobC={};function gfBobImg(v){const k=JSON.stringify(v.rows)+JSON.stringify(v.pal);if(gfBobC[k])return gfBobC[k];const w=Math.max(...v.rows.map(r=>r.length)),h=v.rows.length,c=document.createElement('canvas');c.width=w+2;c.height=h+2;const x=c.getContext('2d');
+v.rows.forEach((r,yy)=>{for(let xx=0;xx<r.length;xx++){const cc=v.pal[r[xx]];if(!cc)continue;x.fillStyle='#1a1a2a';x.fillRect(xx,yy+1,3,1);x.fillRect(xx+1,yy,1,3)}});v.rows.forEach((r,yy)=>{for(let xx=0;xx<r.length;xx++){const cc=v.pal[r[xx]];if(cc){x.fillStyle=cc;x.fillRect(xx+1,yy+1,1,1)}}});return gfBobC[k]=c}
+function gfBobDraw(x,cx,cy,it,t,st){const v=it&&it.v;if(!v){x.fillStyle='#f4f4f4';x.fillRect(cx-2,cy-4,4,3);x.fillStyle='#e8556a';x.fillRect(cx-2,cy-1,4,3);return}
+const fx=v.fx||{},tr=v.tier|0,im=gfBobImg(v),w=im.width,h=im.height,top=cy-h+2;
+if(fx.glow){const r=5+tr*2+Math.sin(t*3)*1.2;x.save();x.globalCompositeOperation='lighter';const g=x.createRadialGradient(cx,cy-h/2+2,0,cx,cy-h/2+2,r);g.addColorStop(0,hexA2(fx.glow,.5));g.addColorStop(1,hexA2(fx.glow,0));x.fillStyle=g;x.fillRect(cx-r,cy-h/2+2-r,r*2,r*2);x.restore()}
+if(fx.rays){x.save();x.translate(cx,cy-h/2+2);x.rotate(t*.6);x.strokeStyle=hexA2(fx.rays,.45);for(let i=0;i<8;i++){x.rotate(Math.PI/4);x.beginPath();x.moveTo(0,h/2+1);x.lineTo(0,h/2+4+tr);x.stroke()}x.restore()}
+if(fx.ring){const rr=(t*9)%10,c=fx.ring==='rb'?`hsl(${(t*90)%360},90%,70%)`:fx.ring;x.strokeStyle=fx.ring==='rb'?c:hexA2(c,.6*(1-rr/10));x.beginPath();x.ellipse(cx,cy+2,3+rr,1+rr*.3,0,0,6.3);x.stroke()}
+x.drawImage(im,Math.round(cx-w/2),Math.round(top));
+const P=(arr,k)=>arr[k%arr.length];
+if(fx.spark)for(let k=0;k<3+tr;k++){const a=k*2.4+t*.7,r=4+((k*7)%5),al=.5+.5*Math.sin(t*5+k*1.7);x.fillStyle=hexA2(P(fx.spark,k),al);x.fillRect(cx+Math.cos(a)*r,cy-h/2+Math.sin(a)*r,1,1)}
+if(fx.rise)for(let k=0;k<3+tr;k++){const p=(t*.6+k/(3+tr))%1;x.fillStyle=hexA2(P(fx.rise,k),1-p);x.fillRect(cx+Math.sin(k*3+t*2)*4,top-p*12,1,1)}
+if(fx.fall)for(let k=0;k<3+tr;k++){const p=(t*.5+k/(3+tr))%1;x.fillStyle=hexA2(P(fx.fall,k),1-p);x.fillRect(cx+((k*5)%11)-5+Math.sin(t+k)*1,top-8+p*12,1,1)}
+if(fx.orbit)fx.orbit.forEach((c,k)=>{const a=t*1.6+k*6.283/fx.orbit.length;x.fillStyle=c;x.fillRect(cx+Math.cos(a)*(w/2+3),cy-h/2+2+Math.sin(a)*(h/2+1)*.6,1,1)})}
+const gfThC={};function gfThumb(it){if(gfThC[it.id])return gfThC[it.id];const c=document.createElement('canvas');c.width=40;c.height=40;const x=c.getContext('2d');x.imageSmoothingEnabled=false;x.scale(2,2);
+if(it.s==='bob'){const im=gfBobImg(it.v),sc=17/Math.max(im.width,im.height);x.drawImage(im,10-im.width*sc/2,10-im.height*sc/2,im.width*sc,im.height*sc)}
+else gfRodDraw(x,3,18,16,3,it,1.2);return gfThC[it.id]=c.toDataURL()}
 const GFW=[58,26,11,4,1,.35],GFRW=[1,2,4,8,15,30],GFCAP=30,GFOPEN=[0,15,50];
 const GFT_N=['흔함','보통','희귀','영웅','전설','신화'];
 let gfT='f',gfSpot=0,gfPg=0,gfSel=-1,gfS={st:'idle',t:0},gfLast=[],gfMsg='',gfBusy=false,gfAv=null,gfAvK='';
@@ -1647,14 +1674,15 @@ x.fillStyle='#1c1622';x.fillRect(78,wy-16,2,34);x.fillRect(74,wy-18,10,2);const 
 function gfDraw(cv,t){const x=cv.getContext('2d'),W=cv.width,H=cv.height,s=W/340;x.setTransform(s,0,0,s,0,0);x.imageSmoothingEnabled=false;const w=340,h=210,wy=104;
 gfBg(x,t,92);
 const av=gfAvatar(),py=wy+18-44+Math.sin(t*2)*1.5;x.save();x.globalAlpha=.78;if(av)x.drawImage(av,24,py,30,45);x.restore();
-const tipX=60,tipY=py+8;x.strokeStyle='#6a5a7a';x.lineWidth=1.5;x.beginPath();x.moveTo(44,py+26);x.lineTo(tipX,tipY);x.stroke();x.lineWidth=1;
+const tipX=60,tipY=py+8,eqM=pfOf(me).eq||{},rodI=ITEM[eqM.rod],bobI=ITEM[eqM.bob];
 const st=gfS.st,now=performance.now()/1000;
 if(st!=='idle'&&st!=='done'){const p=Math.min(1,(now-gfS.t0)/.6),fx=gfS.bx,fyy=wy+20,cx0=tipX+(fx-tipX)*p,cy0=tipY+(fyy-tipY)*p-Math.sin(p*3.14)*40;
 let by=fyy;if(st==='wait')by+=Math.sin(now*3)*1;if(st==='nib')by+=2+Math.sin(now*24)*1.5;if(st==='bite')by+=4+Math.sin(now*30)*2;if(st==='reel')by+=3+Math.sin(now*18)*2;
 const bxx=p<1?cx0:fx,byy=p<1?cy0:by;x.strokeStyle='rgba(220,230,255,.55)';x.beginPath();x.moveTo(tipX,tipY);x.quadraticCurveTo((tipX+bxx)/2,Math.max(tipY,byy)+10,bxx,byy);x.stroke();
-x.fillStyle='#f4f4f4';x.fillRect(bxx-2,byy-4,4,3);x.fillStyle='#e8556a';x.fillRect(bxx-2,byy-1,4,3);
+gfBobDraw(x,bxx,byy,bobI,now,st);
 if(p>=1&&(st==='bite'||st==='nib'||st==='reel')){x.strokeStyle='rgba(180,220,255,.5)';const rr=(now*14)%12;x.beginPath();x.ellipse(fx,fyy+3,4+rr,1.5+rr*.25,0,0,6.3);x.stroke()}
 if(st==='bite'){x.fillStyle='#ffe066';x.font='bold 22px sans-serif';x.textAlign='center';x.fillText('!',fx,fyy-14+Math.sin(now*20)*2)}}
+gfRodDraw(x,44,py+26,tipX,tipY,rodI,now,(st!=='idle'&&st!=='done'&&gfS.bx)?gfS.bx:null,wy+20);
 if(st==='reel')gfReelDraw(x,now);
 if(st==='got'){const f=GF.L[gfS.f],im=GF.img(f.id,gfS.sh?'sh':'',4),k=Math.min(1,(now-gfS.t0)/.35),sc=Math.min(1.6,120/im.width);x.fillStyle='rgba(6,8,20,.6)';x.fillRect(0,0,w,h);
 const gg=x.createRadialGradient(170,92,0,170,92,90);gg.addColorStop(0,gfS.sh?'rgba(255,240,170,.45)':`${GF.RARITY[f.rar].color}55`);gg.addColorStop(1,'rgba(0,0,0,0)');x.fillStyle=gg;x.fillRect(80,10,180,170);
@@ -1739,8 +1767,9 @@ const gfAvC={};function gfAvOf(n){const k=n+JSON.stringify(pfOf(n).eq||{})+JSON.
 function gfPubDraw(cv,t){const x=cv.getContext('2d'),s=cv.width/340;x.setTransform(s,0,0,s,-0,-20*s);x.imageSmoothingEnabled=false;const wy=104,g=G(),on=gfActive(g),O=D.gfon||{};gfBg(x,t,340);
 const n=on.length,gap=n?Math.min(54,300/n):0;on.forEach((nm,i)=>{const q=O[nm]||{},x0=12+i*gap+(n<4?(300-gap*n)/2:0),py=wy+18-44+Math.sin(t*2+i)*1.5,av=gfAvOf(nm);const ghN=g&&g.roles&&g.roles[nm]&&!g.alive[nm]&&['vote','trial','night'].includes(g.phase);x.save();x.globalAlpha=ghN?.7:1;if(av)x.drawImage(av,x0,py,30,45);x.restore();
 const tipX=x0+36,tipY=py+8,bx=x0+44,by=wy+64;let bb=by;const st=q.s;if(st==='wait')bb+=Math.sin(t*3+i);if(st==='bite')bb+=3+Math.sin(t*30)*2;if(st==='reel')bb+=2+Math.sin(t*18)*2;
-x.strokeStyle='#6a5a7a';x.lineWidth=1.4;x.beginPath();x.moveTo(x0+20,py+26);x.lineTo(tipX,tipY);x.stroke();x.lineWidth=1;
-if(st==='wait'||st==='bite'||st==='reel'){x.strokeStyle='rgba(220,230,255,.45)';x.beginPath();x.moveTo(tipX,tipY);x.quadraticCurveTo(tipX+6,bb-8,bx,bb);x.stroke();x.fillStyle='#f4f4f4';x.fillRect(bx-2,bb-4,4,3);x.fillStyle='#e8556a';x.fillRect(bx-2,bb-1,4,3)}
+const eqN=pfOf(nm).eq||{},rodN=ITEM[eqN.rod],bobN=ITEM[eqN.bob];
+if(st==='wait'||st==='bite'||st==='reel'){x.strokeStyle='rgba(220,230,255,.45)';x.beginPath();x.moveTo(tipX,tipY);x.quadraticCurveTo(tipX+6,bb-8,bx,bb);x.stroke();gfBobDraw(x,bx,bb,bobN,t,st)}
+gfRodDraw(x,x0+20,py+26,tipX,tipY,rodN,t+i,(st==='wait'||st==='bite'||st==='reel')?bx:null,bb);
 if(st==='bite'){x.fillStyle='#ffe066';x.font='bold 16px sans-serif';x.textAlign='center';x.fillText('!',bx,bb-10)}
 x.textAlign='center';x.font='bold 9px sans-serif';x.fillStyle='rgba(0,0,0,.6)';x.fillText(nm,x0+15+1,wy+38+1);x.fillStyle='#e8f4ff';x.fillText(nm,x0+15,wy+38);
 x.font='8px sans-serif';x.fillStyle='rgba(184,255,240,.8)';x.fillText(st==='reel'?'감는 중':st==='bite'?'입질!':st==='wait'?'기다리는 중':st==='got'&&NOW()-(q.at||0)<12000?'낚았다!':st==='miss'&&NOW()-(q.at||0)<8000?'놓쳤다…':'쉬는 중',x0+15,wy+48);
@@ -1875,7 +1904,7 @@ const HAIR=[
 {4:'...oHHHHHHHHo...',5:'...HhhHHHHHHH...',6:'...HHHHHHHHHH...',7:'...HH......HH...',8:'...HH......HH...',9:'...HH......HH...',10:'...HH......HH...',11:'....H......H....'},
 {4:'...oHHHHHHHHo...',5:'...HhhHHHHHHH...',6:'..HHHHHHHHHHHH..',7:'..HH........HH..',8:'..H.H......H.H..',9:'..HH........HH..',10:'..H.H......H.H..',11:'..HH........HH..',12:'..H.H......H.H..',13:'...H........H...'}];
 const CAPE={13:'...CCCCCCCCCC...',14:'..CCCCCCCCCCCC..',15:'..CCCCCCCCCCCC..',16:'.CCCCCCCCCCCCCC.',17:'.CCCCCCCCCCCCCC.',18:'.CCCCCCCCCCCCCC.',19:'.CCCCCCCCCCCCCC.',20:'.CCCCCCCCCCCCCC.',21:'CCCCCCCCCCCCCCCC',22:'CCCCCCCCCCCCCCCC',23:'CCDCCCCCCCCCCDCC',24:'CCCCCCCCCCCCCCCC',25:'CDCCCCCCCCCCCCDC'};
-const SLOT={title:'칭호',suit:'한벌룩',top:'상의',bot:'하의',hat:'모자',glass:'안경',face:'얼굴',cape:'망토/날개/등',hand:'손 도구',pet:'반려동물',aura:'오라 이펙트',foot:'발밑 효과',plate:'이름표',nameC:'이름색',dead:'쓰러짐',win:'승리'};
+const SLOT={title:'칭호',suit:'한벌룩',top:'상의',bot:'하의',hat:'모자',glass:'안경',face:'얼굴',cape:'망토/날개/등',hand:'손 도구',pet:'반려동물',aura:'오라 이펙트',foot:'발밑 효과',plate:'이름표',nameC:'이름색',dead:'쓰러짐',win:'승리',rod:'낚싯대',bob:'찌'};
 const I=(id,s,n,p,v)=>({id,s,n,p,v}),vr=(a,b,t)=>Object.fromEntries(Array.from({length:b-a+1},(_,i)=>[a+i,t]));
 const WING=(pal)=>({rows:{8:'.ww..........ww.',9:'gww..........wwg',10:'gwww........wwwg',11:'gwww........wwwg',12:'wwwww......wwwww',13:'gwww........wwwg',14:'.www........www.',15:'.gww........wwg.',16:'..ww........ww..',17:'..ww........ww..',18:'...w........w...'.slice(0,16)},pal});
 const SHOP=[
@@ -2349,6 +2378,78 @@ I('n_gw','nameC','도깨비불 이름',0,'#8cffe6'),
 I('h_gat','hat','뱃사공의 삿갓',0,{rows:{1:'.......kk.......',2:'.....kkkkkk.....',3:'...kkKkkkkKkk...',4:'.kkkkkkkkkkkkkk.'},pal:{k:'#6b5b3e',K:'#8a7650'}}),
 I('pl_gsec','plate','저승 비밀결사',0,{f:'#0a0a14',s:'#b197fc',c:'pl-neon'})];
 GFI.forEach(it=>{SHOP.push(it);HIDE.add(it.id)});
+/* 물결마을 명품 찌 40종 · 낚싯대 15종 + 저승 전용 (모양·효과만 다름) */
+const GFBOB=[
+ ['b_cherry','체리 찌',500000,0,["...g...","..g.g..",".g...g.","rrr.rrr","rhr.rhr","rrr.rrr"],{g:'#5cb85c',r:'#e8344a',h:'#ffb0b8'},{spark:['#ffb0b8','#ffffff']}],
+ ['b_icecream','아이스크림 찌',550000,0,[".ppp.","pphpp","ppppp","ywyyw",".ywy.","..y.."],{p:'#ffa8c8',h:'#ffe0ec',y:'#e8b060',w:'#c88840'},{spark:['#ffe0ec','#ffffff']}],
+ ['b_strawberry','딸기 찌',600000,0,[".gGg.","rrrrr","ryrry","rrrrr",".ryr.","..r.."],{g:'#4caf50',G:'#7ed37e',r:'#ee3b52',y:'#ffe08a'},{spark:['#ffffff','#ffc0c8']}],
+ ['b_donut','도넛 찌',650000,0,[".ppp.","psbpp","pp.pp","dpsdp",".ddd."],{p:'#ff9ec4',s:'#ffe066',b:'#7ec8ff',d:'#d8a060'},{spark:['#ffe066','#7ec8ff']}],
+ ['b_clover','네잎클로버 찌',700000,0,["gg.gg","ghggg",".gsg.","ggggg","gg.gg","..s.."],{g:'#3fae5a',h:'#9be6a8',s:'#2a7a3a'},{spark:['#c8ffd0','#ffffff'],ring:'#9be6a8'}],
+ ['b_frog','개구리 찌',750000,0,["ww.ww","wkgkw","ggggg","grrrg",".ggg."],{w:'#ffffff',k:'#202030',g:'#6cc04a',r:'#ff7a8a'},{rise:['#c8f0ff','#ffffff']}],
+ ['b_penguin','펭귄 찌',800000,0,[".kkk.","kwkwk","kkykk","kwwwk","kwwwk",".o.o."],{k:'#283048',w:'#ffffff',y:'#ffb020',o:'#ff9020'},{spark:['#cfeaff','#ffffff']}],
+ ['b_bunny','토끼 찌',900000,0,[".w.w.",".p.p.",".www.","wkwkw","wwpww",".www."],{w:'#ffffff',p:'#ffb0c8',k:'#302838'},{spark:['#ffd0e0','#ffffff']}],
+ ['b_sushi','연어초밥 찌',1200000,1,["..k..",".oko.","owkwo","wwkww","wwwww"],{o:'#ff8a5a',w:'#fffaf0',k:'#203028'},{spark:['#ffc8a8','#ffffff'],ring:'#ffc8a8'}],
+ ['b_moon','초승달 찌',1500000,1,["..yy.",".yh..","yy...","yy...","yy...",".yy..","..yy."],{y:'#ffd84a',h:'#fff6c0'},{glow:'#ffe680',spark:['#fff6c0','#ffffff']}],
+ ['b_bell','황금 방울 찌',1800000,1,["..r..",".yyy.","yhyyy","yyyyy","yyyyy","ddddd","..k.."],{r:'#e83a4a',y:'#ffcc3a',h:'#fff2b0',d:'#c89020',k:'#604010'},{glow:'#ffd860',spark:['#fff2b0','#ffcc3a']}],
+ ['b_lantern','꽃등불 찌',2000000,1,["..k..",".rrr.","rryrr","ryyyr","rryrr",".rrr.","..y.."],{k:'#503020',r:'#e84a5a',y:'#ffe080'},{glow:'#ff9a6a',rise:['#ffd080','#ff9a6a']}],
+ ['b_rubber','왕관 오리 찌',2200000,1,["..gg..","..yy..","..ykyo","yyyyy.","yyyyy.",".yyy.."],{g:'#ffb000',y:'#ffe050',k:'#202030',o:'#ff8020'},{spark:['#fff2b0','#ffffff'],ring:'#ffe050'}],
+ ['b_crystal','수정 찌',2500000,1,["..c..",".cwc.","cwbcb","cbbcb",".cbc.","..c.."],{c:'#8ae8ff',w:'#ffffff',b:'#4ab0f0'},{glow:'#8ae8ff',spark:['#ffffff','#8ae8ff','#e0c8ff']}],
+ ['b_jelly','해파리 찌',2800000,1,[".ppp.","pphpp","ppppp","p.p.p","p.p.p",".p.p."],{p:'#e8a0f8',h:'#ffe8ff'},{glow:'#f0b0ff',rise:['#ffffff','#e0f4ff']}],
+ ['b_cloud','구름 찌',3000000,1,[".ww..","wwww.","wwwww",".b.b.","b.b.b"],{w:'#ffffff',b:'#7ec8ff'},{fall:['#7ec8ff','#c8e8ff'],ring:'#c8e8ff'}],
+ ['b_ghost','꼬마 유령 찌',3000000,1,[".www.","wwwww","wkwkw","wwwww","wwwww","w.w.w"],{w:'#f4f0ff',k:'#403060'},{glow:'#c8a8ff',rise:['#c8a8ff','#ffffff']}],
+ ['b_heart2','반짝 하트 찌',3500000,1,[".rr.rr.","rhrrrrr","rrrrrrr",".rrrrr.","..rrr..","...r..."],{r:'#ff4a7a',h:'#ffd0de'},{glow:'#ff80a8',rise:['#ff80a8','#ffd0de']}],
+ ['b_music','음표 찌',5500000,2,["..kkk","..k.k","..k.k","kkk.k","kkkkk","kk..."],{k:'#8a5cff'},{glow:'#b090ff',rise:['#b090ff','#ff90c8','#90d0ff'],orbit:['#ffffff','#ffd0ff']}],
+ ['b_planet','토성 찌',6000000,2,["...ooo...","..ohooo..","rrrrrrrrr","..ooooo..","...ooo..."],{o:'#f0a858',h:'#ffe0b0',r:'#e8d8ff'},{glow:'#ffc890',orbit:['#ffffff','#ffe0b0','#c8b8ff'],spark:['#ffffff']}],
+ ['b_lotus','연꽃 등불 찌',6500000,2,["...p...",".p.p.p.","ppplppp","pplllpp",".ggggg."],{p:'#ff9ec4',l:'#ffe8f0',g:'#5cb878'},{glow:'#ffb0d0',fall:['#ffc4d6','#ffe0ea'],ring:'#ffb0d0'}],
+ ['b_snowglobe','스노우볼 찌',7000000,2,[".bbbbb.","bwbsbwb","bbsbbsb","bbwbbbb",".bbbbb.","ddddddd",".ddddd."],{b:'#bfe6ff',w:'#ffffff',s:'#e8f8ff',d:'#a8784a'},{glow:'#c8eaff',fall:['#ffffff','#e0f4ff']}],
+ ['b_whale','아기 고래 찌',7500000,2,["....w.w",".bbbb.w","bbbbbbb","bkbbbbb","bwwwwbb",".bbbb.."],{b:'#5a8ae0',k:'#182040',w:'#e8f4ff'},{rise:['#ffffff','#bfe6ff'],ring:'#bfe6ff'}],
+ ['b_phoenix','불사조 깃털 찌',8000000,2,["..r..",".ror.",".oyo.","royor",".oyo.","..o..","..d..","..d.."],{r:'#ff4a2a',o:'#ff9a2a',y:'#ffe060',d:'#a04020'},{glow:'#ff8040',rise:['#ffb040','#ff6020','#ffe060']}],
+ ['b_gem','루비 하트 찌',9000000,2,["..g..",".rgr.","rhrrr","rrrrr",".rrr.","..r.."],{g:'#ffd040',r:'#e0204a',h:'#ffc0d0'},{glow:'#ff4070',spark:['#ffffff','#ffc0d0','#ffd040']}],
+ ['b_clock','시계탑 찌',10000000,2,["..y..",".ywy.","ywkwy","ywwky","ywwwy",".yyy."],{y:'#e8b040',w:'#fffaf0',k:'#302820'},{glow:'#ffe0a0',orbit:['#ffe0a0','#ffffff','#ffe0a0','#ffffff'],ring:'#ffe0a0'}],
+ ['b_dragon','용의 알 찌',25000000,3,["..ggg..",".ggrgg.","ggrrrgg","grrgrrg","ggrrrgg",".ggrgg.","..ggg.."],{g:'#2a9a6a',r:'#ff5a3a'},{glow:'#ff7040',rise:['#ff8040','#ffd040','#ff4020'],ring:'#ff9050',spark:['#ffd040']}],
+ ['b_angel','천사 찌',28000000,3,["..yyy..",".......","..www..","w.www.w","wwwwwww",".wwwww.","...w..."],{y:'#ffe060',w:'#ffffff'},{glow:'#fff4c0',fall:['#ffffff','#fff4c0'],orbit:['#ffe060','#ffffff','#ffe060']}],
+ ['b_sun','태양 찌',30000000,3,["...y...",".y.y.y.","..ooo..","yoohooy","..ooo..",".y.y.y.","...y..."],{y:'#ffd020',o:'#ff9a20',h:'#fff4b0'},{glow:'#ffc040',rays:'#ffd860',spark:['#fff4b0']}],
+ ['b_galaxy','은하수 찌',35000000,3,["..ppp..",".pbbbp.","pbwbbbp","pbbwbbp","pbbbwbp",".pbbbp.","..ppp.."],{p:'#b080ff',b:'#3a2a90',w:'#ffffff'},{glow:'#9a70ff',orbit:['#ffffff','#ffe0ff','#a0d0ff','#ffffff','#ffd0a0'],spark:['#ffffff','#e0c8ff'],ring:'rb'}],
+ ['b_crown','왕관 찌',40000000,3,["y.y.y.y","yyyyyyy","yryyyby","yyyyyyy",".yyyyy.","...y..."],{y:'#ffcc30',r:'#ff3a5a',b:'#3a8aff'},{glow:'#ffd860',fall:['#ffd040','#fff4b0'],spark:['#ffffff']}],
+ ['b_rainbowp','무지개 진주 찌',45000000,3,[".wpw.","wpwbw","pwhwb","wbwgw",".wgw.","..w.."],{w:'#ffffff',p:'#ffb0e0',b:'#a0d0ff',g:'#b0f0c0',h:'#fffff0'},{glow:'#ffe0ff',ring:'rb',spark:['#ffb0e0','#a0d0ff','#b0f0c0','#fff0a0']}],
+ ['b_hourglass','시간의 모래시계 찌',100000000,4,["yyyyyyy",".bwwwb.","..bwb..","...s...","..bsb..",".bsssb.","yyyyyyy"],{y:'#d8a030',b:'#a8e0ff',w:'#ffffff',s:'#ffd070'},{glow:'#ffe8a0',orbit:['#ffd070','#ffffff','#ffd070','#ffffff','#ffd070','#ffffff'],ring:'rb',fall:['#ffd070']}],
+ ['b_starheart','별의 심장 찌',150000000,4,["....y....","...yhy...","yyyyyyyyy",".yyyryyy.","..yrrry..","..yyryy..",".yy...yy.","y.......y"],{y:'#ffd840',h:'#fffff0',r:'#ff4a8a'},{glow:'#ffb0e0',rays:'#fff0a0',orbit:['#ff80c0','#ffffff','#80d0ff','#ffffff','#ffe060','#ffffff'],ring:'rb',spark:['#ffffff','#ffd0f0']}],
+ 
+ ['b_acorn','도토리 찌',1200000,1,[".ddd.","ddddd","bbbbb","bhbbb",".bbb.","..b.."],{d:'#6a4428',b:'#b8783a',h:'#e8b070'},{fall:['#e8a040','#c86020']},'autumn'],
+ ['b_maple2','단풍 등불 찌',4000000,2,["..r..","r.r.r","rrrrr",".ryr.","rryrr","..b.."],{r:'#e8502a',y:'#ffd060',b:'#7a4020'},{glow:'#ff9040',fall:['#e8502a','#ffa040','#ffd060']},'autumn'],
+ ['b_pepero','빼빼로 찌',1100000,1,["..k..","..p..","..k..","..k..","..t..","..t.."],{k:'#5a3020',p:'#ff90b8',t:'#e8c080'},{rise:['#ff90b8','#ffffff'],spark:['#ff90b8']},'pepero'],
+ ['b_snowman','눈사람 찌',2000000,1,[".kkk.",".kkk.",".www.","wkwkw","wwoww",".www.","wwwww",".www."],{k:'#283040',w:'#ffffff',o:'#ff8a30'},{fall:['#ffffff','#e0f4ff']},'winter'],
+ ['b_gift','선물상자 찌',3000000,2,["r.r.r",".rrr.","ggrgg","ggrgg","rrrrr","ggrgg"],{r:'#e83040',g:'#2aa060'},{glow:'#ffd860',spark:['#ffd860','#ffffff','#ff6080']},'xmas'],
+ ['b_lucky','복주머니 찌',3000000,2,["..y..",".rrr.","rryrr","rrrrr","rryrr",".rrr."],{r:'#e02848',y:'#ffd040'},{glow:'#ffcc40',fall:['#ffd040','#fff4b0']},'lunar']
+];
+const GFROD=[
+ ['r_bone','해골 낚싯대',1000000,0,['#e8e4d8','#c8c0b0','#ffffff'],{tip:'skull',tc:'#ffffff',along:['#c8ffc0']}],
+ ['r_neon','네온 낚싯대',1200000,0,['#ff4ab0','#4af0ff','#ff4ab0','#4af0ff'],{glow:'#ff80d0',tip:'orb',tc:'#80ffff'}],
+ ['r_heart','러블리 하트 낚싯대',1800000,1,['#ff9ec4','#ffd0e0','#ffffff'],{tip:'heart',tc:'#ff4a7a',along:['#ff90b8','#ffd0de']}],
+ ['r_wand','별빛 마법봉 낚싯대',2000000,1,['#5a4ab0','#8a7ae0','#fff0b0'],{tip:'star',tc:'#ffe060',glow:'#c0b0ff',along:['#fff6b0','#ffffff']}],
+ ['r_sakura2','벚꽃 만개 낚싯대',3000000,1,['#8a5a4a','#ffb0c8','#ffe0ea'],{tip:'flower',tc:'#ffb0c8',along:['#ffc4d6','#ffe0ea'],trail:1}],
+ ['r_ice','빙결 낚싯대',6000000,2,['#a0d8ff','#e0f4ff','#ffffff'],{tip:'gem',tc:'#bff0ff',glow:'#a0e0ff',along:['#ffffff','#e0f4ff']}],
+ ['r_trident','포세이돈 삼지창',8000000,2,['#2a6aa0','#4ab0d0','#ffe080'],{tip:'trident',tc:'#ffd040',glow:'#60c0ff',along:['#bfe6ff','#ffffff']}],
+ ['r_thunder','번개 낚싯대',12000000,2,['#303050','#ffe040','#ffffff'],{tip:'bolt',tc:'#fff060',glow:'#fff080',bolt:1}],
+ ['r_saber','광선 낚싯대',15000000,2,['#606070','#80ffb0','#e0fff0','#ffffff'],{glow:'#60ff90',tip:'orb',tc:'#c0ffd8'}],
+ ['r_aurora','오로라 낚싯대',25000000,3,['#60e0c0','#80b0ff','#d090ff','#ff90c0'],{glow:'#a0e0ff',tip:'star',tc:'#ffffff',along:['#80f0d0','#a0c0ff','#ffa0e0'],rb:1}],
+ ['r_dragon','용염 낚싯대',30000000,3,['#401818','#a02020','#ff6020','#ffd040'],{glow:'#ff6020',tip:'flame',tc:'#ffb040',along:['#ff8040','#ffd040','#ff3010'],trail:1}],
+ ['r_gold2','순금 용왕 낚싯대',50000000,3,['#b07010','#ffc830','#fff4b0','#ffc830'],{glow:'#ffd040',tip:'gem',tc:'#ff4060',along:['#ffd040','#fff4b0'],trail:1}],
+ ['r_cosmos','우주의 낚싯대',120000000,4,['#1a1040','#4a30a0','#a080ff','#ffffff'],{glow:'#9070ff',tip:'planet',tc:'#ffd0ff',along:['#ffffff','#c8b0ff','#80d0ff','#ffd0a0'],rb:1,trail:1}],
+ ['r_maple','단풍 낚싯대',1500000,1,['#8a5030','#e8602a','#ffb040'],{tip:'leaf',tc:'#e8502a',along:['#e8602a','#ffb040'],trail:1},'autumn'],
+ ['r_candy','사탕 지팡이 낚싯대',2000000,1,['#ff3040','#ffffff','#ff3040','#ffffff'],{tip:'star',tc:'#ffe060',along:['#ffffff']},'winter']
+];
+GFROD.push(['r_gwisp','도깨비불 낚싯대',0,1,['#2a2440','#3fc8b0','#8cffe6'],{glow:'#8cffe6',tip:'orb',tc:'#e0fff8',along:['#8cffe6','#ffffff']}],
+['r_reaper','저승사자 낫대',0,2,['#141420','#2a2a3a','#9a9ab0'],{glow:'#6a5acd',tip:'gem',tc:'#c0c0ff',trail:1}],
+['r_lotus3','삼도천 연꽃대',0,2,['#2a5a4a','#3fc8b0','#ffc9e0'],{tip:'flower',tc:'#f783ac',along:['#ffc9e0','#8cffe6'],trail:1}],
+['r_yeomra','염라 홀',0,3,['#3a0a0a','#c92a2a','#ffd43b'],{glow:'#ff6b6b',tip:'gem',tc:'#ffd43b',along:['#ffd43b','#ff8787'],trail:1}]);
+GFBOB.push(['b_wisp','도깨비불 찌',0,1,[".cc.","cwWc","cWWc",".cc.","..c."],{c:'#3fc8b0',w:'#ffffff',W:'#8cffe6'},{glow:'#8cffe6',rise:['#8cffe6','#e0fff8']}],
+['b_skull','해골 찌',0,1,[".www.","wkwkw","wwwww",".w.w."],{w:'#f0ece0',k:'#202020'},{rise:['#c8ffc0','#ffffff']}],
+['b_ldlotus','삼도천 연등 찌',0,2,["..y..",".ppp.","ppypp","ppppp",".ggg."],{y:'#ffe066',p:'#f783ac',g:'#3fc8b0'},{glow:'#ffb0d0',fall:['#ffc9e0','#8cffe6'],ring:'#8cffe6'}],
+['b_yeomra','염라 방울 찌',0,3,["..r..",".yyy.","yryry","yyyyy",".ddd.","..k.."],{r:'#c92a2a',y:'#ffd43b',d:'#e8590c',k:'#5c3a1e'},{glow:'#ff8787',orbit:['#ffd43b','#ff6b6b','#ffd43b'],spark:['#fff3bf']}]);
+const GFTP=[40,80,150,300,500],GFTN=['레어','에픽','유니크','레전더리','미스틱'],GFTC=['#4a90ff','#9a5cff','#f0a020','#2ec27e','#ff4f8b'];
+GFROD.forEach(r=>SHOP.push(I('f'+r[0],'rod',r[1],GFTP[r[3]],{col:r[4],fx:r[5],tier:r[3]})));
+GFBOB.forEach(r=>SHOP.push(I('f'+r[0],'bob',r[1],GFTP[r[3]],{rows:r[4],pal:r[5],fx:r[6],tier:r[3]})));
 const ITEM=Object.fromEntries(SHOP.map(i=>[i.id,i]));
 const flagN=p=>Object.keys((p&&p.own)||{}).filter(k=>k.startsWith('fl_')).length;
 const flId=k=>'fl_'+(k==='_main'?'main':k);
@@ -3507,6 +3608,7 @@ if((c.log||[]).length)h+=`<div class="sm" style="margin-top:6px">📜 ${c.log.sl
 // ===== 썸네일 =====
 const MB='background:rgba(255,255,255,.05);border-radius:8px';
 function thumb(it,ch){const id=it.id,s=it.s;
+if(s==='rod'||s==='bob')return`<img src="${gfThumb(it)}" style="width:46px;height:46px;image-rendering:pixelated;${MB}" title="${GFTN[it.v.tier|0]}"><i class="gftier" style="background:${GFTC[it.v.tier|0]}"></i>`;
 if(s==='hat'||s==='glass')return`<svg viewBox="-20 -60 40 36" style="width:52px;height:52px;${MB}">${sprite(ch,{[s]:id})}</svg>`;
 if(s==='face')return`<svg viewBox="-16 -47 32 26" style="width:58px;height:50px;${MB}">${sprite(ch,{face:id})}</svg>`;
 if(s==='top'||s==='bot'||s==='suit')return`<svg viewBox="-19 -31 38 33" style="width:52px;height:46px;${MB}">${sprite(ch,{[s]:id})}</svg>`;
