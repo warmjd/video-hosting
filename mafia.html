@@ -2739,11 +2739,12 @@ const holdStart=e=>{if(e&&e.preventDefault)e.preventDefault();holdOn=true;clearT
 function holdEnd(){if(!holdOn)return;holdOn=false;clearTimeout(holdT);render()}
 window.holdStart=holdStart;['pointerup','pointercancel','touchend','touchcancel','blur'].forEach(ev=>window.addEventListener(ev,holdEnd));
 document.addEventListener('visibilitychange',holdEnd);
+const fakeMates=g=>{const k=Math.max(0,Object.values(g.roles).filter(isM).length-1),others=Object.keys(g.roles).filter(n=>n!==me),dm=others.filter(n=>!g.alive[n]&&isM(g.roles[n])),rk=others.filter(n=>g.alive[n]).sort((a,b)=>sRand(g,'r'+a)-sRand(g,'r'+b));return[...dm,...rk].slice(0,k)};
 const sRand=(g,k)=>{let h=0;const t=(g.sid||0)+':'+me+':'+k;for(const c of t)h=(h*33+c.codePointAt(0))>>>0;return h};
 function fakeDesc(g,p,fr){const ns=Object.keys(g.roles).filter(n=>n!==p),R=k=>sRand(g,k);let t=RD[fr]||'';
 if(fr==='citizen')t+='\n🎯 비밀 미션: '+Object.values(MIS)[R('m')%4]+' (성공하면 +15달란트)';
 if(fr==='witness'){const x=ns[R('w')%ns.length]||'';t+='\n🔎 힌트: 마피아 팀 중 한 명의 이름은 「'+cho(x)+'」으로 시작해요'}
-if(isM(fr)){const k=Math.max(0,Object.values(g.roles).filter(isM).length-1),pool=[...ns],mates=[];for(let i=0;i<k&&pool.length;i++)mates.push(pool.splice(R('t'+i)%pool.length,1)[0]);t+='\n동료: '+(mates.map(n=>n+(g.alive[n]?'':'💀')).join(', ')||'')}
+if(isM(fr)){const mates=fakeMates(g);t+='\n동료: '+(mates.map(n=>n+(g.alive[n]?'':'💀')).join(', ')||'')}
 return t}
 function cardHTML(rr,dead){const[cl,tn]=TEAM(rr),[e,...nm]=RN[rr].split(' ');return`<div class="rchip ${cl}${dead?' dead':''}"><span class="rce ke">${e}</span><span><b>${nm.join(' ')}${dead?' · 사망':''}</b><small>${tn.replace(/^\S+\s/,'')} · 꾹 누르면 진짜 직업</small></span></div>`}
 function myCard(g,p,r,dead){const fk=fkGet(),show=holdOn?r:fk,real=holdOn;
@@ -2756,7 +2757,7 @@ return`<div class="wmw hold" onpointerdown="holdStart(event)" oncontextmenu="ret
 /* 가짜 밤 행동 화면 (눌러도 아무 일 없음, 모양만 같음) */
 let fakePick={};window.fakeAct=(k,n)=>{const g=G();if(!g)return;const key=g.sid+':'+g.day+':'+k;if((k==='police'||k==='detective')&&fakePick[key])return;if((k==='police'||k==='detective')&&!confirm(n+'님을 조사할까요?\n하루에 딱 1명, 한 번 정하면 바꿀 수 없어요!'))return;fakePick[key]=n;render()};
 function fakeNight(g,p,fk,o){const key=k=>fakePick[g.sid+':'+g.day+':'+k];
-if(isM(fk)){const c=key('mafia'),ns=Object.keys(g.roles).filter(n=>n!==p),R=k=>sRand(g,k),k=Math.max(0,Object.values(g.roles).filter(isM).length-1),pool=[...ns],mates=[];for(let i=0;i<k&&pool.length;i++)mates.push(pool.splice(R('t'+i)%pool.length,1)[0]);const am=mates.filter(n=>g.alive[n]);
+if(isM(fk)){const c=key('mafia'),am=fakeMates(g).filter(n=>g.alive[n]);
 return`<div class="t" style="margin-top:10px">🔪 오늘 밤 제거할 사람 (현재: ${c==='-'?'안 고름 (동료에게 맡김)':c||'미선택'})</div><div class="g2">${o.filter(n=>!am.includes(n)).map(n=>fbtn(n,`fakeAct('mafia','${n}')`,c===n,'')).join('')}</div>${btn(c==='-'?'안 고르기 선택됨':'이번 밤은 안 고를게요 (동료 선택에 맡기기)',`fakeAct('mafia','-')`,c==='-','g')}<div class="sm" style="margin-top:4px">탐정에게 들키기 싫을 때 써요. 동료가 고른 사람이 그대로 제거되고, 모두 안 고르면 아무도 안 죽어요. 다 정하면 밤이 바로 끝나요.</div><div class="q" style="margin-top:8px;font-size:.85rem;color:#ffd8a8;background:rgba(255,255,255,.06);border-radius:8px;padding:8px">👥 동료 지목 현황 (실시간)\n${am.map(k=>k+' (미선택)').join('\n')||'생존 동료 없음'}\n고른 사람끼리는 같은 사람이어야 밤이 바로 끝나요. (안 고름은 빼고)</div>`}
 if(fk==='doctor'){const c=key('doctor');return`<div class="t" style="margin-top:10px">💉 오늘 밤 보호할 사람 (현재: ${c||'미선택'})</div><div class="g2">${al(g).map(n=>fbtn(n,`fakeAct('doctor','${n}')`,c===n,'')).join('')}</div>`}
 if(fk==='police'){const c=key('police');return`<div class="t" style="margin-top:10px">🕵️ ${c?'오늘 조사 완료: '+c+' (변경 불가 · 결과는 다음 날 아침에!)':'오늘 조사할 사람 (딱 1명 · 결과는 다음 날 아침 공개)'}</div>${c?'':`<div class="g2">${o.map(n=>fbtn(n,`fakeAct('police','${n}')`,0,'')).join('')}</div>`}`}
