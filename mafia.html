@@ -411,7 +411,7 @@ const mp={};Object.keys(N.mafia||{}).forEach(k=>{if(g.alive[k]&&isM(g.roles[k])&
 const t2=tally(mp,g),tg=t2.mx>0?t2.top[Math.random()*t2.top.length|0]:'';
 const dk=Object.keys(N.doctor||{}).find(k=>g.alive[k]&&g.roles[k]==='doctor'),dp=dk?N.doctor[dk]:'';
 const pk=Object.keys(N.police||{}).find(k=>g.alive[k]&&g.roles[k]==='police');if(pk){const t=N.police[pk],r=g.roles[t];let hit=r==='mafia';if(r==='godfather')for(let e=1;e<g.day;e++)if(((D.night[e]||{}).police||{})[pk]===t)hit=true;if(hit){ad(g,pk,5);inc(g,'ct',pk)}}
-Object.keys(N.reporter||{}).forEach(k=>{if(g.alive[k]&&g.roles[k]==='reporter'&&!(g.rp&&g.rp[k])){g.rp=g.rp||{};g.rp[k]=1;const cnt=new Set(['mafia','doctor','police','detective'].flatMap(q=>Object.keys(N[q]||{}))).size;g.log.push('📰 속보! 간밤에 능력을 사용한 사람은 총 '+cnt+'명이었습니다.')}});
+Object.keys(N.reporter||{}).forEach(k=>{if(g.alive[k]&&g.roles[k]==='reporter'&&!(g.rp&&g.rp[k])){g.rp=g.rp||{};g.rp[k]=1;const cnt=new Set(['mafia','doctor','police','detective'].flatMap(q=>Object.keys(N[q]||{}).filter(k=>N[q][k]&&N[q][k]!=='-'))).size;g.log.push('📰 속보! 간밤에 능력을 사용한 사람은 총 '+cnt+'명이었습니다.')}});
 if(tg&&tg===dp){ad(g,dk,10);inc(g,'sv',dk);{g.svd=g.svd||{};g.svk=g.svk||{};g.svk[dk]=g.svd[dk]===g.day-1?(g.svk[dk]||1)+1:1;g.svd[dk]=g.day;const b=g.svk[dk]>=3?300:g.svk[dk]===2?100:0;if(b){g.dsv=g.dsv||{};g.dsv[dk]=(g.dsv[dk]||0)+b}}g.log.push('🛡️ '+g.day+'일차 밤, 마피아의 습격이 있었지만 의사가 막아냈습니다! 아무도 죽지 않았어요.')}
 else if(tg&&g.roles[tg]==='soldier'&&!(g.rev||[]).includes(tg)){g.rev=(g.rev||[]).concat([tg]);ad(g,tg,5);inc(g,'sb',tg);g.log.push('🪖 '+g.day+'일차 밤, 마피아의 습격! '+tg+'님은 군인이었습니다. 방패로 버텨냈어요! 아무도 죽지 않았어요.')}
 else if(tg){die(g,tg);g.kl=g.kl||{};g.kl[g.day]=tg;g.log.push('💀 '+g.day+'일차 밤, '+tg+' 사망했습니다.')}
@@ -1799,6 +1799,18 @@ const cv=$('gfCv'),b=$('gfB'),dn=e=>{e.preventDefault();if(gfS.st==='reel'){gfHo
 requestAnimationFrame(gfTick)}gfUI()}
 
 
+
+/* 위장 카드가 마피아면 똑같이 생긴 가짜 밀담 (내 화면에만, 서버에 안 보냄) */
+let fmL=[];try{fmL=JSON.parse(localStorage.getItem('m1_fmch')||'[]')}catch(e){}
+window.fmSend=()=>{const g=G(),i=$('mchIn');if(!g||!i)return;const m=i.value.trim().slice(0,120);if(!m)return;fmL.push({s:g.sid,f:me,m,d:g.day,ph:g.phase,at:NOW()});fmL=fmL.slice(-40);try{localStorage.setItem('m1_fmch',JSON.stringify(fmL))}catch(e){}i.value='';i.blur();render()};
+function fakeMch(g,el){const fk=fkGet();if(!isM(fk)||!me||!g||!g.roles||!g.roles[me]||isM(g.roles[me])||!g.alive[me]||!['vote','trial','night'].includes(g.phase))return false;
+const fe=document.activeElement;if(fe&&el.contains(fe)&&fe.dataset&&fe.dataset.keep)return true;el.style.display='block';
+const mates=fakeMates(g),team=[me,...mates].sort(),L=fmL.filter(x=>x.s===g.sid),PH={vote:'낮',trial:'재판',night:'밤'};
+const pk=[];for(let d=g.day-1;d>=1;d--){const vic=Object.keys(g.roles).filter(n=>!team.includes(n)&&(!(g.dd||{})[n]||g.dd[n]>=d)).sort((x,y)=>sRand(g,'mv'+d+x)-sRand(g,'mv'+d+y)),kl=(g.kl||{})[d],tg=kl&&!team.includes(kl)?kl:vic[0];const ls=team.filter(n=>!(g.dd||{})[n]||g.dd[n]>=d).map(n=>{const mine=n===me?fakePick[g.sid+':'+d+':mafia']:'';const t=mine&&!team.includes(mine)?mine:tg;return n+' → '+(t||'안 고름')});pk.push({d,L:ls})}
+const pkH=pk.length?`<div class="mpk"><b>${pk[0].d}일차 밤 마피아 지목</b>${pk[0].L.map(l=>`<span>${esc(l)}</span>`).join('')}${pk.length>1?`<details><summary>이전 밤 ${pk.length-1}번</summary>${pk.slice(1).map(o=>`<div><small>${o.d}일차 밤</small> ${o.L.map(esc).join(' · ')}</div>`).join('')}</details>`:''}</div>`:'';
+el.innerHTML=`<div class="t">마피아 밀담 <span class="sm" style="font-weight:600">· 마피아 팀만 보여요 · 판이 끝나면 공개</span></div><div class="sm" style="margin-bottom:6px">팀: ${team.map(n=>esc(n)+(g.alive[n]?'':'(사망)')).join(', ')}</div>`+pkH
++`<div class="gll mcl">${L.map(x=>`<div class="glm mcm me"><b>${esc(x.f)}</b><small>${x.d||''}일차 ${PH[x.ph]||''}</small><p>${esc(x.m)}</p></div>`).join('')||'<div class="sm" style="text-align:center;padding:8px 0">오늘 밤 누구를 노릴지 여기서 정해요</div>'}</div>`
++`<div class="g2 scr" style="margin-top:8px">${al(g).filter(n=>!team.includes(n)).map(n=>`<button class="g" style="width:auto;padding:4px 10px;font-size:.78rem;min-height:0" onclick="mchPick('${esc(n)}')">${esc(n)}</button>`).join('')}</div><div style="display:flex;gap:6px;margin-top:6px"><input id="mchIn" data-keep="1" maxlength="120" placeholder="동료에게만 (예: 오늘 밤 ○○ 가자)" style="flex:1" onkeydown="if(event.key==='Enter')fmSend()"><button class="p" style="width:auto" onclick="fmSend()">보내기</button></div>`+wmk();return true}
 /* ===== 마피아 밀담: 마피아 팀만 보는 채팅 (판 끝나면 공개) ===== */
 let mchAll=0,mchSeen=-1;
 const mafPicks=(g,d)=>{const N=((D.night||{})[d]||{}).mafia||{},ms=Object.keys(g.roles).filter(n=>isM(g.roles[n]));return ms.filter(n=>N[n]).map(n=>n+(N[n]==='-'?' → 안 고름':' → '+N[n])).concat(ms.filter(n=>!N[n]&&(g.dd==null||!g.dd[n]||g.dd[n]>=d)).map(n=>n+' → 안 정함'))};
@@ -1806,7 +1818,7 @@ const mchWho=g=>{if(!me||!g||!g.roles||!g.roles[me])return'';if(g.phase==='end')
 window.mchSend=()=>{const g=G(),w=mchWho(g),i=$('mchIn');if(w!=='live'||!i)return;const m=i.value.trim().slice(0,120);if(!m)return;const id=NOW().toString(36)+Math.random().toString(36).slice(2,5);set(ref(db,ROOT+'/mch/'+id),{f:me,m,at:NOW(),d:g.day,ph:g.phase});i.value='';i.blur()};
 window.mchPick=n=>{const i=$('mchIn');if(!i)return;i.value=(i.value?i.value+' ':'')+n+' ';i.focus()};
 window.mchMore=()=>{mchAll=!mchAll;render()};
-function mchRender(g){const el=$('mch');if(!el)return;const w=mchWho(g);if(!w){el.style.display='none';return}const fe=document.activeElement;if(fe&&el.contains(fe)&&fe.dataset&&fe.dataset.keep)return;el.style.display='block';
+function mchRender(g){const el=$('mch');if(!el)return;const w=mchWho(g);if(!w){if(fakeMch(g,el))return;el.style.display='none';return}const fe=document.activeElement;if(fe&&el.contains(fe)&&fe.dataset&&fe.dataset.keep)return;el.style.display='block';
 const L=Object.values(D.mch||{}).filter(x=>x&&x.m).sort((a,b)=>a.at-b.at);if(w==='read'&&!L.length){el.style.display='none';return}
 const show=mchAll?L:L.slice(-10),team=Object.keys(g.roles).filter(n=>isM(g.roles[n]));
 if(w==='live'||w==='dead'){if(mchSeen>=0&&L.length>mchSeen){const nw=L.slice(mchSeen).filter(x=>x.f!==me);if(nw.length)toast('마피아 밀담: '+nw[nw.length-1].f+' "'+nw[nw.length-1].m.slice(0,20)+'"')}mchSeen=L.length}
@@ -3946,13 +3958,23 @@ const sel=fkOpen?`<div class="fkp"><div class="sm" style="margin-bottom:6px">평
 return`<div class="wmw hold" onpointerdown="holdStart(event)" oncontextmenu="return false">${body}${show?wmk():''}</div><div style="text-align:right;margin-top:4px"><button class="g fkb" onclick="fkTog()">${fkOpen?'닫기':'위장 카드'}</button></div>${sel}`}
 
 
+
+/* 위장 카드용 과거 기록: 판·날짜마다 고정, 그날 살아있던 사람 중에서 */
+function fkPast(g,d,k){const c=Object.keys(g.roles).filter(n=>n!==me&&(!(g.dd||{})[n]||g.dd[n]>=d)).sort((a,b)=>sRand(g,k+d+a)-sRand(g,k+d+b));return c[0]||''}
+function fakeList(g,p,fk){const k=fk==='police'?'police':'detective';let rs='';for(let d=1;d<=g.day;d++){let t=fakePick[g.sid+':'+d+':'+k];if(!t&&(d<g.day||(g.phase!=='night'&&g.phase!=='end'&&d<g.day)))t=fkPast(g,d,k[0]);if(!t)continue;
+const done=d<g.day||g.phase==='end';rs+=done?`<div>${d}일차: ${t} → <b>${k==='police'?PT[0]:'간밤에 아무에게도 능력을 쓰지 않았어요'}</b></div>`:`<div>${d}일차: ${t} 조사 중… (결과는 다음 날 아침에 알려드려요)</div>`}
+return k==='police'?`<div class="q" style="margin-top:8px">🕵️ 조사 기록\n${rs||'아직 없어요'}</div>`:`<div class="q" style="margin-top:8px">🔎 조사 기록\n${rs||'아직 없어요'}</div>`}
 /* 가짜 밤 행동 화면 (눌러도 아무 일 없음, 모양만 같음) */
-let fakePick={};window.fakeAct=(k,n)=>{const g=G();if(!g)return;const key=g.sid+':'+g.day+':'+k;if((k==='police'||k==='detective')&&fakePick[key])return;if((k==='police'||k==='detective')&&!confirm(n+'님을 조사할까요?\n하루에 딱 1명, 한 번 정하면 바꿀 수 없어요!'))return;fakePick[key]=n;render()};
+let fakePick={};try{fakePick=JSON.parse(localStorage.getItem('m1_fkp')||'{}')}catch(e){}
+const fkSave=()=>{try{localStorage.setItem('m1_fkp',JSON.stringify(fakePick))}catch(e){}};
+window.fakeRep=()=>{const g=G();if(!g)return;if(!confirm('속보를 발행할까요?\n게임당 1번이에요. 아침에 모두에게 공개돼요.'))return;fakePick[g.sid+':'+g.day+':reporter']='1';fkSave();render()};
+window.fakeAct=(k,n)=>{const g=G();if(!g)return;const key=g.sid+':'+g.day+':'+k;if((k==='police'||k==='detective')&&fakePick[key])return;if((k==='police'||k==='detective')&&!confirm(n+'님을 조사할까요?\n하루에 딱 1명, 한 번 정하면 바꿀 수 없어요!'))return;fakePick[key]=n;fkSave();render()};
 function fakeNight(g,p,fk,o){const key=k=>fakePick[g.sid+':'+g.day+':'+k];
 if(isM(fk)){const c=key('mafia'),am=fakeMates(g).filter(n=>g.alive[n]);
 return`<div class="t" style="margin-top:10px">🔪 오늘 밤 제거할 사람 (현재: ${c==='-'?'안 고름 (동료에게 맡김)':c||'미선택'})</div><div class="g2">${o.filter(n=>!am.includes(n)).map(n=>fbtn(n,`fakeAct('mafia','${n}')`,c===n,'')).join('')}</div>${btn(c==='-'?'안 고르기 선택됨':'이번 밤은 안 고를게요 (동료 선택에 맡기기)',`fakeAct('mafia','-')`,c==='-','g')}<div class="sm" style="margin-top:4px">탐정에게 들키기 싫을 때 써요. 동료가 고른 사람이 그대로 제거되고, 모두 안 고르면 아무도 안 죽어요. 다 정하면 밤이 바로 끝나요.</div><div class="q" style="margin-top:8px;font-size:.85rem;color:#ffd8a8;background:rgba(255,255,255,.06);border-radius:8px;padding:8px">👥 동료 지목 현황 (실시간)\n${am.map(k=>k+' (미선택)').join('\n')||'생존 동료 없음'}\n고른 사람끼리는 같은 사람이어야 밤이 바로 끝나요. (안 고름은 빼고)</div>`}
-if(fk==='doctor'){const c=key('doctor');return`<div class="t" style="margin-top:10px">💉 오늘 밤 보호할 사람 (현재: ${c||'미선택'})</div><div class="g2">${al(g).map(n=>fbtn(n,`fakeAct('doctor','${n}')`,c===n,'')).join('')}</div>`}
+if(fk==='doctor'){const c=key('doctor'),last=g.day>1?(fakePick[g.sid+':'+(g.day-1)+':doctor']||fkPast(g,g.day-1,'d')):'';return`<div class="t" style="margin-top:10px">💉 오늘 밤 보호할 사람 (현재: ${c||'미선택'})</div><div class="g2">${al(g).map(n=>n===last?`<button disabled class="g">${n}(어제 보호)</button>`:fbtn(n,`fakeAct('doctor','${n}')`,c===n,'')).join('')}</div>`}
 if(fk==='police'){const c=key('police');return`<div class="t" style="margin-top:10px">🕵️ ${c?'오늘 조사 완료: '+c+' (변경 불가 · 결과는 다음 날 아침에!)':'오늘 조사할 사람 (딱 1명 · 결과는 다음 날 아침 공개)'}</div>${c?'':`<div class="g2">${o.map(n=>fbtn(n,`fakeAct('police','${n}')`,0,'')).join('')}</div>`}`}
+if(fk==='reporter'){const c=key('reporter'),used=Object.keys(fakePick).some(k=>k.startsWith(g.sid+':')&&k.endsWith(':reporter')&&k!==g.sid+':'+g.day+':reporter');return`<div class="t" style="margin-top:10px">📰 속보 (게임당 1번)</div>${used?'<div class="q">이미 속보를 발행했어요.</div>':c?'<div class="q">✅ 속보 발행 예약! 아침에 "간밤에 능력을 쓴 사람 수"가 공개돼요.</div>':btn('📰 속보 발행하기',"fakeRep()",0,'')}`}
 if(fk==='detective'){const c=key('detective');return`<div class="t" style="margin-top:10px">🔎 ${c?'오늘 조사 완료: '+c+' (변경 불가 · 결과는 다음 날 아침에!)':'오늘 조사할 사람 (딱 1명 · 그 사람이 오늘 밤 능력을 누구에게 썼는지 알려줘요)'}</div>${c?'':`<div class="g2">${o.map(n=>fbtn(n,`fakeAct('detective','${n}')`,0,'')).join('')}</div>`}`}
 return''}
 
@@ -3997,8 +4019,9 @@ if(r==='doctor'){const c=(N.doctor||{})[p],last=Object.values((D.night[g.day-1]|
 if(r==='police'){const c=(N.police||{})[p];h+=`<div class="t" style="margin-top:10px">🕵️ ${c?'오늘 조사 완료: '+c+' (변경 불가 · 결과는 다음 날 아침에!)':'오늘 조사할 사람 (딱 1명 · 결과는 다음 날 아침 공개)'}</div>${c?'':`<div class="g2">${o.map(n=>fbtn(n,`act('police','${n}')`,0,'')).join('')}</div>`}`}
 if(r==='detective'){const c=(N.detective||{})[p];h+=`<div class="t" style="margin-top:10px">🔎 ${c?'오늘 조사 완료: '+c+' (변경 불가 · 결과는 다음 날 아침에!)':'오늘 조사할 사람 (딱 1명 · 그 사람이 오늘 밤 능력을 누구에게 썼는지 알려줘요)'}</div>${c?'':`<div class="g2">${o.map(n=>fbtn(n,`act('detective','${n}')`,0,'')).join('')}</div>`}`}
 if(r==='reporter'){const c=(N.reporter||{})[p],used=g.rp&&g.rp[p];h+=`<div class="t" style="margin-top:10px">📰 속보 (게임당 1번)</div>${used?'<div class="q">이미 속보를 발행했어요.</div>':c?'<div class="q">✅ 속보 발행 예약! 아침에 "간밤에 능력을 쓴 사람 수"가 공개돼요.</div>':btn('📰 속보 발행하기',"act('reporter','1')",0,'')}`}
-if(!isM(r)&&r!=='doctor'&&r!=='police'&&r!=='detective'&&r!=='reporter'){const fk=fkGet();h=['mafia','doctor','police','detective'].includes(fk)||isM(fk)?fakeNight(g,p,fk,o):'<div class="q">🌙 밤이에요. 당신은 할 일이 없어요. 💤 아침을 기다려 주세요.</div>'}}
+if(!isM(r)&&r!=='doctor'&&r!=='police'&&r!=='detective'&&r!=='reporter'){const fk=fkGet();h=['mafia','doctor','police','detective','reporter'].includes(fk)||isM(fk)?fakeNight(g,p,fk,o):'<div class="q">🌙 밤이에요. 당신은 할 일이 없어요. 💤 아침을 기다려 주세요.</div>'}}
 if(r==='police')h+=polList(g,p);if(r==='detective')h+=detList(g,p);
+if(r!=='police'&&r!=='detective'&&!isM(r)&&r!=='doctor'&&r!=='reporter'){const fk=fkGet();if(fk==='police'||fk==='detective')h+=fakeList(g,p,fk)}
 const wmo=g.phase==='night'&&(r!=='citizen'||!!fkGet());A.classList.toggle('wmon',wmo);A.innerHTML=h+(wmo?wmk():'')}}
 const KPm=isKp(me);if(KPm)admin=true;const AQ=ADMINQ||KPm;const AD=$('adm');AD.style.display=AQ?'block':'none';
 const fe=document.activeElement;if(AQ&&!(fe&&AD.contains(fe)&&['INPUT','SELECT'].includes(fe.tagName))){if(!admin)AD.innerHTML='<div class="t">🛠️ 운영자</div><input id="ap" type="password" placeholder="운영자 비밀번호" onkeydown="if(event.key===\'Enter\')unlock()"><button onclick="unlock()">확인</button>';
