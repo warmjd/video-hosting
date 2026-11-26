@@ -1591,13 +1591,36 @@ return{L,SPOT,RARITY,img,url};
 const GFREW=[['k_grod','도감 30종',t=>t.d>=30],['p_gwisp','도감 50종',t=>t.d>=50],['n_gw','도감 60종',t=>t.d>=60],['o_gw','도감 100종',t=>t.d>=100],['pl_gw','도감 120종',t=>t.d>=120],['o_glotus','도감 150종',t=>t.d>=150],
 ['k_glan','낚은 수 100마리',t=>t.n>=100],['k_gnet','월척 5마리',t=>t.w>=5],['au_gs','반짝 5종',t=>t.s>=5],['au_gw','신화 1종',t=>t.m>=1],['p_gkoi','염라금붕어 낚기',t=>t.has(206)],['p_gbone','백골상어 낚기',t=>t.has(205)]];
 function gfStat(v){v=v||{};const c=v.c||{},ks=Object.keys(c);return{d:ks.length,s:Object.keys(v.sh||{}).length,n:v.n||0,w:v.wl||0,m:ks.filter(k=>GF.L[k]&&GF.L[k].rar===5).length,a:ks.filter(k=>GF.L[k]&&GF.L[k].sp===0).length,b:ks.filter(k=>GF.L[k]&&GF.L[k].sp===1).length,c:ks.filter(k=>GF.L[k]&&GF.L[k].sp===2).length,has:id=>!!c[id]}}
+
+/* ===== 숨겨진 칭호 15종 (조건은 숨김 · 몇 개만 힌트) ===== */
+const GFH={h1:['꽝의 신','10번 연속 놓치기',''],h2:['성급한 손가락','가짜 입질에 50번 속기',''],h3:['한 끗 차이','게이지 90% 넘었다가 놓치기',''],h4:['쪼꼬미 수집가','보통의 60% 이하 크기 10마리','작은 것도 소중해'],h5:['기적의 역전','게이지 5% 이하에서 살려 잡기',''],
+h6:['0.1%의 사나이','한 판(하루)에 반짝 2마리',''],h7:['빛나는 월척','반짝이면서 월척',''],h8:['새벽 강태공','새벽 3~5시에 낚기','새벽에 무슨 일이…'],h9:['점심시간 도둑','점심 12시대에 20마리','밥은 먹고 낚시해요?'],h10:['퇴근길 낚시꾼','저녁 6시대에 신화 낚기','퇴근길에…'],
+h11:['첫날의 희생양','1일차에 죽어 유령 낚시 3판','억울함은 낚시로'],h12:['저승 동창회','유령 4명 이상 함께 낚시 중에 낚기',''],h13:['죽어서도 마피아','마피아로 죽어서 신화 낚기',''],h14:['이름의 운명','내 이름 첫 글자와 같은 물고기 낚기','이름을 잘 봐요'],h15:['삼도천 완주','한 판(하루)에 세 낚시터 모두 영웅 이상','']};
+const gfInit=n=>{const c=(n||'')[0]||'';return c};
+function gfHidCatch(c,x,newH){const H=c.h=c.h||{};H.t=H.t||{};const un=k=>{if(!H.t[k]){H.t[k]=1;newH.push(k)}},f=x.f;H.ms=0;
+if(x.L.len<=f.len*.6){H.sm=(H.sm||0)+1;if(H.sm>=10)un('h4')}
+if(x.mn<=.05)un('h5');
+if(x.sh){if(!H.shs||H.shs.s!==x.key)H.shs={s:x.key,n:0};H.shs.n++;if(H.shs.n>=2)un('h6');if(x.L.wl)un('h7')}
+if(x.hr===3||x.hr===4)un('h8');
+if(x.hr===12){if(!H.lu||H.lu.d!==x.dk)H.lu={d:x.dk,n:0};H.lu.n++;if(H.lu.n>=20)un('h9')}
+if(x.hr===18&&f.rar===5)un('h10');
+const g=x.g;if(x.gh&&g&&g.dd&&g.dd[me]===1){H.fd=H.fd||{};H.fd['s'+g.sid]=1;if(Object.keys(H.fd).length>=3)un('h11')}
+if(x.gh&&x.gc>=4)un('h12');
+if(x.gh&&g&&isM(g.roles[me])&&f.rar===5)un('h13');
+const i0=gfInit(me);if(i0&&(f.name[0]===i0||(!GF.L.some(q=>q.name[0]===i0)&&cho(f.name)===cho(me))))un('h14');
+if(f.rar>=3){if(!H.s3||H.s3.s!==x.key)H.s3={s:x.key,a:[0,0,0]};H.s3.a[f.sp]=1;if(H.s3.a[0]&&H.s3.a[1]&&H.s3.a[2])un('h15')}}
+async function gfMissRec(kind,mx){if(!me||kind==='early')return;const newH=[];try{await runTransaction(ref(db,DBB+'/gfish/'+me),c=>{c=c||{};const H=c.h=c.h||{};H.t=H.t||{};const un=k=>{if(!H.t[k]){H.t[k]=1;newH.push(k)}};H.ms=(H.ms||0)+1;if(H.ms>=10)un('h1');if(kind==='nib'){H.fn=(H.fn||0)+1;if(H.fn>=50)un('h2')}if(kind==='reel'&&mx>=.9)un('h3');return c});
+if(newH.length){await runTransaction(ref(db,DBB+'/profiles/'+me),c=>{c=c||{t:0,own:{},eq:{}};c.ght=c.ght||{};newH.forEach(k=>c.ght[k]=1);const hn=Object.keys(c.ght).length;c.own=c.own||{};if(hn>=5)c.own.h_gat=1;if(hn>=15)c.own.pl_gsec=1;return c});toast('숨겨진 칭호 「'+newH.map(k=>GFH[k][0]).join('」「')+'」를 찾았어요!')}}catch(e){console.error(e)}}
 const GFW=[58,26,11,4,1,.35],GFRW=[1,2,4,8,15,30],GFCAP=30,GFOPEN=[0,15,50];
 const GFT_N=['흔함','보통','희귀','영웅','전설','신화'];
 let gfT='f',gfSpot=0,gfPg=0,gfSel=-1,gfS={st:'idle',t:0},gfLast=[],gfMsg='',gfBusy=false,gfAv=null,gfAvK='';
 const gfMe=()=>(D.gfish||{})[me]||{};
 const gfDex=n=>Object.keys(((D.gfish||{})[n]||{}).c||{}).length;
 const gfShN=n=>Object.keys(((D.gfish||{})[n]||{}).sh||{}).length;
-const gfCan=g=>glWho(g)==='dead';
+const gfCan=g=>!!(me&&D.users[me]);
+const gfGh=g=>glWho(g)==='dead';
+const gfKey=g=>gfGh(g)?'s'+(g.sid||0):'d'+kday(),gfCapOf=g=>gfGh(g)?GFCAP:10;
+const gfHr=()=>new Date(NOW()+9*36e5).getUTCHours();
 const gfSfx=n=>{try{if(Snd.ready&&SND_ON)Snd.sfx(n)}catch(e){}};
 function gfPick(sp){const fs=GF.L.filter(f=>f.sp===sp),rs=[...new Set(fs.map(f=>f.rar))],tot=rs.reduce((a,r)=>a+GFW[r],0);let u=Math.random()*tot,rr=rs[0];for(const r of rs){if(u<GFW[r]){rr=r;break}u-=GFW[r]}const c=fs.filter(f=>f.rar===rr);return c[Math.random()*c.length|0]}
 function gfLen(f){const g=Math.random()<.045,r=g?1.3+Math.random()*.6:.55+Math.pow(Math.random(),1.4)*.7;return{len:Math.max(1,Math.round(f.len*r)),wl:g}}
@@ -1647,7 +1670,7 @@ s.bv+=(gfHold?2.9:-2.5)*dt;s.bv=Math.max(-1.4,Math.min(1.4,s.bv));s.bar+=s.bv*dt
 if(now>s.nx){const r=Math.random();if(s.ty==='dash')s.ft=Math.random();else if(s.ty==='jump')s.ft=r<.5?.8+Math.random()*.2:Math.random()*.5;else if(s.ty==='dive')s.ft=r<.6?Math.random()*.25:Math.random();else if(s.ty==='stay')s.ft=Math.max(0,Math.min(1,s.fy+(Math.random()-.5)*.25));else if(s.ty==='zig')s.ft=s.fy>.5?.1+Math.random()*.25:.65+Math.random()*.25;else s.ft=Math.random();s.nx=now+(s.ty==='dash'?.5:s.ty==='stay'?1.4:.9)/(.7+s.sp*.5)*(0.6+Math.random()*.8)}
 const k=s.ty==='dash'?7:s.ty==='stay'?2.2:4;s.fv+=((s.ft-s.fy)*k*s.sp-s.fv*2.6)*dt*3;s.fy+=s.fv*dt;s.fy=Math.max(0,Math.min(1,s.fy));
 const inZ=s.fy>=s.bar-.02&&s.fy<=s.bar+s.bh+.02,f=GF.L[s.f];s.pr+=inZ?(.30/(1+.18*f.rar))*dt:-.20*dt;s.inZ=inZ;
-if(s.pr>=1)gfLand();else if(s.pr<=0||now-s.t1>30)gfLose('놓쳤어요… 물고기가 도망갔어요')}
+s.mx=Math.max(s.mx||0,s.pr);s.mn=Math.min(s.mn==null?1:s.mn,s.pr);if(s.pr>=1)gfLand();else if(s.pr<=0||now-s.t1>30)gfLose('놓쳤어요… 물고기가 도망갔어요','reel')}
 function gfReelDraw(x,now){const s=gfS,X=296,Y=22,Hh=156,Wd=16;x.fillStyle='rgba(8,10,24,.78)';x.fillRect(X-6,Y-6,Wd+30,Hh+12);x.fillStyle='#1c2a44';x.fillRect(X,Y,Wd,Hh);
 x.fillStyle=s.inZ?'rgba(105,219,124,.85)':'rgba(105,219,124,.5)';x.fillRect(X,Y+Hh*(1-s.bar-s.bh),Wd,Hh*s.bh);
 const im=GF.img(s.f,'',1),sc2=Math.min(1,26/im.width),iw=im.width*sc2,ih=im.height*sc2,fy=Y+Hh*(1-s.fy)-ih/2;x.drawImage(im,X+Wd/2-iw/2,fy,iw,ih);
@@ -1656,35 +1679,35 @@ x.textAlign='center';x.fillStyle='rgba(255,255,255,.8)';x.font='bold 11px sans-s
 /* --- 흐름 --- */
 let gfTm=0;
 window.gfBtn=()=>{const g=G();if(!gfCan(g))return;const st=gfS.st;
-if(st==='idle'||st==='done'||st==='got'){if(st==='got')return;const sp=gfSpot;if(gfDex(me)<GFOPEN[sp])return toast(GF.SPOT[sp]+'은(는) 저승 도감 '+GFOPEN[sp]+'종부터 열려요');clearTimeout(gfTm);gfS={st:'cast',t0:performance.now()/1000,bx:150+Math.random()*90,sp};gfMsg='';gfSfx('cast');gfOn('wait');
+if(st==='idle'||st==='done'||st==='got'){if(st==='got')return;const sp=gfSpot;if(sp===2&&!gfGh(g))return toast('망각의 소는 유령만 갈 수 있어요 (게임 중 죽으면 열려요)');if(gfDex(me)<GFOPEN[sp])return toast(GF.SPOT[sp]+'은(는) 저승 도감 '+GFOPEN[sp]+'종부터 열려요');clearTimeout(gfTm);gfS={st:'cast',t0:performance.now()/1000,bx:150+Math.random()*90,sp};gfMsg='';gfSfx('cast');gfOn('wait');
 setTimeout(()=>{if(gfS.st!=='cast')return;gfSfx('splash');gfS.st='wait';gfUI();const n=Math.random()<.55?(1+(Math.random()*2|0)):0;let tt=1600+Math.random()*(sp?4200:3200);for(let i=0;i<n;i++){const at=600+Math.random()*(tt-900);setTimeout(()=>{if(gfS.st!=='wait')return;gfS.st='nib';setTimeout(()=>{if(gfS.st==='nib')gfS.st='wait'},380)},at)}
 gfTm=setTimeout(()=>{if(gfS.st!=='wait'&&gfS.st!=='nib')return;const f=gfPick(sp);gfS.st='bite';gfS.f=f.id;gfS.bt=performance.now()/1000;gfSfx('bite');gfUI();gfOn('bite');try{navigator.vibrate&&navigator.vibrate(60)}catch(e){}
-gfTm=setTimeout(()=>{if(gfS.st==='bite')gfLose('늦었어요! 찌가 다시 떠올랐어요')},Math.max(650,1150-80*f.rar))},tt)},600);gfUI();return}
-if(st==='nib'||st==='wait'){clearTimeout(gfTm);gfLose(st==='nib'?'너무 빨랐어요. 살짝 건드린 거였어요':'아직 입질이 없어요');return}
+gfTm=setTimeout(()=>{if(gfS.st==='bite')gfLose('늦었어요! 찌가 다시 떠올랐어요','late')},Math.max(650,1150-80*f.rar))},tt)},600);gfUI();return}
+if(st==='nib'||st==='wait'){clearTimeout(gfTm);gfLose(st==='nib'?'너무 빨랐어요. 살짝 건드린 거였어요':'아직 입질이 없어요',st==='nib'?'nib':'early');return}
 if(st==='bite'){clearTimeout(gfTm);gfReelStart(GF.L[gfS.f]);gfUI();gfOn('reel');return}};
 let gfOnAt=0,gfAct=0;function gfOn(st,extra){if(!me)return;gfAct=Date.now();gfOnAt=Date.now();set(ref(db,ROOT+'/gfon/'+me),{s:st,at:NOW(),sp:gfSpot,...(extra||{})})}
 setInterval(()=>{const g=G();if(!me||!gfCan(g)||Date.now()-gfAct>180000)return;const el=$('gfz');if(!el||el.offsetParent===null)return;const st=gfS.st==='got'?'got':gfS.st==='reel'?'reel':gfS.st==='bite'?'bite':['cast','wait','nib'].includes(gfS.st)?'wait':'idle';set(ref(db,ROOT+'/gfon/'+me),{...((D.gfon||{})[me]||{}),s:st,at:NOW()})},25000);
-function gfLose(m){gfS={st:'done'};gfMsg=m;gfHold=false;gfSfx('escape');gfUI();gfOn('miss')}
-async function gfLand(){const s=gfS,f=GF.L[s.f],L=gfLen(f),sh=Math.random()<1/90,g=G(),sid=g&&g.sid||0,M=gfMe(),nw=!((M.c||{})[f.id]);
+function gfLose(m,kind){const mx=gfS.mx||0;gfS={st:'done'};gfMsg=m;gfHold=false;gfSfx('escape');gfUI();gfOn('miss');gfMissRec(kind||'',mx)}
+async function gfLand(){const s=gfS,g=G(),gh=gfGh(g),f=GF.L[s.f],L=gfLen(f),sh=Math.random()<(gh?1/90:1/150),sid=gfKey(g),cap=gfCapOf(g),M=gfMe(),nw=!((M.c||{})[f.id]),mn=s.mn==null?1:s.mn,hr=gfHr(),dk=kday(),gc=gfActive(g).filter(n=>g&&g.roles&&g.roles[n]&&!g.alive[n]).length,newH=[];
 gfS={st:'got',f:f.id,len:L.len,wl:L.wl,sh,nw,t0:performance.now()/1000};gfHold=false;gfOn('got',{f:f.id,len:L.len,sh:sh?1:0,wl:L.wl?1:0});gfSfx(sh||f.rar>=4?'sparkle':'catch');gfUI();
 let rw=GFRW[f.rar]+(nw?3:0)+(L.wl?2:0);if(sh)rw*=2;let got=0,dex=0,shn=0,gst=null;
-try{const r=await runTransaction(ref(db,DBB+'/gfish/'+me),c=>{c=c||{};c.c=c.c||{};c.mx=c.mx||{};c.c[f.id]=(c.c[f.id]||0)+1;if(L.len>(c.mx[f.id]||0))c.mx[f.id]=L.len;if(sh){c.sh=c.sh||{};c.sh[f.id]=(c.sh[f.id]||0)+1}c.n=(c.n||0)+1;if(!c.g||c.g.s!==sid)c.g={s:sid,t:0};const a=Math.max(0,Math.min(rw,GFCAP-c.g.t));c.g.t+=a;c.ga=a;if(L.wl)c.wl=(c.wl||0)+1;return c});
+try{const r=await runTransaction(ref(db,DBB+'/gfish/'+me),c=>{c=c||{};c.c=c.c||{};c.mx=c.mx||{};c.c[f.id]=(c.c[f.id]||0)+1;if(L.len>(c.mx[f.id]||0))c.mx[f.id]=L.len;if(sh){c.sh=c.sh||{};c.sh[f.id]=(c.sh[f.id]||0)+1}c.n=(c.n||0)+1;if(!c.g||c.g.s!==sid)c.g={s:sid,t:0};const a=Math.max(0,Math.min(rw,cap-c.g.t));c.g.t+=a;c.ga=a;if(L.wl)c.wl=(c.wl||0)+1;gfHidCatch(c,{f,L,sh,mn,hr,dk,key:sid,gh,g,gc},newH);return c});
 const v=r&&r.snapshot&&r.snapshot.val?r.snapshot.val():null;if(v){got=v.ga||0;dex=Object.keys(v.c||{}).length;shn=Object.keys(v.sh||{}).length;gst=gfStat(v)}}catch(e){console.error(e)}
 const own0=pfOf(me).own||{},newI=gst?GFREW.filter(([id,,ok])=>!own0[id]&&ok(gst)).map(x=>x[0]):[],grod=newI.includes('k_grod');
-try{await runTransaction(ref(db,DBB+'/profiles/'+me),c=>{c=c||{t:0,own:{},eq:{}};if(got>0){if(c.earn==null)c.earn=(c.t||0)+spentOf(c.own);c.t=(c.t||0)+got;c.earn+=got}if(dex)c.gdx=Math.max(c.gdx||0,dex);if(shn)c.gsx=Math.max(c.gsx||0,shn);if(gst)c.gst={d:gst.d,s:gst.s,n:gst.n,w:gst.w,m:gst.m,a:gst.a,b:gst.b,c:gst.c};if(newI.length){c.own=c.own||{};newI.forEach(id=>c.own[id]=1)}return c})}catch(e){console.error(e)}
+try{await runTransaction(ref(db,DBB+'/profiles/'+me),c=>{c=c||{t:0,own:{},eq:{}};if(got>0){if(c.earn==null)c.earn=(c.t||0)+spentOf(c.own);c.t=(c.t||0)+got;c.earn+=got}if(dex)c.gdx=Math.max(c.gdx||0,dex);if(shn)c.gsx=Math.max(c.gsx||0,shn);if(gst)c.gst={d:gst.d,s:gst.s,n:gst.n,w:gst.w,m:gst.m,a:gst.a,b:gst.b,c:gst.c};if(newH.length){c.ght=c.ght||{};newH.forEach(k=>c.ght[k]=1);const hn=Object.keys(c.ght).length;c.own=c.own||{};if(hn>=5)c.own.h_gat=1;if(hn>=15)c.own.pl_gsec=1}if(newI.length){c.own=c.own||{};newI.forEach(id=>c.own[id]=1)}return c})}catch(e){console.error(e)}
 if(newI.length)setTimeout(()=>toast('저승 보상! '+newI.map(id=>(ITEM[id]||{}).n).join(', ')+' 받았어요 (가방에서 착용)'),1500);
-const used=((gfMe().g||{}).s===sid?(gfMe().g||{}).t:0)||0;
-gfMsg=`${f.name} ${L.len}cm${L.wl?' · 월척!':''}${sh?' · 반짝!':''}${nw?' · 새 물고기!':''} · `+(got?`+${got} 달란트 (이번 판 ${used}/${GFCAP})`:`이번 판 달란트는 다 받았어요`);
+const used=((gfMe().g||{}).s===sid?(gfMe().g||{}).t:0)||0;if(newH.length)setTimeout(()=>{toast('숨겨진 칭호 「'+newH.map(k=>(GFH[k]||[])[0]).join('」「')+'」를 찾았어요!');try{const fid=NOW().toString(36)+'h';set(ref(db,DBB+'/gfeed/'+fid),{n:me,f:f.id,len:L.len,hid:1,at:NOW()})}catch(e){}},2400);
+gfMsg=`${f.name} ${L.len}cm${L.wl?' · 월척!':''}${sh?' · 반짝!':''}${nw?' · 새 물고기!':''} · `+(got?`+${got} 달란트 (${gh?'이번 판':'오늘'} ${used}/${cap})`:`${gh?'이번 판':'오늘'} 달란트는 다 받았어요`);
 gfLast=[{id:f.id,sh},...gfLast].slice(0,6);
 if(f.rar>=3||sh||L.wl){try{const fid=NOW().toString(36)+Math.random().toString(36).slice(2,4);set(ref(db,DBB+'/gfeed/'+fid),{n:me,f:f.id,len:L.len,sh:sh?1:0,wl:L.wl?1:0,at:NOW()});const ks=Object.keys(D.gfeed||{}).sort((a,b)=>(D.gfeed[a].at||0)-(D.gfeed[b].at||0));ks.slice(0,Math.max(0,ks.length-29)).forEach(k=>set(ref(db,DBB+'/gfeed/'+k),null))}catch(e){}}
 setTimeout(()=>{if(gfS.st==='got'){gfS={st:'done'};gfUI()}},2600)}
 /* --- 화면 --- */
 window.gfTab=t=>{gfT=t;gfSel=-1;gfUI()};window.gfSp=s=>{if(gfS.st!=='idle'&&gfS.st!=='done')return;gfSpot=s;gfPg=0;gfSel=-1;gfUI()};window.gfPage=d=>{gfPg=Math.max(0,gfPg+d);gfSel=-1;gfUI()};window.gfPick2=i=>{gfSel=gfSel===i?-1:i;gfUI()};
 function gfUI(){const el=$('gfz');if(!el||el.style.display==='none')return;const M=gfMe(),dex=Object.keys(M.c||{}).length,g=G(),sid=g&&g.sid,used=(M.g&&M.g.s===sid?M.g.t:0)||0;
-const hd=$('gfH');if(hd)hd.innerHTML=`저승 나루터 <span class="sm" style="font-weight:600">· 도감 ${dex}/${GF.L.length} · 이번 판 ${used}/${GFCAP} 달란트</span>`;
+const gh=gfGh(g),u2=(M.g&&M.g.s===gfKey(g)?M.g.t:0)||0;const hd=$('gfH');if(hd)hd.innerHTML=`저승 나루터 <span class="sm" style="font-weight:600">· 도감 ${dex}/${GF.L.length} · ${gh?'이번 판':'오늘'} ${u2}/${gfCapOf(g)} 달란트${gh?' · 유령 혜택 중':''}</span>`;
 const tb=$('gfTb');if(tb)tb.innerHTML=[['f','낚시'],['d','도감'],['w','보상'],['r','순위']].map(([k,l])=>`<button class="${gfT===k?'on':''}" onclick="gfTab('${k}')">${l}</button>`).join('');
 $('gfF').style.display=gfT==='f'?'':'none';const P2=$('gfP');P2.style.display=gfT==='f'?'none':'';
-const sps=GF.SPOT.map((n,i)=>{const lk=dex<GFOPEN[i];return`<button class="${gfSpot===i?'on':''}${lk?' lk':''}" onclick="gfSp(${i})">${n}${lk?` <small>${GFOPEN[i]}종</small>`:''}</button>`}).join('');
+const sps=GF.SPOT.map((n,i)=>{const gl=i===2&&!gh,lk=gl||dex<GFOPEN[i];return`<button class="${gfSpot===i?'on':''}${lk?' lk':''}" onclick="gfSp(${i})">${n}${gl?' <small>유령 전용</small>':lk?` <small>${GFOPEN[i]}종</small>`:''}</button>`}).join('');
 if(gfT==='f'){$('gfSps').innerHTML=sps;const st=gfS.st,b=$('gfB');b.textContent=st==='bite'?'지금! 챔질':st==='reel'?'꾹 누르고 있기':st==='cast'||st==='wait'||st==='nib'?'기다리는 중…':st==='got'?'낚았다!':'낚싯대 던지기';b.className=st==='bite'?'p gfb hot':st==='reel'?'p gfb hold':'p gfb';
 $('gfR').innerHTML=gfLast.length?'<span class="sm">방금 낚은 것</span>'+gfLast.map(o=>`<img src="${GF.url(o.id,o.sh?'sh':'',2)}" title="${esc(GF.L[o.id].name)}">`).join(''):'<span class="sm">찌가 쏙 들어가면 버튼! 그다음엔 꾹 눌러 초록 칸 안에 물고기를 잡아 두세요</span>';return}
 if(gfT==='d'){const fs=GF.L.filter(f=>f.sp===gfSpot),pg=Math.min(gfPg,Math.ceil(fs.length/20)-1),sh=fs.slice(pg*20,pg*20+20),own=M.c||{},shs=M.sh||{},have=fs.filter(f=>own[f.id]).length;
@@ -1692,7 +1715,7 @@ let h=`<div class="gfsp">${sps}</div><div class="sm" style="margin:6px 2px">${GF
 h+=`<div class="gfpg">${btn('이전','gfPage(-1)',0,'g')}<span class="sm">${pg+1}/${Math.ceil(fs.length/20)}</span>${btn('다음','gfPage(1)',0,'g')}</div>`;
 if(gfSel>=0){const f=GF.L[gfSel],o=own[f.id];h+=`<div class="gfd"><b style="color:${GF.RARITY[f.rar].color}">${o?esc(f.name):'???'}</b> <small>${GF.RARITY[f.rar].name}</small><p>${o?esc(f.desc):'아직 못 낚은 물고기예요.'}</p>${o?`<small>잡은 수 ${o} · 최대 ${(M.mx||{})[f.id]||0}cm (보통 ${f.len}cm)${shs[f.id]?' · 반짝 '+shs[f.id]+'마리':''}</small>`:''}</div>`}
 P2.innerHTML=h;return}
-if(gfT==='w'){const t=gfStat(M),own=pfOf(me).own||{},ach=ACH.filter(a=>/^a_g/.test(a[0]));P2.innerHTML=`<div class="sm" style="margin:4px 2px 8px">조건을 채우면 자동으로 받아요 · 꾸미기 탭 가방에서 착용</div><div class="gfw">`+GFREW.map(([id,lab,ok])=>{const it=ITEM[id]||{},got=!!own[id];return`<div class="${got?'ok':''}"><span>${esc(it.n||id)}</span><small>${SLOT[it.s]||''} · ${lab}</small><b>${got?'받음':ok(t)?'다음 낚시 때':'—'}</b></div>`}).join('')+`</div><details style="margin-top:10px"><summary class="sm">저승 칭호 ${ach.filter(a=>a[3](pfOf(me).st||{},pfOf(me))).length}/${ach.length} · 펼쳐 보기 (꾸미기 › 칭호에서 달기)</summary><div class="gfw" style="margin-top:6px">`+ach.map(a=>{const d=a[3](pfOf(me).st||{},pfOf(me));return`<div class="${d?'ok':''}"><span>${esc(a[1].replace(/^\S+\s/,''))}</span><small>${esc(a[2])}</small><b>${d?'달성':'—'}</b></div>`}).join('')+`</div></details><div class="sm" style="margin-top:8px">시장의 「낚시」 물건: 어부 모자 · 밀짚 낚시모자 · 편광 선글라스 · 대나무 낚싯대 · 뜰채 · 어항 금붕어 · 꽃게 · 물웅덩이 · 낚시 칭호 5종</div>`;return}
+if(gfT==='w'){const t=gfStat(M),own=pfOf(me).own||{},ach=ACH.filter(a=>/^a_g/.test(a[0]));P2.innerHTML=`<div class="sm" style="margin:4px 2px 8px">조건을 채우면 자동으로 받아요 · 꾸미기 탭 가방에서 착용</div><div class="gfw">`+GFREW.map(([id,lab,ok])=>{const it=ITEM[id]||{},got=!!own[id];return`<div class="${got?'ok':''}"><span>${esc(it.n||id)}</span><small>${SLOT[it.s]||''} · ${lab}</small><b>${got?'받음':ok(t)?'다음 낚시 때':'—'}</b></div>`}).join('')+`</div><details style="margin-top:10px"><summary class="sm">저승 칭호 ${ach.filter(a=>a[3](pfOf(me).st||{},pfOf(me))).length}/${ach.length} · 펼쳐 보기 (꾸미기 › 칭호에서 달기)</summary><div class="gfw" style="margin-top:6px">`+ach.map(a=>{const d=a[3](pfOf(me).st||{},pfOf(me));return`<div class="${d?'ok':''}"><span>${esc(a[1].replace(/^\S+\s/,''))}</span><small>${esc(a[2])}</small><b>${d?'달성':'—'}</b></div>`}).join('')+`</div></details><details style="margin-top:10px"><summary class="sm">숨겨진 칭호 ${Object.keys(pfOf(me).ght||{}).length}/15 · 5개면 「뱃사공의 삿갓」, 15개면 「저승 비밀결사」 명판</summary><div class="gfw" style="margin-top:6px">${Object.keys(GFH).map(k=>{const ok=!!(pfOf(me).ght||{})[k];return`<div class="${ok?'ok':''}"><span>${ok?esc(GFH[k][0]):'???'}</span><small>${ok?esc(GFH[k][1]):esc(GFH[k][2]||'')}</small></div>`}).join('')}</div></details><div class="sm" style="margin-top:8px">시장의 「낚시」 물건: 어부 모자 · 밀짚 낚시모자 · 편광 선글라스 · 대나무 낚싯대 · 뜰채 · 어항 금붕어 · 꽃게 · 물웅덩이 · 낚시 칭호 5종</div>`;return}
 const us=Object.keys(D.gfish||{}).filter(n=>D.users[n]),R=(k,f)=>us.map(n=>[n,f(n)]).filter(x=>x[1]>0).sort((a,b)=>b[1]-a[1]).slice(0,5);
 const box=(t,L2,u)=>`<div class="gfrk"><div class="sm">${t}</div>${L2.map(([n,v],i)=>`<div><span>${i+1}</span><b>${esc(n)}</b><em>${v}${u}</em></div>`).join('')||'<div class="sm">아직 없어요</div>'}</div>`;
 P2.innerHTML=box('저승 도감',R('d',gfDex),'종')+box('반짝',R('s',gfShN),'종')+box('월척',R('w',n=>((D.gfish[n]||{}).wl)||0),'마리')+box('낚은 수',R('n',n=>((D.gfish[n]||{}).n)||0),'마리')}
@@ -1707,14 +1730,14 @@ const ago=t=>{const m=Math.round((NOW()-t)/6e4);return m<1?'방금':m<60?m+'분 
 if(!el.dataset.b){el.dataset.b=1;el.innerHTML=`<div class="t" id="gpT"></div><div class="gfcw"><canvas id="gpCv" width="680" height="340"></canvas></div><div id="gpB"></div>`;requestAnimationFrame(gfPubTick)}
 $('gpT').innerHTML=`저승 나루터 <span class="sm" style="font-weight:600">· 지금 낚시 중 ${on.length}명${dead.length?' · 유령 '+dead.length+'명':''}</span>`;
 let h=`<div class="gprk"><div class="sm" style="margin:10px 2px 6px">저승 도감 순위</div>`+(top.length?top.map(([n,v,shc,wl],i)=>`<div class="gpr${n===me?' me':''}"><em>${i+1}</em><b>${esc(n)}</b><span class="vtb"><i style="width:${(v/mx*100).toFixed(0)}%"></i></span><strong>${v}종</strong><small>${shc?'반짝 '+shc:''}${shc&&wl?' · ':''}${wl?'월척 '+wl:''}</small></div>`).join(''):'<div class="sm">아직 아무도 못 낚았어요</div>')+`</div>`;
-const sh=F.slice(0,gfpbAll?10:3);if(sh.length)h+=`<div class="sm" style="margin:12px 2px 4px">최근 대어</div><div class="gfnw">${sh.map(x=>{const f=GF.L[x.f];return`<div><img src="${GF.url(f.id,x.sh?'sh':'',2)}"><span><b>${esc(x.n)}</b> · <i style="color:${GF.RARITY[f.rar].color}">${esc(f.name)}</i> ${x.len}cm${x.sh?' · 반짝':''}${x.wl?' · 월척':''}</span><small>${ago(x.at)}</small></div>`}).join('')}</div>`;
+const sh=F.slice(0,gfpbAll?10:3);if(sh.length)h+=`<div class="sm" style="margin:12px 2px 4px">최근 대어</div><div class="gfnw">${sh.map(x=>{const f=GF.L[x.f];if(x.hid)return`<div><img src="${GF.url(f.id,'',2)}"><span><b>${esc(x.n)}</b> · <i style="color:#b197fc">숨겨진 칭호를 찾았어요!</i></span><small>${ago(x.at)}</small></div>`;return`<div><img src="${GF.url(f.id,x.sh?'sh':'',2)}"><span><b>${esc(x.n)}</b> · <i style="color:${GF.RARITY[f.rar].color}">${esc(f.name)}</i> ${x.len}cm${x.sh?' · 반짝':''}${x.wl?' · 월척':''}</span><small>${ago(x.at)}</small></div>`}).join('')}</div>`;
 if(us.length>5||F.length>3)h+=btn(gfpbAll?'접기':'순위·대어 더 보기','gfpbMore()',0,'g');
-h+=`<div class="sm" style="margin-top:8px;opacity:.7">죽은 참가자만 낚시할 수 있어요 (게임 탭). 유령들 대화는 여기 안 보여요.</div>`;
+h+=`<div class="sm" style="margin-top:8px;opacity:.7">누구나 낚시할 수 있어요 (바로 아래). 유령은 혜택이 커요: 망각의 소 · 판당 30달란트 · 반짝 확률 업 (산 사람은 하루 10달란트). 유령들 대화는 여기 안 보여요.</div>`;
 $('gpB').innerHTML=h}
-function gfActive(g){const O=D.gfon||{},live=g&&g.roles&&['vote','trial','night'].includes(g.phase);return Object.keys(O).filter(n=>O[n]&&NOW()-(O[n].at||0)<75000&&(!live||(g.roles[n]&&!g.alive[n]))).sort()}
+function gfActive(g){const O=D.gfon||{},live=g&&g.roles&&['vote','trial','night'].includes(g.phase);return Object.keys(O).filter(n=>O[n]&&NOW()-(O[n].at||0)<75000).sort()}
 const gfAvC={};function gfAvOf(n){const k=n+JSON.stringify(pfOf(n).eq||{})+JSON.stringify(chOf(n));const c=gfAvC[n];if(c&&c.k===k)return c.im&&c.im.complete?c.im:null;const im=new Image();gfAvC[n]={k,im};try{im.src='data:image/svg+xml;charset=utf-8,'+encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="-22 -62 44 66" width="88" height="132" shape-rendering="crispEdges">${sprite(chOf(n),pfOf(n).eq||{},'s')}</svg>`)}catch(e){}return null}
 function gfPubDraw(cv,t){const x=cv.getContext('2d'),s=cv.width/340;x.setTransform(s,0,0,s,-0,-20*s);x.imageSmoothingEnabled=false;const wy=104,g=G(),on=gfActive(g),O=D.gfon||{};gfBg(x,t,340);
-const n=on.length,gap=n?Math.min(54,300/n):0;on.forEach((nm,i)=>{const q=O[nm]||{},x0=12+i*gap+(n<4?(300-gap*n)/2:0),py=wy+18-44+Math.sin(t*2+i)*1.5,av=gfAvOf(nm);x.save();x.globalAlpha=.8;if(av)x.drawImage(av,x0,py,30,45);x.restore();
+const n=on.length,gap=n?Math.min(54,300/n):0;on.forEach((nm,i)=>{const q=O[nm]||{},x0=12+i*gap+(n<4?(300-gap*n)/2:0),py=wy+18-44+Math.sin(t*2+i)*1.5,av=gfAvOf(nm);const ghN=g&&g.roles&&g.roles[nm]&&!g.alive[nm]&&['vote','trial','night'].includes(g.phase);x.save();x.globalAlpha=ghN?.7:1;if(av)x.drawImage(av,x0,py,30,45);x.restore();
 const tipX=x0+36,tipY=py+8,bx=x0+44,by=wy+64;let bb=by;const st=q.s;if(st==='wait')bb+=Math.sin(t*3+i);if(st==='bite')bb+=3+Math.sin(t*30)*2;if(st==='reel')bb+=2+Math.sin(t*18)*2;
 x.strokeStyle='#6a5a7a';x.lineWidth=1.4;x.beginPath();x.moveTo(x0+20,py+26);x.lineTo(tipX,tipY);x.stroke();x.lineWidth=1;
 if(st==='wait'||st==='bite'||st==='reel'){x.strokeStyle='rgba(220,230,255,.45)';x.beginPath();x.moveTo(tipX,tipY);x.quadraticCurveTo(tipX+6,bb-8,bx,bb);x.stroke();x.fillStyle='#f4f4f4';x.fillRect(bx-2,bb-4,4,3);x.fillStyle='#e8556a';x.fillRect(bx-2,bb-1,4,3)}
@@ -1727,6 +1750,7 @@ function gfPubTick(){const cv=$('gpCv'),el=$('gfpb');if(cv&&el&&el.offsetParent!
 let gfLoop=0;function gfTick(){const cv=$('gfCv'),el=$('gfz');if(!cv||!el||el.style.display==='none'||el.offsetParent===null||gfT!=='f'){gfLoop=setTimeout(()=>requestAnimationFrame(gfTick),400);return}
 const now=performance.now()/1000;if(gfS.st==='reel')gfReelStep(now);try{gfDraw(cv,now)}catch(e){console.error(e)}requestAnimationFrame(gfTick)}
 function gfRender(g){const el=$('gfz');if(!el)return;if(!gfCan(g)){el.style.display='none';if(gfS.st!=='idle'){gfS={st:'idle'};gfHold=false}return}el.style.display='block';
+const gh=gfGh(g),tab=gh?'game':'town';if(el.dataset.tab!==tab){el.dataset.tab=tab;const an=gh?$('me'):$('gfpb');if(an&&an.parentNode)an.parentNode.insertBefore(el,an.nextSibling)}if(!gh&&gfSpot===2)gfSpot=0;
 if(!el.dataset.b){el.dataset.b=1;el.innerHTML=`<div class="t" id="gfH"></div><div class="seg brseg" id="gfTb"></div><div id="gfF"><div class="gfsp" id="gfSps"></div><div class="gfcw"><canvas id="gfCv" width="680" height="420"></canvas></div><button class="p gfb" id="gfB">낚싯대 던지기</button><div class="gfr" id="gfR"></div></div><div id="gfP" class="brb"></div>`;
 const cv=$('gfCv'),b=$('gfB'),dn=e=>{e.preventDefault();if(gfS.st==='reel'){gfHold=true;return}gfBtn()},up=()=>{gfHold=false};
 [cv,b].forEach(z=>{z.addEventListener('pointerdown',dn);z.addEventListener('pointerup',up);z.addEventListener('pointerleave',up);z.addEventListener('pointercancel',up);z.addEventListener('contextmenu',e=>e.preventDefault())});
@@ -2321,7 +2345,9 @@ I('o_glotus','foot','저승 연꽃',0,{rows:['......pPp.......','..g.pPwPp..g...
 I('au_gw','aura','혼불 오라',0,{k:'rise',c:['#8cffe6','#3fc8b0','#e0fff8']}),
 I('au_gs','aura','반짝 비늘',0,{k:'spark',c:['#ffe066','#ffffff','#b8fff0'],n:12}),
 I('pl_gw','plate','저승 명판',0,{f:'#0b1422',s:'#8cffe6',c:'pl-neon'}),
-I('n_gw','nameC','도깨비불 이름',0,'#8cffe6')];
+I('n_gw','nameC','도깨비불 이름',0,'#8cffe6'),
+I('h_gat','hat','뱃사공의 삿갓',0,{rows:{1:'.......kk.......',2:'.....kkkkkk.....',3:'...kkKkkkkKkk...',4:'.kkkkkkkkkkkkkk.'},pal:{k:'#6b5b3e',K:'#8a7650'}}),
+I('pl_gsec','plate','저승 비밀결사',0,{f:'#0a0a14',s:'#b197fc',c:'pl-neon'})];
 GFI.forEach(it=>{SHOP.push(it);HIDE.add(it.id)});
 const ITEM=Object.fromEntries(SHOP.map(i=>[i.id,i]));
 const flagN=p=>Object.keys((p&&p.own)||{}).filter(k=>k.startsWith('fl_')).length;
@@ -2690,6 +2716,7 @@ const ACH=[
 ACH.push(['a_g5','🐟 첫 손맛','저승에서 첫 물고기',(s,p)=>((p.gst||{}).n||0)>=1],['a_g6','🎣 백 마리 낚시꾼','저승 물고기 100마리',(s,p)=>((p.gst||{}).n||0)>=100],['a_g7','🐋 천 마리의 강태공','저승 물고기 1000마리',(s,p)=>((p.gst||{}).n||0)>=1000],['a_g8','📏 월척 사냥꾼','월척 5마리',(s,p)=>((p.gst||{}).w||0)>=5],['a_g9','🦈 괴물 월척','월척 30마리',(s,p)=>((p.gst||{}).w||0)>=30],['a_g10','🌟 반짝 수집가','반짝 10종',(s,p)=>((p.gst||{}).s||0)>=10],['a_g11','🔱 신화를 낚은 자','저승 신화 1종',(s,p)=>((p.gst||{}).m||0)>=1],['a_g12','👑 삼도천의 군주','저승 신화 8종 모두',(s,p)=>((p.gst||{}).m||0)>=8],['a_g13','🌊 얕은 여울 정복','얕은 여울 80종',(s,p)=>((p.gst||{}).a||0)>=80],['a_g14','🌀 깊은 강 정복','깊은 강 80종',(s,p)=>((p.gst||{}).b||0)>=80],['a_g15','🌑 망각의 소 정복','망각의 소 48종',(s,p)=>((p.gst||{}).c||0)>=48],['a_g16','📚 저승 박사','저승 도감 208종 완성',(s,p)=>((p.gst||{}).d||0)>=208]);
 ACH.push(['a_g1','🎣 저승 낚시꾼','저승 도감 20종',(s,p)=>(p.gdx||0)>=20],['a_g2','👻 저승 강태공','저승 도감 80종',(s,p)=>(p.gdx||0)>=80],['a_g3','💀 삼도천의 주인','저승 도감 180종',(s,p)=>(p.gdx||0)>=180],['a_g4','✨ 저승 반짝이','반짝 물고기 3종',(s,p)=>(p.gsx||0)>=3]);
 ACH.push(['a_u2','🚩 연합 원정대','마을 깃발 2개 모으기 (다른 마을 판 끝까지 하기)',(s,p)=>flagN(p)>=2],['a_u4','🏰 연합의 수호자','마을 깃발 4개 모으기',(s,p)=>flagN(p)>=4]);
+Object.keys(GFH).forEach(k=>ACH.push(['a_'+k,'🔮 '+GFH[k][0],GFH[k][1],(s,p)=>!!((p.ght||{})[k]),1]));
 const ACHM=Object.fromEntries(ACH.map(a=>[a[0],a]));
 const achOK=(n,id)=>{const a=ACHM[id],p=pfOf(n);return!!a&&!!a[3](p.st||{},p)};
 const RANKT=[['r_pop','👑 연합 패셔니스타','인기도 1위','crown',n=>pfOf(n).pop||0],['r_rich','💰 달란트 재벌','번 달란트 누적 1위','bag',earned],['r_win','🏆 승리의 아이콘','최다 승리 1위','trophy',n=>stOf(n).w||0],['r_play','🎮 마을 터줏대감','최다 출전 1위','pad',n=>stOf(n).g||0],['r_maf','🌑 밤의 지배자','마피아 팀 승리 1위','moonb',n=>stOf(n).wm||0],['r_lord','🏰 연합 대표','연합 성에 가장 많이 투자한 대표','castle',n=>0],['r_gf','🎣 저승의 강태공','저승 도감 1위','star',n=>gfDex(n)],['r_season','🌟 지난 시즌 챔피언','지난 시즌 점수 1위','star',n=>sScore(n,SN()-1)]];
@@ -3519,8 +3546,8 @@ function myRefunds(){const L=Object.entries(D.refunds||{}).filter(([k,r])=>r.u==
 return`<div class="q" style="font-size:.78rem;background:rgba(255,255,255,.05);border-radius:10px;padding:8px;margin:6px 0">📮 내 환불 요청\n${L.map(([k,r])=>{const it=ITEM[r.i]||{n:r.i,p:0};return'• '+esc(it.n)+' — '+(r.st==='wait'?'⏳ 운영자 확인 중':r.st==='ok'?'✅ 환불 완료 (+'+it.p+')':r.st==='no'?'❌ 거절'+(r.note?': '+esc(r.note):''):'⚠️ 처리 불가')}).join('\n')}</div>`}
 // ===== 칭호(업적·랭킹) 줄 =====
 function spTitleRows(eq,onlyOK){let h='';const row=(id,nm,desc,ok)=>`<div class="row2${ok?'':' lock'}"><span class="tthumb">${nm}</span><div class="nm2"><div class="sm">${desc}</div></div>${onlyOK?'':btn(tryOn.title===id?'입는 중':'👀',`tryItem('${id}')`,tryOn.title===id,'g')}${ok?(eq.title===id?btn('해제',"equip('title','')",1,''):btn('착용',`equip('title','${id}')`,0,'')):'<button class="g" disabled>🔒</button>'}</div>`;
-const A=ACH.filter(a=>!onlyOK||achOK(me,a[0])),K=RANKT.filter(r=>!onlyOK||rankHolders(r[0]).includes(me));
-if(A.length)h+=`<div class="sm" style="margin:8px 0 2px;color:#8ce99a">🏅 업적 칭호 (무료 · 조건 달성 시 자동 해금) ${onlyOK?'':'· '+ACH.filter(a=>achOK(me,a[0])).length+'/'+ACH.length}</div>`+A.map(a=>row(a[0],a[1],a[2],achOK(me,a[0]))).join('');
+const A=ACH.filter(a=>(!a[4]||achOK(me,a[0]))&&(!onlyOK||achOK(me,a[0]))),K=RANKT.filter(r=>!onlyOK||rankHolders(r[0]).includes(me));
+if(A.length)h+=`<div class="sm" style="margin:8px 0 2px;color:#8ce99a">🏅 업적 칭호 (무료 · 조건 달성 시 자동 해금) ${onlyOK?'':'· '+ACH.filter(a=>!a[4]&&achOK(me,a[0])).length+'/'+ACH.filter(a=>!a[4]).length+' · 숨겨진 칭호 '+ACH.filter(a=>a[4]&&achOK(me,a[0])).length+'/'+ACH.filter(a=>a[4]).length}</div>`+A.map(a=>row(a[0],a[1],a[2],achOK(me,a[0]))).join('');
 if(K.length)h+=`<div class="sm" style="margin:8px 0 2px;color:#ffd43b">👑 랭킹 칭호 (1위만 · 1위를 뺏기면 사라져요)</div>`+K.map(r=>{const hd=rankHolders(r[0]);return row(r[0],r[1],r[2]+' · 현재: '+(hd.join(', ')||'없음'),hd.includes(me))}).join('');return h}
 const swatch=(f,arr,cur)=>`<div class="g2" style="margin:4px 0">${arr.map((c,i)=>`<button class="sw ${cur===i?'on':''}" style="background:${c}" onclick="setCh('${f}',${i})"></button>`).join('')}</div>`;
 function shopRender(){const el=$('shop');if(!me){el.style.display='block';el.innerHTML='<div class="emp"><div class="big">🎀</div><div class="t">내 캐릭터 꾸미기</div><div class="sm">🔥게임 탭에서 입장하면 캐릭터를 꾸미고 달란트시장을 이용할 수 있어요.</div></div>';return}el.style.display='block';const pf=pfOf(me),t=pf.t||0,own=pf.own||{},eq=pf.eq||{},ch=chOf(me);
@@ -3737,7 +3764,7 @@ h=`<div class="q" style="font-size:.8rem">운영자가 켰을 때만 하는 <b>�
 +F('재판 대상이 되면?','앱에 최후 변론을 3줄까지 남길 수 있어요. 다른 사람들 찬반 화면에 바로 떠요. 카톡으로 해도 괜찮아요.')
 +F('판 끝나고 설문은 뭐예요?','재밌었다 / 너무 쉬웠다 / 너무 어려웠다 / 지루했다 중 하나만 누르면 돼요. 그 결과를 보고 단서 양을 조절해요.')}
 else{const F=(q,a)=>`<div class="fq"><b>Q. ${q}</b><p>${a}</p></div>`;
-h=F('저승 나루터가 뭐예요?','죽은 참가자만 들어가는 낚시터예요 (게임 탭). 물결마을 물고기 200종에 저승 전용 신화 8종까지 208종 도감을 채워요. 반짝(1/90)·월척(크기 1.3배 이상)도 있어요. 얕은 여울 → 깊은 강(도감 15종) → 망각의 소(50종) 순으로 열려요. 낚으면 달란트를 받는데 한 판에 최대 30까지예요. 도감 30종이면 저승 낚싯대를 받아요. 도감은 판이 바뀌어도 계속 쌓여요.')+F('캡처를 올렸는데 왜 안 믿어요?','누구나 "위장 카드"로 아무 직업 카드나 똑같이 띄울 수 있고, 밤 행동 화면도 가짜를 띄울 수 있어요. 그래서 캡처는 증거가 안 돼요. 진짜 직업은 카드를 꾹 누르고 있는 동안만 보여요.')+F('마피아인데 밤에 아무도 안 고르고 싶어요','"이번 밤은 안 고를게요" 버튼을 누르세요. 탐정에게 동선을 들키기 싫을 때 좋아요. 동료가 고른 사람이 그대로 제거되고, 마피아 모두 안 고르면 그날 밤은 아무도 안 죽어요. 살아있는 마피아가 전부 정하면(안 고름 포함) 밤이 바로 끝나요.')+F('왜 다음 단계로 안 넘어가요?','살아있는 사람이 모두 투표/능력을 써야 바로 넘어가요. 한 명이라도 안 하면 제한시간까지 기다려요. 죽은 사람은 기다리지 않아요. 계속 막히면 운영자에게 말해주세요 (시간 연장 · 퇴장 처리 가능).')
+h=F('저승 나루터가 뭐예요?','누구나 낚시할 수 있는 낚시터예요 (마을 탭 · 유령이 되면 게임 탭 맨 위). 유령은 혜택이 커요: 망각의 소 입장, 판당 최대 30달란트(산 사람은 하루 10), 반짝 확률 업. 숨겨진 칭호 15종도 있어요. 물결마을 물고기 200종에 저승 전용 신화 8종까지 208종 도감을 채워요. 반짝(1/90)·월척(크기 1.3배 이상)도 있어요. 얕은 여울 → 깊은 강(도감 15종) → 망각의 소(50종) 순으로 열려요. 낚으면 달란트를 받는데 한 판에 최대 30까지예요. 도감 30종이면 저승 낚싯대를 받아요. 도감은 판이 바뀌어도 계속 쌓여요.')+F('캡처를 올렸는데 왜 안 믿어요?','누구나 "위장 카드"로 아무 직업 카드나 똑같이 띄울 수 있고, 밤 행동 화면도 가짜를 띄울 수 있어요. 그래서 캡처는 증거가 안 돼요. 진짜 직업은 카드를 꾹 누르고 있는 동안만 보여요.')+F('마피아인데 밤에 아무도 안 고르고 싶어요','"이번 밤은 안 고를게요" 버튼을 누르세요. 탐정에게 동선을 들키기 싫을 때 좋아요. 동료가 고른 사람이 그대로 제거되고, 마피아 모두 안 고르면 그날 밤은 아무도 안 죽어요. 살아있는 마피아가 전부 정하면(안 고름 포함) 밤이 바로 끝나요.')+F('왜 다음 단계로 안 넘어가요?','살아있는 사람이 모두 투표/능력을 써야 바로 넘어가요. 한 명이라도 안 하면 제한시간까지 기다려요. 죽은 사람은 기다리지 않아요. 계속 막히면 운영자에게 말해주세요 (시간 연장 · 퇴장 처리 가능).')
 +F('투표를 바꿀 수 있나요?','낮 투표는 마감 전까지 몇 번이든 바꿀 수 있어요. 경찰·탐정 조사는 한 번 정하면 못 바꿔요.')
 +F('경찰 조사 결과는 언제 나와요?','밤에 고르고, 다음 날 아침에 내 화면 "조사 기록"에서 확인해요. 갓파더는 "마피아 아님"으로 나오지만 같은 사람을 두 번 조사하면 정체가 드러나요. 술꾼은 마피아로 나와요!')
 +F('의사는 자기 자신을 지킬 수 있나요?','네! 다만 어젯밤 지킨 사람은 오늘 밤 다시 지킬 수 없어요. 자기 자신도 똑같아서 이틀 연속으로 나를 지킬 수는 없어요. 하루 걸러서는 가능해요 (예: 1일차 밤 나 → 2일차 밤 다른 사람 → 3일차 밤 다시 나). 전날 밤에 아무도 안 지켰다면 오늘은 누구든 지킬 수 있어요.')
