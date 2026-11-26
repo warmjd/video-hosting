@@ -3766,12 +3766,12 @@ const sRand=(g,k)=>{let h=0;const t=(g.sid||0)+':'+me+':'+k;for(const c of t)h=(
 function fakeDesc(g,p,fr){const ns=Object.keys(g.roles).filter(n=>n!==p),R=k=>sRand(g,k);let t=RD[fr]||'';
 if(fr==='citizen')t+='\n🎯 비밀 미션: '+Object.values(MIS)[R('m')%4]+' (성공하면 +15달란트)';
 if(fr==='witness'){const x=ns[R('w')%ns.length]||'';t+='\n🔎 힌트: 마피아 팀 중 한 명의 이름은 「'+cho(x)+'」으로 시작해요'}
-if(isM(fr)){const mates=fakeMates(g);t+='\n동료: '+(mates.map(n=>n+(g.alive[n]?'':'💀')).join(', ')||'')}
+if(isM(fr)){const mates=fakeMates(g);t+='\n동료: '+(mates.map(n=>n+(g.alive[n]?'':'(사망)')).join(', ')||'')}
 return t}
 function cardHTML(rr,dead){const[cl,tn]=TEAM(rr),[e,...nm]=RN[rr].split(' ');return`<div class="rchip ${cl}${dead?' dead':''}"><span class="rce ke">${e}</span><span><b>${nm.join(' ')}${dead?' · 사망':''}</b><small>${tn.replace(/^\S+\s/,'')} · 꾹 누르면 진짜 직업</small></span></div>`}
 function myCard(g,p,r,dead){const fk=fkGet(),show=holdOn?r:fk,real=holdOn;
 let body;if(!show)body=`<div class="rchip hid"><span class="rce">?</span><span><b>내 직업 보기</b><small>꾹 누르고 있는 동안만 보여요</small></span></div>`;
-else body=cardHTML(show,dead)+`<div class="q" style="text-align:center">${real?`${dead?((g.rise&&g.rise[p])?'✝️ 부활 대기 중! '+g.rise[p]+'일차 낮에 다시 살아나요. 그동안은 죽은 사람처럼 말하지 마세요. (직업 정보는 볼 수 없어요)':'모든 직업을 아래에서 볼 수 있어요. (카톡방 스포 금지!)'):RD[r]+(r==='witness'&&g.wh&&g.wh[p]?'\n🔎 힌트: 마피아 팀 중 한 명의 이름은 「'+g.wh[p]+'」으로 시작해요':'')+(r==='citizen'&&g.ms&&g.ms[p]?'\n🎯 비밀 미션: '+MIS[g.ms[p]]+' (성공하면 +15달란트)':'')}${isM(r)?'\n동료: '+Object.keys(g.roles).filter(n=>isM(g.roles[n])&&n!==p).map(n=>n+(g.roles[n]==='godfather'?'(갓파더)':'')+(g.alive[n]?'':'💀')).join(', '):''}`:(dead?'모든 직업을 아래에서 볼 수 있어요. (카톡방 스포 금지!)':fakeDesc(g,p,show))}</div>`;
+else body=cardHTML(show,dead)+`<div class="q" style="text-align:center">${real?`${dead?((g.rise&&g.rise[p])?'✝️ 부활 대기 중! '+g.rise[p]+'일차 낮에 다시 살아나요. 그동안은 죽은 사람처럼 말하지 마세요. (직업 정보는 볼 수 없어요)':'모든 직업을 아래에서 볼 수 있어요. (카톡방 스포 금지!)'):RD[r]+(r==='witness'&&g.wh&&g.wh[p]?'\n🔎 힌트: 마피아 팀 중 한 명의 이름은 「'+g.wh[p]+'」으로 시작해요':'')+(r==='citizen'&&g.ms&&g.ms[p]?'\n🎯 비밀 미션: '+MIS[g.ms[p]]+' (성공하면 +15달란트)':'')}${isM(r)?'\n동료: '+Object.keys(g.roles).filter(n=>isM(g.roles[n])&&n!==p).map(n=>n+(g.roles[n]==='godfather'?'(갓파더)':'')+(g.alive[n]?'':'(사망)')).join(', '):''}`:(dead?'모든 직업을 아래에서 볼 수 있어요. (카톡방 스포 금지!)':fakeDesc(g,p,show))}</div>`;
 const sel=fkOpen?`<div class="fkp"><div class="sm" style="margin-bottom:6px">평소 화면에 띄워둘 카드예요. 진짜 카드와 겉모습이 똑같아서, 캡처해도 진짜인지 아무도 몰라요. 진짜 직업은 카드를 꾹 누르고 있을 때만 보여요.</div><div class="g2">${btn('? 가림 카드',"fkSet('')",!fk,'g')}${FKR.map(k=>btn(RN[k].split(' ').slice(1).join(' '),`fkSet('${k}')`,fk===k,'g')).join('')}</div></div>`:'';
 return`<div class="wmw hold" onpointerdown="holdStart(event)" oncontextmenu="return false">${body}${show?wmk():''}</div><div style="text-align:right;margin-top:4px"><button class="g fkb" onclick="fkTog()">${fkOpen?'닫기':'위장 카드'}</button></div>${sel}`}
 
