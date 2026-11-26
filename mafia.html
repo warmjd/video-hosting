@@ -207,6 +207,16 @@ body.tvm .scene{max-width:calc((100vh - 250px)*400/340);margin:0 auto}body.tvm #
 .fkb{width:auto;padding:5px 12px;font-size:.75rem;min-height:0}.fkp{margin-top:6px;padding:10px;border-radius:12px;background:rgba(255,255,255,.05)}
 .wmw{position:relative}.wmk{position:absolute;inset:-10px;overflow:hidden;pointer-events:none;display:flex;flex-direction:column;justify-content:space-around;transform:rotate(-14deg);opacity:.13;z-index:3}.wmk span{white-space:nowrap;font-size:.78rem;font-weight:800;color:#fff;letter-spacing:.05em}
 #act.wmon{position:relative}
+.gfz{border:1px solid rgba(140,255,230,.22)!important;background:linear-gradient(180deg,rgba(20,30,58,.9),rgba(16,18,40,.9))!important}
+.gfcw{margin-top:8px;border-radius:14px;overflow:hidden;border:1px solid rgba(140,255,230,.18);touch-action:none;user-select:none;-webkit-user-select:none;-webkit-touch-callout:none}.gfcw canvas{display:block;width:100%;height:auto;image-rendering:pixelated}
+.gfb{width:100%;margin-top:8px;font-size:1rem;padding:13px;touch-action:none;user-select:none;-webkit-user-select:none;-webkit-touch-callout:none}.gfb.hot{background:#ff922b!important;animation:gfpulse .35s infinite alternate}.gfb.hold{background:#37b24d!important}
+@keyframes gfpulse{to{transform:scale(1.03)}}
+.gfsp{display:flex;gap:6px;overflow-x:auto;margin-top:8px}.gfsp button{flex:none;width:auto;padding:6px 12px;font-size:.8rem;border-radius:999px;min-height:0;background:rgba(255,255,255,.06);box-shadow:none;color:#cfd8f8}.gfsp button.on{background:rgba(140,255,230,.2);color:#b8fff0}.gfsp button.lk{opacity:.5}.gfsp small{opacity:.7;font-size:.7rem}
+.gfr{display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-top:8px}.gfr img{height:22px;image-rendering:pixelated}
+.gfg{display:grid;grid-template-columns:repeat(5,1fr);gap:6px}.gfc{position:relative;aspect-ratio:1;display:flex;align-items:center;justify-content:center;padding:4px;border-radius:10px;background:rgba(255,255,255,.05);border:1px solid color-mix(in srgb,var(--rc) 45%,transparent);box-shadow:none;min-height:0}.gfc img{max-width:100%;max-height:100%;image-rendering:pixelated}.gfc.no{border-color:rgba(255,255,255,.06)}.gfc.sel{background:rgba(140,255,230,.15)}.gfc i{position:absolute;top:1px;right:4px;font-style:normal;color:#ffe066;font-size:.7rem}
+.gfpg{display:flex;align-items:center;justify-content:center;gap:10px;margin-top:8px}.gfpg button{width:auto;padding:6px 14px}
+.gfd{margin-top:8px;padding:10px 12px;border-radius:12px;background:rgba(255,255,255,.05);font-size:.85rem}.gfd small{opacity:.7}.gfd p{margin:4px 0}
+.gfrk{margin-bottom:10px}.gfrk>div:not(.sm){display:flex;align-items:center;gap:8px;padding:4px 0;font-size:.85rem}.gfrk span{width:1.4em;text-align:center;opacity:.6}.gfrk em{margin-left:auto;font-style:normal;font-weight:700;color:#b8fff0}
 .gll{display:flex;flex-direction:column;gap:6px;margin-top:8px;max-height:340px;overflow:auto}.glm{padding:8px 11px;border-radius:12px;background:rgba(165,216,255,.07);border:1px solid rgba(165,216,255,.12)}.glm.me{background:rgba(165,216,255,.14)}.glm b{font-size:.82rem;color:#a5d8ff}.glm small{font-size:.68rem;opacity:.6;margin-left:6px}.glm p{margin:3px 0 0;font-size:.88rem;line-height:1.4;white-space:pre-wrap;word-break:break-all}
 #glc{border:1px solid rgba(165,216,255,.25)}
 .vdot{display:inline-block;width:7px;height:7px;border-radius:50%;margin-right:4px;vertical-align:middle;box-shadow:0 0 0 1px rgba(0,0,0,.35)}
@@ -265,6 +275,7 @@ body.tvm .scene{max-width:calc((100vh - 250px)*400/340);margin:0 auto}body.tvm #
 <div id="hd"><div id="hdt"></div><button class="g" id="hdc" onclick="cpNotice()">카톡 공지</button></div>
 <div class="c" id="login" data-tab="game"></div>
 <div class="c" id="me" data-tab="game" style="display:none"></div>
+<div class="c gfz" id="gfz" data-tab="game" style="display:none"></div>
 <div class="c brfc" id="brf" data-tab="game" style="display:none"></div>
 <div class="c" id="clu" data-tab="game" style="display:none"></div>
 <div class="c" id="tres" data-tab="game" style="display:none"></div>
@@ -310,8 +321,8 @@ const CASTLE_ON=true;const SEASON0=Date.UTC(2026,10,22,15),SLEN=28*864e5,SN=t=>M
 const toast=m=>{document.querySelectorAll('.toast').forEach(x=>x.remove());const d=document.createElement('div');d.className='toast';d.textContent=m;document.body.appendChild(d);setTimeout(()=>d.remove(),2600)};
 const db=getDatabase(initializeApp(cfg));let OFF=0;const NOW=()=>Date.now()+OFF;onValue(ref(db,'.info/serverTimeOffset'),x=>{OFF=x.val()||0});
 let D={users:{},game:null,votes:{},night:{},ghost:{},fv:{},entries:{},profiles:{},last:[],cfg:null,refunds:{},likes:{},castle:{},board:{},why:{},lobbyDl:0,lobbyMsg:'',hello:{},vil:{},card:{},plays:{},lp:{},seen:{},keepers:{},endAt:0},me=localStorage.getItem('m1_me')||'',as='',admin=false,loaded=false,busy=false,busyAt=0;
-const SHK=new Set(["users", "profiles", "likes", "castle", "refunds", "plays", "lp", "seen", "vil", "card", "keepers", "grants", "survey", "yard", "rooms", "where"]);
-const DK={glc:{},rinfo:{},rooms:{},where:{},cpub:{},dfs:{},survey:{},qa:{},pin:{},news:{},archIdx:{},pres:{},shout:{},poke:{},cheer:{},yard:{},lw:{},optout:{},users:{},game:null,votes:{},night:{},ghost:{},fvotes:{},entries:{},profiles:{},last:[],cfg:null,refunds:{},likes:{},castle:{},board:{},why:{},lobbyDl:0,lobbyMsg:'',hello:{},vil:{},card:{},plays:{},lp:{},seen:{},keepers:{},endAt:0};
+const SHK=new Set(["gfish","users", "profiles", "likes", "castle", "refunds", "plays", "lp", "seen", "vil", "card", "keepers", "grants", "survey", "yard", "rooms", "where"]);
+const DK={gfish:{},glc:{},rinfo:{},rooms:{},where:{},cpub:{},dfs:{},survey:{},qa:{},pin:{},news:{},archIdx:{},pres:{},shout:{},poke:{},cheer:{},yard:{},lw:{},optout:{},users:{},game:null,votes:{},night:{},ghost:{},fvotes:{},entries:{},profiles:{},last:[],cfg:null,refunds:{},likes:{},castle:{},board:{},why:{},lobbyDl:0,lobbyMsg:'',hello:{},vil:{},card:{},plays:{},lp:{},seen:{},keepers:{},endAt:0};
 let got=0,rq=0;const kickR=()=>{if(rq)return;rq=1;setTimeout(()=>{rq=0;render();tick()},40)};
 Object.keys(DK).forEach(k=>{let first=1;onValue(ref(db,(SHK.has(k)?DBB:ROOT)+'/'+k),x=>{const v=x.val(),d=DK[k];D[k==='fvotes'?'fv':k]=v==null?(Array.isArray(d)?[]:d&&typeof d==='object'?{}:d):v;if(first){first=0;got++}if(got>=Object.keys(DK).length){loaded=true;kickR()}})});
 async function H(s){const b=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(s));return[...new Uint8Array(b)].map(x=>x.toString(16).padStart(2,'0')).join('')}
@@ -737,8 +748,935 @@ const L=Object.values(D.glc||{}).filter(x=>x&&x.m).sort((a,b)=>a.at-b.at),show=g
 const rows=show.map(x=>`<div class="glm${x.f===me?' me':''}"><b>${esc(x.f)}</b><small>${x.sp?'관전':R(x.f)} · ${x.d||''}일차</small><p>${esc(x.m)}</p></div>`).join('')||'<div class="sm" style="text-align:center;padding:10px 0">아직 조용해요. 첫 마디를 남겨보세요.</div>';
 el.innerHTML=`<div class="t">유령 라운지 <span class="sm" style="font-weight:600">· ${w==='read'?'게임 끝 · 이번 판 유령들의 대화예요':'죽은 참가자만 보여요 · 판이 끝나면 모두에게 공개'}</span></div>${L.length>12?btn(glAll?'최근만':'이전 대화 '+(L.length-12)+'개 더','glMore()',0,'g'):''}<div class="gll">${rows}</div>${w==='read'?'':`<div style="display:flex;gap:6px;margin-top:8px"><input id="glIn" data-keep="1" maxlength="120" placeholder="유령끼리 한마디 (산 사람은 못 봐요)" style="flex:1" onkeydown="if(event.key==='Enter')glSend()"><button class="p" style="width:auto" onclick="glSend()">보내기</button></div><div class="sm" style="margin-top:6px">카톡방에서는 게임 얘기 금지! 여기서는 마음껏 떠들어도 돼요.</div>`}`}
 let ghSeen='';function ghostNote(g){if(!me||!g||!g.roles||!g.roles[me]||g.alive[me]||(g.rise&&g.rise[me])||!['vote','trial','night'].includes(g.phase))return;const k='m1_gh_'+g.sid;if(ghSeen===k)return;ghSeen=k;try{if(localStorage.getItem(k))return;localStorage.setItem(k,'1')}catch(e){}
-$('rms').innerHTML=`<div class="t" style="margin-bottom:8px">이제 유령이에요</div><div class="q" style="font-size:.88rem;line-height:1.6">토론 탭 맨 위 <b>유령 라운지</b>에서 다른 유령들이랑 마음껏 떠들 수 있어요. 산 사람한테는 안 보여요.
+$('rms').innerHTML=`<div class="t" style="margin-bottom:8px">이제 유령이에요</div><div class="q" style="font-size:.88rem;line-height:1.6">게임 탭에 <b>저승 나루터</b>가 열렸어요. 유령만 낚시할 수 있어요 (물고기 208종 · 반짝 · 월척 · 판마다 최대 30달란트).
+토론 탭 맨 위 <b>유령 라운지</b>에서는 다른 유령들이랑 마음껏 떠들 수 있어요. 산 사람한테는 안 보여요.
 카톡방에서는 게임 얘기를 하면 안 돼요. 잡담은 괜찮아요!</div><button class="p" style="width:100%;margin-top:12px" onclick="roomClose();navT('talk')">유령 라운지 가기</button><button class="g" style="width:100%;margin-top:6px" onclick="roomClose()">나중에</button>`;$('rmo').classList.add('on')}
+const GF=(()=>{'use strict';
+const RNG=(seed)=>{let s=seed>>>0;return()=>{s=(s+0x6D2B79F5)>>>0;let t=s;t=Math.imul(t^t>>>15,t|1);t^=t+Math.imul(t^t>>>7,t|61);return((t^t>>>14)>>>0)/4294967296}};
+const H2=(x,y,s)=>{let h=(Math.imul(x,374761393)+Math.imul(y,668265263)+Math.imul(s,2147483647))|0;h=Math.imul(h^(h>>>13),1274126177);return((h^(h>>>16))>>>0)/4294967296};
+const hex=(h)=>{h=h.replace('#','');return[parseInt(h.slice(0,2),16),parseInt(h.slice(2,4),16),parseInt(h.slice(4,6),16)]};
+const mixc=(a,b,t)=>[a[0]+(b[0]-a[0])*t,a[1]+(b[1]-a[1])*t,a[2]+(b[2]-a[2])*t].map(Math.round);
+const lighten=(c,t)=>mixc(c,[255,255,255],t);
+const darken=(c,t)=>mixc(c,[52,40,86],t);
+function rgb2hsl(c){let r=c[0]/255,g=c[1]/255,b=c[2]/255;const mx=Math.max(r,g,b),mn=Math.min(r,g,b);let h=0,s=0;const l=(mx+mn)/2;if(mx!==mn){const d=mx-mn;s=l>.5?d/(2-mx-mn):d/(mx+mn);h=mx===r?(g-b)/d+(g<b?6:0):mx===g?(b-r)/d+2:(r-g)/d+4;h/=6}return[h,s,l]}
+function hsl2rgb(a){const h=a[0],s=a[1],l=a[2];const f=(p,q,t)=>{if(t<0)t+=1;if(t>1)t-=1;return t<1/6?p+(q-p)*6*t:t<1/2?q:t<2/3?p+(q-p)*(2/3-t)*6:p};let r,g,b;if(s===0){r=g=b=l}else{const q=l<.5?l*(1+s):l+s-l*s,p=2*l-q;r=f(p,q,h+1/3);g=f(p,q,h);b=f(p,q,h-1/3)}return[r,g,b].map(v=>Math.round(v*255))}
+function hueShift(c,deg){const t=rgb2hsl(c);return hsl2rgb([(t[0]+deg/360+1)%1,t[1],t[2]])}
+
+function Buf(w,h){return{w:w,h:h,d:new Uint8ClampedArray(w*h*4)}}
+function px(b,x,y,c,a){if(x<0||y<0||x>=b.w||y>=b.h)return;const i=(y*b.w+x)*4;b.d[i]=c[0];b.d[i+1]=c[1];b.d[i+2]=c[2];b.d[i+3]=a===undefined?255:a}
+function getA(b,x,y){if(x<0||y<0||x>=b.w||y>=b.h)return 0;return b.d[(y*b.w+x)*4+3]}
+function fillR(b,x,y,w,h,c,a){for(let j=0;j<h;j++)for(let i=0;i<w;i++)px(b,x+i,y+j,c,a)}
+function ell(b,cx,cy,rx,ry,c){for(let y=Math.floor(cy-ry);y<=Math.ceil(cy+ry);y++)for(let x=Math.floor(cx-rx);x<=Math.ceil(cx+rx);x++){const dx=(x+.5-cx)/rx,dy=(y+.5-cy)/ry;if(dx*dx+dy*dy<=1)px(b,x,y,c)}}
+function flipX(b){const o=Buf(b.w,b.h);for(let y=0;y<b.h;y++)for(let x=0;x<b.w;x++){const s=(y*b.w+x)*4,d=(y*b.w+(b.w-1-x))*4;for(let k=0;k<4;k++)o.d[d+k]=b.d[s+k]}return o}
+function outlineBuf(b,col){const add=[];for(let y=0;y<b.h;y++)for(let x=0;x<b.w;x++){if(getA(b,x,y)===0&&(getA(b,x-1,y)>0||getA(b,x+1,y)>0||getA(b,x,y-1)>0||getA(b,x,y+1)>0))add.push([x,y])}add.forEach(p=>px(b,p[0],p[1],col))}
+const OUT=[88,72,112];
+
+/* ---------- 물고기 틀 (오른쪽을 보는 몸통, 왼쪽이 꼬리) ----------
+   b 몸통 / f 지느러미 / e 눈 / d 어두운 디테일(수염·입) */
+const FISH_TPL={
+tiny:[
+"......bbbbb...",
+".ff.bbbbbbbbb.",
+".fffbbbbbbbbeb",
+".fffbbbbbbbbbb",
+".ff..bbbbbbbb.",
+".......bbfb..."],
+round:[
+".......bbbbb......",
+".....bbbbbbbbb....",
+".ff.bbbbbbbbbbbb..",
+".fffbbbbbbbbbbbeb.",
+".ffbbbbbbbbbbbbbb.",
+".fffbbbbbbbbbbbbb.",
+".ff..bbbbbbbbbbb..",
+"......bbbbbbbbb...",
+".......bbbfbb....."],
+long:[
+"............bbbb..............",
+".........bffffbbbbbb..........",
+".ff....bbbbbbbbbbbbbbb........",
+".fff.bbbbbbbbbbbbbbbbbbbb.....",
+".fffbbbbbbbbbbbbbbbbbbbbbbeb..",
+".fffbbbbbbbbbbbbbbbbbbbbbbbbb.",
+".ff.bbbbbbbbbbbbbbbbbbbbbbbb..",
+".....bbbbbbbbbbbbbbbbbbbbb....",
+".......bbbbbbffbbbbbbbbb......",
+"............fff..............."],
+cat:[
+"..............................",
+"......bbbbbbbbbbbbb...........",
+".ff.bbbbbbbbbbbbbbbbbbb.......",
+".ffbbbbbbbbbbbbbbbbbbbbbb.....",
+".ffbbbbbbbbbbbbbbbbbbbbebbdd..",
+".ffbbbbbbbbbbbbbbbbbbbbbbbbbd.",
+".f..bbbbbbbbbbbbbbbbbbbbbbbbdd",
+"....bbbbbbbbbbbbbbbbbbbbbbb...",
+"......bbbbbbbbbbbbbbbbbbbb....",
+".........ff.......ff.........."],
+eel:[
+"..............................",
+".......bbbbb........bbbbb.....",
+".f...bbbbbbbbb....bbbbbbbbb...",
+"fff.bbbbbbbbbbb..bbbbbbbbbbeb.",
+".fffbbbbbbbbbbbbbbbbbbbbbbbbbb",
+".ff..bbbbbbbbbbbbbbbbbbbbbbbb.",
+".......bbbbbb....bbbbbbb......",
+".............................."],
+puff:[
+"....bbbbbb....",
+"..bbbbbbbbbb..",
+".bbbbbbbbbbbb.",
+".bbbbbbbbbbebb",
+"ffbbbbbbbbbbbb",
+"fffbbbbbbbbbdb",
+"ffbbbbbbbbbbbb",
+".bbbbbbbbbbbb.",
+"..bbbbbbbbbb..",
+"....bbffbb...."],
+shark:[
+"................bb............",
+"...............bbbb...........",
+"..............bbbbbb..........",
+".ff..........bbbbbbbbb........",
+".fff.....bbbbbbbbbbbbbbbbb....",
+"..fffbbbbbbbbbbbbbbbbbbbbbbbb.",
+"...ffbbbbbbbbbbbbbbbbbbbbebbbb",
+"..fffbbbbbbbbbbbbbbbbbbbbbbbd.",
+".fff....bbbbbbbbbbbbbbbbbbb...",
+".ff........bbbfffbbbbbbb......",
+"............fff..............."],
+flat:[
+"..........................",
+".....bbbbbbbbbbbbbbbb.....",
+"..fbbbbbbbbbbbbbbbbbbb....",
+".fffbbbbbbbbbbbbbbbbbbbb..",
+".fffbbbbbbbbbbbbbbbbebebb.",
+".fffbbbbbbbbbbbbbbbbbbbbb.",
+"..fbbbbbbbbbbbbbbbbbbbbb..",
+".....bbbbbbbbbbbbbbbbbb...",
+".......bbbbbbbbbbbbbb....."],
+disc:[
+"......bbbbbbbb....",
+"....bbbbbbbbbbbb..",
+"...bbbbbbbbbbbbbb.",
+"..bbbbbbbbbbbbbbbb",
+".fbbbbbbbbbbbbbebb",
+"ffbbbbbbbbbbbbbbbb",
+"ffbbbbbbbbbbbbbbbb",
+"ffbbbbbbbbbbbbbbdb",
+".fbbbbbbbbbbbbbbbb",
+"..bbbbbbbbbbbbbbb.",
+"...bbbbbbbbbbbbb..",
+"....bbbbffbbbbb...",
+"......bbbbbbbb...."],
+ray:[
+"............bb............",
+".........bbbbbbbb.........",
+"......bbbbbbbbbbbbbb......",
+"..dd.bbbbbbbbbbbbbbbbb....",
+"dddddbbbbbbbbbbbbbbbbebb..",
+"..dd.bbbbbbbbbbbbbbbbbbbb.",
+"......bbbbbbbbbbbbbb......",
+".........bbbbbbbb........."],
+fancy:[
+"...ff.....bbbbb.....",
+"..ffff..bbbbbbbbb...",
+".fffff.bbbbbbbbbbb..",
+".ffffffbbbbbbbbbebb.",
+".fffffbbbbbbbbbbbbb.",
+"..ffffbbbbbbbbbbbb..",
+".fffff.bbbbbbbbbb...",
+"..ffff..bbbbbbb.....",
+"...ff....bbbfb......"],
+angler:[
+".............f..dd.....",
+"............f..d.......",
+"..........ffff.........",
+".ff....bbbbbbbbbb......",
+".fff.bbbbbbbbbbbbbb....",
+".ffbbbbbbbbbbbbbbbebb..",
+".fffbbbbbbbbbbbbbbbbb..",
+"..fbbbbbddddddddbbbb...",
+"..fbbbbbbbbbbbbbbbb....",
+"....bbbbbbbbbbbbb......"],
+whale:[
+"..............................................",
+".......................bbbb...................",
+"...................bbbbbbbbbbbbb..............",
+"..ff.............bbbbbbbbbbbbbbbbbb...........",
+".fff...........bbbbbbbbbbbbbbbbbbbbbbb........",
+".ffff.....bbbbbbbbbbbbbbbbbbbbbbbbbbbbbb......",
+"..ffffbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbebb....",
+"...fffbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb...",
+"..ffff....bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb....",
+".fff..........bbbbbbbbbbbbbbbbffbbbbbbb.......",
+".ff.............bbbbbbbbbbbbbbbbbbbb.........."],
+/* 5단계 새 틀: 해마 · 돛새치 · 쏠배감펭 · 바늘 · 상자 · 나비 · 철갑상어 */
+seahorse:[
+"....bbb.....",
+"...bbbbbb...",
+"..fbbbbebbdd",
+"...bbbbbb...",
+"....bbbb....",
+"...fbbbb....",
+"..ffbbbbb...",
+"...fbbbbb...",
+"....bbbbb...",
+"....bbbbb...",
+".....bbbb...",
+"......bbb...",
+"..b....bb...",
+"..bb..bbb...",
+"...bbbbb....",
+"....bbb....."],
+sail:[
+"..........ffffffffff..............",
+"........fffffffffffff.............",
+".......ffffffffffffff.............",
+"......ffffffffffffff..............",
+".ff..bbbbbbbbbbbbbbbbbb...........",
+".fffbbbbbbbbbbbbbbbbbbbbbbebb.....",
+"..fbbbbbbbbbbbbbbbbbbbbbbbbbbdddddd",
+".fffbbbbbbbbbbbbbbbbbbbbbbbbb.....",
+".ff...bbbbbbbbbbbbbbbbbbbbb.......",
+"..........ff......ff.............."],
+lion:[
+"......f.f.f.f.....",
+".....ff.f.f.ff....",
+"....fffffffffff...",
+"..f..bbbbbbbbb....",
+".fff.bbbbbbbbbbb..",
+".ffbbbbbbbbbbbbebd",
+".fffbbbbbbbbbbbbbd",
+"..f.bbbbbbbbbbbbb.",
+"....ffbbbbbbbbb...",
+"...ff.ff.ff.f.....",
+"..f..f..f..f......"],
+needle:[
+"..f...............................",
+".ff..bbbbbbbbbbbbbbbbbbbbb........",
+"fffbbbbbbbbbbbbbbbbbbbbbbbbebdddddd",
+".ffbbbbbbbbbbbbbbbbbbbbbbbbb......",
+"..f.....f....bbbbbbbbbf..........."],
+box:[
+"....bbbbbbbbbb..",
+"...bbbbbbbbbbbb.",
+".f.bbbbbbbbbbebb",
+"ffbbbbbbbbbbbbbb",
+"ffbbbbbbbbbbbbdb",
+".f.bbbbbbbbbbbbb",
+"...bbbbbbbbbbbb.",
+"....bfbb..bfb..."],
+angel:[
+".........f......",
+"........ffb.....",
+".......fbbbb....",
+"......bbbbbbb...",
+".ff..bbbbbbbbb..",
+".fffbbbbbbbbbebb",
+".fffbbbbbbbbbbbd",
+".ff..bbbbbbbbb..",
+"......bbbbbbb...",
+".......fbbbb....",
+"........ffb.....",
+".........f......"],
+sturgeon:[
+"...............d....d....d.........",
+".ff..........bbbbbbbbbbbbbbb.......",
+".fff.....bbbbbbbbbbbbbbbbbbbbbb....",
+"..fffbbbbbbbbbbbbbbbbbbbbbbbbebbb..",
+"...ffbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+"..fff...bbbbbbbbbbbbbbbbbbbbbbbd...",
+".ff.........bbbffbbbbbbbffbb..d.d.."]
+};
+
+/* 전설종 손도트: 숫자 = 팔레트 색 (1 가장 어두움 → 5 가장 밝음, 6·7 지느러미, 8·9 포인트), e 눈, k 짙은 점 */
+const LEGEND_ART={
+/* 황금잉어: 황금빛 비늘, 붉은 수염, 물결치는 꼬리 */
+'황금잉어':{pal:{1:'#c4802a',2:'#e8a838',3:'#ffcf54',4:'#ffeb96',5:'#fff6d0',6:'#f0b058',7:'#ffdf8c',8:'#e2684a',e:'#342a46',w:'#ffffff'},rows:[
+"..............6.......................",
+".............667......................",
+"............66777.....2222............",
+"66.........6677776.223333322..........",
+"7766......667777762333344433322.......",
+"77766...6677776622333444443333322.....",
+".777766.66766222333334444433333332....",
+"..7777662222333233323332333233333e32..",
+"..77776223333333333333333333333333332.",
+"..777762333433343334333433343333333w38",
+"..77776225555555555555555555553333322.",
+".777766.2255555555555555555555555522.8",
+"77766....22555556665555555555552228...",
+"7766.......2225567765555222222.....8..",
+"66............267776...........8......",
+"...............6677...................",
+]},
+/* 구름송어: 하얀 구름 비늘, 하늘색 그늘, 솜 지느러미 */
+'구름송어':{pal:{1:'#8ea6dc',2:'#bccaf4',3:'#e4ebff',4:'#ffffff',5:'#f6f8ff',6:'#c8d4ff',7:'#eef2ff',8:'#ffb8cc',e:'#342a46',9:'#a8bcf0'},rows:[
+"...................77..................",
+".................777677................",
+"...............7777666..22222..........",
+"6.............777766622333332222.......",
+"76..........1222223333344443333332.....",
+"776....12222333344444444444433333322...",
+"7776.122333344447744447744444333333e2..",
+"77766223334477744447774444777444433332.",
+"77766223334444444444444444444444433889.",
+"7776.12233334444444444444444444333332..",
+"776....122233355555555555555533332.....",
+"76.........1122225556655555222.........",
+"6..............122267766221............",
+"...................6776................",
+]},
+/* 노을돔: 붉은 노을 그라데이션, 금빛 점, 부채 지느러미 */
+'노을돔':{pal:{1:'#c2546a',2:'#ea7a7a',3:'#ff9e86',4:'#ffc89a',5:'#ffe2b0',6:'#ff9a9a',7:'#ffd2b8',8:'#fff2a8',e:'#342a46',w:'#ffffff'},rows:[
+"...............6.6.6..............",
+"..............6767676.............",
+".............677777776............",
+"66..........12222222222...........",
+"776.......122233333332222.........",
+"7776.....12233383333338332........",
+"77776...1223333344443333332.......",
+"777776.12233334444444443383e2.....",
+"7777761223338344444844443333w32...",
+"777776.12333344444444444443333322.",
+"77776...1233345555555555443333221.",
+"7776.....12234555555555554433221..",
+"776.......12223555555554433221....",
+"66.........1122233333333322.......",
+"..............12276762221.........",
+"................6.6.6.............",
+]},
+/* 실러캔스: 푸른 몸에 하얀 반점, 다리 같은 지느러미, 세 갈래 꼬리 */
+'실러캔스':{pal:{1:'#3a4a7c',2:'#4e60a0',3:'#6c80c0',4:'#90a4dc',5:'#b0bce4',6:'#5a6aa8',7:'#8c9cd0',8:'#e8eeff',e:'#f0f4ff',k:'#1e2440'},rows:[
+"..................66...................",
+".................6776..................",
+"7...............67776..................",
+"77........1222222222222222.............",
+"776....1122333333333383333222..........",
+"7776.11223338333333333333333322........",
+"77766223333333333833333338333333222....",
+"7777622338333333333333333333333kek32...",
+"777662333333383333333383333333333333...",
+"7776.2233333333333333333333333333331...",
+"776...12233334444444444444444433331....",
+"7........122224455555555554442221......",
+"...........6676...2222222....6676......",
+"..........6776.............67776.......",
+"..........76..................76.......",
+]},
+/* 은하룡어: 남보라 몸에 은하수 반짝임, 금빛 갈기 */
+'은하룡어':{pal:{1:'#3a2e7c',2:'#5446a8',3:'#6c60c8',4:'#8e84e0',5:'#b4a8f0',6:'#ffe0a8',7:'#fff4d0',8:'#fff8c0',9:'#ffc8f0',e:'#fff8e0',k:'#1c1640'},rows:[
+"........................6.6.6..............",
+".......................676767.6.6..........",
+"6...........66.6.6....67777767676..........",
+"76.........677676767..1222222277776........",
+"776......112222222221112334333222226.......",
+"7776...1122333433343322233343833333322.....",
+"77776.12233833333333833333333333333ke32....",
+".7777123333333398333333339833333833333336..",
+"..777223343338333333333333333333333333336..",
+".7777.1222333333334444333333444433332226...",
+"77776...11222224455555222244555522221......",
+"7776.......112222222111...1222222.....6....",
+"776.........................................",
+]},
+/* 연못주인 메기왕: 이끼 낀 거대한 메기, 머리에 수련, 긴 수염 */
+'연못주인 메기왕':{pal:{1:'#4e5640',2:'#6a7456',3:'#86906c',4:'#a6ae88',5:'#d8d6b8',6:'#5c6a4c',7:'#88986c',8:'#f8b4cc',9:'#fff0f6',a:'#8cc89c',e:'#f4f0c8',k:'#1c1a14'},rows:[
+"..............................989.......",
+".............................88988......",
+"...........................aa898aa......",
+"7.................11112222aaaaaaa.......",
+"76..........1112222233333333332222......",
+"776.....11122333333343333433333332222...",
+"7766..1122333433333333333333333333k2e22.",
+"77766122333333334333334333333333333331..",
+"7776612233343333333333333333333333331111",
+"7766.1123333333444444444444444333331..1.",
+".76....1122334555555555555555553331...1.",
+".6........11222245555555555422221..11...",
+"..............1266762222221.......1.....",
+"...............677766.............1.....",
+]},
+/* 폭포잉어왕: 물보라를 두른 청록 잉어, 용 같은 지느러미 */
+'폭포잉어왕':{pal:{1:'#2e6a78',2:'#3e8e98',3:'#5cb4b4',4:'#8ad8cc',5:'#d4f4ec',6:'#68c0e0',7:'#c0ecff',8:'#ffffff',9:'#ffd870',e:'#1e2a3a',k:'#ff8a70'},rows:[
+"................6.6.6.6...............",
+"..8............67676767...............",
+"..............6777777776..............",
+"66.........1122222222222222...........",
+"776.....1122333333333333333322........",
+"7776..1122334334334334334333333322.....",
+"777761223333333333333333333333333e32..",
+"77776223343343343343343343343333333399",
+"777761223333333333333333333333333333k.",
+"7776..112233444444444444444443333322.9",
+"776.....112245555555555555554433221...",
+"66.........11222255566555522211.......",
+"..................67776...............",
+"..8................676................",
+"......................................",
+]},
+/* 용궁해마: 진주빛 갈기와 산호 왕관을 쓴 커다란 해마 */
+'용궁해마':{pal:{1:'#c25a6a',2:'#e8808a',3:'#ffa8a8',4:'#ffd0c0',5:'#fff0e4',6:'#ffd870',7:'#fff4b8',8:'#a8e8ff',e:'#342a46',w:'#ffffff'},rows:[
+"......6.6.6.......",
+".....6767676......",
+"......12222.......",
+".....1233332......",
+"....12334433222...",
+"...1233343e333322.",
+"...12333333332222.",
+"..8.123333332.....",
+".88.1233443.......",
+"888612334443......",
+".88612334453......",
+"..8612334553......",
+"...612334553......",
+"...61233455.......",
+"....1233453.......",
+"....123345........",
+".....12334........",
+"......1233...22...",
+".......1233.2.....",
+"........12332.....",
+".........122......",
+]},
+/* 푸른바다용: 폭풍우의 바다를 닮은 청새치형 용, 번개 무늬 */
+'푸른바다용':{pal:{1:'#1e3a6c',2:'#2c5494',3:'#3e74bc',4:'#6ca0dc',5:'#cce4f8',6:'#4890d0',7:'#a0d4f8',8:'#fff07a',9:'#ffffff',e:'#fff07a',k:'#0e1a34'},rows:[
+"...........6.....6.....6.................",
+"..........676...676...676................",
+"66.......67776.67776.67776...............",
+"776.....6777777777777777776..............",
+"7776..1122222222222222222222222..........",
+"77776122333333833333333833333332222......",
+"777761233338383333333338383333333ke22....",
+"777762233333383333333333833333333333399999",
+"77776223344444444444444444444443333222...",
+"7776..112344555555555555555544433221.....",
+"776......11222222255666552222222.........",
+"66................677776.................",
+]},
+/* 달빛선녀어: 하늘하늘 긴 지느러미를 끄는 선녀 같은 물고기 */
+'달빛선녀어':{pal:{1:'#8a7cc8',2:'#a89ce4',3:'#ccc4f8',4:'#ece8ff',5:'#ffffff',6:'#f4c8f0',7:'#fff0fc',8:'#fff4b8',e:'#342a46',9:'#c8f0ff'},rows:[
+"....................6.....................",
+"...................676....................",
+"..................67766...................",
+"66...............677766..12222...........",
+"7766............67776612233332...........",
+"777666.........6776.12334443332..........",
+".7777666......776..123344444333e2........",
+"..777776666...66..1233444884444332.......",
+"...7777777766666612334448844443322.......",
+"..77777766666...6612334444444433322......",
+".7777666.......676..12334555544332.......",
+"7766..........67776...1223355533221......",
+"66...........677776.....11222222.........",
+"............6777776......................",
+"...........677777.6......................",
+"..........6777..6........................",
+]},
+};
+
+
+/* spec: {tpl,c,pat,pc,belly,fin}  pat 0없음 1줄무늬 2점 3띠 4등 5얼룩 6머리 7가는줄 */
+
+/* 갯것 모양 (2026-11-09) */
+FISH_TPL.crab=[
+".ff..........ff.",
+"fff..........fff",
+".ff..e....e..ff.",
+"..fbbbbbbbbbbf..",
+".bbbbbbbbbbbbbb.",
+"bbbbbbbbbbbbbbbb",
+".bbbbbbbbbbbbbb.",
+"..d.d.d..d.d.d..",
+".d.d.d....d.d.d."];
+FISH_TPL.shrimp=[
+"..............ff.",
+".....bbbbbbb..f..",
+"...bbbbbbbbbbe...",
+"..bbbbbbbbbbbbb..",
+".fbbbbbbbbbbbd.d.",
+"ffbbbbbbbbbb.....",
+".f..bbbbbbb......",
+"....d.d.d.d......"];
+FISH_TPL.lobster=[
+".................ff.",
+"...............fff..",
+".ff..bbbbbbbbbb.f...",
+"fffbbbbbbbbbbbbbe...",
+".ffbbbbbbbbbbbbbbbf.",
+"...bbbbbbbbbbbbb.fff",
+".....d.d.d.d.d....f."];
+FISH_TPL.conch=[
+"......bbbb....",
+"....bbbbbbbb..",
+"...bbddbbbbbb.",
+"..bbbdbbddbbbb",
+"..bbbbbdbbbbbb",
+".bbbbbbbbbbbb.",
+"bbbbbbbbbbbb..",
+".ffbbbbbbbe...",
+"..fffffff....."];
+FISH_TPL.star=[
+"......b......",
+".....bbb.....",
+".....bbb.....",
+"bbbbbbbbbbbbb",
+".bbbbbebbbbb.",
+"..bbbbbbbbb..",
+"..bbbb.bbbb..",
+".bbb.....bbb.",
+".bb.......bb."];
+FISH_TPL.clam=[
+"....bbbbbb....",
+"..bbbbbbbbbb..",
+".bbdbbdbbdbbb.",
+"bbbdbbdbbdbbbb",
+"bbbdbbdbbdbbbb",
+".bbbbbbbbbbbb.",
+"..ffffffffff.."];
+FISH_TPL.urchin=[
+".d..d..d..d.",
+"..d.d.d.d...",
+"d.bbbbbbb.d.",
+".bbbbbbbbbd.",
+"dbbbbbbbbbb.",
+".bbbbbbbbbbd",
+"d.bbbbbbbb..",
+"..d.d.d.d.d.",
+".d..d..d..d."];
+FISH_TPL.jelly=[
+"...bbbbbb...",
+".bbbbbbbbbb.",
+"bbbbbbbbbbbb",
+"bbbbbbbbbbbb",
+".f.f.f.f.f..",
+".f.f.f.f.f..",
+"..f.f.f.f.f.",
+"..f...f...f."];
+FISH_TPL.octo=[
+"....bbbbbb....",
+"...bbbbbbbb...",
+"..bbbbbbbbbb..",
+"..bbebbbbebb..",
+"..bbbbbbbbbb..",
+"...bbbbbbbb...",
+".bb.bb.bb.bb..",
+"b..b..b..b..b."];
+FISH_TPL.cucumber=[
+"...d....d....d....",
+".bbbbbbbbbbbbbbbb.",
+"bbbbbbbbbbbbbbbbbb",
+"bbbbbbbbbbbbbbbbbe",
+".bbbbbbbbbbbbbbbb.",
+"..d..d..d..d..d..."];
+function buildFish(spec,seed){
+  if(spec.art)return buildArt(spec.art);
+  const rows=FISH_TPL[spec.tpl]||FISH_TPL.round;
+  const w0=Math.max.apply(null,rows.map(r=>r.length)),h0=rows.length,P=2,W=w0+P*2,H=h0+P*2;
+  const g=[];for(let y=0;y<H;y++)g.push(new Array(W).fill('.'));
+  rows.forEach((r,y)=>{for(let x=0;x<r.length;x++)g[y+P][x+P]=r[x]});
+  const body=hex(spec.c),belly=spec.belly?hex(spec.belly):lighten(body,.5),back=darken(body,.14);
+  const fin=spec.fin?hex(spec.fin):lighten(hueShift(body,14),.2);
+  const pc=spec.pc?hex(spec.pc):(spec.pat===5?hueShift(darken(body,.25),-20):darken(hueShift(body,-12),.32));
+  let minX=99,maxX=0,minY=99,maxY=0;
+  for(let y=0;y<H;y++)for(let x=0;x<W;x++)if(g[y][x]==='b'){minX=Math.min(minX,x);maxX=Math.max(maxX,x);minY=Math.min(minY,y);maxY=Math.max(maxY,y)}
+  const mid=(minY+maxY)>>1,bw=maxX-minX;
+  const out=Buf(W,H);
+  const isB=(x,y)=>y>=0&&y<H&&x>=0&&x<W&&(g[y][x]==='b'||g[y][x]==='e');
+  for(let y=0;y<H;y++)for(let x=0;x<W;x++){
+    const ch=g[y][x];if(ch==='.')continue;
+    if(ch==='b'){
+      let c=body;
+      if(!isB(x,y+1)||!isB(x,y+2))c=belly;
+      else if(!isB(x,y-1))c=back;
+      const rx=x-minX;
+      switch(spec.pat|0){
+        case 1:if(rx>3&&rx<bw-3&&rx%4<2&&c!==belly)c=mixc(c,pc,.6);break;
+        case 2:if(H2(x,y,seed)<.1&&c!==belly)c=pc;break;
+        case 3:if(y===mid&&rx>bw*.25&&rx<bw*.82)c=pc;break;
+        case 4:if(y<=minY+1)c=pc;break;
+        case 5:if(H2(Math.floor(rx/4),Math.floor((y-minY)/4),seed)<.42)c=pc;break;
+        case 6:if(rx>bw*.64&&c!==belly)c=pc;break;
+        case 7:if((y===mid-1||y===mid+1)&&rx>bw*.2&&rx<bw*.85)c=pc;break;
+      }
+      px(out,x,y,c);
+    }else if(ch==='f')px(out,x,y,(x+y)%2?fin:lighten(fin,.22));
+    else if(ch==='e')px(out,x,y,[52,42,70]);
+    else if(ch==='d')px(out,x,y,darken(body,.55));
+  }
+  outlineBuf(out,mixc(darken(body,.6),OUT,.55));
+  return out;
+}
+
+function buildArt(a){
+  const rows=a.rows,w0=Math.max.apply(null,rows.map(r=>r.length)),h0=rows.length,P=2,b=Buf(w0+P*2,h0+P*2);
+  rows.forEach((r,y)=>{for(let x=0;x<r.length;x++){const c=a.pal[r[x]];if(c)px(b,x+P,y+P,hex(c))}});
+  outlineBuf(b,mixc(darken(hex(a.pal[1]),.5),OUT,.5));
+  return b;
+}
+
+const RARITY=[
+ {name:'흔함',color:'#9aa7b4',base:58,mult:1},
+ {name:'보통',color:'#6fc28f',base:26,mult:2.2},
+ {name:'희귀',color:'#6aa6ee',base:11,mult:5},
+ {name:'영웅',color:'#b886ee',base:4,mult:20},
+ {name:'전설',color:'#f2b238',base:1,mult:120}   // 2026-11-09: 전설 값을 크게 올렸어요 (예전 45)
+];
+const ZONE_PRICE=[8,30,90,280,950,2000,400,100,1200,1500,2600,400,3000,3400,4200,7000,8000,10000,12000,3000,9000,2600]; // 9 안개 연못 · 10 안개 계곡 · 11 산호초 해안 // server.js ZONE_PRICE와 같아야 해요 (7 배낚시 · 8 시장)
+
+/* [이름, 틀, 몸색, 무늬, 길이cm, 설명, {pc,belly,fin}] — 각 낚시터 20종, 순서가 희귀도 (8·6·4·1·1) */
+const RAW=[
+[ /* 1 연못 */
+['송사리','tiny','#f2e6b0',0,4,'무리 지어 다니며 햇빛에 반짝인다.'],
+['참붕어','round','#e8d8a8',2,8,'붕어를 닮았지만 훨씬 작다.'],
+['피라미','tiny','#c8dcec',1,10,'물살이 빠른 곳을 좋아한다.'],
+['붕어','round','#d8c89c',0,25,'연못의 터줏대감.'],
+['미꾸라지','eel','#cbb68c',2,15,'진흙 속을 꿈틀꿈틀 파고든다.'],
+['버들치','tiny','#c8d6a0',2,9,'버드나무 그늘 아래서 쉰다.'],
+['납자루','round','#d8d4ea',3,7,'조개 속에 알을 낳는 영리한 물고기.'],
+['떡붕어','round','#e0cba8',4,35,'붕어보다 몸집이 크고 느긋하다.'],
+['잉어','long','#e6b878',0,60,'수염이 달린 점잖은 물고기.'],
+['향어','long','#c4ab86',4,55,'비늘이 큼직해 한눈에 알아본다.'],
+['메기','cat','#8f8c80',2,45,'수염으로 어둠 속을 더듬는다.'],
+['블루길','round','#86c4dc',3,20,'파란 볼이 매력 포인트.'],
+['배스','long','#a8c88c',5,42,'욕심 많은 연못의 사냥꾼.',{pc:'#7a9a64'}],
+['동자개','cat','#dcb864',1,25,'가시를 세우면 따끔하다.'],
+['가물치','long','#84906e',5,75,'물 위로 고개를 내밀고 숨을 쉰다.',{pc:'#5c6a4c'}],
+['비단잉어','long','#fff0e4',5,60,'빨강과 하양이 어우러진 정원의 보석.',{pc:'#ff9a8a'}],
+['금붕어','fancy','#ffb470',0,12,'치렁한 꼬리를 흔들며 헤엄친다.'],
+['연꽃붕어','round','#f6bcd4',2,22,'연꽃 잎 밑에서만 모습을 보인다.',{pc:'#ffe6f0'}],
+['이슬잉어','long','#d2dcff',2,70,'아침 이슬처럼 맑게 반짝인다.',{pc:'#fffadc'}],
+['황금잉어','long','#ffd35a',2,90,'소원을 들어준다는 연못의 전설.',{pc:'#fff3b0',belly:'#fff0b4',fin:'#ffe08a'}]
+],[ /* 2 시냇가 */
+['쉬리','tiny','#d8e6ee',7,12,'맑은 물에서만 사는 날렵한 물고기.'],
+['갈겨니','tiny','#cfd8c8',3,14,'돌 틈 사이를 쏜살같이 오간다.'],
+['모래무지','round','#d9c8a4',2,16,'모래 속에 몸을 숨긴다.'],
+['꾹저구','cat','#b09c84',2,10,'바닥에 납작 붙어 지낸다.'],
+['버들개','tiny','#cfd4b4',1,9,'버들잎처럼 가늘고 길다.'],
+['둑중개','cat','#a89480',5,12,'돌 밑에 숨어 먹이를 노린다.'],
+['돌고기','round','#c8cdd8',3,11,'돌 위의 이끼를 뜯어 먹는다.'],
+['참마자','long','#d4d8dc',4,30,'긴 몸으로 여울을 거슬러 오른다.'],
+['꺽지','round','#b8a878',5,18,'바위틈의 작은 사냥꾼.',{pc:'#7e7050'}],
+['쏘가리','long','#d8c070',5,40,'시냇가의 왕이라 불린다.',{pc:'#8a7c44'}],
+['어름치','long','#c8c0a8',2,35,'점박이 무늬가 고운 귀한 손님.'],
+['은어','tiny','#cfe4d4',0,20,'수박 향이 난다고들 한다.'],
+['황어','long','#d4b4a0',7,35,'봄이면 붉은 띠를 두른다.',{pc:'#e07c6c'}],
+['열목어','long','#b8c4c0',2,50,'차가운 물을 좋아하는 점박이.',{pc:'#d88a84'}],
+['송어','long','#c8d4dc',7,45,'무지갯빛 줄이 은은하다.',{pc:'#f0a0a8'}],
+['산천어','long','#aebcc8',2,30,'산골짜기 맑은 물의 요정.',{pc:'#e8928a'}],
+['무지개송어','long','#cbe0ec',7,55,'햇살에 일곱 빛깔로 번쩍인다.',{pc:'#ff9fbf'}],
+['뱀장어','eel','#8c9488',0,70,'밤이 되면 물길을 따라 움직인다.',{belly:'#e6e2c8'}],
+['연어','long','#f4a8a0',2,80,'먼 바다에서 고향으로 돌아온다.',{pc:'#c76a72'}],
+['구름송어','long','#f0f4ff',2,95,'구름 위에서 내려왔다는 시냇가의 전설.',{pc:'#bcd0ff',belly:'#ffffff',fin:'#d8e4ff'}]
+],[ /* 3 바닷가 */
+['멸치','tiny','#cfe0ec',4,10,'큰 무리로 은빛 파도를 만든다.'],
+['정어리','tiny','#b8cce0',2,20,'떼를 지어 바다를 휘감는다.'],
+['전어','round','#c4d0dc',2,25,'가을 노을과 가장 잘 어울린다.'],
+['학꽁치','eel','#b4d4dc',0,40,'주둥이가 학의 부리처럼 뾰족하다.'],
+['망둥어','cat','#b8a490',2,15,'갯벌 위를 폴짝폴짝 뛴다.'],
+['볼락','round','#d8a0a0',0,22,'저녁이 되면 눈이 커진다.'],
+['쥐치','flat','#c8c0a0',2,25,'쥐 같은 입으로 쪼르르 갉아 먹는다.'],
+['놀래미','round','#d0b080',5,30,'바위틈에서 얼굴을 쏙 내민다.'],
+['고등어','long','#7aa8c8',7,40,'등에 물결무늬가 새겨져 있다.',{pc:'#3c5c88'}],
+['숭어','long','#b8c4c8',4,50,'물 밖으로 높이 뛰어오른다.'],
+['우럭','round','#8c8c88',2,35,'바위 밑에서 커다란 눈을 껌뻑인다.'],
+['광어','flat','#c4b494',2,55,'눈이 왼쪽에 모여 있다.'],
+['도다리','flat','#d4c4a4',5,35,'눈이 오른쪽에 모여 있다.'],
+['가자미','flat','#b8a888',2,30,'납작 엎드려 모래빛으로 변한다.'],
+['감성돔','round','#8c94a0',4,45,'바다낚시꾼들의 오랜 로망.'],
+['참돔','round','#f4a0a8',2,60,'벚꽃빛 몸에 푸른 점이 반짝인다.',{pc:'#7ac8e8'}],
+['농어','long','#b8c0c8',2,70,'파도를 거슬러 오르는 힘센 물고기.'],
+['복어','puff','#e8d098',2,25,'화가 나면 통통하게 부풀어 오른다.'],
+['갈치','eel','#dce6f0',0,120,'달빛 같은 은색 칼날.',{belly:'#ffffff'}],
+['노을돔','round','#ffb090',2,80,'저녁놀이 물고기가 된 바다의 전설.',{pc:'#ffe0a0',fin:'#ffd0b0'}]
+],[ /* 4 먼바다 */
+['청어','tiny','#a8c0d8',4,30,'푸른 등이 파도에 녹아든다.'],
+['임연수어','long','#c8b88c',1,35,'줄무늬가 선명한 겨울 손님.'],
+['쥐노래미','round','#b0a070',2,30,'얕은 바위지대의 단골.'],
+['열빙어','tiny','#dcd8c4',0,18,'알이 가득 차 있다.'],
+['대구','long','#b8ac94',2,80,'커다란 입으로 닥치는 대로 삼킨다.'],
+['명태','long','#c4bca8',7,55,'이름이 가장 많은 물고기.'],
+['도루묵','round','#c8c4b4',4,25,'말짱 도루묵이 되지 않도록.'],
+['꽁치','eel','#94b4c8',4,30,'가을 바다의 은빛 화살.'],
+['방어','long','#98b4c4',3,90,'겨울이면 기름이 오른다.',{pc:'#f2d46a'}],
+['삼치','long','#a8b8c4',2,80,'날카로운 이빨로 빠르게 헤엄친다.'],
+['만새기','long','#8cd0a8',2,100,'초록과 노랑이 어우러진 바다 위의 보석.',{pc:'#ffe46a',belly:'#fff0b0'}],
+['가오리','ray','#b8c0d0',0,70,'바다 밑을 날개처럼 펄럭인다.'],
+['아귀','angler','#9c8c78',2,60,'머리의 등불로 먹이를 유인한다.'],
+['홍어','ray','#c4a8a8',2,80,'삭혀 먹는 이야기로 유명하다.'],
+['참치','long','#6c8cb8',4,180,'대양을 가로지르는 푸른 질주.',{belly:'#e8e0e0'}],
+['청새치','long','#5c88c8',7,250,'하늘로 솟구치는 바다의 검객.',{pc:'#98c4f0'}],
+['황새치','long','#7c90a8',0,240,'긴 뿔로 바다를 가른다.'],
+['귀상어','shark','#98a4b4',4,300,'망치 같은 머리로 모래 속을 훑는다.'],
+['개복치','disc','#c8d0dc',2,200,'느긋하게 햇볕을 쬔다.'],
+['실러캔스','round','#6c7ca8',2,150,'수억 년 전 모습 그대로 살아 있는 화석.',{pc:'#dce4ff',fin:'#8c9cc8'}]
+],[ /* 5 달빛호수 */
+['별모래치','tiny','#f4eed0',2,5,'모래알처럼 작게 반짝인다.',{pc:'#fffbe8'}],
+['이슬방울어','puff','#cfe4ff',2,8,'이슬 한 방울만 한 몸집.'],
+['안개미꾸라지','eel','#d8d0ec',2,15,'안개 속에서 구불구불 헤엄친다.'],
+['꽃잎붕어','round','#f8c8dc',2,12,'꽃잎이 물에 떨어져 물고기가 되었다.',{pc:'#ffffff'}],
+['구름멸치','tiny','#e8ecff',0,8,'구름 조각처럼 폭신하다.'],
+['달무리송사리','tiny','#f0e4ff',3,6,'달무리를 두르고 다닌다.',{pc:'#c8b0f0'}],
+['솜털메기','cat','#e0d4f0',2,20,'수염마저 솜털처럼 보송하다.'],
+['반딧불이어','round','#fff0a0',2,10,'어둠 속에서 몸이 깜빡인다.',{pc:'#ffffff'}],
+['초롱아귀','angler','#a8b4f0',2,30,'호수의 밤길을 밝히는 등불.'],
+['오로라송어','long','#a8e8d4',7,45,'몸 위로 오로라가 일렁인다.',{pc:'#c8a8f8'}],
+['유리가오리','ray','#d4ecf8',0,60,'몸이 유리처럼 비쳐 보인다.'],
+['은하잉어','long','#8c94e0',2,60,'비늘마다 작은 별이 박혀 있다.',{pc:'#fff8d0'}],
+['보름달복어','puff','#fff4c8',2,30,'부풀면 보름달을 닮는다.',{pc:'#ffe08a'}],
+['안개상어','shark','#c4c8e8',4,120,'안개 속에서 조용히 다가온다.'],
+['노을고래새끼','whale','#ffc4d4',0,300,'엄마를 잃고 호수에 길을 잘못 든 아기 고래.'],
+['별똥어','fancy','#ffe8a8',2,20,'지나간 자리에 별가루가 남는다.',{fin:'#ffd0f0'}],
+['무지개용어','eel','#f8b4e0',7,150,'꼬리를 흔들면 무지개가 걸린다.',{pc:'#a8e0f8'}],
+['꿈꾸는 개복치','disc','#dcc8f8',2,180,'잠든 채로 호수 위를 떠다닌다.'],
+['달빛고래','whale','#c8d4ff',2,500,'호수에 달이 뜨면 노래를 부른다.',{pc:'#fff8d8',belly:'#f4f0ff'}],
+['은하룡어','eel','#6c60c8',2,300,'별이 흐르는 호수의 가장 깊은 곳에 산다는 전설.',{pc:'#ffe8a8',belly:'#b4a8f0',fin:'#ffe0f8'}]
+]];
+/* 5단계: 새 100종 (id 100~199) — 각 낚시터 20종 더, 순서가 희귀도 (8·6·4·1·1)
+   ex 안의 출현 조건: t 시간대(dawn 새벽·day 낮·dusk 노을·night 밤) · w 날씨(rain 비·fog 안개·rainbow 무지개·clear 맑음) · s 장소 */
+const RAW2=[
+[ /* 1 연못 */
+['각시붕어','round','#ecc4b4',3,6,'분홍빛 혼인색이 고운 작은 붕어.',{pc:'#e88a9a'}],
+['왜몰개','tiny','#d4dcc0',7,6,'연못가 수초 사이를 떼 지어 다닌다.'],
+['밀어','cat','#c0b090',2,8,'바닥 돌에 배를 붙이고 쉰다.'],
+['줄납자루','round','#d0d8e8',7,8,'몸 옆으로 가는 줄이 흐른다.'],
+['큰납지리','round','#d8d0e0',3,12,'납자루 무리의 맏형.'],
+['참중고기','tiny','#d0c8b0',2,10,'점점이 무늬가 수줍게 박혀 있다.'],
+['버들붕어','round','#b8c8a0',1,7,'수컷은 지느러미를 활짝 펴고 뽐낸다.'],
+['대륙송사리','tiny','#e8e0c0',0,4,'송사리보다 조금 더 통통하다.'],
+['초어','long','#a8b890',0,80,'물풀을 우적우적 먹는 큰 물고기.'],
+['백련어','long','#c8ccd0',2,70,'입을 벌리고 물을 걸러 먹는다.'],
+['가시고기','tiny','#b8c49c',4,6,'아빠가 둥지를 지키는 다정한 물고기.'],
+['얼룩동사리','cat','#a89070',5,20,'얼룩무늬로 진흙 속에 녹아든다.',{pc:'#6e5a44'}],
+['개구리밥붕어','round','#b8dca0',2,15,'머리에 개구리밥을 이고 다닌다.',{s:'lily'}],
+['저녁미꾸리','eel','#c8a888',2,18,'노을이 지면 진흙 밖으로 나온다.',{t:'dusk'}],
+['반짝가물치','long','#90a080',5,70,'비 오는 날 수면 위로 고개를 든다.',{pc:'#5c6a4c',w:'rain'}],
+['수련잉어','long','#f8e8f0',5,65,'수련 꽃잎을 닮은 무늬를 지녔다.',{pc:'#f4a8c8',s:'lily'}],
+['달맞이붕어','round','#fff4c0',2,28,'밤에 달을 올려다보며 떠오른다.',{pc:'#ffffff',t:'night'}],
+['물안개송사리','tiny','#e4e8f4',0,5,'안개 낀 날에만 모습을 보인다.',{w:'fog'}],
+['무지개비단잉어','long','#fff8f0',5,75,'무지개 뜬 날 연못을 수놓는다.',{pc:'#a8c8ff',w:'rainbow'}],
+['연못주인 메기왕','cat','#86906c',2,180,'연못 밑바닥에서 백 년을 살았다는 연못의 주인.',{t:'night'}]
+],[ /* 2 시냇가 */
+['금강모치','tiny','#d8d0b0',3,9,'맑은 계곡 상류의 귀한 손님.',{pc:'#e8a050'}],
+['감돌고기','round','#c0c8d0',7,10,'검은 띠를 세 줄 두르고 있다.',{pc:'#505868'}],
+['종개','eel','#c8b898',2,12,'돌 틈을 미끄러지듯 지난다.'],
+['새코미꾸리','eel','#e0b880',5,14,'주황빛 몸에 점이 흩뿌려져 있다.'],
+['퉁가리','cat','#c09868',0,10,'건드리면 가시로 콕 찌른다.'],
+['동사리','cat','#a89878',5,15,'둥그런 머리로 바닥을 지킨다.'],
+['긴몰개','tiny','#d0d8d8',7,10,'가늘고 긴 몸으로 여울을 탄다.'],
+['돌마자','round','#c4c0b0',2,9,'돌에 붙은 먹이를 핥아 먹는다.'],
+['끄리','long','#c0c8d0',1,30,'물 위로 뛰어올라 벌레를 낚아챈다.'],
+['누치','long','#d0c8b8',0,40,'큰 비늘이 은은하게 빛난다.'],
+['칠성장어','eel','#8c8c90',2,45,'몸 옆에 일곱 개의 구멍이 있다.',{t:'night'}],
+['꺽저기','round','#b0a888',5,15,'꺽지의 사촌인데 훨씬 수줍다.'],
+['빗방울치','tiny','#c8dcf0',2,8,'빗방울 소리를 따라 모여든다.',{w:'rain'}],
+['이끼퉁이','cat','#98a880',5,18,'이끼를 닮아 숨바꼭질 선수다.',{pc:'#6c7c58',s:'up'}],
+['홍송어','long','#e8b0a8',7,50,'붉은 줄이 흐르는 시냇가의 미인.',{pc:'#d86868'}],
+['새벽은어','tiny','#e8f0f0',0,22,'첫 햇살에 은빛으로 반짝인다.',{t:'dawn'}],
+['물안개황어','long','#d8c8c8',7,40,'안개 속 여울에서 붉은 띠가 아른거린다.',{pc:'#e89090',w:'fog'}],
+['반딧불쏘가리','long','#e0c878',5,45,'밤 시냇물에서 무늬가 은은히 빛난다.',{pc:'#a08a40',t:'night'}],
+['계곡철갑상어','sturgeon','#a0a8b0',4,120,'갑옷 같은 비늘판을 두른 옛 물고기.',{s:'up'}],
+['폭포잉어왕','long','#5cb4b4',2,130,'폭포를 거슬러 올라 용이 된다는 전설의 잉어.',{w:'rain'}]
+],[ /* 3 바닷가 */
+['보리멸','tiny','#e8dcc0',0,20,'모래사장 가까이에서 무리를 짓는다.'],
+['까나리','tiny','#c8d8e0',7,15,'모래 속에 쏙 숨는다.'],
+['베도라치','eel','#a8a080',5,20,'바위틈 웅덩이에 숨어 사는 주민.'],
+['자리돔','round','#8898b0',2,12,'제자리를 잘 지키는 작은 돔.'],
+['쏨뱅이','round','#d08870',5,25,'가시에 독이 있어 조심해야 한다.',{pc:'#a05848'}],
+['전갱이','long','#a8c0d0',7,30,'꼬리 쪽에 단단한 비늘이 줄지어 있다.'],
+['양태','flat','#b8a888',2,40,'납작한 머리로 모래에 숨는다.'],
+['문절망둑','cat','#c0b098',2,18,'갯벌에서 고개를 갸웃거린다.'],
+['해마','seahorse','#f0c060',0,12,'꼬리로 부두 기둥을 꼭 붙잡고 쉰다.',{s:'dock'}],
+['쏠배감펭','lion','#f0b8a0',1,30,'줄무늬 지느러미를 부채처럼 펼친다.',{pc:'#c86058'}],
+['거북복','box','#f0d860',2,20,'네모난 몸으로 뒤뚱뒤뚱 헤엄친다.',{pc:'#5878a8'}],
+['노을학꽁치','needle','#f0c8a8',0,35,'노을빛에 물드는 가느다란 주둥이.',{t:'dusk'}],
+['꼼치','eel','#d8c8c8',2,40,'말랑말랑한 몸, 비 오는 날 잘 문다.',{w:'rain'}],
+['줄돔','round','#d8d8d0',1,30,'일곱 줄무늬가 선명한 바위의 돔.',{pc:'#404858'}],
+['참복','puff','#d8c8a0',5,40,'복어 중의 으뜸이라 불린다.',{pc:'#5c5848'}],
+['나비고기','angel','#fff0a0',3,15,'나비처럼 팔랑이는 산호의 무희.',{pc:'#303050',t:'day'}],
+['부두놀래기','round','#a8d8b8',7,25,'부두 기둥에 사는 알록달록 놀래기.',{pc:'#f4a0c0',s:'dock'}],
+['달밤숭어','long','#c8d0e8',2,55,'보름달 밤에 은빛으로 뛰어오른다.',{pc:'#ffffff',t:'night'}],
+['무지개놀래기','angel','#a8e0f0',7,30,'무지개 뜬 날 바위 사이를 수놓는다.',{pc:'#f8a0c8',w:'rainbow'}],
+['용궁해마','seahorse','#ffa8a8',2,60,'용궁의 문을 지킨다는 커다란 해마.',{t:'dusk'}]
+],[ /* 4 먼바다 */
+['날치','needle','#88b0d8',7,30,'날개 같은 가슴지느러미로 파도 위를 난다.',{pc:'#c8e0f8'}],
+['가다랑어','long','#6888b0',7,70,'배 쪽으로 검은 줄이 내려간다.',{pc:'#404c70'}],
+['눈볼대','round','#f0a090',0,30,'커다란 눈으로 깊은 곳을 살핀다.'],
+['빨간횟대','cat','#e09080',5,25,'바위에 착 붙어 꼼짝하지 않는다.'],
+['말쥐치','flat','#a8b0b8',2,40,'말처럼 길쭉한 얼굴의 쥐치.'],
+['도치','puff','#a8b098',2,25,'배의 빨판으로 바위에 달라붙는다.'],
+['은대구','long','#808898',0,70,'깊은 바다의 기름진 물고기.'],
+['양미리','needle','#c8d4dc',0,20,'가늘고 길어 바늘 같다.'],
+['황다랑어','long','#5878b0',4,150,'노란 지느러미로 대양을 누빈다.',{pc:'#f0d050',fin:'#f8e070'}],
+['부시리','long','#88a8c0',3,100,'방어와 쌍둥이처럼 닮았다.',{pc:'#e8d070'}],
+['청소놀래기','tiny','#80b0f0',3,10,'큰 물고기를 깨끗이 청소해 준다.',{pc:'#203060'}],
+['망치고등어','long','#7898b8',5,40,'등에 망치로 두드린 듯한 무늬가 있다.',{pc:'#3c5878'}],
+['안개대구','long','#c0c4cc',2,85,'짙은 안개 속에서만 입질한다.',{w:'fog'}],
+['샛비늘치','tiny','#a0b0e0',2,8,'밤바다에서 몸의 점이 빛난다.',{pc:'#f0f8a0',t:'night'}],
+['돛새치','sail','#5888c0',1,220,'등의 돛을 펼치고 파도를 가른다.',{pc:'#3c5c98',fin:'#7ca8e8'}],
+['쥐가오리','ray','#606878',0,400,'커다란 날개로 바다를 난다.',{belly:'#e8ecf4',t:'day'}],
+['고래상어','shark','#6878a0',2,900,'세상에서 가장 큰 물고기지만 순하다.',{pc:'#e0e8f8',s:'end'}],
+['빗속아귀','angler','#506078',2,80,'빗소리를 들으면 얕은 곳으로 올라온다.',{w:'rain'}],
+['산갈치','eel','#e0e8f8',7,500,'은빛 리본 같은 몸에 붉은 볏을 달았다.',{pc:'#f07080',belly:'#ffffff',t:'night'}],
+['푸른바다용','long','#3e74bc',2,350,'폭풍우 치는 날 먼바다 끝에서 모습을 드러낸다.',{w:'rain'}]
+],[ /* 5 달빛호수 */
+['별사탕송사리','tiny','#fff0f8',2,4,'별사탕처럼 오돌토돌 귀엽다.',{pc:'#ffc0e0'}],
+['비눗방울어','puff','#e8f4ff',0,6,'톡 건드리면 터질 것처럼 투명하다.'],
+['꿈붕어','round','#e0d8ff',7,12,'잠든 사람의 꿈속을 헤엄친다고 한다.',{pc:'#c8b8f8'}],
+['달토끼어','round','#f8f4f0',2,14,'귀처럼 생긴 지느러미가 쫑긋하다.',{pc:'#ffd0e0'}],
+['은방울메기','cat','#d8dcf0',2,20,'수염 끝에 은방울이 달렸다.'],
+['자장가피라미','tiny','#d0e0f8',1,9,'헤엄칠 때 작은 노랫소리가 난다.'],
+['솜사탕붕어','round','#ffd8ec',5,15,'구름 같은 무늬가 폭신폭신하다.',{pc:'#d8e8ff'}],
+['이슬해마','seahorse','#d8f0ff',0,8,'이슬방울을 꼬리에 매달고 다닌다.'],
+['별무리가오리','ray','#a8b0e8',2,70,'등에 작은 별무리를 지고 다닌다.',{pc:'#fff8c0'}],
+['유리나비고기','angel','#e8f4ff',7,16,'지느러미가 유리처럼 맑다.',{pc:'#c8d8ff'}],
+['초승달치','needle','#fff4c8',0,25,'초승달처럼 휘어진 은빛 몸.',{t:'night'}],
+['연잎복어','puff','#c8ecc8',2,18,'연잎 위에 올라가 낮잠을 잔다.',{pc:'#ffffff',s:'lily'}],
+['안개나비','angel','#e0e0f0',0,14,'안개 낀 호수 위를 팔랑인다.',{w:'fog'}],
+['새벽별돔','round','#f8d8c8',2,30,'새벽녘 마지막 별을 닮았다.',{pc:'#fffad8',t:'dawn'}],
+['별자리쏠배감펭','lion','#c8b8f0',2,30,'지느러미에 별자리가 그려져 있다.',{pc:'#fff0a0'}],
+['무지개해마','seahorse','#ffc8e8',7,15,'무지개 뜬 날 호수에 놀러 온다.',{pc:'#a8e8f8',w:'rainbow'}],
+['은하돛새치','sail','#7880d8',2,200,'돛에 은하수가 흐른다.',{pc:'#fff8d8'}],
+['꿈꾸는 거북복','box','#f0e0ff',2,25,'잠든 채 빙글빙글 떠다닌다.',{pc:'#c8b0f8'}],
+['오로라철갑상어','sturgeon','#a8d8e8',7,200,'등의 비늘판마다 오로라가 일렁인다.',{pc:'#d8b0f8',t:'night'}],
+['달빛선녀어','fancy','#ccc4f8',2,90,'보름달 밤, 호수 한가운데서 춤춘다는 전설.',{t:'night'}]
+]];
+
+const RAR_OF=i=>i<8?0:i<14?1:i<18?2:i<19?3:4;
+RARITY.push({name:'신화',color:'#ff7eb6',base:.3,mult:300});
+/* 저승 전용 신화 8종 (망각의 소) — 새 물고기는 항상 맨 끝에 붙여요 (id가 밀리면 도감이 깨져요) */
+const GHOST_RAW=[
+['도깨비불메기','cat','#7fe0d0',2,90,'수염 끝마다 푸른 도깨비불이 일렁인다.',{pc:'#e0fff8',belly:'#c8f8ee'}],
+['망각의은어','tiny','#c8d0f0',0,22,'이걸 먹으면 전생을 잊는다는 소문이 있다.',{pc:'#ffffff'}],
+['뱃사공잉어','long','#8a7cb8',7,120,'삼도천 뱃사공이 몰래 키우던 잉어.',{pc:'#f0d080'}],
+['저승꽃해마','seahorse','#f0a0c8',2,30,'저승 꽃밭에서 꼬리를 감고 잠든다.',{pc:'#fff0f8'}],
+['혼불가오리','ray','#5868a8',2,260,'등 위로 혼불이 둥실둥실 떠오른다.',{pc:'#a8f0ff',belly:'#e0e8ff'}],
+['백골상어','shark','#d8d4c8',2,480,'뼈만 남았는데도 아직 헤엄친다.',{pc:'#8a8478',belly:'#f4f0e8'}],
+['염라금붕어','fancy','#f05050',5,40,'염라대왕 책상 위 어항에서 탈출했다.',{pc:'#ffd060',fin:'#ffb0a0'}],
+['삼도천용','long','#3c4c8c',2,900,'세 갈래 강이 만나는 곳에서 천 년을 기다렸다.',{pc:'#b8f0ff',fin:'#80a0ff'}]];
+const L=[],SPOT=['얕은 여울','깊은 강','망각의 소'];
+const add=(r,rar,zi,sp)=>{const ex=r[6]||{};L.push({id:L.length,name:r[0],rar,sp,spec:{tpl:r[1],c:r[2],pat:r[3],pc:ex.pc,belly:ex.belly,fin:ex.fin,art:LEGEND_ART[r[0]]},len:r[4],desc:r[5]})};
+const spotOfZ=zi=>zi<2?0:zi<4?1:2;
+RAW.forEach((z,zi)=>z.forEach((r,i)=>add(r,RAR_OF(i),zi,spotOfZ(zi))));
+RAW2.forEach((z,zi)=>z.forEach((r,i)=>add(r,RAR_OF(i),zi,spotOfZ(zi))));
+GHOST_RAW.forEach(r=>add(r,5,4,2));
+const C={};
+function toCanvas(b,sc){const c=document.createElement('canvas');c.width=b.w*sc;c.height=b.h*sc;const x=c.getContext('2d'),t=document.createElement('canvas');t.width=b.w;t.height=b.h;t.getContext('2d').putImageData(new ImageData(b.d,b.w,b.h),0,0);x.imageSmoothingEnabled=false;x.drawImage(t,0,0,c.width,c.height);return c}
+function shinyBuf(b){const o=Buf(b.w,b.h);for(let i=0;i<b.d.length;i+=4){if(!b.d[i+3])continue;const c=lighten(hueShift([b.d[i],b.d[i+1],b.d[i+2]],165),.12);o.d[i]=c[0];o.d[i+1]=c[1];o.d[i+2]=c[2];o.d[i+3]=b.d[i+3]}return o}
+function shadowBuf(b){const o=Buf(b.w,b.h);for(let i=0;i<b.d.length;i+=4){if(!b.d[i+3])continue;o.d[i]=70;o.d[i+1]=76;o.d[i+2]=120;o.d[i+3]=255}return o}
+function img(id,mode,sc){const k=id+':'+(mode||'')+':'+(sc||3);if(C[k])return C[k];const f=L[id];if(!f)return null;let b=buildFish(f.spec,id*7+3);if(mode==='sh')b=shinyBuf(b);if(mode==='x')b=shadowBuf(b);return C[k]=toCanvas(b,sc||3)}
+function url(id,mode,sc){const k='u'+id+':'+(mode||'')+':'+(sc||3);if(C[k])return C[k];const c=img(id,mode,sc);return C[k]=c?c.toDataURL():''}
+return{L,SPOT,RARITY,img,url};
+
+})();
+
+/* ===== 저승 나루터: 유령만 오는 낚시터 (물결마을 물고기 200종 + 저승 신화 8종) ===== */
+const GFW=[58,26,11,4,1,.35],GFRW=[1,2,4,8,15,30],GFCAP=30,GFOPEN=[0,15,50];
+const GFT_N=['흔함','보통','희귀','영웅','전설','신화'];
+let gfT='f',gfSpot=0,gfPg=0,gfSel=-1,gfS={st:'idle',t:0},gfLast=[],gfMsg='',gfBusy=false,gfAv=null,gfAvK='';
+const gfMe=()=>(D.gfish||{})[me]||{};
+const gfDex=n=>Object.keys(((D.gfish||{})[n]||{}).c||{}).length;
+const gfShN=n=>Object.keys(((D.gfish||{})[n]||{}).sh||{}).length;
+const gfCan=g=>glWho(g)==='dead';
+const gfSfx=n=>{try{if(Snd.ready&&SND_ON)Snd.sfx(n)}catch(e){}};
+function gfPick(sp){const fs=GF.L.filter(f=>f.sp===sp),rs=[...new Set(fs.map(f=>f.rar))],tot=rs.reduce((a,r)=>a+GFW[r],0);let u=Math.random()*tot,rr=rs[0];for(const r of rs){if(u<GFW[r]){rr=r;break}u-=GFW[r]}const c=fs.filter(f=>f.rar===rr);return c[Math.random()*c.length|0]}
+function gfLen(f){const g=Math.random()<.045,r=g?1.3+Math.random()*.6:.55+Math.pow(Math.random(),1.4)*.7;return{len:Math.max(1,Math.round(f.len*r)),wl:g}}
+const GFTY={shark:'dash',whale:'dash',sturgeon:'dash',sail:'jump',eel:'zig',needle:'zig',flat:'dive',ray:'dive',angler:'dive',puff:'stay',box:'stay',disc:'stay',seahorse:'stay'};
+/* --- 장면 --- */
+function gfAvatar(){const k=me+JSON.stringify(pfOf(me).eq||{})+JSON.stringify(chOf(me));if(gfAvK===k)return gfAv;gfAvK=k;gfAv=null;try{const sv=`<svg xmlns="http://www.w3.org/2000/svg" viewBox="-22 -62 44 66" width="88" height="132" shape-rendering="crispEdges">${sprite(chOf(me),pfOf(me).eq||{},'s')}</svg>`,im=new Image();im.onload=()=>{gfAv=im};im.src='data:image/svg+xml;charset=utf-8,'+encodeURIComponent(sv)}catch(e){}return gfAv}
+const GFST=Array.from({length:46},(_,i)=>({x:(i*73)%340,y:(i*37)%70,p:i*1.7}));
+const GFWS=Array.from({length:6},(_,i)=>({x:60+i*50,y:40+(i%3)*18,p:i*2.1,s:.3+i%3*.15}));
+function gfDraw(cv,t){const x=cv.getContext('2d'),W=cv.width,H=cv.height,s=W/340;x.setTransform(s,0,0,s,0,0);x.imageSmoothingEnabled=false;const w=340,h=210,wy=104;
+let gr=x.createLinearGradient(0,0,0,wy);gr.addColorStop(0,'#070818');gr.addColorStop(1,'#1a1838');x.fillStyle=gr;x.fillRect(0,0,w,wy);
+GFST.forEach(st=>{const a=.35+.35*Math.sin(t*1.3+st.p);x.fillStyle=`rgba(220,230,255,${a})`;x.fillRect(st.x,st.y,1,1)});
+x.fillStyle='rgba(200,215,255,.10)';x.beginPath();x.arc(268,30,22,0,6.3);x.fill();x.fillStyle='#d8e0f8';x.beginPath();x.arc(268,30,11,0,6.3);x.fill();x.fillStyle='#1a1838';x.beginPath();x.arc(273,27,10,0,6.3);x.fill();
+x.fillStyle='#12122a';x.beginPath();x.moveTo(0,wy);for(let i=0;i<=340;i+=20)x.lineTo(i,wy-14-12*Math.abs(Math.sin(i*.031))-6*Math.sin(i*.11));x.lineTo(340,wy);x.fill();
+x.fillStyle='#0c0d22';x.beginPath();x.moveTo(0,wy);for(let i=0;i<=340;i+=14)x.lineTo(i,wy-5-5*Math.abs(Math.sin(i*.07+1)));x.lineTo(340,wy);x.fill();
+gr=x.createLinearGradient(0,wy,0,h);gr.addColorStop(0,'#14243a');gr.addColorStop(1,'#08101e');x.fillStyle=gr;x.fillRect(0,wy,w,h-wy);
+for(let i=0;i<14;i++){const yy=wy+6+i*7.5,o=(t*(8+i)+i*37)%380-20;x.fillStyle=`rgba(140,200,255,${.05+.03*Math.sin(t+i)})`;x.fillRect(o,yy,26+i*2,1);x.fillRect((o+170)%380-20,yy+3,18,1)}
+for(let i=0;i<9;i++){const ww=14-i*1.2+3*Math.sin(t*2+i);x.fillStyle=`rgba(216,224,248,${.16-i*.014})`;x.fillRect(268-ww/2+2*Math.sin(t*1.5+i*.7),wy+3+i*4.5,ww,1.5)}
+const bx=(t*6)%460-60;x.fillStyle='#0a0a18';x.beginPath();x.moveTo(bx,wy+8);x.lineTo(bx+34,wy+8);x.lineTo(bx+28,wy+13);x.lineTo(bx+6,wy+13);x.fill();x.fillRect(bx+15,wy-6,5,14);x.fillRect(bx+13,wy-9,9,3);x.strokeStyle='#0a0a18';x.beginPath();x.moveTo(bx+24,wy-4);x.lineTo(bx+40,wy+14);x.stroke();x.fillStyle=`rgba(255,200,120,${.6+.3*Math.sin(t*5)})`;x.fillRect(bx+2,wy+2,3,3);
+for(let k=0;k<3;k++){const my=wy-2+k*22,mo=(t*(4+k*2)+k*90)%520-180;gr=x.createLinearGradient(mo,0,mo+180,0);gr.addColorStop(0,'rgba(200,210,240,0)');gr.addColorStop(.5,'rgba(200,210,240,.07)');gr.addColorStop(1,'rgba(200,210,240,0)');x.fillStyle=gr;x.fillRect(mo,my,180,10)}
+GFWS.forEach((o,i)=>{const ox=o.x+18*Math.sin(t*o.s+o.p),oy=o.y+wy-70+8*Math.sin(t*o.s*1.7+o.p),a=.55+.25*Math.sin(t*3+o.p),g2=x.createRadialGradient(ox,oy,0,ox,oy,9);g2.addColorStop(0,`rgba(140,255,230,${a})`);g2.addColorStop(1,'rgba(140,255,230,0)');x.fillStyle=g2;x.fillRect(ox-9,oy-9,18,18);x.fillStyle=`rgba(230,255,250,${a})`;x.fillRect(ox-1,oy-1,2,2)});
+x.fillStyle='#2a2030';x.fillRect(0,wy+18,92,8);x.fillStyle='#3a2c3c';x.fillRect(0,wy+18,92,2);[6,34,62,86].forEach(px0=>{x.fillStyle='#1c1622';x.fillRect(px0,wy+26,4,24)});
+x.fillStyle='#1c1622';x.fillRect(78,wy-16,2,34);x.fillRect(74,wy-18,10,2);const lf=.7+.3*Math.sin(t*9)*Math.sin(t*3.1);const lg=x.createRadialGradient(79,wy-10,0,79,wy-10,26);lg.addColorStop(0,`rgba(255,190,110,${.45*lf})`);lg.addColorStop(1,'rgba(255,190,110,0)');x.fillStyle=lg;x.fillRect(53,wy-36,52,52);x.fillStyle=`rgba(255,220,150,${lf})`;x.fillRect(77,wy-13,5,6);
+const av=gfAvatar(),py=wy+18-44+Math.sin(t*2)*1.5;x.save();x.globalAlpha=.78;if(av)x.drawImage(av,24,py,30,45);x.restore();
+const tipX=60,tipY=py+8;x.strokeStyle='#6a5a7a';x.lineWidth=1.5;x.beginPath();x.moveTo(44,py+26);x.lineTo(tipX,tipY);x.stroke();x.lineWidth=1;
+const st=gfS.st,now=performance.now()/1000;
+if(st!=='idle'&&st!=='done'){const p=Math.min(1,(now-gfS.t0)/.6),fx=gfS.bx,fyy=wy+20,cx0=tipX+(fx-tipX)*p,cy0=tipY+(fyy-tipY)*p-Math.sin(p*3.14)*40;
+let by=fyy;if(st==='wait')by+=Math.sin(now*3)*1;if(st==='nib')by+=2+Math.sin(now*24)*1.5;if(st==='bite')by+=4+Math.sin(now*30)*2;if(st==='reel')by+=3+Math.sin(now*18)*2;
+const bxx=p<1?cx0:fx,byy=p<1?cy0:by;x.strokeStyle='rgba(220,230,255,.55)';x.beginPath();x.moveTo(tipX,tipY);x.quadraticCurveTo((tipX+bxx)/2,Math.max(tipY,byy)+10,bxx,byy);x.stroke();
+x.fillStyle='#f4f4f4';x.fillRect(bxx-2,byy-4,4,3);x.fillStyle='#e8556a';x.fillRect(bxx-2,byy-1,4,3);
+if(p>=1&&(st==='bite'||st==='nib'||st==='reel')){x.strokeStyle='rgba(180,220,255,.5)';const rr=(now*14)%12;x.beginPath();x.ellipse(fx,fyy+3,4+rr,1.5+rr*.25,0,0,6.3);x.stroke()}
+if(st==='bite'){x.fillStyle='#ffe066';x.font='bold 22px sans-serif';x.textAlign='center';x.fillText('!',fx,fyy-14+Math.sin(now*20)*2)}}
+if(st==='reel')gfReelDraw(x,now);
+if(st==='got'){const f=GF.L[gfS.f],im=GF.img(f.id,gfS.sh?'sh':'',4),k=Math.min(1,(now-gfS.t0)/.35),sc=Math.min(1.6,120/im.width);x.fillStyle='rgba(6,8,20,.6)';x.fillRect(0,0,w,h);
+const gg=x.createRadialGradient(170,92,0,170,92,90);gg.addColorStop(0,gfS.sh?'rgba(255,240,170,.45)':`${GF.RARITY[f.rar].color}55`);gg.addColorStop(1,'rgba(0,0,0,0)');x.fillStyle=gg;x.fillRect(80,10,180,170);
+const iw=im.width*sc*k,ih=im.height*sc*k;x.drawImage(im,170-iw/2,92-ih/2+Math.sin(now*4)*2,iw,ih);
+if(gfS.sh)for(let i=0;i<8;i++){const a=now*2+i*.8,rx=170+Math.cos(a)*(50+i*3),ry=92+Math.sin(a*1.3)*30;x.fillStyle=`rgba(255,250,200,${.5+.5*Math.sin(now*6+i)})`;x.fillRect(rx,ry,2,2);x.fillRect(rx-2,ry+1,6,0.6)}
+x.textAlign='center';x.fillStyle=GF.RARITY[f.rar].color;x.font='bold 11px sans-serif';x.fillText(GF.RARITY[f.rar].name+(gfS.sh?' · 반짝':'')+(gfS.wl?' · 월척!':'')+(gfS.nw?' · NEW':''),170,166);x.fillStyle='#fff';x.font='bold 15px sans-serif';x.fillText(f.name+'  '+gfS.len+'cm',170,186)}
+if(st==='idle'||st==='done'){x.textAlign='center';x.fillStyle='rgba(220,230,255,.55)';x.font='11px sans-serif';x.fillText(gfMsg||'아래 버튼을 눌러 낚싯대를 던져요',170,200)}}
+/* --- 감기 (누르고 있으면 초록 칸이 올라가요) --- */
+let gfHold=false;
+function gfReelStart(f){const d=Math.min(5,f.rar);gfS={...gfS,st:'reel',bar:.3,bv:0,fy:.5,ft:.5,fv:0,pr:.32,nx:0,ty:GFTY[f.spec.tpl]||(f.spec.tpl==='long'&&f.rar>=2?'jump':'norm'),bh:[.40,.35,.30,.26,.22,.19][d],sp:.45+.16*d,t1:performance.now()/1000,lt:performance.now()/1000};gfSfx('hook')}
+function gfReelStep(now){const s=gfS,dt=Math.min(.05,now-s.lt);s.lt=now;
+s.bv+=(gfHold?2.9:-2.5)*dt;s.bv=Math.max(-1.4,Math.min(1.4,s.bv));s.bar+=s.bv*dt;if(s.bar<0){s.bar=0;s.bv*=-.3}if(s.bar>1-s.bh){s.bar=1-s.bh;s.bv*=-.3}
+if(now>s.nx){const r=Math.random();if(s.ty==='dash')s.ft=Math.random();else if(s.ty==='jump')s.ft=r<.5?.8+Math.random()*.2:Math.random()*.5;else if(s.ty==='dive')s.ft=r<.6?Math.random()*.25:Math.random();else if(s.ty==='stay')s.ft=Math.max(0,Math.min(1,s.fy+(Math.random()-.5)*.25));else if(s.ty==='zig')s.ft=s.fy>.5?.1+Math.random()*.25:.65+Math.random()*.25;else s.ft=Math.random();s.nx=now+(s.ty==='dash'?.5:s.ty==='stay'?1.4:.9)/(.7+s.sp*.5)*(0.6+Math.random()*.8)}
+const k=s.ty==='dash'?7:s.ty==='stay'?2.2:4;s.fv+=((s.ft-s.fy)*k*s.sp-s.fv*2.6)*dt*3;s.fy+=s.fv*dt;s.fy=Math.max(0,Math.min(1,s.fy));
+const inZ=s.fy>=s.bar-.02&&s.fy<=s.bar+s.bh+.02,f=GF.L[s.f];s.pr+=inZ?(.30/(1+.18*f.rar))*dt:-.20*dt;s.inZ=inZ;
+if(s.pr>=1)gfLand();else if(s.pr<=0||now-s.t1>30)gfLose('놓쳤어요… 물고기가 도망갔어요')}
+function gfReelDraw(x,now){const s=gfS,X=296,Y=22,Hh=156,Wd=16;x.fillStyle='rgba(8,10,24,.78)';x.fillRect(X-6,Y-6,Wd+30,Hh+12);x.fillStyle='#1c2a44';x.fillRect(X,Y,Wd,Hh);
+x.fillStyle=s.inZ?'rgba(105,219,124,.85)':'rgba(105,219,124,.5)';x.fillRect(X,Y+Hh*(1-s.bar-s.bh),Wd,Hh*s.bh);
+const im=GF.img(s.f,'',1),sc2=Math.min(1,26/im.width),iw=im.width*sc2,ih=im.height*sc2,fy=Y+Hh*(1-s.fy)-ih/2;x.drawImage(im,X+Wd/2-iw/2,fy,iw,ih);
+x.fillStyle='#2a2a3a';x.fillRect(X+Wd+6,Y,6,Hh);const pc=s.pr>.66?'#69db7c':s.pr>.33?'#ffd43b':'#ff6b6b';x.fillStyle=pc;x.fillRect(X+Wd+6,Y+Hh*(1-s.pr),6,Hh*s.pr);
+x.textAlign='center';x.fillStyle='rgba(255,255,255,.8)';x.font='bold 11px sans-serif';x.fillText(gfHold?'올리는 중':'누르고 있으면 올라가요',150,30)}
+/* --- 흐름 --- */
+let gfTm=0;
+window.gfBtn=()=>{const g=G();if(!gfCan(g))return;const st=gfS.st;
+if(st==='idle'||st==='done'||st==='got'){if(st==='got')return;const sp=gfSpot;if(gfDex(me)<GFOPEN[sp])return toast(GF.SPOT[sp]+'은(는) 저승 도감 '+GFOPEN[sp]+'종부터 열려요');clearTimeout(gfTm);gfS={st:'cast',t0:performance.now()/1000,bx:150+Math.random()*90,sp};gfMsg='';gfSfx('cast');
+setTimeout(()=>{if(gfS.st!=='cast')return;gfSfx('splash');gfS.st='wait';gfUI();const n=Math.random()<.55?(1+(Math.random()*2|0)):0;let tt=1600+Math.random()*(sp?4200:3200);for(let i=0;i<n;i++){const at=600+Math.random()*(tt-900);setTimeout(()=>{if(gfS.st!=='wait')return;gfS.st='nib';setTimeout(()=>{if(gfS.st==='nib')gfS.st='wait'},380)},at)}
+gfTm=setTimeout(()=>{if(gfS.st!=='wait'&&gfS.st!=='nib')return;const f=gfPick(sp);gfS.st='bite';gfS.f=f.id;gfS.bt=performance.now()/1000;gfSfx('bite');gfUI();try{navigator.vibrate&&navigator.vibrate(60)}catch(e){}
+gfTm=setTimeout(()=>{if(gfS.st==='bite')gfLose('늦었어요! 찌가 다시 떠올랐어요')},Math.max(650,1150-80*f.rar))},tt)},600);gfUI();return}
+if(st==='nib'||st==='wait'){clearTimeout(gfTm);gfLose(st==='nib'?'너무 빨랐어요. 살짝 건드린 거였어요':'아직 입질이 없어요');return}
+if(st==='bite'){clearTimeout(gfTm);gfReelStart(GF.L[gfS.f]);gfUI();return}};
+function gfLose(m){gfS={st:'done'};gfMsg=m;gfHold=false;gfSfx('escape');gfUI()}
+async function gfLand(){const s=gfS,f=GF.L[s.f],L=gfLen(f),sh=Math.random()<1/90,g=G(),sid=g&&g.sid||0,M=gfMe(),nw=!((M.c||{})[f.id]);
+gfS={st:'got',f:f.id,len:L.len,wl:L.wl,sh,nw,t0:performance.now()/1000};gfHold=false;gfSfx(sh||f.rar>=4?'sparkle':'catch');gfUI();
+let rw=GFRW[f.rar]+(nw?3:0)+(L.wl?2:0);if(sh)rw*=2;let got=0,dex=0,shn=0;
+try{const r=await runTransaction(ref(db,DBB+'/gfish/'+me),c=>{c=c||{};c.c=c.c||{};c.mx=c.mx||{};c.c[f.id]=(c.c[f.id]||0)+1;if(L.len>(c.mx[f.id]||0))c.mx[f.id]=L.len;if(sh){c.sh=c.sh||{};c.sh[f.id]=(c.sh[f.id]||0)+1}c.n=(c.n||0)+1;if(!c.g||c.g.s!==sid)c.g={s:sid,t:0};const a=Math.max(0,Math.min(rw,GFCAP-c.g.t));c.g.t+=a;c.ga=a;if(L.wl)c.wl=(c.wl||0)+1;return c});
+const v=r&&r.snapshot&&r.snapshot.val?r.snapshot.val():null;if(v){got=v.ga||0;dex=Object.keys(v.c||{}).length;shn=Object.keys(v.sh||{}).length}}catch(e){console.error(e)}
+const grod=dex>=30&&!((pfOf(me).own||{}).k_grod);
+if(got>0||nw||sh||grod)try{await runTransaction(ref(db,DBB+'/profiles/'+me),c=>{c=c||{t:0,own:{},eq:{}};if(got>0){if(c.earn==null)c.earn=(c.t||0)+spentOf(c.own);c.t=(c.t||0)+got;c.earn+=got}if(dex)c.gdx=Math.max(c.gdx||0,dex);if(shn)c.gsx=Math.max(c.gsx||0,shn);if(grod){c.own=c.own||{};c.own.k_grod=1}return c})}catch(e){console.error(e)}
+const used=((gfMe().g||{}).s===sid?(gfMe().g||{}).t:0)||0;
+gfMsg=`${f.name} ${L.len}cm${L.wl?' · 월척!':''}${sh?' · 반짝!':''}${nw?' · 새 물고기!':''} · `+(got?`+${got} 달란트 (이번 판 ${used}/${GFCAP})`:`이번 판 달란트는 다 받았어요`);
+gfLast=[{id:f.id,sh},...gfLast].slice(0,6);if(grod)setTimeout(()=>toast('저승 도감 30종 달성! 저승 낚싯대를 받았어요 (가방 > 손 도구)'),1500);
+setTimeout(()=>{if(gfS.st==='got'){gfS={st:'done'};gfUI()}},2600)}
+/* --- 화면 --- */
+window.gfTab=t=>{gfT=t;gfSel=-1;gfUI()};window.gfSp=s=>{if(gfS.st!=='idle'&&gfS.st!=='done')return;gfSpot=s;gfPg=0;gfSel=-1;gfUI()};window.gfPage=d=>{gfPg=Math.max(0,gfPg+d);gfSel=-1;gfUI()};window.gfPick2=i=>{gfSel=gfSel===i?-1:i;gfUI()};
+function gfUI(){const el=$('gfz');if(!el||el.style.display==='none')return;const M=gfMe(),dex=Object.keys(M.c||{}).length,g=G(),sid=g&&g.sid,used=(M.g&&M.g.s===sid?M.g.t:0)||0;
+const hd=$('gfH');if(hd)hd.innerHTML=`저승 나루터 <span class="sm" style="font-weight:600">· 도감 ${dex}/${GF.L.length} · 이번 판 ${used}/${GFCAP} 달란트</span>`;
+const tb=$('gfTb');if(tb)tb.innerHTML=[['f','낚시'],['d','도감'],['r','순위']].map(([k,l])=>`<button class="${gfT===k?'on':''}" onclick="gfTab('${k}')">${l}</button>`).join('');
+$('gfF').style.display=gfT==='f'?'':'none';const P2=$('gfP');P2.style.display=gfT==='f'?'none':'';
+const sps=GF.SPOT.map((n,i)=>{const lk=dex<GFOPEN[i];return`<button class="${gfSpot===i?'on':''}${lk?' lk':''}" onclick="gfSp(${i})">${n}${lk?` <small>${GFOPEN[i]}종</small>`:''}</button>`}).join('');
+if(gfT==='f'){$('gfSps').innerHTML=sps;const st=gfS.st,b=$('gfB');b.textContent=st==='bite'?'지금! 챔질':st==='reel'?'꾹 누르고 있기':st==='cast'||st==='wait'||st==='nib'?'기다리는 중…':st==='got'?'낚았다!':'낚싯대 던지기';b.className=st==='bite'?'p gfb hot':st==='reel'?'p gfb hold':'p gfb';
+$('gfR').innerHTML=gfLast.length?'<span class="sm">방금 낚은 것</span>'+gfLast.map(o=>`<img src="${GF.url(o.id,o.sh?'sh':'',2)}" title="${esc(GF.L[o.id].name)}">`).join(''):'<span class="sm">찌가 쏙 들어가면 버튼! 그다음엔 꾹 눌러 초록 칸 안에 물고기를 잡아 두세요</span>';return}
+if(gfT==='d'){const fs=GF.L.filter(f=>f.sp===gfSpot),pg=Math.min(gfPg,Math.ceil(fs.length/20)-1),sh=fs.slice(pg*20,pg*20+20),own=M.c||{},shs=M.sh||{},have=fs.filter(f=>own[f.id]).length;
+let h=`<div class="gfsp">${sps}</div><div class="sm" style="margin:6px 2px">${GF.SPOT[gfSpot]} ${have}/${fs.length}종 · 반짝 ${Object.keys(shs).length}종</div><div class="gfg">`+sh.map(f=>{const o=own[f.id];return`<button class="gfc${o?'':' no'}${gfSel===f.id?' sel':''}" style="--rc:${GF.RARITY[f.rar].color}" onclick="gfPick2(${f.id})"><img src="${GF.url(f.id,o?(shs[f.id]?'sh':''):'x',2)}">${shs[f.id]?'<i>✦</i>':''}</button>`}).join('')+`</div>`;
+h+=`<div class="gfpg">${btn('이전','gfPage(-1)',0,'g')}<span class="sm">${pg+1}/${Math.ceil(fs.length/20)}</span>${btn('다음','gfPage(1)',0,'g')}</div>`;
+if(gfSel>=0){const f=GF.L[gfSel],o=own[f.id];h+=`<div class="gfd"><b style="color:${GF.RARITY[f.rar].color}">${o?esc(f.name):'???'}</b> <small>${GF.RARITY[f.rar].name}</small><p>${o?esc(f.desc):'아직 못 낚은 물고기예요.'}</p>${o?`<small>잡은 수 ${o} · 최대 ${(M.mx||{})[f.id]||0}cm (보통 ${f.len}cm)${shs[f.id]?' · 반짝 '+shs[f.id]+'마리':''}</small>`:''}</div>`}
+P2.innerHTML=h;return}
+const us=Object.keys(D.gfish||{}).filter(n=>D.users[n]),R=(k,f)=>us.map(n=>[n,f(n)]).filter(x=>x[1]>0).sort((a,b)=>b[1]-a[1]).slice(0,5);
+const box=(t,L2,u)=>`<div class="gfrk"><div class="sm">${t}</div>${L2.map(([n,v],i)=>`<div><span>${i+1}</span><b>${esc(n)}</b><em>${v}${u}</em></div>`).join('')||'<div class="sm">아직 없어요</div>'}</div>`;
+P2.innerHTML=box('저승 도감',R('d',gfDex),'종')+box('반짝',R('s',gfShN),'종')+box('월척',R('w',n=>((D.gfish[n]||{}).wl)||0),'마리')+box('낚은 수',R('n',n=>((D.gfish[n]||{}).n)||0),'마리')}
+let gfLoop=0;function gfTick(){const cv=$('gfCv'),el=$('gfz');if(!cv||!el||el.style.display==='none'||el.offsetParent===null||gfT!=='f'){gfLoop=setTimeout(()=>requestAnimationFrame(gfTick),400);return}
+const now=performance.now()/1000;if(gfS.st==='reel')gfReelStep(now);try{gfDraw(cv,now)}catch(e){console.error(e)}requestAnimationFrame(gfTick)}
+function gfRender(g){const el=$('gfz');if(!el)return;if(!gfCan(g)){el.style.display='none';if(gfS.st!=='idle'){gfS={st:'idle'};gfHold=false}return}el.style.display='block';
+if(!el.dataset.b){el.dataset.b=1;el.innerHTML=`<div class="t" id="gfH"></div><div class="seg brseg" id="gfTb"></div><div id="gfF"><div class="gfsp" id="gfSps"></div><div class="gfcw"><canvas id="gfCv" width="680" height="420"></canvas></div><button class="p gfb" id="gfB">낚싯대 던지기</button><div class="gfr" id="gfR"></div></div><div id="gfP" class="brb"></div>`;
+const cv=$('gfCv'),b=$('gfB'),dn=e=>{e.preventDefault();if(gfS.st==='reel'){gfHold=true;return}gfBtn()},up=()=>{gfHold=false};
+[cv,b].forEach(z=>{z.addEventListener('pointerdown',dn);z.addEventListener('pointerup',up);z.addEventListener('pointerleave',up);z.addEventListener('pointercancel',up);z.addEventListener('contextmenu',e=>e.preventDefault())});
+requestAnimationFrame(gfTick)}gfUI()}
+
 /* ===== 단서 카드 · 추리판 ===== */
 let cbT='p',cbAll=0,cfOpen=0;
 const cMine=(g,p)=>{const o=[];Object.keys(g.clue||{}).forEach(d=>{const c=(g.clue[d]||{})[p];if(c)o.push({d:+d,c})});return o.sort((a,b)=>b.d-a.d)};
@@ -1314,6 +2252,7 @@ function flagReg(k,nm){const id=flId(k);if(ITEM[id])return ITEM[id];const h=k===
 const it=I(id,'hand',(nm||k)+' 깃발',0,{rows:{0:'...............y',1:'..........FFFFFb',2:'..........FfffFb',3:'..........FFFFFb',...vr(4,15,'...............b'),16:'..............bb',17:'..............bb',...vr(18,24,'...............b')},pal:{F,f,b:'#8b5a2b',y:'#ffd43b'}});
 it.flag=1;SHOP.push(it);ITEM[id]=it;HIDE.add(id);return it}
 function flagSync(){const R=D.rooms||{};flagReg('_main',(R._main||{}).nm||'원우마을');Object.keys(R).forEach(k=>flagReg(k,(R[k]||{}).nm||k));Object.keys(pfOf(me).own||{}).forEach(id=>{if(id.startsWith('fl_')&&!ITEM[id])flagReg(id.slice(3)==='main'?'_main':id.slice(3),id.slice(3))})}
+{const R=I('k_grod','hand','저승 낚싯대',0,{rows:{0:'.............c.c',1:'..............c.',2:'.............cwc',...vr(3,15,'..............g.'),16:'.............gg.',17:'.............gg.',...vr(18,24,'..............g.')},pal:{g:'#5a4a7a',c:'#8cffe6',w:'#ffffff'}});R.flag=1;SHOP.push(R);ITEM.k_grod=R;HIDE.add('k_grod')}
 let flGot='';
 function flagGive(g){if(!me||!g||g.phase!=='end'||!g.roles||!g.roles[me]||flGot===g.sid)return;flGot=g.sid;const it=flagReg(RKEY,RNM());if((pfOf(me).own||{})[it.id])return;
 runTransaction(ref(db,DBB+'/profiles/'+me),c=>{c=c||{t:0,own:{},eq:{}};c.own=c.own||{};if(c.own[it.id])return;c.own[it.id]=1;return c}).then(r=>{if(r&&r.committed)toast(it.n+'을 받았어요! 가방 > 손 도구에서 들 수 있어요')}).catch(()=>{})}
@@ -1668,6 +2607,7 @@ const ACH=[
 ['a20','☠️ 마피아의 표적','밤에 습격당해 3번 사망',s=>(s.kd||0)>=3],['a21','⚖️ 억울한 영혼','시민인데 처형 2번',s=>(s.exi||0)>=2],['a22','🗳️ 정확한 한 표','마피아 처형에 5번 투표',s=>(s.mv||0)>=5],
 ['a23','🌟 인기스타','인기도 10 받기',(s,p)=>(p.pop||0)>=10],['a24','🔥 마을 셀럽','인기도 50 받기',(s,p)=>(p.pop||0)>=50],['a25','🛍️ 수집가','아이템 20개 보유',(s,p)=>oc(p)>=20],['a26','🏛️ 박물관장','아이템 60개 보유',(s,p)=>oc(p)>=60],
 ['a27','💸 큰손','달란트 1000 사용',(s,p)=>spentOf(p.own)>=1000],['a28','💰 저축왕','달란트 500 보유',(s,p)=>(p.t||0)>=500]];
+ACH.push(['a_g1','🎣 저승 낚시꾼','저승 도감 20종',(s,p)=>(p.gdx||0)>=20],['a_g2','👻 저승 강태공','저승 도감 80종',(s,p)=>(p.gdx||0)>=80],['a_g3','💀 삼도천의 주인','저승 도감 180종',(s,p)=>(p.gdx||0)>=180],['a_g4','✨ 저승 반짝이','반짝 물고기 3종',(s,p)=>(p.gsx||0)>=3]);
 ACH.push(['a_u2','🚩 연합 원정대','마을 깃발 2개 모으기 (다른 마을 판 끝까지 하기)',(s,p)=>flagN(p)>=2],['a_u4','🏰 연합의 수호자','마을 깃발 4개 모으기',(s,p)=>flagN(p)>=4]);
 const ACHM=Object.fromEntries(ACH.map(a=>[a[0],a]));
 const achOK=(n,id)=>{const a=ACHM[id],p=pfOf(n);return!!a&&!!a[3](p.st||{},p)};
@@ -2716,7 +3656,7 @@ h=`<div class="q" style="font-size:.8rem">운영자가 켰을 때만 하는 <b>�
 +F('재판 대상이 되면?','앱에 최후 변론을 3줄까지 남길 수 있어요. 다른 사람들 찬반 화면에 바로 떠요. 카톡으로 해도 괜찮아요.')
 +F('판 끝나고 설문은 뭐예요?','재밌었다 / 너무 쉬웠다 / 너무 어려웠다 / 지루했다 중 하나만 누르면 돼요. 그 결과를 보고 단서 양을 조절해요.')}
 else{const F=(q,a)=>`<div class="fq"><b>Q. ${q}</b><p>${a}</p></div>`;
-h=F('캡처를 올렸는데 왜 안 믿어요?','누구나 "위장 카드"로 아무 직업 카드나 똑같이 띄울 수 있고, 밤 행동 화면도 가짜를 띄울 수 있어요. 그래서 캡처는 증거가 안 돼요. 진짜 직업은 카드를 꾹 누르고 있는 동안만 보여요.')+F('마피아인데 밤에 아무도 안 고르고 싶어요','"이번 밤은 안 고를게요" 버튼을 누르세요. 탐정에게 동선을 들키기 싫을 때 좋아요. 동료가 고른 사람이 그대로 제거되고, 마피아 모두 안 고르면 그날 밤은 아무도 안 죽어요. 살아있는 마피아가 전부 정하면(안 고름 포함) 밤이 바로 끝나요.')+F('왜 다음 단계로 안 넘어가요?','살아있는 사람이 모두 투표/능력을 써야 바로 넘어가요. 한 명이라도 안 하면 제한시간까지 기다려요. 죽은 사람은 기다리지 않아요. 계속 막히면 운영자에게 말해주세요 (시간 연장 · 퇴장 처리 가능).')
+h=F('저승 나루터가 뭐예요?','죽은 참가자만 들어가는 낚시터예요 (게임 탭). 물결마을 물고기 200종에 저승 전용 신화 8종까지 208종 도감을 채워요. 반짝(1/90)·월척(크기 1.3배 이상)도 있어요. 얕은 여울 → 깊은 강(도감 15종) → 망각의 소(50종) 순으로 열려요. 낚으면 달란트를 받는데 한 판에 최대 30까지예요. 도감 30종이면 저승 낚싯대를 받아요. 도감은 판이 바뀌어도 계속 쌓여요.')+F('캡처를 올렸는데 왜 안 믿어요?','누구나 "위장 카드"로 아무 직업 카드나 똑같이 띄울 수 있고, 밤 행동 화면도 가짜를 띄울 수 있어요. 그래서 캡처는 증거가 안 돼요. 진짜 직업은 카드를 꾹 누르고 있는 동안만 보여요.')+F('마피아인데 밤에 아무도 안 고르고 싶어요','"이번 밤은 안 고를게요" 버튼을 누르세요. 탐정에게 동선을 들키기 싫을 때 좋아요. 동료가 고른 사람이 그대로 제거되고, 마피아 모두 안 고르면 그날 밤은 아무도 안 죽어요. 살아있는 마피아가 전부 정하면(안 고름 포함) 밤이 바로 끝나요.')+F('왜 다음 단계로 안 넘어가요?','살아있는 사람이 모두 투표/능력을 써야 바로 넘어가요. 한 명이라도 안 하면 제한시간까지 기다려요. 죽은 사람은 기다리지 않아요. 계속 막히면 운영자에게 말해주세요 (시간 연장 · 퇴장 처리 가능).')
 +F('투표를 바꿀 수 있나요?','낮 투표는 마감 전까지 몇 번이든 바꿀 수 있어요. 경찰·탐정 조사는 한 번 정하면 못 바꿔요.')
 +F('경찰 조사 결과는 언제 나와요?','밤에 고르고, 다음 날 아침에 내 화면 "조사 기록"에서 확인해요. 갓파더는 "마피아 아님"으로 나오지만 같은 사람을 두 번 조사하면 정체가 드러나요. 술꾼은 마피아로 나와요!')
 +F('의사는 자기 자신을 지킬 수 있나요?','네! 다만 어젯밤 지킨 사람은 오늘 밤 다시 지킬 수 없어요. 자기 자신도 똑같아서 이틀 연속으로 나를 지킬 수는 없어요. 하루 걸러서는 가능해요 (예: 1일차 밤 나 → 2일차 밤 다른 사람 → 3일차 밤 다시 나). 전날 밤에 아무도 안 지켰다면 오늘은 누구든 지킬 수 있어요.')
@@ -2778,7 +3718,7 @@ $('rms').innerHTML=`<div class="t" style="margin-bottom:8px">서충원 트롤 �
 // ── 기록 색깔 ──
 const lgc=x=>/^(🎉|😈|🤡 광대)/.test(x)?'wn':/^(💀|🚪)/.test(x)?'k':/^(🛡️|🪖|✝️)/.test(x)?'s':/^⚖️/.test(x)?'j':/^🌙/.test(x)?'n':/^(☀️|🌅)/.test(x)?'dy':'';
 let lgAll=false;window.lgMore=()=>{lgAll=!lgAll;render()};
-function render(){const fe0=document.activeElement;if(fe0&&fe0.dataset&&fe0.dataset.keep)return;RH={};const g=G(),p=P(),$u=Object.keys(D.users);hist(g,p);ringRender(g,p);awardRender(g);storyRender(g);tresRender(g);clueRender(g,p);hotfixNote();glRender(g);ghostNote(g);roomHead();roomBar();kpBox(g);flagSync();flagGive(g);svyRender(g,p);calRender();plazaRender(g);seatRender(g);presUp();shopRender();fameRender();dexRender();autoClaim();ysRender(g);bdRender(g,p);ntRender(g,p);vcRender(g,p);foldApply();
+function render(){const fe0=document.activeElement;if(fe0&&fe0.dataset&&fe0.dataset.keep)return;RH={};const g=G(),p=P(),$u=Object.keys(D.users);hist(g,p);ringRender(g,p);awardRender(g);storyRender(g);tresRender(g);clueRender(g,p);hotfixNote();glRender(g);ghostNote(g);gfRender(g);roomHead();roomBar();kpBox(g);flagSync();flagGive(g);svyRender(g,p);calRender();plazaRender(g);seatRender(g);presUp();shopRender();fameRender();dexRender();autoClaim();ysRender(g);bdRender(g,p);ntRender(g,p);vcRender(g,p);foldApply();
 {const gp=g&&['vote','trial','night'].includes(g.phase),N=Object.keys(D.entries||{}).filter(n=>D.users[n]).length;$('hdt').innerHTML=g&&g.phase==='end'?'<b>게임 종료</b><span>'+esc(stripE(g.winner||''))+'</span>':gp?'':'<b>참가 신청 중</b><span>신청 '+N+'명 · 최소 '+cfgCheck(CF(),0).min+'명'+(D.lobbyDl?' · '+hm(D.lobbyDl)+' 마감':'')+(TEST?' · 테스트':'')+'</span>';const hc=$('hdc');hc.style.display=me?'':'none';hc.classList.toggle('nw',!!(g&&gp&&localStorage.getItem('m1_ntc')!==(g.sid||0)+'_'+(g.seq||0)+g.phase))}cd();
 $('login').style.display=me?'none':'';if(!me&&!$('nm'))$('login').innerHTML='<div class="t">입장하기</div><div class="sm" style="margin-bottom:10px">이름을 고르고 비밀번호 숫자 4자리를 넣어주세요. 처음이면 지금 넣은 번호가 비밀번호가 돼요.</div><div class="g2">'+ROSTER.map(n=>`<button class="g" onclick="pick('${n}')">${n}</button>`).join('')+'</div><input id="nm" maxlength="8" placeholder="이름" style="margin-top:10px"><input id="pin" type="password" inputmode="numeric" maxlength="4" placeholder="비밀번호 4자리"><button class="p" style="width:100%;margin-top:6px" onclick="login()">입장</button><div class="sm" id="lm"></div>';
 $('acct').innerHTML=me?autoRow(me)+`<div class="sm" style="margin:0 2px 6px">내 계정</div><div class="row2" style="background:#2e2850;border-radius:16px;padding:12px 14px"><div class="nm2"><b>${esc(me)}</b> <span class="sm">· ${((D.profiles||{})[me]||{}).t||0} 달란트</span>${as?` · <b style="color:#ffd43b">${as}</b>로 보는 중`:''}</div>${btn('로그아웃','logout()',0,'g')}</div>`:'';
