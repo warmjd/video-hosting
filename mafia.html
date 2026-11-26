@@ -2555,7 +2555,7 @@ const tx=document.createElement('div');tx.innerHTML=l.join('\n');ysTxt='[마피�
 /* ===== 오늘의 브리핑: 신문 · 여론 · 주장 · 질문 · 핀 (한 카드, 탭으로 전환, 5개씩만) ===== */
 let brT='op',brMore=false,brForm='';const BRN=5;
 const brCan=(g,p)=>!!(p&&g&&g.roles&&g.roles[p]&&g.alive[p]&&['vote','trial','night'].includes(g.phase));
-const editorOf=(g,d)=>{const a=Object.keys(g.roles||{}).filter(n=>g.alive[n]||((g.df||{})[d]===n)).sort();if(!a.length)return'';return a[(((g.sid||0)/1000|0)+d*7)%a.length]};
+const editorOf=(g,d)=>{const a=Object.keys(g.roles||{}).filter(n=>g.alive[n]||((g.df||{})[d]===n)).sort();if(!a.length)return'';const k=((g.sid||0)/1000|0)+d*7,e=a[k%a.length];if(g.alive[e]||g.phase==='end'||d<g.day)return e;const b=a.filter(n=>g.alive[n]);return b.length?b[k%b.length]:''};
 const brData=(g,p)=>{const B=D.board||{},d=g.day,E=B[d]||{},op={},co={};Object.keys(E).forEach(n=>{const e=E[n]||{};if(e.s&&g.alive[n]&&g.alive[e.s])(op[e.s]=op[e.s]||[]).push(n)});
 for(let x=1;x<=d;x++){const o=B[x]||{};Object.keys(o).forEach(n=>{if(o[n]&&o[n].co)co[n]={r:o[n].co,d:x,i:o[n].ci||''}})}
 const gr={};Object.keys(co).forEach(n=>(gr[co[n].r]=gr[co[n].r]||[]).push(n));const cf=UNQ.filter(r=>(gr[r]||[]).length>1);
