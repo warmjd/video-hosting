@@ -216,6 +216,7 @@ body.tvm .scene{max-width:calc((100vh - 250px)*400/340);margin:0 auto}body.tvm #
 .gfg{display:grid;grid-template-columns:repeat(5,1fr);gap:6px}.gfc{position:relative;aspect-ratio:1;display:flex;align-items:center;justify-content:center;padding:4px;border-radius:10px;background:rgba(255,255,255,.05);border:1px solid color-mix(in srgb,var(--rc) 45%,transparent);box-shadow:none;min-height:0}.gfc img{max-width:100%;max-height:100%;image-rendering:pixelated}.gfc.no{border-color:rgba(255,255,255,.06)}.gfc.sel{background:rgba(140,255,230,.15)}.gfc i{position:absolute;top:1px;right:4px;font-style:normal;color:#ffe066;font-size:.7rem}
 .gfpg{display:flex;align-items:center;justify-content:center;gap:10px;margin-top:8px}.gfpg button{width:auto;padding:6px 14px}
 .gfd{margin-top:8px;padding:10px 12px;border-radius:12px;background:rgba(255,255,255,.05);font-size:.85rem}.gfd small{opacity:.7}.gfd p{margin:4px 0}
+.gfw{display:grid;grid-template-columns:1fr 1fr;gap:6px}.gfw>div{padding:7px 9px;border-radius:10px;background:rgba(255,255,255,.04);font-size:.8rem;display:flex;flex-direction:column;gap:1px}.gfw small{opacity:.6;font-size:.68rem}.gfw b{font-size:.68rem;opacity:.45}.gfw .ok{background:rgba(140,255,230,.1)}.gfw .ok b{opacity:1;color:#8cffe6}.gfw .ok span{color:#b8fff0}
 .gfrk{margin-bottom:10px}.gfrk>div:not(.sm){display:flex;align-items:center;gap:8px;padding:4px 0;font-size:.85rem}.gfrk span{width:1.4em;text-align:center;opacity:.6}.gfrk em{margin-left:auto;font-style:normal;font-weight:700;color:#b8fff0}
 .glr{display:flex;gap:4px;margin-top:5px;flex-wrap:wrap}.glr button{width:auto;min-height:0;padding:2px 8px;font-size:.72rem;border-radius:999px;background:rgba(255,255,255,.06);box-shadow:none;color:#cfe8ff}.glr button.on{background:rgba(165,216,255,.3);color:#fff}
 .glf{margin-bottom:10px;padding:8px 11px;border-radius:12px;background:rgba(0,0,0,.22);font-size:.82rem}.glf summary{cursor:pointer;font-weight:700;color:#a5d8ff}.glf summary small{font-weight:500;opacity:.6;margin-left:4px}.glf p{margin:3px 0;opacity:.85}.glf p.h{font-weight:700;opacity:1;margin-top:6px}
@@ -1585,6 +1586,11 @@ return{L,SPOT,RARITY,img,url};
 })();
 
 /* ===== 저승 나루터: 유령만 오는 낚시터 (물결마을 물고기 200종 + 저승 신화 8종) ===== */
+
+/* 저승 낚시 보상표: 조건을 채우면 자동으로 받아요 */
+const GFREW=[['k_grod','도감 30종',t=>t.d>=30],['p_gwisp','도감 50종',t=>t.d>=50],['n_gw','도감 60종',t=>t.d>=60],['o_gw','도감 100종',t=>t.d>=100],['pl_gw','도감 120종',t=>t.d>=120],['o_glotus','도감 150종',t=>t.d>=150],
+['k_glan','낚은 수 100마리',t=>t.n>=100],['k_gnet','월척 5마리',t=>t.w>=5],['au_gs','반짝 5종',t=>t.s>=5],['au_gw','신화 1종',t=>t.m>=1],['p_gkoi','염라금붕어 낚기',t=>t.has(206)],['p_gbone','백골상어 낚기',t=>t.has(205)]];
+function gfStat(v){v=v||{};const c=v.c||{},ks=Object.keys(c);return{d:ks.length,s:Object.keys(v.sh||{}).length,n:v.n||0,w:v.wl||0,m:ks.filter(k=>GF.L[k]&&GF.L[k].rar===5).length,a:ks.filter(k=>GF.L[k]&&GF.L[k].sp===0).length,b:ks.filter(k=>GF.L[k]&&GF.L[k].sp===1).length,c:ks.filter(k=>GF.L[k]&&GF.L[k].sp===2).length,has:id=>!!c[id]}}
 const GFW=[58,26,11,4,1,.35],GFRW=[1,2,4,8,15,30],GFCAP=30,GFOPEN=[0,15,50];
 const GFT_N=['흔함','보통','희귀','영웅','전설','신화'];
 let gfT='f',gfSpot=0,gfPg=0,gfSel=-1,gfS={st:'idle',t:0},gfLast=[],gfMsg='',gfBusy=false,gfAv=null,gfAvK='';
@@ -1661,21 +1667,22 @@ setInterval(()=>{const g=G();if(!me||!gfCan(g)||Date.now()-gfAct>180000)return;c
 function gfLose(m){gfS={st:'done'};gfMsg=m;gfHold=false;gfSfx('escape');gfUI();gfOn('miss')}
 async function gfLand(){const s=gfS,f=GF.L[s.f],L=gfLen(f),sh=Math.random()<1/90,g=G(),sid=g&&g.sid||0,M=gfMe(),nw=!((M.c||{})[f.id]);
 gfS={st:'got',f:f.id,len:L.len,wl:L.wl,sh,nw,t0:performance.now()/1000};gfHold=false;gfOn('got',{f:f.id,len:L.len,sh:sh?1:0,wl:L.wl?1:0});gfSfx(sh||f.rar>=4?'sparkle':'catch');gfUI();
-let rw=GFRW[f.rar]+(nw?3:0)+(L.wl?2:0);if(sh)rw*=2;let got=0,dex=0,shn=0;
+let rw=GFRW[f.rar]+(nw?3:0)+(L.wl?2:0);if(sh)rw*=2;let got=0,dex=0,shn=0,gst=null;
 try{const r=await runTransaction(ref(db,DBB+'/gfish/'+me),c=>{c=c||{};c.c=c.c||{};c.mx=c.mx||{};c.c[f.id]=(c.c[f.id]||0)+1;if(L.len>(c.mx[f.id]||0))c.mx[f.id]=L.len;if(sh){c.sh=c.sh||{};c.sh[f.id]=(c.sh[f.id]||0)+1}c.n=(c.n||0)+1;if(!c.g||c.g.s!==sid)c.g={s:sid,t:0};const a=Math.max(0,Math.min(rw,GFCAP-c.g.t));c.g.t+=a;c.ga=a;if(L.wl)c.wl=(c.wl||0)+1;return c});
-const v=r&&r.snapshot&&r.snapshot.val?r.snapshot.val():null;if(v){got=v.ga||0;dex=Object.keys(v.c||{}).length;shn=Object.keys(v.sh||{}).length}}catch(e){console.error(e)}
-const grod=dex>=30&&!((pfOf(me).own||{}).k_grod);
-if(got>0||nw||sh||grod)try{await runTransaction(ref(db,DBB+'/profiles/'+me),c=>{c=c||{t:0,own:{},eq:{}};if(got>0){if(c.earn==null)c.earn=(c.t||0)+spentOf(c.own);c.t=(c.t||0)+got;c.earn+=got}if(dex)c.gdx=Math.max(c.gdx||0,dex);if(shn)c.gsx=Math.max(c.gsx||0,shn);if(grod){c.own=c.own||{};c.own.k_grod=1}return c})}catch(e){console.error(e)}
+const v=r&&r.snapshot&&r.snapshot.val?r.snapshot.val():null;if(v){got=v.ga||0;dex=Object.keys(v.c||{}).length;shn=Object.keys(v.sh||{}).length;gst=gfStat(v)}}catch(e){console.error(e)}
+const own0=pfOf(me).own||{},newI=gst?GFREW.filter(([id,,ok])=>!own0[id]&&ok(gst)).map(x=>x[0]):[],grod=newI.includes('k_grod');
+try{await runTransaction(ref(db,DBB+'/profiles/'+me),c=>{c=c||{t:0,own:{},eq:{}};if(got>0){if(c.earn==null)c.earn=(c.t||0)+spentOf(c.own);c.t=(c.t||0)+got;c.earn+=got}if(dex)c.gdx=Math.max(c.gdx||0,dex);if(shn)c.gsx=Math.max(c.gsx||0,shn);if(gst)c.gst={d:gst.d,s:gst.s,n:gst.n,w:gst.w,m:gst.m,a:gst.a,b:gst.b,c:gst.c};if(newI.length){c.own=c.own||{};newI.forEach(id=>c.own[id]=1)}return c})}catch(e){console.error(e)}
+if(newI.length)setTimeout(()=>toast('저승 보상! '+newI.map(id=>(ITEM[id]||{}).n).join(', ')+' 받았어요 (가방에서 착용)'),1500);
 const used=((gfMe().g||{}).s===sid?(gfMe().g||{}).t:0)||0;
 gfMsg=`${f.name} ${L.len}cm${L.wl?' · 월척!':''}${sh?' · 반짝!':''}${nw?' · 새 물고기!':''} · `+(got?`+${got} 달란트 (이번 판 ${used}/${GFCAP})`:`이번 판 달란트는 다 받았어요`);
 gfLast=[{id:f.id,sh},...gfLast].slice(0,6);
-if(f.rar>=3||sh||L.wl){try{const fid=NOW().toString(36)+Math.random().toString(36).slice(2,4);set(ref(db,DBB+'/gfeed/'+fid),{n:me,f:f.id,len:L.len,sh:sh?1:0,wl:L.wl?1:0,at:NOW()});const ks=Object.keys(D.gfeed||{}).sort((a,b)=>(D.gfeed[a].at||0)-(D.gfeed[b].at||0));ks.slice(0,Math.max(0,ks.length-29)).forEach(k=>set(ref(db,DBB+'/gfeed/'+k),null))}catch(e){}}if(grod)setTimeout(()=>toast('저승 도감 30종 달성! 저승 낚싯대를 받았어요 (가방 > 손 도구)'),1500);
+if(f.rar>=3||sh||L.wl){try{const fid=NOW().toString(36)+Math.random().toString(36).slice(2,4);set(ref(db,DBB+'/gfeed/'+fid),{n:me,f:f.id,len:L.len,sh:sh?1:0,wl:L.wl?1:0,at:NOW()});const ks=Object.keys(D.gfeed||{}).sort((a,b)=>(D.gfeed[a].at||0)-(D.gfeed[b].at||0));ks.slice(0,Math.max(0,ks.length-29)).forEach(k=>set(ref(db,DBB+'/gfeed/'+k),null))}catch(e){}}
 setTimeout(()=>{if(gfS.st==='got'){gfS={st:'done'};gfUI()}},2600)}
 /* --- 화면 --- */
 window.gfTab=t=>{gfT=t;gfSel=-1;gfUI()};window.gfSp=s=>{if(gfS.st!=='idle'&&gfS.st!=='done')return;gfSpot=s;gfPg=0;gfSel=-1;gfUI()};window.gfPage=d=>{gfPg=Math.max(0,gfPg+d);gfSel=-1;gfUI()};window.gfPick2=i=>{gfSel=gfSel===i?-1:i;gfUI()};
 function gfUI(){const el=$('gfz');if(!el||el.style.display==='none')return;const M=gfMe(),dex=Object.keys(M.c||{}).length,g=G(),sid=g&&g.sid,used=(M.g&&M.g.s===sid?M.g.t:0)||0;
 const hd=$('gfH');if(hd)hd.innerHTML=`저승 나루터 <span class="sm" style="font-weight:600">· 도감 ${dex}/${GF.L.length} · 이번 판 ${used}/${GFCAP} 달란트</span>`;
-const tb=$('gfTb');if(tb)tb.innerHTML=[['f','낚시'],['d','도감'],['r','순위']].map(([k,l])=>`<button class="${gfT===k?'on':''}" onclick="gfTab('${k}')">${l}</button>`).join('');
+const tb=$('gfTb');if(tb)tb.innerHTML=[['f','낚시'],['d','도감'],['w','보상'],['r','순위']].map(([k,l])=>`<button class="${gfT===k?'on':''}" onclick="gfTab('${k}')">${l}</button>`).join('');
 $('gfF').style.display=gfT==='f'?'':'none';const P2=$('gfP');P2.style.display=gfT==='f'?'none':'';
 const sps=GF.SPOT.map((n,i)=>{const lk=dex<GFOPEN[i];return`<button class="${gfSpot===i?'on':''}${lk?' lk':''}" onclick="gfSp(${i})">${n}${lk?` <small>${GFOPEN[i]}종</small>`:''}</button>`}).join('');
 if(gfT==='f'){$('gfSps').innerHTML=sps;const st=gfS.st,b=$('gfB');b.textContent=st==='bite'?'지금! 챔질':st==='reel'?'꾹 누르고 있기':st==='cast'||st==='wait'||st==='nib'?'기다리는 중…':st==='got'?'낚았다!':'낚싯대 던지기';b.className=st==='bite'?'p gfb hot':st==='reel'?'p gfb hold':'p gfb';
@@ -1685,6 +1692,7 @@ let h=`<div class="gfsp">${sps}</div><div class="sm" style="margin:6px 2px">${GF
 h+=`<div class="gfpg">${btn('이전','gfPage(-1)',0,'g')}<span class="sm">${pg+1}/${Math.ceil(fs.length/20)}</span>${btn('다음','gfPage(1)',0,'g')}</div>`;
 if(gfSel>=0){const f=GF.L[gfSel],o=own[f.id];h+=`<div class="gfd"><b style="color:${GF.RARITY[f.rar].color}">${o?esc(f.name):'???'}</b> <small>${GF.RARITY[f.rar].name}</small><p>${o?esc(f.desc):'아직 못 낚은 물고기예요.'}</p>${o?`<small>잡은 수 ${o} · 최대 ${(M.mx||{})[f.id]||0}cm (보통 ${f.len}cm)${shs[f.id]?' · 반짝 '+shs[f.id]+'마리':''}</small>`:''}</div>`}
 P2.innerHTML=h;return}
+if(gfT==='w'){const t=gfStat(M),own=pfOf(me).own||{},ach=ACH.filter(a=>/^a_g/.test(a[0]));P2.innerHTML=`<div class="sm" style="margin:4px 2px 8px">조건을 채우면 자동으로 받아요 · 꾸미기 탭 가방에서 착용</div><div class="gfw">`+GFREW.map(([id,lab,ok])=>{const it=ITEM[id]||{},got=!!own[id];return`<div class="${got?'ok':''}"><span>${esc(it.n||id)}</span><small>${SLOT[it.s]||''} · ${lab}</small><b>${got?'받음':ok(t)?'다음 낚시 때':'—'}</b></div>`}).join('')+`</div><details style="margin-top:10px"><summary class="sm">저승 칭호 ${ach.filter(a=>a[3](pfOf(me).st||{},pfOf(me))).length}/${ach.length} · 펼쳐 보기 (꾸미기 › 칭호에서 달기)</summary><div class="gfw" style="margin-top:6px">`+ach.map(a=>{const d=a[3](pfOf(me).st||{},pfOf(me));return`<div class="${d?'ok':''}"><span>${esc(a[1].replace(/^\S+\s/,''))}</span><small>${esc(a[2])}</small><b>${d?'달성':'—'}</b></div>`}).join('')+`</div></details><div class="sm" style="margin-top:8px">시장의 「낚시」 물건: 어부 모자 · 밀짚 낚시모자 · 편광 선글라스 · 대나무 낚싯대 · 뜰채 · 어항 금붕어 · 꽃게 · 물웅덩이 · 낚시 칭호 5종</div>`;return}
 const us=Object.keys(D.gfish||{}).filter(n=>D.users[n]),R=(k,f)=>us.map(n=>[n,f(n)]).filter(x=>x[1]>0).sort((a,b)=>b[1]-a[1]).slice(0,5);
 const box=(t,L2,u)=>`<div class="gfrk"><div class="sm">${t}</div>${L2.map(([n,v],i)=>`<div><span>${i+1}</span><b>${esc(n)}</b><em>${v}${u}</em></div>`).join('')||'<div class="sm">아직 없어요</div>'}</div>`;
 P2.innerHTML=box('저승 도감',R('d',gfDex),'종')+box('반짝',R('s',gfShN),'종')+box('월척',R('w',n=>((D.gfish[n]||{}).wl)||0),'마리')+box('낚은 수',R('n',n=>((D.gfish[n]||{}).n)||0),'마리')}
@@ -2290,6 +2298,31 @@ SPOOL.forEach(id=>{if(!SEASONI.has(id))HIDE.add(id)});
 function setOf(eq){const e=eq||{},s=(ITEM[e.suit]||{}).v;if(s)return s.set||'';const t=(ITEM[e.top]||{}).v,b=(ITEM[e.bot]||{}).v;return t&&b&&t.set&&t.set===b.set?t.set:''}
 const mergeTry=(eq,tr)=>{const o={...(eq||{}),...(tr||{})};if(tr&&(tr.top||tr.bot)&&!tr.suit)delete o.suit;if(tr&&tr.suit){delete o.top;delete o.bot}return o};
 
+
+/* ===== 낚시 치장: 시장에서 사는 것 + 저승 낚시로만 받는 것 ===== */
+SHOP.push(
+I('h_buck','hat','어부 모자',40,{rows:{1:'.....oooooo.....',2:'....oOOOOOOy....',3:'....oOOOOOOo....',4:'..oooooooooooo..'},pal:{o:'#c9a66b',O:'#a8844a',y:'#ffd43b'}}),
+I('h_straw','hat','밀짚 낚시모자',50,{rows:{1:'.....yyyyyy.....',2:'....yyyyyyyy....',3:'....rrrrrrrr....',4:'.yyyyyyyyyyyyyy.'},pal:{y:'#f2d27a',r:'#e8556a'}}),
+I('g_pol','glass','편광 선글라스',40,{rows:{7:'....bwbbbbwb....',8:'....bbbbbbbb....'},pal:{b:'#1c7ed6',w:'#a5d8ff'}}),
+I('k_bam','hand','대나무 낚싯대',40,{rows:{0:'..............bl',1:'..............bl',2:'..............Bl',3:'..............bl',4:'..............b.',5:'..............b.',6:'..............B.',...vr(7,9,'..............b.'),10:'..............B.',...vr(11,13,'..............b.'),14:'..............B.',15:'..............b.',16:'.............bb.',17:'.............bb.',...vr(18,24,'..............b.')},pal:{b:'#a3be5a',B:'#6b8a2a',l:'#e9ecef'}}),
+I('k_net','hand','뜰채',50,{rows:{0:'...........www..',1:'..........w.w.w.',2:'..........ww.ww.',3:'...........www..',...vr(4,15,'.............b..'),16:'............bb..',17:'............bb..',...vr(18,24,'.............b..')},pal:{w:'#f1f3f5',b:'#8b5a2b'}}),
+I('p_gold','pet','어항 금붕어',60,{rows:['.bbbbbb.','b..oo..b','b.oooo.b','b..o.o.b','bwwwwwwb','.bbbbbb.'],pal:{b:'#a5d8ff',o:'#ff922b',w:'#74c0fc'},w:8}),
+I('p_crab','pet','꽃게',50,{rows:['r....r..','rr..rr..','.rrrr...','rerrer..','.rrrr...','r.r.r.r.'],pal:{r:'#f03e3e',e:'#222222'},w:8}),
+I('o_pond','foot','물웅덩이',60,{rows:['.....bbbbbb.....','..bbBBBBBBBBbb..','.bBBBwBBBBwBBBb.','..bbBBBBBBBBbb..','.....bbbbbb.....'],pal:{b:'#1c7ed6',B:'#4dabf7',w:'#e7f5ff'}}),
+...[['tf1','손맛 중독',40],['tf2','월척 꿈나무',30],['tf3','붕어빵 아님',30],['tf4','찌만 보는 사람',30],['tf5','오늘도 꽝',20]].map(([id,n,p])=>I(id,'title',n,p,n)));
+const GFI=[
+I('k_gnet','hand','혼불 뜰채',0,{rows:{0:'...........ccc..',1:'..........c.w.c.',2:'..........c...c.',3:'...........ccc..',...vr(4,15,'.............g..'),16:'............gg..',17:'............gg..',...vr(18,24,'.............g..')},pal:{c:'#8cffe6',w:'#e0fff8',g:'#5a4a7a'}}),
+I('k_glan','hand','도깨비 등불',0,{rows:{...vr(0,2,'..............g.'),3:'.............ccc',4:'.............cWc',5:'.............cWc',6:'.............ccc',...vr(7,15,'..............g.'),16:'.............gg.',17:'.............gg.',...vr(18,24,'..............g.')},pal:{g:'#5a4a7a',c:'#3fc8b0',W:'#e0fff8'}}),
+I('p_gwisp','pet','도깨비불',0,{rows:['..cc....','.cCCc...','cCwWCc..','cCWWCc..','.cCCc...','..c.c...'],pal:{c:'#3fc8b0',C:'#8cffe6',w:'#ffffff',W:'#e0fff8'},w:8}),
+I('p_gkoi','pet','염라금붕어',0,{rows:['........','.rr..f..','rrrrrff.','rerrrff.','.rrrr.f.','..y.....'],pal:{r:'#f05050',f:'#ffb0a0',e:'#222222',y:'#ffd060'},w:8}),
+I('p_gbone','pet','백골 물고기',0,{rows:['........','.w.w.ww.','wwwwwwew','.w.w.ww.','........','........'],pal:{w:'#e8e4d8',e:'#222222'},w:8}),
+I('o_gw','foot','저승 물결',0,{rows:['.....cccccc.....','..cc........cc..','.c..wwwwwwww..c.','..cc........cc..','.....cccccc.....'],pal:{c:'#3fc8b0',w:'#8cffe6'}}),
+I('o_glotus','foot','저승 연꽃',0,{rows:['......pPp.......','..g.pPwPp..g....','.ggg.pPp..ggg...','..g........g....','................'],pal:{p:'#f783ac',P:'#ffc9e0',w:'#ffffff',g:'#3fc8b0'}}),
+I('au_gw','aura','혼불 오라',0,{k:'rise',c:['#8cffe6','#3fc8b0','#e0fff8']}),
+I('au_gs','aura','반짝 비늘',0,{k:'spark',c:['#ffe066','#ffffff','#b8fff0'],n:12}),
+I('pl_gw','plate','저승 명판',0,{f:'#0b1422',s:'#8cffe6',c:'pl-neon'}),
+I('n_gw','nameC','도깨비불 이름',0,'#8cffe6')];
+GFI.forEach(it=>{SHOP.push(it);HIDE.add(it.id)});
 const ITEM=Object.fromEntries(SHOP.map(i=>[i.id,i]));
 const flagN=p=>Object.keys((p&&p.own)||{}).filter(k=>k.startsWith('fl_')).length;
 const flId=k=>'fl_'+(k==='_main'?'main':k);
@@ -2654,11 +2687,12 @@ const ACH=[
 ['a20','☠️ 마피아의 표적','밤에 습격당해 3번 사망',s=>(s.kd||0)>=3],['a21','⚖️ 억울한 영혼','시민인데 처형 2번',s=>(s.exi||0)>=2],['a22','🗳️ 정확한 한 표','마피아 처형에 5번 투표',s=>(s.mv||0)>=5],
 ['a23','🌟 인기스타','인기도 10 받기',(s,p)=>(p.pop||0)>=10],['a24','🔥 마을 셀럽','인기도 50 받기',(s,p)=>(p.pop||0)>=50],['a25','🛍️ 수집가','아이템 20개 보유',(s,p)=>oc(p)>=20],['a26','🏛️ 박물관장','아이템 60개 보유',(s,p)=>oc(p)>=60],
 ['a27','💸 큰손','달란트 1000 사용',(s,p)=>spentOf(p.own)>=1000],['a28','💰 저축왕','달란트 500 보유',(s,p)=>(p.t||0)>=500]];
+ACH.push(['a_g5','🐟 첫 손맛','저승에서 첫 물고기',(s,p)=>((p.gst||{}).n||0)>=1],['a_g6','🎣 백 마리 낚시꾼','저승 물고기 100마리',(s,p)=>((p.gst||{}).n||0)>=100],['a_g7','🐋 천 마리의 강태공','저승 물고기 1000마리',(s,p)=>((p.gst||{}).n||0)>=1000],['a_g8','📏 월척 사냥꾼','월척 5마리',(s,p)=>((p.gst||{}).w||0)>=5],['a_g9','🦈 괴물 월척','월척 30마리',(s,p)=>((p.gst||{}).w||0)>=30],['a_g10','🌟 반짝 수집가','반짝 10종',(s,p)=>((p.gst||{}).s||0)>=10],['a_g11','🔱 신화를 낚은 자','저승 신화 1종',(s,p)=>((p.gst||{}).m||0)>=1],['a_g12','👑 삼도천의 군주','저승 신화 8종 모두',(s,p)=>((p.gst||{}).m||0)>=8],['a_g13','🌊 얕은 여울 정복','얕은 여울 80종',(s,p)=>((p.gst||{}).a||0)>=80],['a_g14','🌀 깊은 강 정복','깊은 강 80종',(s,p)=>((p.gst||{}).b||0)>=80],['a_g15','🌑 망각의 소 정복','망각의 소 48종',(s,p)=>((p.gst||{}).c||0)>=48],['a_g16','📚 저승 박사','저승 도감 208종 완성',(s,p)=>((p.gst||{}).d||0)>=208]);
 ACH.push(['a_g1','🎣 저승 낚시꾼','저승 도감 20종',(s,p)=>(p.gdx||0)>=20],['a_g2','👻 저승 강태공','저승 도감 80종',(s,p)=>(p.gdx||0)>=80],['a_g3','💀 삼도천의 주인','저승 도감 180종',(s,p)=>(p.gdx||0)>=180],['a_g4','✨ 저승 반짝이','반짝 물고기 3종',(s,p)=>(p.gsx||0)>=3]);
 ACH.push(['a_u2','🚩 연합 원정대','마을 깃발 2개 모으기 (다른 마을 판 끝까지 하기)',(s,p)=>flagN(p)>=2],['a_u4','🏰 연합의 수호자','마을 깃발 4개 모으기',(s,p)=>flagN(p)>=4]);
 const ACHM=Object.fromEntries(ACH.map(a=>[a[0],a]));
 const achOK=(n,id)=>{const a=ACHM[id],p=pfOf(n);return!!a&&!!a[3](p.st||{},p)};
-const RANKT=[['r_pop','👑 연합 패셔니스타','인기도 1위','crown',n=>pfOf(n).pop||0],['r_rich','💰 달란트 재벌','번 달란트 누적 1위','bag',earned],['r_win','🏆 승리의 아이콘','최다 승리 1위','trophy',n=>stOf(n).w||0],['r_play','🎮 마을 터줏대감','최다 출전 1위','pad',n=>stOf(n).g||0],['r_maf','🌑 밤의 지배자','마피아 팀 승리 1위','moonb',n=>stOf(n).wm||0],['r_lord','🏰 연합 대표','연합 성에 가장 많이 투자한 대표','castle',n=>0],['r_season','🌟 지난 시즌 챔피언','지난 시즌 점수 1위','star',n=>sScore(n,SN()-1)]];
+const RANKT=[['r_pop','👑 연합 패셔니스타','인기도 1위','crown',n=>pfOf(n).pop||0],['r_rich','💰 달란트 재벌','번 달란트 누적 1위','bag',earned],['r_win','🏆 승리의 아이콘','최다 승리 1위','trophy',n=>stOf(n).w||0],['r_play','🎮 마을 터줏대감','최다 출전 1위','pad',n=>stOf(n).g||0],['r_maf','🌑 밤의 지배자','마피아 팀 승리 1위','moonb',n=>stOf(n).wm||0],['r_lord','🏰 연합 대표','연합 성에 가장 많이 투자한 대표','castle',n=>0],['r_gf','🎣 저승의 강태공','저승 도감 1위','star',n=>gfDex(n)],['r_season','🌟 지난 시즌 챔피언','지난 시즌 점수 1위','star',n=>sScore(n,SN()-1)]];
 if(!CASTLE_ON)RANKT.splice(RANKT.findIndex(r=>r[0]==='r_lord'),1);
 const RANKM=Object.fromEntries(RANKT.map(r=>[r[0],r]));
 let RH={};
