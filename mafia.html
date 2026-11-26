@@ -219,6 +219,7 @@ body.tvm .scene{max-width:calc((100vh - 250px)*400/340);margin:0 auto}body.tvm #
 .gfrk{margin-bottom:10px}.gfrk>div:not(.sm){display:flex;align-items:center;gap:8px;padding:4px 0;font-size:.85rem}.gfrk span{width:1.4em;text-align:center;opacity:.6}.gfrk em{margin-left:auto;font-style:normal;font-weight:700;color:#b8fff0}
 .glr{display:flex;gap:4px;margin-top:5px;flex-wrap:wrap}.glr button{width:auto;min-height:0;padding:2px 8px;font-size:.72rem;border-radius:999px;background:rgba(255,255,255,.06);box-shadow:none;color:#cfe8ff}.glr button.on{background:rgba(165,216,255,.3);color:#fff}
 .glf{margin-bottom:10px;padding:8px 11px;border-radius:12px;background:rgba(0,0,0,.22);font-size:.82rem}.glf summary{cursor:pointer;font-weight:700;color:#a5d8ff}.glf summary small{font-weight:500;opacity:.6;margin-left:4px}.glf p{margin:3px 0;opacity:.85}.glf p.h{font-weight:700;opacity:1;margin-top:6px}
+.gpr{display:grid;grid-template-columns:1.4em 4.6em 1fr 3.2em;align-items:center;gap:8px;padding:5px 0;font-size:.85rem}.gpr em{font-style:normal;font-weight:800;color:#8cffe6;text-align:center}.gpr strong{text-align:right;color:#b8fff0}.gpr small{grid-column:2/5;margin-top:-4px;font-size:.7rem;opacity:.55}.gpr small:empty{display:none}.gpr.me b{color:#ffe066}.gpr .vtb i{background:linear-gradient(90deg,#3fc8b0,#8cffe6)}
 .gftop{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px}.gftop span{padding:5px 10px;border-radius:999px;background:rgba(140,255,230,.1);font-size:.8rem}.gftop em{font-style:normal;color:#8cffe6;margin-right:5px;font-weight:800}.gftop b{color:#b8fff0}
 .gfnw>div{display:flex;align-items:center;gap:8px;padding:5px 0;font-size:.82rem;border-bottom:1px solid rgba(255,255,255,.05)}.gfnw img{height:20px;image-rendering:pixelated;flex:none}.gfnw span{flex:1;min-width:0}.gfnw i{font-style:normal;font-weight:700}.gfnw small{opacity:.55;flex:none}
 .gll{display:flex;flex-direction:column;gap:6px;margin-top:8px;max-height:340px;overflow:auto}.glm{padding:8px 11px;border-radius:12px;background:rgba(165,216,255,.07);border:1px solid rgba(165,216,255,.12)}.glm.me{background:rgba(165,216,255,.14)}.glm b{font-size:.82rem;color:#a5d8ff}.glm small{font-size:.68rem;opacity:.6;margin-left:6px}.glm p{margin:3px 0 0;font-size:.88rem;line-height:1.4;white-space:pre-wrap;word-break:break-all}
@@ -299,10 +300,10 @@ body.tvm .scene{max-width:calc((100vh - 250px)*400/340);margin:0 auto}body.tvm #
 <div class="c" id="hist" data-tab="talk" style="display:none"></div>
 <div class="c" id="cal" data-tab="talk"></div>
 <div class="c" id="shop" data-tab="look" style="display:none"></div>
-<div class="c" id="plaza" data-tab="town"></div>
+<div class="c gfpub" id="gfpb" data-tab="town" style="display:none"></div>
+<div class="c" id="plaza" data-tab="town" style="display:none!important"></div>
 <div class="c" id="fame" data-tab="town" style="display:none"></div>
 <div class="c" id="dex" data-tab="town" style="display:none"></div>
-<div class="c gfpub" id="gfpb" data-tab="town" style="display:none"></div>
 <div class="c" id="vc" data-tab="town" style="display:none"></div>
 <div class="c" data-tab="more"><div class="t">☰ 더보기</div><button class="mrow" onclick="rulesOpen()">📖<span>규칙서 · 직업 · 달란트 안내</span></button><button class="mrow" onclick="tvOpen()">📺<span>진행자 화면 (TV·빔프로젝터에 띄우기)</span></button><button class="mrow" onclick="offOpen()">🃏<span>오프라인 한 판 (폰 하나로 돌려 하기)</span></button><button class="mrow" onclick="introOpen()">👋<span>처음 안내 다시 보기</span></button><button class="mrow" id="txb" onclick="txToggle()">📝 텍스트</button><div class="sm" style="margin:6px 2px 0">텍스트 모드는 그림 없이 메모장처럼 가볍게 보여줘요.</div><div id="acct" style="margin-top:14px"></div></div>
 <div class="c" id="adm" data-tab="more" style="display:none"></div>
@@ -327,7 +328,7 @@ const toast=m=>{document.querySelectorAll('.toast').forEach(x=>x.remove());const
 const db=getDatabase(initializeApp(cfg));let OFF=0;const NOW=()=>Date.now()+OFF;onValue(ref(db,'.info/serverTimeOffset'),x=>{OFF=x.val()||0});
 let D={users:{},game:null,votes:{},night:{},ghost:{},fv:{},entries:{},profiles:{},last:[],cfg:null,refunds:{},likes:{},castle:{},board:{},why:{},lobbyDl:0,lobbyMsg:'',hello:{},vil:{},card:{},plays:{},lp:{},seen:{},keepers:{},endAt:0},me=localStorage.getItem('m1_me')||'',as='',admin=false,loaded=false,busy=false,busyAt=0;
 const SHK=new Set(["gfeed","gfish","users", "profiles", "likes", "castle", "refunds", "plays", "lp", "seen", "vil", "card", "keepers", "grants", "survey", "yard", "rooms", "where"]);
-const DK={gfeed:{},gfish:{},glc:{},rinfo:{},rooms:{},where:{},cpub:{},dfs:{},survey:{},qa:{},pin:{},news:{},archIdx:{},pres:{},shout:{},poke:{},cheer:{},yard:{},lw:{},optout:{},users:{},game:null,votes:{},night:{},ghost:{},fvotes:{},entries:{},profiles:{},last:[],cfg:null,refunds:{},likes:{},castle:{},board:{},why:{},lobbyDl:0,lobbyMsg:'',hello:{},vil:{},card:{},plays:{},lp:{},seen:{},keepers:{},endAt:0};
+const DK={gfon:{},gfeed:{},gfish:{},glc:{},rinfo:{},rooms:{},where:{},cpub:{},dfs:{},survey:{},qa:{},pin:{},news:{},archIdx:{},pres:{},shout:{},poke:{},cheer:{},yard:{},lw:{},optout:{},users:{},game:null,votes:{},night:{},ghost:{},fvotes:{},entries:{},profiles:{},last:[],cfg:null,refunds:{},likes:{},castle:{},board:{},why:{},lobbyDl:0,lobbyMsg:'',hello:{},vil:{},card:{},plays:{},lp:{},seen:{},keepers:{},endAt:0};
 let got=0,rq=0;const kickR=()=>{if(rq)return;rq=1;setTimeout(()=>{rq=0;render();tick()},40)};
 Object.keys(DK).forEach(k=>{let first=1;onValue(ref(db,(SHK.has(k)?DBB:ROOT)+'/'+k),x=>{const v=x.val(),d=DK[k];D[k==='fvotes'?'fv':k]=v==null?(Array.isArray(d)?[]:d&&typeof d==='object'?{}:d):v;if(first){first=0;got++}if(got>=Object.keys(DK).length){loaded=true;kickR()}})});
 async function H(s){const b=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(s));return[...new Uint8Array(b)].map(x=>x.toString(16).padStart(2,'0')).join('')}
@@ -486,7 +487,7 @@ const {roles,alive,ms,wh}=makeRoles(ns,sh,cf),m=Object.values(roles).filter(isM)
 await set(ref(db,ROOT+'/votes'),null);await set(ref(db,ROOT+'/night'),null);await set(ref(db,ROOT+'/ghost'),null);await set(ref(db,ROOT+'/fvotes'),null);for(const k of ['board','why'])try{await set(ref(db,ROOT+'/'+k),null)}catch(e){console.error(e)}await set(ref(db,ROOT+'/game'),{phase:'vote',day:1,seq:0,def:'',deadline:NOW()+cf.tm.v*HR,tm:cf.tm,setup,roles,alive,ms,...(cf.clue?clueInit(roles,alive,cf.clue):{}),wh,sid:NOW(),winner:'',log:['🌅 게임 시작! '+n+'명 참가 · '+setup+' · 모두에게 직업이 배정됐어요','☀️ 1일차 낮이 시작됐어요. 카톡방에서 의심을 나누고 투표하세요. 모두 투표하면 바로 최후 변론으로 넘어가요!']})};
 window.closeNow=async()=>{if(!confirm('지금 이 단계를 바로 넘길까요? (비상용)'))return;await runTransaction(ref(db,ROOT+'/game'),c=>{if(!c||!c.roles||!['vote','trial','night'].includes(c.phase))return;step(c);c.seq=(c.seq||0)+1;return c})};
 window.openNext=async()=>{if(!confirm('다음 판 참가 신청을 지금 열까요?\n이번 판 달란트는 모두 정산되고 기록은 정리돼요.'))return;await resetG(true)};
-window.resetG=async(auto)=>{if(!auto&&!confirm('한 판 더 하시겠어요? 이전 판의 투표·역할·기록과 참가 신청이 모두 지워지고, 참가 신청을 새로 받아요. (달란트와 구매 내역은 유지돼요)'))return;const g0=G();if(g0&&g0.roles&&!(D.archIdx||{})['g'+g0.sid])await archGame(g0,g0.phase==='end'?'end':'stop');if(g0&&g0.phase==='end'&&g0.aw)for(const k of Object.keys(g0.aw))await claim(k,g0);if(g0&&g0.roles)await set(ref(db,ROOT+'/last'),Object.keys(g0.roles));for(const k of ['votes','night','ghost','fvotes','entries','optout','lw','qa','pin','news','board','why','hello','lobbyDl','lobbyMsg','cpub','dfs','glc'])try{await set(ref(db,ROOT+'/'+k),null)}catch(e){console.error(e)}await set(ref(db,ROOT+'/game'),{phase:'lobby'});try{await set(ref(db,ROOT+'/endAt'),null)}catch(e){console.error(e)}D.entries={};D.optout={};await autoJoin()};
+window.resetG=async(auto)=>{if(!auto&&!confirm('한 판 더 하시겠어요? 이전 판의 투표·역할·기록과 참가 신청이 모두 지워지고, 참가 신청을 새로 받아요. (달란트와 구매 내역은 유지돼요)'))return;const g0=G();if(g0&&g0.roles&&!(D.archIdx||{})['g'+g0.sid])await archGame(g0,g0.phase==='end'?'end':'stop');if(g0&&g0.phase==='end'&&g0.aw)for(const k of Object.keys(g0.aw))await claim(k,g0);if(g0&&g0.roles)await set(ref(db,ROOT+'/last'),Object.keys(g0.roles));for(const k of ['votes','night','ghost','fvotes','entries','optout','lw','qa','pin','news','board','why','hello','lobbyDl','lobbyMsg','cpub','dfs','glc','gfon'])try{await set(ref(db,ROOT+'/'+k),null)}catch(e){console.error(e)}await set(ref(db,ROOT+'/game'),{phase:'lobby'});try{await set(ref(db,ROOT+'/endAt'),null)}catch(e){console.error(e)}D.entries={};D.optout={};await autoJoin()};
 const lobbyNow=()=>{const g=G();return!g||g.phase==='lobby'};
 const inGame=()=>{const g=G();return!!(g&&['vote','trial','night'].includes(g.phase))};
 const saveCfg=async f=>{if(inGame())return alert('게임 중에는 직업 구성을 바꿀 수 없어요. 다음 판에 적용하려면 게임이 끝난 뒤 바꿔주세요.');const c=CF();f(c);await set(ref(db,ROOT+'/cfg'),c)};
@@ -1599,7 +1600,7 @@ const GFTY={shark:'dash',whale:'dash',sturgeon:'dash',sail:'jump',eel:'zig',need
 function gfAvatar(){const k=me+JSON.stringify(pfOf(me).eq||{})+JSON.stringify(chOf(me));if(gfAvK===k)return gfAv;gfAvK=k;gfAv=null;try{const sv=`<svg xmlns="http://www.w3.org/2000/svg" viewBox="-22 -62 44 66" width="88" height="132" shape-rendering="crispEdges">${sprite(chOf(me),pfOf(me).eq||{},'s')}</svg>`,im=new Image();im.onload=()=>{gfAv=im};im.src='data:image/svg+xml;charset=utf-8,'+encodeURIComponent(sv)}catch(e){}return gfAv}
 const GFST=Array.from({length:46},(_,i)=>({x:(i*73)%340,y:(i*37)%70,p:i*1.7}));
 const GFWS=Array.from({length:6},(_,i)=>({x:60+i*50,y:40+(i%3)*18,p:i*2.1,s:.3+i%3*.15}));
-function gfDraw(cv,t){const x=cv.getContext('2d'),W=cv.width,H=cv.height,s=W/340;x.setTransform(s,0,0,s,0,0);x.imageSmoothingEnabled=false;const w=340,h=210,wy=104;
+function gfBg(x,t,dw){const w=340,h=210,wy=104;
 let gr=x.createLinearGradient(0,0,0,wy);gr.addColorStop(0,'#070818');gr.addColorStop(1,'#1a1838');x.fillStyle=gr;x.fillRect(0,0,w,wy);
 GFST.forEach(st=>{const a=.35+.35*Math.sin(t*1.3+st.p);x.fillStyle=`rgba(220,230,255,${a})`;x.fillRect(st.x,st.y,1,1)});
 x.fillStyle='rgba(200,215,255,.10)';x.beginPath();x.arc(268,30,22,0,6.3);x.fill();x.fillStyle='#d8e0f8';x.beginPath();x.arc(268,30,11,0,6.3);x.fill();x.fillStyle='#1a1838';x.beginPath();x.arc(273,27,10,0,6.3);x.fill();
@@ -1611,8 +1612,11 @@ for(let i=0;i<9;i++){const ww=14-i*1.2+3*Math.sin(t*2+i);x.fillStyle=`rgba(216,2
 const bx=(t*6)%460-60;x.fillStyle='#0a0a18';x.beginPath();x.moveTo(bx,wy+8);x.lineTo(bx+34,wy+8);x.lineTo(bx+28,wy+13);x.lineTo(bx+6,wy+13);x.fill();x.fillRect(bx+15,wy-6,5,14);x.fillRect(bx+13,wy-9,9,3);x.strokeStyle='#0a0a18';x.beginPath();x.moveTo(bx+24,wy-4);x.lineTo(bx+40,wy+14);x.stroke();x.fillStyle=`rgba(255,200,120,${.6+.3*Math.sin(t*5)})`;x.fillRect(bx+2,wy+2,3,3);
 for(let k=0;k<3;k++){const my=wy-2+k*22,mo=(t*(4+k*2)+k*90)%520-180;gr=x.createLinearGradient(mo,0,mo+180,0);gr.addColorStop(0,'rgba(200,210,240,0)');gr.addColorStop(.5,'rgba(200,210,240,.07)');gr.addColorStop(1,'rgba(200,210,240,0)');x.fillStyle=gr;x.fillRect(mo,my,180,10)}
 GFWS.forEach((o,i)=>{const ox=o.x+18*Math.sin(t*o.s+o.p),oy=o.y+wy-70+8*Math.sin(t*o.s*1.7+o.p),a=.55+.25*Math.sin(t*3+o.p),g2=x.createRadialGradient(ox,oy,0,ox,oy,9);g2.addColorStop(0,`rgba(140,255,230,${a})`);g2.addColorStop(1,'rgba(140,255,230,0)');x.fillStyle=g2;x.fillRect(ox-9,oy-9,18,18);x.fillStyle=`rgba(230,255,250,${a})`;x.fillRect(ox-1,oy-1,2,2)});
-x.fillStyle='#2a2030';x.fillRect(0,wy+18,92,8);x.fillStyle='#3a2c3c';x.fillRect(0,wy+18,92,2);[6,34,62,86].forEach(px0=>{x.fillStyle='#1c1622';x.fillRect(px0,wy+26,4,24)});
+x.fillStyle='#2a2030';x.fillRect(0,wy+18,dw,8);x.fillStyle='#3a2c3c';x.fillRect(0,wy+18,dw,2);Array.from({length:Math.ceil(dw/28)},(_,k)=>6+k*28).forEach(px0=>{x.fillStyle='#1c1622';x.fillRect(px0,wy+26,4,24)});
 x.fillStyle='#1c1622';x.fillRect(78,wy-16,2,34);x.fillRect(74,wy-18,10,2);const lf=.7+.3*Math.sin(t*9)*Math.sin(t*3.1);const lg=x.createRadialGradient(79,wy-10,0,79,wy-10,26);lg.addColorStop(0,`rgba(255,190,110,${.45*lf})`);lg.addColorStop(1,'rgba(255,190,110,0)');x.fillStyle=lg;x.fillRect(53,wy-36,52,52);x.fillStyle=`rgba(255,220,150,${lf})`;x.fillRect(77,wy-13,5,6);
+}
+function gfDraw(cv,t){const x=cv.getContext('2d'),W=cv.width,H=cv.height,s=W/340;x.setTransform(s,0,0,s,0,0);x.imageSmoothingEnabled=false;const w=340,h=210,wy=104;
+gfBg(x,t,92);
 const av=gfAvatar(),py=wy+18-44+Math.sin(t*2)*1.5;x.save();x.globalAlpha=.78;if(av)x.drawImage(av,24,py,30,45);x.restore();
 const tipX=60,tipY=py+8;x.strokeStyle='#6a5a7a';x.lineWidth=1.5;x.beginPath();x.moveTo(44,py+26);x.lineTo(tipX,tipY);x.stroke();x.lineWidth=1;
 const st=gfS.st,now=performance.now()/1000;
@@ -1646,15 +1650,17 @@ x.textAlign='center';x.fillStyle='rgba(255,255,255,.8)';x.font='bold 11px sans-s
 /* --- 흐름 --- */
 let gfTm=0;
 window.gfBtn=()=>{const g=G();if(!gfCan(g))return;const st=gfS.st;
-if(st==='idle'||st==='done'||st==='got'){if(st==='got')return;const sp=gfSpot;if(gfDex(me)<GFOPEN[sp])return toast(GF.SPOT[sp]+'은(는) 저승 도감 '+GFOPEN[sp]+'종부터 열려요');clearTimeout(gfTm);gfS={st:'cast',t0:performance.now()/1000,bx:150+Math.random()*90,sp};gfMsg='';gfSfx('cast');
+if(st==='idle'||st==='done'||st==='got'){if(st==='got')return;const sp=gfSpot;if(gfDex(me)<GFOPEN[sp])return toast(GF.SPOT[sp]+'은(는) 저승 도감 '+GFOPEN[sp]+'종부터 열려요');clearTimeout(gfTm);gfS={st:'cast',t0:performance.now()/1000,bx:150+Math.random()*90,sp};gfMsg='';gfSfx('cast');gfOn('wait');
 setTimeout(()=>{if(gfS.st!=='cast')return;gfSfx('splash');gfS.st='wait';gfUI();const n=Math.random()<.55?(1+(Math.random()*2|0)):0;let tt=1600+Math.random()*(sp?4200:3200);for(let i=0;i<n;i++){const at=600+Math.random()*(tt-900);setTimeout(()=>{if(gfS.st!=='wait')return;gfS.st='nib';setTimeout(()=>{if(gfS.st==='nib')gfS.st='wait'},380)},at)}
-gfTm=setTimeout(()=>{if(gfS.st!=='wait'&&gfS.st!=='nib')return;const f=gfPick(sp);gfS.st='bite';gfS.f=f.id;gfS.bt=performance.now()/1000;gfSfx('bite');gfUI();try{navigator.vibrate&&navigator.vibrate(60)}catch(e){}
+gfTm=setTimeout(()=>{if(gfS.st!=='wait'&&gfS.st!=='nib')return;const f=gfPick(sp);gfS.st='bite';gfS.f=f.id;gfS.bt=performance.now()/1000;gfSfx('bite');gfUI();gfOn('bite');try{navigator.vibrate&&navigator.vibrate(60)}catch(e){}
 gfTm=setTimeout(()=>{if(gfS.st==='bite')gfLose('늦었어요! 찌가 다시 떠올랐어요')},Math.max(650,1150-80*f.rar))},tt)},600);gfUI();return}
 if(st==='nib'||st==='wait'){clearTimeout(gfTm);gfLose(st==='nib'?'너무 빨랐어요. 살짝 건드린 거였어요':'아직 입질이 없어요');return}
-if(st==='bite'){clearTimeout(gfTm);gfReelStart(GF.L[gfS.f]);gfUI();return}};
-function gfLose(m){gfS={st:'done'};gfMsg=m;gfHold=false;gfSfx('escape');gfUI()}
+if(st==='bite'){clearTimeout(gfTm);gfReelStart(GF.L[gfS.f]);gfUI();gfOn('reel');return}};
+let gfOnAt=0,gfAct=0;function gfOn(st,extra){if(!me)return;gfAct=Date.now();gfOnAt=Date.now();set(ref(db,ROOT+'/gfon/'+me),{s:st,at:NOW(),sp:gfSpot,...(extra||{})})}
+setInterval(()=>{const g=G();if(!me||!gfCan(g)||Date.now()-gfAct>180000)return;const el=$('gfz');if(!el||el.offsetParent===null)return;const st=gfS.st==='got'?'got':gfS.st==='reel'?'reel':gfS.st==='bite'?'bite':['cast','wait','nib'].includes(gfS.st)?'wait':'idle';set(ref(db,ROOT+'/gfon/'+me),{...((D.gfon||{})[me]||{}),s:st,at:NOW()})},25000);
+function gfLose(m){gfS={st:'done'};gfMsg=m;gfHold=false;gfSfx('escape');gfUI();gfOn('miss')}
 async function gfLand(){const s=gfS,f=GF.L[s.f],L=gfLen(f),sh=Math.random()<1/90,g=G(),sid=g&&g.sid||0,M=gfMe(),nw=!((M.c||{})[f.id]);
-gfS={st:'got',f:f.id,len:L.len,wl:L.wl,sh,nw,t0:performance.now()/1000};gfHold=false;gfSfx(sh||f.rar>=4?'sparkle':'catch');gfUI();
+gfS={st:'got',f:f.id,len:L.len,wl:L.wl,sh,nw,t0:performance.now()/1000};gfHold=false;gfOn('got',{f:f.id,len:L.len,sh:sh?1:0,wl:L.wl?1:0});gfSfx(sh||f.rar>=4?'sparkle':'catch');gfUI();
 let rw=GFRW[f.rar]+(nw?3:0)+(L.wl?2:0);if(sh)rw*=2;let got=0,dex=0,shn=0;
 try{const r=await runTransaction(ref(db,DBB+'/gfish/'+me),c=>{c=c||{};c.c=c.c||{};c.mx=c.mx||{};c.c[f.id]=(c.c[f.id]||0)+1;if(L.len>(c.mx[f.id]||0))c.mx[f.id]=L.len;if(sh){c.sh=c.sh||{};c.sh[f.id]=(c.sh[f.id]||0)+1}c.n=(c.n||0)+1;if(!c.g||c.g.s!==sid)c.g={s:sid,t:0};const a=Math.max(0,Math.min(rw,GFCAP-c.g.t));c.g.t+=a;c.ga=a;if(L.wl)c.wl=(c.wl||0)+1;return c});
 const v=r&&r.snapshot&&r.snapshot.val?r.snapshot.val():null;if(v){got=v.ga||0;dex=Object.keys(v.c||{}).length;shn=Object.keys(v.sh||{}).length}}catch(e){console.error(e)}
@@ -1685,14 +1691,31 @@ P2.innerHTML=box('저승 도감',R('d',gfDex),'종')+box('반짝',R('s',gfShN),'
 
 /* 저승 나루터 소식 (모두에게: 순위 3 + 최근 대어) */
 let gfpbAll=0;window.gfpbMore=()=>{gfpbAll=!gfpbAll;render()};
-function gfPub(g){const el=$('gfpb');if(!el)return;const us=Object.keys(D.gfish||{}).filter(n=>D.users[n]),F=Object.values(D.gfeed||{}).filter(x=>x&&GF.L[x.f]).sort((a,b)=>b.at-a.at);if(!us.length&&!F.length){el.style.display='none';return}el.style.display='block';
-const top=us.map(n=>[n,gfDex(n)]).filter(x=>x[1]>0).sort((a,b)=>b[1]-a[1]).slice(0,3),g0=g&&g.roles&&['vote','trial','night'].includes(g.phase)?Object.keys(g.roles).filter(n=>!g.alive[n]&&!(g.rise&&g.rise[n])):[];
+function gfPub(g){const el=$('gfpb');if(!el)return;el.style.display='block';
+const us=Object.keys(D.gfish||{}).filter(n=>D.users[n]),F=Object.values(D.gfeed||{}).filter(x=>x&&GF.L[x.f]).sort((a,b)=>b.at-a.at),live=g&&g.roles&&['vote','trial','night'].includes(g.phase);
+const on=gfActive(g),dead=live?Object.keys(g.roles).filter(n=>!g.alive[n]&&!(g.rise&&g.rise[n])):[];
+const top=us.map(n=>[n,gfDex(n),gfShN(n),((D.gfish[n]||{}).wl)||0]).filter(x=>x[1]>0).sort((a,b)=>b[1]-a[1]).slice(0,gfpbAll?10:5),mx=Math.max(1,...top.map(x=>x[1]));
 const ago=t=>{const m=Math.round((NOW()-t)/6e4);return m<1?'방금':m<60?m+'분 전':m<1440?Math.round(m/60)+'시간 전':Math.round(m/1440)+'일 전'};
-const sh=gfpbAll?F.slice(0,12):F.slice(0,3);
-el.innerHTML=`<div class="t">저승 나루터 소식 <span class="sm" style="font-weight:600">· 유령만 낚시할 수 있어요</span></div>`
-+(g0.length?`<div class="sm" style="margin-bottom:6px">지금 저승에 있는 유령: ${g0.map(esc).join(', ')}</div>`:'')
-+(top.length?`<div class="gftop">${top.map(([n,v],i)=>`<span><em>${i+1}</em>${esc(n)} <b>${v}종</b></span>`).join('')}</div>`:'')
-+(sh.length?`<div class="gfnw">${sh.map(x=>{const f=GF.L[x.f];return`<div><img src="${GF.url(f.id,x.sh?'sh':'',2)}"><span><b>${esc(x.n)}</b> · <i style="color:${GF.RARITY[f.rar].color}">${esc(f.name)}</i> ${x.len}cm${x.sh?' · 반짝':''}${x.wl?' · 월척':''}</span><small>${ago(x.at)}</small></div>`}).join('')}</div>${F.length>3?btn(gfpbAll?'접기':'최근 대어 더 보기','gfpbMore()',0,'g'):''}`:'<div class="sm">아직 대어 소식이 없어요. 영웅 이상 · 반짝 · 월척을 낚으면 여기에 떠요.</div>')}
+if(!el.dataset.b){el.dataset.b=1;el.innerHTML=`<div class="t" id="gpT"></div><div class="gfcw"><canvas id="gpCv" width="680" height="340"></canvas></div><div id="gpB"></div>`;requestAnimationFrame(gfPubTick)}
+$('gpT').innerHTML=`저승 나루터 <span class="sm" style="font-weight:600">· 지금 낚시 중 ${on.length}명${dead.length?' · 유령 '+dead.length+'명':''}</span>`;
+let h=`<div class="gprk"><div class="sm" style="margin:10px 2px 6px">저승 도감 순위</div>`+(top.length?top.map(([n,v,shc,wl],i)=>`<div class="gpr${n===me?' me':''}"><em>${i+1}</em><b>${esc(n)}</b><span class="vtb"><i style="width:${(v/mx*100).toFixed(0)}%"></i></span><strong>${v}종</strong><small>${shc?'반짝 '+shc:''}${shc&&wl?' · ':''}${wl?'월척 '+wl:''}</small></div>`).join(''):'<div class="sm">아직 아무도 못 낚았어요</div>')+`</div>`;
+const sh=F.slice(0,gfpbAll?10:3);if(sh.length)h+=`<div class="sm" style="margin:12px 2px 4px">최근 대어</div><div class="gfnw">${sh.map(x=>{const f=GF.L[x.f];return`<div><img src="${GF.url(f.id,x.sh?'sh':'',2)}"><span><b>${esc(x.n)}</b> · <i style="color:${GF.RARITY[f.rar].color}">${esc(f.name)}</i> ${x.len}cm${x.sh?' · 반짝':''}${x.wl?' · 월척':''}</span><small>${ago(x.at)}</small></div>`}).join('')}</div>`;
+if(us.length>5||F.length>3)h+=btn(gfpbAll?'접기':'순위·대어 더 보기','gfpbMore()',0,'g');
+h+=`<div class="sm" style="margin-top:8px;opacity:.7">죽은 참가자만 낚시할 수 있어요 (게임 탭). 유령들 대화는 여기 안 보여요.</div>`;
+$('gpB').innerHTML=h}
+function gfActive(g){const O=D.gfon||{},live=g&&g.roles&&['vote','trial','night'].includes(g.phase);return Object.keys(O).filter(n=>O[n]&&NOW()-(O[n].at||0)<75000&&(!live||(g.roles[n]&&!g.alive[n]))).sort()}
+const gfAvC={};function gfAvOf(n){const k=n+JSON.stringify(pfOf(n).eq||{})+JSON.stringify(chOf(n));const c=gfAvC[n];if(c&&c.k===k)return c.im&&c.im.complete?c.im:null;const im=new Image();gfAvC[n]={k,im};try{im.src='data:image/svg+xml;charset=utf-8,'+encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="-22 -62 44 66" width="88" height="132" shape-rendering="crispEdges">${sprite(chOf(n),pfOf(n).eq||{},'s')}</svg>`)}catch(e){}return null}
+function gfPubDraw(cv,t){const x=cv.getContext('2d'),s=cv.width/340;x.setTransform(s,0,0,s,-0,-20*s);x.imageSmoothingEnabled=false;const wy=104,g=G(),on=gfActive(g),O=D.gfon||{};gfBg(x,t,340);
+const n=on.length,gap=n?Math.min(54,300/n):0;on.forEach((nm,i)=>{const q=O[nm]||{},x0=12+i*gap+(n<4?(300-gap*n)/2:0),py=wy+18-44+Math.sin(t*2+i)*1.5,av=gfAvOf(nm);x.save();x.globalAlpha=.8;if(av)x.drawImage(av,x0,py,30,45);x.restore();
+const tipX=x0+36,tipY=py+8,bx=x0+44,by=wy+64;let bb=by;const st=q.s;if(st==='wait')bb+=Math.sin(t*3+i);if(st==='bite')bb+=3+Math.sin(t*30)*2;if(st==='reel')bb+=2+Math.sin(t*18)*2;
+x.strokeStyle='#6a5a7a';x.lineWidth=1.4;x.beginPath();x.moveTo(x0+20,py+26);x.lineTo(tipX,tipY);x.stroke();x.lineWidth=1;
+if(st==='wait'||st==='bite'||st==='reel'){x.strokeStyle='rgba(220,230,255,.45)';x.beginPath();x.moveTo(tipX,tipY);x.quadraticCurveTo(tipX+6,bb-8,bx,bb);x.stroke();x.fillStyle='#f4f4f4';x.fillRect(bx-2,bb-4,4,3);x.fillStyle='#e8556a';x.fillRect(bx-2,bb-1,4,3)}
+if(st==='bite'){x.fillStyle='#ffe066';x.font='bold 16px sans-serif';x.textAlign='center';x.fillText('!',bx,bb-10)}
+x.textAlign='center';x.font='bold 9px sans-serif';x.fillStyle='rgba(0,0,0,.6)';x.fillText(nm,x0+15+1,wy+38+1);x.fillStyle='#e8f4ff';x.fillText(nm,x0+15,wy+38);
+x.font='8px sans-serif';x.fillStyle='rgba(184,255,240,.8)';x.fillText(st==='reel'?'감는 중':st==='bite'?'입질!':st==='wait'?'기다리는 중':st==='got'&&NOW()-(q.at||0)<12000?'낚았다!':st==='miss'&&NOW()-(q.at||0)<8000?'놓쳤다…':'쉬는 중',x0+15,wy+48);
+if(st==='got'&&q.f!=null&&GF.L[q.f]&&NOW()-(q.at||0)<12000){const im=GF.img(q.f,q.sh?'sh':'',2),sc=Math.min(1.2,40/im.width),iw=im.width*sc,ih=im.height*sc;const gg=x.createRadialGradient(x0+15,py-10,0,x0+15,py-10,24);gg.addColorStop(0,'rgba(255,240,170,.35)');gg.addColorStop(1,'rgba(0,0,0,0)');x.fillStyle=gg;x.fillRect(x0-10,py-34,50,50);x.drawImage(im,x0+15-iw/2,py-10-ih/2+Math.sin(t*4)*2,iw,ih)}});
+if(!n){x.textAlign='center';x.fillStyle='rgba(220,230,255,.6)';x.font='11px sans-serif';x.fillText('지금 낚시하는 유령이 없어요',170,wy+62)}}
+function gfPubTick(){const cv=$('gpCv'),el=$('gfpb');if(cv&&el&&el.offsetParent!==null){try{gfPubDraw(cv,performance.now()/1000)}catch(e){console.error(e)}requestAnimationFrame(gfPubTick)}else setTimeout(()=>requestAnimationFrame(gfPubTick),500)}
 let gfLoop=0;function gfTick(){const cv=$('gfCv'),el=$('gfz');if(!cv||!el||el.style.display==='none'||el.offsetParent===null||gfT!=='f'){gfLoop=setTimeout(()=>requestAnimationFrame(gfTick),400);return}
 const now=performance.now()/1000;if(gfS.st==='reel')gfReelStep(now);try{gfDraw(cv,now)}catch(e){console.error(e)}requestAnimationFrame(gfTick)}
 function gfRender(g){const el=$('gfz');if(!el)return;if(!gfCan(g)){el.style.display='none';if(gfS.st!=='idle'){gfS={st:'idle'};gfHold=false}return}el.style.display='block';
