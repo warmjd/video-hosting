@@ -1818,6 +1818,12 @@ el.innerHTML=`<div class="t">마피아 밀담 <span class="sm" style="font-weigh
 +`<div class="gll mcl">${show.map(x=>`<div class="glm mcm${x.f===me?' me':''}"><b>${esc(x.f)}</b><small>${x.d||''}일차 ${PH[x.ph]||''}</small><p>${esc(x.m)}</p></div>`).join('')||'<div class="sm" style="text-align:center;padding:8px 0">오늘 밤 누구를 노릴지 여기서 정해요</div>'}</div>`
 +(w==='live'?`<div class="g2 scr" style="margin-top:8px">${al(g).filter(n=>!isM(g.roles[n])).map(n=>`<button class="g" style="width:auto;padding:4px 10px;font-size:.78rem;min-height:0" onclick="mchPick('${esc(n)}')">${esc(n)}</button>`).join('')}</div><div style="display:flex;gap:6px;margin-top:6px"><input id="mchIn" data-keep="1" maxlength="120" placeholder="동료에게만 (예: 오늘 밤 ○○ 가자)" style="flex:1" onkeydown="if(event.key==='Enter')mchSend()"><button class="p" style="width:auto" onclick="mchSend()">보내기</button></div>`:w==='dead'?'<div class="sm" style="margin-top:6px">죽은 마피아는 읽기만 할 수 있어요</div>':'')
 +(w!=='read'?wmk():'')}
+/* 채팅창 스크롤 유지: 화면이 다시 그려져도 맨 위로 튀지 않게 (맨 아래 보고 있었으면 새 글 따라 내려감) */
+const chatSave=el=>{const l=el&&el.querySelector('.gll');return l?{t:l.scrollTop,b:l.scrollHeight-l.scrollTop-l.clientHeight<40}:null};
+const chatRestore=(el,st)=>{const l=el&&el.querySelector('.gll');if(!l)return;if(!l.clientHeight){l.dataset.pend=1;return}if(!st||st.b)l.scrollTop=l.scrollHeight;else l.scrollTop=st.t};
+const chatPend=()=>setTimeout(()=>document.querySelectorAll('.gll[data-pend]').forEach(l=>{if(l.clientHeight){l.scrollTop=l.scrollHeight;delete l.dataset.pend}}),60);
+document.addEventListener('toggle',chatPend,true);document.addEventListener('click',e=>{if(e.target.closest&&e.target.closest('.nav'))chatPend()},true);
+{const _g=glRender;glRender=function(g){const el=$('glc'),st=chatSave(el);_g(g);chatRestore(el,st)};const _m=mchRender;mchRender=function(g){const el=$('mch'),st=chatSave(el);_m(g);chatRestore(el,st)}}
 /* ===== 단서 카드 · 추리판 ===== */
 let cbT='p',cbAll=0,cfOpen=0;
 const cMine=(g,p)=>{const o=[];Object.keys(g.clue||{}).forEach(d=>{const c=(g.clue[d]||{})[p];if(c)o.push({d:+d,c})});return o.sort((a,b)=>b.d-a.d)};
