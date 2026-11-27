@@ -393,7 +393,7 @@ const RK=['mafia','godfather','jester','police','doctor','soldier','detective','
 const RMAX={mafia:6,godfather:2,jester:2,police:1,doctor:1,soldier:2,detective:2,jesus:1,mayor:1,reporter:2,drunk:2,witness:2};
 const POOLK=RK.filter(k=>!isM(k)),DEF_TM={v:12,t:3,n:9};
 const PRESET={mode:'custom',c:{mafia:3,jester:1,police:1,doctor:1},pool:['soldier','detective'],pk:1,tm:{v:12,t:3,n:9}};
-const CF=()=>{const c=D.cfg||PRESET;return{mode:c.mode||'custom',c:{...(c.c||{})},pool:[...(c.pool||[])].filter(k=>POOLK.includes(k)),pk:c.pk||0,clue:c.clue||0,tm:{...DEF_TM,...(c.tm||{})}}};
+const CF=()=>{const c=D.cfg||PRESET;return{mode:c.mode||'custom',c:{...(c.c||{})},pool:[...(c.pool||[])].filter(k=>POOLK.includes(k)),pk:c.pk||0,clue:c.clue||0,mx:c.mx||0,tm:{...DEF_TM,...(c.tm||{})}}};
 const TL=(c,k)=>(((c.tm||{})[k])||DEF_TM[k])*HR;
 function autoList(n,shf){const m=n>=10?3:n>=8?2:1,ma=Array(m).fill('mafia');if(n>=12)ma[0]='godfather';
 const fixed=[...ma,'police','doctor','jester',...(n>=10?['soldier','detective']:[]),...(n>=11?['jesus']:[])],pool=shf(['mayor','reporter','drunk','witness']);
@@ -537,6 +537,7 @@ window.cfgRole=(k,d)=>saveCfg(c=>{c.mode='custom';c.c[k]=Math.max(0,Math.min(RMA
 window.cfgPool=k=>saveCfg(c=>{c.mode='custom';const i=c.pool.indexOf(k);if(i>=0)c.pool.splice(i,1);else c.pool.push(k);c.pk=Math.min(c.pk,c.pool.length)});
 window.cfgPk=d=>saveCfg(c=>{c.mode='custom';c.pk=Math.max(0,Math.min(c.pool.length,c.pk+d))});
 window.cfgClue=async v=>{const c=CF();c.clue=v;await set(ref(db,ROOT+'/cfg'),c);toast(inGame()?'다음 판부터 적용돼요':'적용했어요')};
+window.cfgMx=d=>saveCfg(c=>{c.mx=Math.max(4,Math.min(20,(c.mx||MAXP0)+d))});
 window.cfgTm=(k,d)=>saveCfg(c=>{c.tm[k]=Math.max(1,Math.min(48,c.tm[k]+d))});
 window.cfgMode=m=>saveCfg(c=>{if(m==='preset'){const P=JSON.parse(JSON.stringify(PRESET));Object.keys(P).forEach(k=>c[k]=P[k])}else c.mode=m});
 window.extendT=async h=>{await runTransaction(ref(db,ROOT+'/game'),c=>{if(!c||!['vote','trial','night'].includes(c.phase))return;c.deadline=Math.max(c.deadline||0,NOW())+h*HR;c.log=c.log||[];c.log.push('⏰ 운영자가 이번 단계 제한시간을 '+h+'시간 늘렸어요.');return c})};
@@ -554,7 +555,7 @@ if(!amt)return alert('금액을 입력하세요');if(!who.length)return alert('�
 for(const n of who)await runTransaction(ref(db,DBB+'/profiles/'+n),c=>{c=c||{t:0};c.t=Math.max(0,(c.t||0)+amt);return c});alert('완료! '+who.length+'명 · '+amt+'달란트')};
 function cfgUI(){const cf=CF(),n=Object.keys(D.entries||{}).filter(x=>D.users[x]).length,ck=cfgCheck(cf,n),ed=!inGame();
 const cnt=(lab,val,fm,fp)=>`<div class="row2"><div class="nm2">${lab}</div>${ed?btn('−',fm,0,'g'):''}<b style="min-width:24px;text-align:center">${val}</b>${ed?btn('+',fp,0,'g'):''}</div>`;
-let h=`<div class="t" style="margin-top:14px">📋 직업 구성 설정${ed?'':' (게임 중엔 변경 불가 · 다음 판부터 적용)'}</div>`;
+let h=`<div class="t" style="margin-top:14px">📋 직업 구성 설정${ed?'':' (게임 중엔 변경 불가 · 다음 판부터 적용)'}</div>`+cnt('👥 정원 (스스로 신청 가능한 인원)',capP()+'명','cfgMx(-1)','cfgMx(1)')+'<div class="sm" style="margin:-2px 2px 6px">운영자·마을지기가 아래 신청 관리에서 넣는 사람은 정원과 상관없이 들어가요. 직업 구성을 바꿔도 신청자는 절대 빠지지 않아요.</div>';
 if(ed)h+=`<div class="g2">${btn('📌 기본 규칙으로','cfgMode(\'preset\')',0,'g')}${btn('🤖 자동(인원별)','cfgMode(\'auto\')',cf.mode==='auto','g')}${btn('✏️ 직접 설정','cfgMode(\'custom\')',cf.mode==='custom','g')}</div>`;
 if(cf.mode==='custom'){h+=`<div class="sm" style="margin-top:6px">고정 직업 (나머지 자리는 전부 🛋️백수)</div>`+RK.map(k=>cnt(RN[k]+(RMAX[k]===1?' <span class="sm">(최대 1)</span>':''),cf.c[k]||0,`cfgRole('${k}',-1)`,`cfgRole('${k}',1)`)).join('');
 h+=`<div class="sm" style="margin-top:8px">🎲 랜덤 후보 · 눌러서 넣기/빼기 (이 중에서 아래 개수만큼 무작위)</div><div class="g2">${POOLK.map(k=>btn(RN[k],ed?`cfgPool('${k}')`:'',cf.pool.includes(k),'g')).join('')}</div>`+cnt('🎲 랜덤으로 넣을 개수',cf.pk,'cfgPk(-1)','cfgPk(1)')}
@@ -579,11 +580,11 @@ if(!list.length)return alert(mode==='last'?'저장된 지난 판 참가자가 �
 if(!confirm(list.length+'명을 대신 신청 처리할까요?\n'+list.join(', ')))return;const sk=[];for(const n of list){if(busyElse(n)){sk.push(n);continue}await set(ref(db,ROOT+'/entries/'+n),true)}if(sk.length)alert('다른 판에 참가 중이라 건너뛴 사람: '+sk.join(', '))};
 const autoOn=n=>!!((D.profiles||{})[n]||{}).auto;
 const busyElse=n=>{const R=D.rooms||{};for(const k of Object.keys(R)){const r=R[k]||{};if(k!==RKEY&&(r.pl||[]).includes(n)&&NOW()-(r.at||0)<3*864e5)return r.nm||k}return''};
-function joinErr(n,ls){const be=busyElse(n);if(be)return be+' 판에 이미 참가 중이에요. 한 번에 한 판만 할 수 있어요.';if(ls.length>=MAXP)return'정원 '+MAXP+'명이 찼어요. 이번엔 관전으로 함께해요!';const v=D.vil[n];if(v&&ls.filter(k=>D.vil[k]===v).length>=VCAP)return'한 마을은 '+VCAP+'명까지예요. 다른 마을 분들 자리를 남겨두는 거예요. 관전은 언제든 가능해요!';return''}
+function joinErr(n,ls){const be=busyElse(n);if(be)return be+' 판에 이미 참가 중이에요. 한 번에 한 판만 할 수 있어요.';if(ls.length>=capP())return'정원 '+capP()+'명이 찼어요. 이번엔 관전으로 함께해요!';const v=D.vil[n];if(v&&ls.filter(k=>D.vil[k]===v).length>=VCAP)return'한 마을은 '+VCAP+'명까지예요. 다른 마을 분들 자리를 남겨두는 거예요. 관전은 언제든 가능해요!';return''}
 async function autoJoin(){if(!lobbyNow())return;const ls=Object.keys(D.entries||{}).filter(k=>D.users[k]);for(const n of Object.keys(D.users||{})){if(D.users[n].bot||!autoOn(n)||(D.entries||{})[n]||(D.optout||{})[n]||((D.where||{})[n]||'_main')!==RKEY)continue;if(joinErr(n,ls))continue;await set(ref(db,ROOT+'/entries/'+n),true);ls.push(n)}}
 window.autoT=async()=>{const n=me;if(!n)return;const on=!autoOn(n);await set(ref(db,DBB+'/profiles/'+n+'/auto'),on?true:null);if(on){await set(ref(db,ROOT+'/optout/'+n),null);if(lobbyNow()&&!(D.entries||{})[n]){const ls=Object.keys(D.entries||{}).filter(k=>D.users[k]),e=joinErr(n,ls);if(!e)await set(ref(db,ROOT+'/entries/'+n),true)}}toast(on?'자동 참가를 켰어요. 새 판이 열리면 알아서 신청돼요':'자동 참가를 껐어요. 다음 판부터는 직접 신청해 주세요')};
 const autoRow=n=>{const on=autoOn(n);return`<button class="mrow auto${on?' on':''}" onclick="autoT()"><i class="sw"></i><span><b>다음 판 자동 참가</b><small>${on?'켜짐 · 새 판이 열리면 알아서 신청돼요':'꺼짐 · 매번 직접 신청해야 해요'}</small></span></button>`};
-window.applyG=async()=>{const n=P(),g=G();if(!n||(g&&g.phase!=='lobby'))return;if(!(D.entries&&D.entries[n])){const ls=Object.keys(D.entries||{}).filter(k=>D.users[k]);if(ls.length>=MAXP)return alert('정원 '+MAXP+'명이 찼어요. 이번엔 관전으로 함께해요!');const v=D.vil[n];if(v&&ls.filter(k=>D.vil[k]===v).length>=VCAP)return alert('한 마을은 '+VCAP+'명까지예요. 다른 마을 분들 자리를 남겨두는 거예요. 관전은 언제든 가능해요!');const be=busyElse(n);if(be)return alert(be+' 판에 이미 참가 중이에요. 한 번에 한 판만 할 수 있어요.')}const was=!!(D.entries&&D.entries[n]);if(!was)set(ref(db,DBB+'/where/'+n),RKEY);await set(ref(db,ROOT+'/entries/'+n),was?null:true);if(autoOn(n))await set(ref(db,ROOT+'/optout/'+n),was?true:null)};
+window.applyG=async()=>{const n=P(),g=G();if(!n||(g&&g.phase!=='lobby'))return;if(!(D.entries&&D.entries[n])){const ls=Object.keys(D.entries||{}).filter(k=>D.users[k]);if(ls.length>=capP())return alert('정원 '+capP()+'명이 찼어요. 이번엔 관전으로 함께해요!');const v=D.vil[n];if(v&&ls.filter(k=>D.vil[k]===v).length>=VCAP)return alert('한 마을은 '+VCAP+'명까지예요. 다른 마을 분들 자리를 남겨두는 거예요. 관전은 언제든 가능해요!');const be=busyElse(n);if(be)return alert(be+' 판에 이미 참가 중이에요. 한 번에 한 판만 할 수 있어요.')}const was=!!(D.entries&&D.entries[n]);if(!was)set(ref(db,DBB+'/where/'+n),RKEY);await set(ref(db,ROOT+'/entries/'+n),was?null:true);if(autoOn(n))await set(ref(db,ROOT+'/optout/'+n),was?true:null)};
 window.addBots=async()=>{const k=Object.keys(D.users),b=k.filter(n=>n.startsWith('테스트')).length,need=Math.max(0,9-Object.keys(D.entries||{}).length);for(let i=1;i<=need;i++){const n='테스트'+(b+i);await set(ref(db,DBB+'/users/'+n),{pin:'-',bot:true});await set(ref(db,ROOT+'/entries/'+n),true)}};
 window.delBots=async()=>{for(const n of Object.keys(D.users))if(D.users[n].bot)await set(ref(db,DBB+'/users/'+n),null)};
 window.auto=async()=>{const g=G();if(!g||!g.roles)return;const a=al(g),d=g.day,pk=x=>{const o=a.filter(y=>y!==x);return o[Math.random()*o.length|0]},bots=a.filter(n=>D.users[n]&&D.users[n].bot);
@@ -600,7 +601,7 @@ const hm=t=>{const d=new Date(t),n=new Date(NOW()),tm=d.toLocaleTimeString('ko-K
 const PHN={vote:'낮 투표',trial:'최후 변론',night:'밤'};
 function cd(){const g=G(),el=$('hdt');if(!el||!g||!['vote','trial','night'].includes(g.phase))return;const s=Math.max(0,Math.floor((g.deadline-NOW())/1000)),h=s/3600|0,m=s/60%60|0;el.innerHTML=`<b>${g.day}일차 · ${PHN[g.phase]}</b><span>${hm(g.deadline)} 마감 · ${h?h+'시간 ':''}${h||m?m+'분':s+'초'} 남음</span>`}
 function noticeTxt(){const g=G(),u=location.href.split('?')[0],n=Object.keys(D.entries||{}).filter(k=>D.users[k]).length;
-if(!g||g.phase==='lobby')return`[${RNM()} 마피아] 참가 신청 받는 중\n현재 ${n}/${MAXP}명${D.lobbyDl?' · '+hm(D.lobbyDl)+' 마감':''}\n${u}`;
+if(!g||g.phase==='lobby')return`[${RNM()} 마피아] 참가 신청 받는 중\n현재 ${n}/${capP()}명${D.lobbyDl?' · '+hm(D.lobbyDl)+' 마감':''}\n${u}`;
 if(g.phase==='end')return`[${RNM()} 마피아] 게임 종료\n${stripE(g.winner||'')}\n${u}`;
 const d=g.day,dl=hm(g.deadline);
 if(g.phase==='vote'){const r=RES(g,d-1);return`[${RNM()} 마피아] ${d}일차 낮이 밝았어요\n${d>1?(r.kl?'간밤에 '+r.kl+'님이 사망했어요':'간밤엔 아무도 죽지 않았어요')+'\n':''}처형 투표는 ${dl}까지\n생존 ${al(g).length}명: ${al(g).join(', ')}\n${u}`}
@@ -3928,14 +3929,14 @@ window.navT=t=>{TAB=t;setTimeout(()=>{try{presUp()}catch(e){}},0);localStorage.s
 function navBadge(g,p){const on=(()=>{if(!p||!g||!g.roles||!g.roles[p]||!g.alive[p])return false;const d=g.day;if(g.phase==='vote')return!(D.votes[d]||{})[p];if(g.phase==='trial')return p!==g.def&&!(D.fv[d]||{})[p];if(g.phase==='night'){const r=g.roles[p],N=D.night[d]||{};if(isM(r))return!(N.mafia||{})[p];if(['doctor','police','detective'].includes(r))return!(N[r]||{})[p]}return false})();const el=$('dot_game');if(el)el.classList.toggle('on',on&&TAB!=='game')}
 window.txToggle=()=>{localStorage.setItem('m1_tx',localStorage.getItem('m1_tx')==='1'?'0':'1');txApply();try{gfTxL='';render()}catch(e){}try{gfUI()}catch(e){}};txApply();
 // ===== 마을 · 자동 진행 · 점수 · 프로필 =====
-const MAXP=10,VCAP=8,DL_H=21,RESET_H=1;let ysTxt='',vcOpen=false,vcSel='';
+const MAXP0=10,VCAP=99,capP=()=>CF().mx||MAXP0,DL_H=21,RESET_H=1;let ysTxt='',vcOpen=false,vcSel='';
 const fmtDl=()=>D.lobbyDl?new Date(D.lobbyDl).toLocaleString('ko-KR',{month:'numeric',day:'numeric',hour:'2-digit',minute:'2-digit'}):'-';
 const nextDl=()=>{const d=new Date(NOW());d.setHours(DL_H,0,0,0);if(d.getTime()<=NOW()+36e5)d.setDate(d.getDate()+1);return d.getTime()};
 window.cpTxt=async t=>{try{await navigator.clipboard.writeText(t);toast('복사했어요. 카톡방에 붙여넣으세요')}catch(e){prompt('길게 눌러 복사하세요',t)}};
 window.cpSum=()=>cpTxt(ysTxt);
-window.cpRecruit=()=>{const n=Object.keys(D.entries||{}).filter(k=>D.users[k]).length;cpTxt('[마피아 모집] 이번 판 참가 신청 중이에요 🙋\n현재 '+n+'/'+MAXP+'명 · 마감 '+fmtDl()+'\n'+location.href.split('?')[0])};
+window.cpRecruit=()=>{const n=Object.keys(D.entries||{}).filter(k=>D.users[k]).length;cpTxt('[마피아 모집] 이번 판 참가 신청 중이에요 🙋\n현재 '+n+'/'+capP()+'명 · 마감 '+fmtDl()+'\n'+location.href.split('?')[0])};
 window.setHello=t=>{const n=P();if(!n||!lobbyNow())return;set(ref(db,ROOT+'/hello/'+n),String(t).trim().slice(0,30)||null)};
-function lobbyExtra(p){return '<input data-keep="1" maxlength="30" placeholder="💬 한 줄 인사 (예: 동명입니다 · 키 큼)" value="'+esc(D.hello[p]||'')+'" onchange="setHello(this.value)"><div class="sm">⏰ 신청 마감 '+fmtDl()+' · 정원 '+MAXP+'명'+(D.lobbyMsg?'\n'+esc(D.lobbyMsg):'')+'</div><div class="q" style="font-size:.8rem">🙋 신청자\n'+(Object.keys(D.entries||{}).filter(n=>D.users[n]).map(n=>(D.vil[n]?esc(D.vil[n])+' · ':'')+esc(n)+(D.hello[n]?' — '+esc(D.hello[n]):'')).join('\n')||'아직 없어요')+'</div>'+btn('📋 모집 공지 복사','cpRecruit()',0,'g')}
+function lobbyExtra(p){return '<input data-keep="1" maxlength="30" placeholder="💬 한 줄 인사 (예: 동명입니다 · 키 큼)" value="'+esc(D.hello[p]||'')+'" onchange="setHello(this.value)"><div class="sm">⏰ 신청 마감 '+fmtDl()+' · 정원 '+capP()+'명'+(D.lobbyMsg?'\n'+esc(D.lobbyMsg):'')+'</div><div class="q" style="font-size:.8rem">🙋 신청자\n'+(Object.keys(D.entries||{}).filter(n=>D.users[n]).map(n=>(D.vil[n]?esc(D.vil[n])+' · ':'')+esc(n)+(D.hello[n]?' — '+esc(D.hello[n]):'')).join('\n')||'아직 없어요')+'</div>'+btn('📋 모집 공지 복사','cpRecruit()',0,'g')}
 const WK=()=>Math.floor((NOW()+9*36e5-4*864e5)/(7*864e5));
 async function recordPlay(ns){const w=WK(),t=NOW(),cnt={};ns.forEach(n=>{const v=D.vil[n];if(v)cnt[v]=(cnt[v]||0)+1});const mix=Object.keys(cnt).length>1,maj=Object.keys(cnt).sort((a,b)=>cnt[b]-cnt[a])[0];for(const n of ns){const old=D.lp[n],ret=(old&&t-old>14*864e5)||(!old&&!(stOf(n).g>0)),c=(D.plays[w]||{})[n]||{};await set(ref(db,DBB+'/plays/'+w+'/'+n),{r:(c.r||ret)?1:0,x:(c.x||mix)?1:0});if(mix&&!c.x)await bonus(n,D.vil[n]&&D.vil[n]!==maj?40:20);await set(ref(db,DBB+'/lp/'+n),t)}}
 function vScore(){const P_=D.plays[WK()]||{},V={};Object.keys(D.users).filter(n=>!D.users[n].bot&&D.vil[n]).forEach(n=>{const v=D.vil[n],o=V[v]=V[v]||{m:0,p:0,r:0,x:0};o.m++;if(P_[n]){o.p++;o.r+=P_[n].r||0;o.x+=P_[n].x||0}});return Object.entries(V).map(([v,o])=>({v,...o,s:Math.round(100*o.p/o.m+10*o.r+10*o.x)})).sort((a,b)=>b.s-a.s)}
