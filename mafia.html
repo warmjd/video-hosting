@@ -223,6 +223,25 @@ body.tx .gfg{grid-template-columns:1fr 1fr}body.tx .gfc{aspect-ratio:auto;justif
 .gfsw{float:right;width:auto;min-height:0;padding:4px 9px;font-size:.7rem;border-radius:999px;background:rgba(255,255,255,.07);box-shadow:none;color:#cfd8f8}
 html,body,body *{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}input,textarea,[contenteditable],input *,textarea *{-webkit-user-select:text!important;user-select:text!important;-webkit-touch-callout:default!important}
 #gfz,#gfz *,#gfpb,#gfpb *{-webkit-user-select:none!important;user-select:none!important;-webkit-touch-callout:none!important;-webkit-tap-highlight-color:transparent}
+.wt{display:flex;flex-direction:column;gap:10px}
+.wtp{position:relative;border-radius:14px;overflow:hidden;padding:10px 10px 14px;border:2px solid #07080f;min-height:180px;display:flex;flex-direction:column;gap:8px;box-shadow:0 3px 0 rgba(0,0,0,.5)}
+.wd{background:linear-gradient(180deg,#4d73a8,#2b4068)}.wdk{background:linear-gradient(180deg,#4a2f3c,#1f1626)}.wm{background:linear-gradient(180deg,#a8785a,#4b3658)}
+.wn{background:radial-gradient(circle at 85% 12%,#4b5090 0,#151836 40%,#08091a)}.wend{background:linear-gradient(180deg,#352a5e,#141128)}
+.wtc{align-self:flex-start;background:#f3eee2;color:#1d1d1d;font-size:.7rem;font-weight:800;padding:3px 8px;border-radius:3px;box-shadow:2px 2px 0 #000}
+.wts{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px}
+.wtrow{display:flex;align-items:flex-end;justify-content:center;gap:2px 6px;flex-wrap:wrap}
+.wtf{display:flex;flex-direction:column;align-items:center}.wtf svg{display:block}
+.wtf small{font-size:.62rem;color:#f0f0f6;background:rgba(0,0,0,.45);padding:0 6px;border-radius:6px;margin-top:-2px;white-space:nowrap}.wtf small i{font-style:normal;color:#ffd43b;margin-left:3px}
+.wtf.dd{opacity:.4;filter:grayscale(1)}.wtf.wmf small{background:#a61e1e}
+.wtly svg{width:150px!important;height:72px!important}
+.wtar{font-size:1.3rem;color:#fff;align-self:center;margin:0 2px 20px;font-weight:800}
+.wtbig{font-size:1.15rem;font-weight:800;color:#fff;text-shadow:2px 2px 0 #000;text-align:center}.wtbig.m{color:#ff6b6b}.wtbig.s{color:#69db7c}
+.wtn{font-size:.8rem;color:#e3e6f5;text-align:center;line-height:1.5}.wtn b{color:#ffd43b}
+.wtb{align-self:flex-start;max-width:82%;background:#fff;color:#111;font-size:.78rem;padding:6px 11px;border-radius:14px 14px 14px 4px;box-shadow:2px 2px 0 rgba(0,0,0,.55);line-height:1.4}
+.wtb b{display:block;font-size:.6rem;color:#777;font-weight:700}.wtb.r{align-self:flex-end;border-radius:14px 14px 4px 14px}
+.wn .wtb{background:#262838;color:#eee}.wn .wtb b{color:#ff8787}
+.wth{display:flex;align-items:center;gap:8px;margin-bottom:10px}.wth b{flex:1}.wth button{width:auto;padding:6px 12px;min-height:0}
+#arcB{overflow-y:auto;-webkit-overflow-scrolling:touch}
 .gfr{display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-top:8px}.gfr img{height:22px;image-rendering:pixelated}
 .gfg{display:grid;grid-template-columns:repeat(5,1fr);gap:6px}.gfc{position:relative;aspect-ratio:1;display:flex;align-items:center;justify-content:center;padding:4px;border-radius:10px;background:rgba(255,255,255,.05);border:1px solid color-mix(in srgb,var(--rc) 45%,transparent);box-shadow:none;min-height:0}.gfc img{max-width:100%;max-height:100%;image-rendering:pixelated}.gfc.no{border-color:rgba(255,255,255,.06)}.gfc.sel{background:rgba(140,255,230,.15)}.gfc i{position:absolute;top:1px;right:4px;font-style:normal;color:#ffe066;font-size:.7rem}
 .gfpg{display:flex;align-items:center;justify-content:center;gap:10px;margin-top:8px}.gfpg button{width:auto;padding:6px 14px}
@@ -597,7 +616,7 @@ function lwRender(g,p){const el=$('lwc'),L=Object.entries(D.lw||{}).filter(([n,t
 if(!L.length){el.style.display='none'}else{el.style.display='block';el.innerHTML=`<div class="t">마지막 한마디</div>`+L.map(([n,t])=>`<div class="lwq" style="text-align:left">“${esc(t)}”<small>${esc(n)}</small></div>`).join('')}
 const M=$('me');if(p&&g&&g.roles&&g.roles[p]&&g.alive&&['vote','trial','night'].includes(g.phase)&&M.style.display!=='none'){const mine=(D.lw||{})[p]||'',ok=g.alive[p]||(g.rise&&g.rise[p]);
 M.insertAdjacentHTML('beforeend',ok?`<div class="lwbox"><div class="sm" style="margin-bottom:4px">마지막 한마디 · 미리 적어 두면 죽을 때 모두에게 공개돼요 (죽은 뒤엔 못 고쳐요)</div><input data-keep="1" maxlength="40" placeholder="예: 범인은 ○○ 같아요…" value="${esc(mine)}" onchange="setLw(this.value)"></div>`:`<div class="lwbox"><div class="sm">마지막 한마디 · ${mine?'“'+esc(mine)+'” (공개됨)':'남기지 않았어요'} · 죽은 뒤엔 고칠 수 없어요</div></div>`)}}
-function storyRender(g){const el=$('story');if(!g||g.phase!=='end'||!g.roles){el.style.display='none';return}el.style.display='block';el.innerHTML=storyHTML(g)+'<div class="sm" style="margin-top:8px">투표 화살표가 있는 날짜별 상세 기록은 토론 탭에 있어요. 지난 판들은 토론 탭 달력에서 다시 볼 수 있어요.</div>'}
+function storyRender(g){const el=$('story');if(!g||g.phase!=='end'||!g.roles){el.style.display='none';return}el.style.display='block';el.innerHTML='<button class="p" style="width:100%;margin-bottom:12px" onclick="wtLive()">이번 판 웹툰으로 다시보기</button>'+storyHTML(g)+'<div class="sm" style="margin-top:8px">투표 화살표가 있는 날짜별 상세 기록은 토론 탭에 있어요. 지난 판들은 토론 탭 달력에서 다시 볼 수 있어요.</div>'}
 function storyHTML(g){
 const R=n=>{const r=g.roles[n];return r?RN[r].split(' ').slice(1).join(' '):''},top=o=>{const c={};Object.values(o||{}).forEach(t=>{if(t!=='-')c[t]=(c[t]||0)+1});return Object.entries(c).sort((a,b)=>b[1]-a[1])};
 let h='<div class="t">그날 밤 무슨 일이</div><div class="sm" style="margin-bottom:10px">이번 판의 모든 선택을 공개해요</div><div class="story">';
@@ -710,11 +729,42 @@ let h=`<div class="t">게임 달력</div><div class="calh"><button class="g" onc
 if(calSel){h+=`<div class="sm" style="margin:12px 2px 6px">${+calSel.slice(5,7)}월 ${+calSel.slice(8)}일의 게임</div>`+(by[calSel]||[]).sort((a,b)=>a[1].s-b[1].s).map(([k,v])=>`<button class="mrow" onclick="${v.live?"navT('game')":`arcOpen('${k}')`}"><span><b>${new Date(v.s+9*36e5).toISOString().slice(11,16)} 시작 · ${v.n}명 · ${v.d}일차까지</b><br><small>${v.live?'지금 진행 중이에요':esc(v.w||'결과 없음')}</small></span></button>`).join('')}
 else if(!Object.keys(I).length)h+='<div class="sm" style="margin-top:10px">이번 업데이트부터 끝난 판이 달력에 기록돼요. 점이 찍힌 날을 누르면 그날 판을 다시 볼 수 있어요.</div>';
 el.innerHTML=h}
+/* ===== 판 다시보기 웹툰 ===== */
+let wtA=null;
+const wtFig=(n,o)=>{o=o||{};const w=o.w||52;return`<div class="wtf${o.dead?' dd':''}${o.cl?' '+o.cl:''}"><svg viewBox="-22 -62 44 66" style="width:${w}px;height:${(w*1.5)|0}px">${sprite(chOf(n),pfOf(n).eq||{},o.v||'f')}</svg><small>${esc(n)}${o.tag?`<i>${esc(o.tag)}</i>`:''}</small></div>`};
+const wtLie=n=>`<div class="wtf wtly">${lying(n)}<small>${esc(n)}</small></div>`;
+const wtCut=(bg,cap,body,bub)=>`<div class="wtp ${bg}">${cap?`<div class="wtc">${cap}</div>`:''}<div class="wts">${body}</div>${bub||''}</div>`;
+const wtS=t=>{t=String(t||'').replace(/\s+/g,' ').trim();return t.length>28?t.slice(0,27)+'…':t};
+const wtB=(who,t,r)=>`<div class="wtb${r?' r':''}"><b>${esc(who)}</b>${esc(t)}</div>`;
+function wtBuild(A){const g=A.g,R=n=>{const r=g.roles[n];return r?RN[r].split(' ').slice(1).join(' '):''},bk={votes:D.votes,night:D.night,fv:D.fv,why:D.why,lw:D.lw},cuts=[];
+D.votes=A.votes||{};D.night=A.night||{};D.fv=A.fv||{};D.why=A.why||{};D.lw=A.lw||{};
+try{const ns=Object.keys(g.roles),mf=ns.filter(n=>isM(g.roles[n])),t0=new Date(g.sid+9*36e5).toISOString(),MC=Object.values(A.mch||{}).filter(x=>x&&x.m&&x.f).sort((x,y)=>x.at-y.at),
+top=o=>{const c={};Object.values(o||{}).forEach(t=>{if(t&&t!=='-')c[t]=(c[t]||0)+1});return Object.entries(c).sort((a,b)=>b[1]-a[1])},LW=n=>{const t=(D.lw||{})[n];return t?wtB(n,'“'+wtS(t)+'”'):''};
+cuts.push({p:99,h:wtCut('wd',`${+t0.slice(5,7)}월 ${+t0.slice(8,10)}일 · ${ns.length}명의 마을`,`<div class="wtrow">${ns.map(n=>wtFig(n,{w:38})).join('')}</div><div class="wtn">이 중에 마피아가 <b>${mf.length}명</b> 숨어 있었다…</div>`)});
+for(let d=1;d<=(g.day||1);d++){const V=D.votes[d]||{},N=D.night[d]||{},r=RES(g,d),tv=top(V);
+if(tv.length){const[tn,tc]=tv[0],vs=Object.keys(V).filter(k=>V[k]===tn&&k!==tn),wy=vs.map(v=>[v,(D.why[d]||{})[v]]).find(x=>x[1]);
+cuts.push({p:r.ex?60:25,h:wtCut('wd',`${d}일차 낮 · 투표`,`<div class="wtrow">${vs.slice(0,4).map(v=>wtFig(v,{w:42,v:'s'})).join('')}${vs.length>4?`<div class="wtar">+${vs.length-4}</div>`:''}<div class="wtar">→</div>${wtFig(tn,{w:60,tag:tc+'표'})}</div>`,wy?wtB(wy[0],wtS(wy[1])):'')})}
+if(r.ex)cuts.push({p:90,h:wtCut('wdk',`${d}일차 · 처형`,`${wtLie(r.ex.n)}<div class="wtbig${r.ex.maf?' m':''}">${r.ex.maf?'마피아였다!':esc(R(r.ex.n))+'였다…'}</div>`,LW(r.ex.n))});
+const ml=Object.keys(N.mafia||{}),mt=top(N.mafia),tgt=mt.length?mt[0][0]:'';
+if(ml.length){const ms=MC.filter(x=>x.d===d&&x.ph==='night'),pk=[...ms.filter(x=>tgt&&x.m.includes(tgt)),...ms].filter((x,i,a)=>a.indexOf(x)===i).slice(0,2).sort((x,y)=>x.at-y.at);
+cuts.push({p:pk.length?55:30,h:wtCut('wn',`${d}일차 밤 · 마피아 회의`,`<div class="wtrow">${ml.map(n=>wtFig(n,{w:48,cl:'wmf'})).join('')}</div><div class="wtn">${tgt?`오늘 밤 타깃은 <b>${esc(tgt)}</b>`:'오늘 밤은 아무도 안 고르기로 했다'}</div>`,pk.map((x,i)=>wtB(x.f,wtS(x.m),i%2)).join(''))})}
+Object.keys(N.police||{}).forEach(a=>{const q=polRes(g,a,d);if(q&&q.m)cuts.push({p:70,h:wtCut('wn',`${d}일차 밤 · 경찰 조사`,`<div class="wtrow">${wtFig(a,{w:48,tag:'경찰',v:'s'})}<div class="wtar">?</div>${wtFig(q.t,{w:52})}</div><div class="wtbig m">${q.m===2?'갓파더 정체 발각!':g.roles[q.t]==='drunk'?'마피아로 나왔다… (사실은 술꾼)':'마피아다!'}</div>`)})});
+const sv=Object.entries(N.doctor||{}).find(([a,t])=>t===tgt);
+if(r.saved&&sv)cuts.push({p:85,h:wtCut('wn',`${d}일차 밤 · 그때 의사가`,`<div class="wtrow">${wtFig(sv[0],{w:52,tag:'의사'})}${wtFig(sv[1],{w:52})}</div><div class="wtbig s">막아냈다!</div>`)});
+if(r.sold&&tgt)cuts.push({p:85,h:wtCut('wn',`${d}일차 밤 · 습격`,`<div class="wtrow">${wtFig(tgt,{w:58,tag:'군인'})}</div><div class="wtbig s">버텼다!</div>`)});
+if(r.kl)cuts.push({p:90,h:wtCut('wm',`${d+1}일차 아침`,`${wtLie(r.kl)}<div class="wtbig">밤사이 ${esc(r.kl)} 사망</div><div class="wtn">${esc(R(r.kl))}였다</div>`,LW(r.kl))})}
+const won=stripE(g.winner||'')||'중간에 끝난 판';
+cuts.push({p:99,h:wtCut('wend','결말',`<div class="wtbig${won.includes('마피아')?' m':won.includes('시민')?' s':''}">${esc(won)}</div><div class="wtn">이번 판 마피아 팀</div><div class="wtrow">${mf.map(n=>wtFig(n,{w:50,tag:R(n),dead:g.alive&&!g.alive[n],cl:'wmf'})).join('')}</div>`)})}
+catch(e){console.error(e)}finally{Object.assign(D,bk)}
+const MX=14;if(cuts.length<=MX)return cuts.map(c=>c.h);const keep=new Set(cuts.map((c,i)=>[c.p,i]).sort((a,b)=>b[0]-a[0]||a[1]-b[1]).slice(0,MX).map(x=>x[1]));return cuts.filter((c,i)=>keep.has(i)).map(c=>c.h)}
+window.wtOpen=()=>{if(!wtA)return;const C=wtBuild(wtA),B=$('arcB');B.innerHTML=`<div class="wth"><button class="g" onclick="wtBack()">‹ 기록</button><b>다시보기 웹툰</b><span class="sm">${C.length}컷</span></div><div class="wt">${C.join('')}</div><div class="sm" style="text-align:center;margin:12px 0 4px">끝 · 마피아 밀담은 일부만 실려요</div>`;B.scrollTop=0;$('arc').classList.add('op')};
+window.wtBack=()=>{if(!wtA)return;const B=$('arcB');B.innerHTML=arcHTML(wtA);deE(B);B.scrollTop=0};
+window.wtLive=()=>{const g=G();if(!g||g.phase!=='end'||!g.roles)return;wtA={g,votes:D.votes,night:D.night,fv:D.fv,why:D.why,lw:D.lw,mch:D.mch};wtOpen()};
 window.arcClose=()=>$('arc').classList.remove('op');
 window.arcOpen=k=>{$('arcB').innerHTML='<div class="sm" style="text-align:center;padding:30px">불러오는 중…</div>';$('arc').classList.add('op');onValue(ref(db,ROOT+'/arch/'+k),x=>{const A=x.val();$('arcB').innerHTML=A?arcHTML(A):'<div class="sm" style="text-align:center;padding:30px">기록을 찾지 못했어요</div>';deE($('arcB'))},{onlyOnce:true})};
-function arcHTML(A){const g=A.g,bk={votes:D.votes,night:D.night,fv:D.fv,why:D.why,lw:D.lw};D.votes=A.votes||{};D.night=A.night||{};D.fv=A.fv||{};D.why=A.why||{};D.lw=A.lw||{};let h='';
+function arcHTML(A){wtA=A;const g=A.g,bk={votes:D.votes,night:D.night,fv:D.fv,why:D.why,lw:D.lw};D.votes=A.votes||{};D.night=A.night||{};D.fv=A.fv||{};D.why=A.why||{};D.lw=A.lw||{};let h='';
 try{const R=n=>RN[g.roles[n]]?RN[g.roles[n]].split(' ').slice(1).join(' '):'',ns=Object.keys(g.roles),t0=new Date(g.sid+9*36e5).toISOString();
-h+=`<div class="arch"><div class="hx ann-t">${+t0.slice(5,7)}월 ${+t0.slice(8,10)}일 ${t0.slice(11,16)}</div><div class="sm">${ns.length}명 · ${g.day}일차까지 · ${esc(g.setup||'')}</div><div class="arw">${esc(stripE(g.winner||'중간에 끝난 판'))}</div></div>
+h+=`<button class="p" style="width:100%;margin-bottom:12px" onclick="wtOpen()">웹툰으로 다시보기</button><div class="arch"><div class="hx ann-t">${+t0.slice(5,7)}월 ${+t0.slice(8,10)}일 ${t0.slice(11,16)}</div><div class="sm">${ns.length}명 · ${g.day}일차까지 · ${esc(g.setup||'')}</div><div class="arw">${esc(stripE(g.winner||'중간에 끝난 판'))}</div></div>
 <div class="sm" style="margin:12px 2px 6px">참가자와 직업</div><div class="g2">${ns.map(n=>`<span class="chip${g.alive&&g.alive[n]?'':' d'}">${esc(n)}<small>${R(n)}</small></span>`).join('')}</div>`;
 for(let d=1;d<=g.day;d++){const V=D.votes[d]||{},G2={};Object.keys(V).forEach(k=>{if(V[k]&&V[k]!==k)(G2[V[k]]=G2[V[k]]||[]).push(k)});const L2=Object.entries(G2).sort((x,y)=>y[1].length-x[1].length),mx=Math.max(1,...L2.map(x=>x[1].length));
 if(L2.length)h+=`<div class="vtl" style="margin-top:14px"><div class="vth">${d}일차 낮 투표</div>${L2.map(([t,vs])=>`<div class="vtr"><div class="vtt"><b>${esc(t)}</b><span class="vtb"><i style="width:${(vs.length/mx*100).toFixed(0)}%"></i></span><em>${vs.length}표</em></div><div class="vtv">${vs.map(v=>`<span>${esc(v)}${(D.why[d]||{})[v]?`<q>${esc(D.why[d][v])}</q>`:''}</span>`).join('')}</div></div>`).join('')}</div>`}
