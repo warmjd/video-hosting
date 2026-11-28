@@ -1923,7 +1923,7 @@ const gfFit=()=>{const el=$('gfz'),cv=$('gfCv');if(!el||!cv)return;if(el.classLi
 window.addEventListener('resize',()=>{const el=$('gfz');if(el&&el.classList.contains('fs'))gfFit()});
 window.gfFs=()=>{const el=$('gfz');if(!el)return;const on=!el.classList.contains('fs');if(on&&TX())return;el.classList.toggle('fs',on);document.body.classList.toggle('gffs',on);if(!on)gfT='f';gfFit();gfUI()};
 function gfHud(g,dex,u2,gh){const el=$('gfz');if(!el||!el.classList.contains('fs'))return;const E=gfEnv(gfSpot),st=gfS.st,a=$('gfAct');
-$('gfHt').innerHTML=`<div class="hrow"><button class="hb" onclick="gfFs()">✕</button><div class="hsp">${GF.SPOT.map((n,i)=>{const gl=i===2&&!gh,lk=gl||dex<GFOPEN[i];return`<button class="${gfSpot===i?'on':''}${lk?' lk':''}" onclick="gfSp(${i})">${n}${lk?` <small>${gl?'유령':GFOPEN[i]+'종'}</small>`:''}</button>`}).join('')}</div></div><div class="hrow r"><span class="hp">도감 <b>${dex}</b>/${GF.L.length}</span><span class="hp">${gh?'이번 판':'오늘'} <b>${u2}</b>/${gfCapOf(g)}</span><span class="hp">${gfSpot===2?'늘 밤':GFTODN[E.tod]} · ${GFWXN[E.wx]}</span>${window.innerHeight>window.innerWidth?'<span class="hp" style="color:#8ce99a">폰을 가로로 돌리면 더 크게 보여요</span>':''}</div>`;
+$('gfHt').innerHTML=`<div class="hrow"><button class="hb" onclick="gfFs()">✕</button><button class="hb" style="font-size:.68rem${GF_BGM&&SND_ON?'':';opacity:.55'}" onclick="gfBgmT()">${GF_BGM&&SND_ON?'음악':'음소거'}</button><div class="hsp">${GF.SPOT.map((n,i)=>{const gl=i===2&&!gh,lk=gl||dex<GFOPEN[i];return`<button class="${gfSpot===i?'on':''}${lk?' lk':''}" onclick="gfSp(${i})">${n}${lk?` <small>${gl?'유령':GFOPEN[i]+'종'}</small>`:''}</button>`}).join('')}</div></div><div class="hrow r"><span class="hp">도감 <b>${dex}</b>/${GF.L.length}</span><span class="hp">${gh?'이번 판':'오늘'} <b>${u2}</b>/${gfCapOf(g)}</span><span class="hp">${gfSpot===2?'늘 밤':GFTODN[E.tod]} · ${GFWXN[E.wx]}</span>${window.innerHeight>window.innerWidth?'<span class="hp" style="color:#8ce99a">폰을 가로로 돌리면 더 크게 보여요</span>':''}</div>`;
 $('gfHb').innerHTML=[['d','도감'],['w','보상'],['r','순위']].map(([k,l])=>`<button class="hb sq${gfT===k?' on':''}" onclick="gfTab('${gfT===k?'f':k}')">${l}</button>`).join('');
 $('gfHr').innerHTML=gfLast.length&&gfT==='f'?gfLast.slice(0,4).map(o=>`<img src="${GF.url(o.id,o.sh?'sh':'',2)}">`).join(''):'';
 a.textContent=st==='bite'?'챔질!':st==='reel'?'꾹!':st==='cast'||st==='wait'||st==='nib'?'기다리는 중':st==='got'?'낚았다!':'던지기';a.className=st==='bite'?'k-hot':st==='reel'?'k-reel'+(gfHold?' dn':''):['cast','wait','nib'].includes(st)?'k-wait':st==='got'?'k-got':'k-cast';a.style.display=gfT==='f'?'':'none';
@@ -1931,7 +1931,7 @@ const P=$('gfP');if(P&&gfT!=='f'&&!P.querySelector('.gfpx'))P.insertAdjacentHTML
 window.gfTab=t=>{gfT=t;gfSel=-1;gfUI()};window.gfSp=s=>{if(gfS.st!=='idle'&&gfS.st!=='done')return;gfSpot=s;gfPg=0;gfSel=-1;gfUI()};window.gfPage=d=>{gfPg=Math.max(0,gfPg+d);gfSel=-1;gfUI()};window.gfPick2=i=>{gfSel=gfSel===i?-1:i;gfUI()};
 function gfUI(){gfUI0();const _e=$('gfz');if(!_e||_e.style.display==='none')return;try{const M=gfMe(),g=G(),sid=g&&g.sid;const dex=Object.keys(M.c||{}).length,gh=gfGh(g);gfHud(g,dex,(M.g&&M.g.s===gfKey(g)?M.g.t:0)||0,gh)}catch(e){console.error(e)}}
 function gfUI0(){const el=$('gfz');if(!el||el.style.display==='none')return;const M=gfMe(),dex=Object.keys(M.c||{}).length,g=G(),sid=g&&g.sid,used=(M.g&&M.g.s===sid?M.g.t:0)||0;
-const gh=gfGh(g),u2=(M.g&&M.g.s===gfKey(g)?M.g.t:0)||0;const tx=TX(),sw=`<button class="gfsw" onclick="txToggle()">${tx?'원래 화면':'몰래 모드'}</button>`+(tx?'':`<button class="gfsw" style="margin-left:4px" onclick="gfFs()">${$('gfz').classList.contains('fs')?'작게':'크게'}</button>`);const hd=$('gfH');if(hd)hd.innerHTML=tx?`${sw}업무 메모 <span class="sm" style="font-weight:600">· 목록 ${dex}/${GF.L.length} · ${u2}/${gfCapOf(g)}</span>`:`${sw}저승 나루터 <span class="sm" style="font-weight:600">· 도감 ${dex}/${GF.L.length} · ${gh?'이번 판':'오늘'} ${u2}/${gfCapOf(g)} 달란트${gh?' · 유령 혜택 중':''}</span>`;
+const gh=gfGh(g),u2=(M.g&&M.g.s===gfKey(g)?M.g.t:0)||0;const tx=TX(),sw=`<button class="gfsw" onclick="txToggle()">${tx?'원래 화면':'몰래 모드'}</button>`+(tx?'':`<button class="gfsw" style="margin-left:4px" onclick="gfBgmT()">${GF_BGM&&SND_ON?'음악 켬':'음악 끔'}</button><button class="gfsw" style="margin-left:4px" onclick="gfFs()">${$('gfz').classList.contains('fs')?'작게':'크게'}</button>`);const hd=$('gfH');if(hd)hd.innerHTML=tx?`${sw}업무 메모 <span class="sm" style="font-weight:600">· 목록 ${dex}/${GF.L.length} · ${u2}/${gfCapOf(g)}</span>`:`${sw}저승 나루터 <span class="sm" style="font-weight:600">· 도감 ${dex}/${GF.L.length} · ${gh?'이번 판':'오늘'} ${u2}/${gfCapOf(g)} 달란트${gh?' · 유령 혜택 중':''}</span>`;
 const tb=$('gfTb');if(tb)tb.innerHTML=(tx?[['f','작성'],['d','목록'],['w','정산'],['r','통계']]:[['f','낚시'],['d','도감'],['w','보상'],['r','순위']]).map(([k,l])=>`<button class="${gfT===k?'on':''}" onclick="gfTab('${k}')">${l}</button>`).join('');
 $('gfF').style.display=gfT==='f'?'':'none';const P2=$('gfP');P2.style.display=gfT==='f'?'none':'';
 const sps=GF.SPOT.map((n,i)=>{const gl=i===2&&!gh,lk=gl||dex<GFOPEN[i];return`<button class="${gfSpot===i?'on':''}${lk?' lk':''}" onclick="gfSp(${i})">${tx?['기본','보관함','기밀'][i]:n}${gl?' <small>유령 전용</small>':lk?` <small>${GFOPEN[i]}종</small>`:''}</button>`}).join('');
@@ -2955,7 +2955,7 @@ const Snd=(()=>{
     if(!ctx||cur===name)return;
     const old=cur?tracks[cur]:null;
     if(old&&old.gain)old.gain.gain.setTargetAtTime(0,ctx.currentTime,.5);
-    cur=name;const tr=tracks[name];
+    cur=name;if(!name)return;const tr=tracks[name];
     if(!tr.gain){tr.gain=ctx.createGain();tr.gain.gain.value=0;tr.gain.connect(bgmBus)}
     tr.gain.gain.cancelScheduledValues(ctx.currentTime);
     tr.gain.gain.setValueAtTime(tr.gain.gain.value,ctx.currentTime);
@@ -3042,6 +3042,12 @@ const Snd=(()=>{
 })();
 let SND_ON=localStorage.getItem('m1_snd')!=='0';
 function bgmPick(){return;if(!Snd.ready||!SND_ON)return;const g=G(),ph=g&&g.phase;Snd.setIntense(ph==='trial');Snd.setTrack(ph==='night'?'night':ph==='trial'?'fish':ph==='end'?'dream':skyMode(g)==='night'?'night':'town')}
+let GF_BGM=localStorage.getItem('m1_gbgm')!=='0';
+window.gfBgmT=()=>{GF_BGM=!GF_BGM;localStorage.setItem('m1_gbgm',GF_BGM?'1':'0');if(GF_BGM&&!SND_ON){SND_ON=true;localStorage.setItem('m1_snd','1');Snd.init();Snd.resume();Snd.setMute(false);sndUpd()}gfBgmTick();try{gfUI()}catch(e){}};
+function gfBgmTick(){if(!Snd.ready)return;const el=$('gfz');let want=null;if(el&&SND_ON&&GF_BGM&&!TX()&&document.visibilityState==='visible'&&el.style.display!=='none'){const fs=el.classList.contains('fs');let vis=fs;if(!fs&&el.offsetParent!==null&&gfT==='f'){const r=el.getBoundingClientRect();vis=r.bottom>80&&r.top<window.innerHeight-80}
+if(vis){const st=gfS.st,E=gfEnv(gfSpot);want=['cast','wait','nib','bite','reel'].includes(st)?'fish':E.wx==='snow'?'snow':(gfSpot===2||E.tod==='night')?'night':'town'}}
+try{Snd.setTrack(want)}catch(e){}}
+setInterval(gfBgmTick,800);document.addEventListener('visibilitychange',gfBgmTick);
 const sndUpd=()=>{const b=$('sndb');if(b){b.textContent=SND_ON?'효과음 켬':'효과음 끔';b.classList.toggle('mut',!SND_ON)}};
 window.sndToggle=()=>{SND_ON=!SND_ON;localStorage.setItem('m1_snd',SND_ON?'1':'0');if(SND_ON){Snd.init();Snd.resume();Snd.setMute(false);bgmPick()}else if(Snd.ready)Snd.setMute(true);sndUpd()};
 document.addEventListener('pointerdown',e=>{if(!SND_ON)return;const first=!Snd.ready;Snd.init();Snd.resume();if(first)Snd.setMute(false);bgmPick();const b=e.target.closest&&e.target.closest('button');if(b&&!first)Snd.sfx('tap')},{passive:true});
